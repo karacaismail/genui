@@ -7,83 +7,92 @@
 <title>GenUI Frontend Gereksinimleri</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Roboto:wght@300;400;500&family=Roboto+Mono:wght@400&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Roboto:wght@300;400;500&family=Roboto+Mono:wght@400&display=swap">
 <style>
 :root {
-  --paper: #f5f7fb;
+  --paper: #f3f5f9;
   --surface: #ffffff;
-  --surface-2: #eef2f8;
-  --ink: #141922;
-  --ink-2: #3a4351;
-  --muted: #667283;
-  --line: #d9dfe8;
-  --line-2: #c4ccd8;
+  --surface-2: #e9edf4;
+  --ink: #121722;
+  --ink-2: #3b4453;
+  --muted: #6b7585;
+  --line: #dbe1ea;
+  --line-2: #c3ccd9;
   --accent: #1677ff;
-  --accent-ink: #0b5bd3;
-  --accent-soft: #e8f1ff;
-  --accent-line: #a6c8ff;
-  --must: #141922;
+  --accent-ink: #0958d9;
+  --accent-soft: #e6f0ff;
+  --accent-line: #91bfff;
+  --gen: #722ed1;
+  --gen-ink: #531dab;
+  --gen-soft: #f4efff;
+  --must: #121722;
   --must-ink: #ffffff;
-  --warn: #ad4e00;
-  --warn-soft: #fff4e6;
-  --ok: #1a7f4b;
-  --ok-soft: #e6f6ec;
-  --shadow: 0 1px 2px rgba(20, 25, 34, .06), 0 8px 24px -16px rgba(20, 25, 34, .18);
-  --radius: 10px;
-  --radius-s: 6px;
+  --ok: #1f8a4c;
+  --ok-soft: #e7f6ec;
+  --warn: #b4530a;
+  --warn-soft: #fff3e6;
+  --shadow: 0 1px 2px rgba(18, 23, 34, .05), 0 12px 32px -20px rgba(18, 23, 34, .25);
+  --radius: 6px;
+  --radius-s: 4px;
   --font-body: "Roboto", "Helvetica Neue", Arial, sans-serif;
-  --font-head: "Archivo", "Roboto", "Helvetica Neue", Arial, sans-serif;
+  --font-head: "Bricolage Grotesque", "Roboto", "Helvetica Neue", Arial, sans-serif;
   --font-mono: "Roboto Mono", "SFMono-Regular", Menlo, Consolas, monospace;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     color-scheme: dark;
-    --paper: #0e131a;
-    --surface: #151b25;
-    --surface-2: #1b2330;
-    --ink: #e7ecf3;
-    --ink-2: #c3cbd7;
-    --muted: #93a0b2;
-    --line: #273142;
-    --line-2: #344054;
+    --paper: #0b1017;
+    --surface: #121924;
+    --surface-2: #182130;
+    --ink: #e9edf3;
+    --ink-2: #c6cdd8;
+    --muted: #8f9bad;
+    --line: #243043;
+    --line-2: #33415a;
     --accent: #4d9bff;
-    --accent-ink: #7fb6ff;
-    --accent-soft: #13233b;
+    --accent-ink: #85b8ff;
+    --accent-soft: #12233b;
     --accent-line: #2b5a9e;
-    --must: #e7ecf3;
-    --must-ink: #0e131a;
-    --warn: #ffb066;
-    --warn-soft: #2a1d0f;
+    --gen: #b37feb;
+    --gen-ink: #d3adf7;
+    --gen-soft: #22163a;
+    --must: #e9edf3;
+    --must-ink: #0b1017;
     --ok: #5fd39a;
     --ok-soft: #10281c;
-    --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 8px 24px -16px rgba(0, 0, 0, .6);
+    --warn: #ffb066;
+    --warn-soft: #2a1d0f;
+    --shadow: 0 1px 2px rgba(0, 0, 0, .5), 0 12px 32px -20px rgba(0, 0, 0, .7);
   }
 }
 :root[data-theme="dark"] {
   color-scheme: dark;
-  --paper: #0e131a;
-  --surface: #151b25;
-  --surface-2: #1b2330;
-  --ink: #e7ecf3;
-  --ink-2: #c3cbd7;
-  --muted: #93a0b2;
-  --line: #273142;
-  --line-2: #34405a;
+  --paper: #0b1017;
+  --surface: #121924;
+  --surface-2: #182130;
+  --ink: #e9edf3;
+  --ink-2: #c6cdd8;
+  --muted: #8f9bad;
+  --line: #243043;
+  --line-2: #33415a;
   --accent: #4d9bff;
-  --accent-ink: #7fb6ff;
-  --accent-soft: #13233b;
+  --accent-ink: #85b8ff;
+  --accent-soft: #12233b;
   --accent-line: #2b5a9e;
-  --must: #e7ecf3;
-  --must-ink: #0e131a;
-  --warn: #ffb066;
-  --warn-soft: #2a1d0f;
+  --gen: #b37feb;
+  --gen-ink: #d3adf7;
+  --gen-soft: #22163a;
+  --must: #e9edf3;
+  --must-ink: #0b1017;
   --ok: #5fd39a;
   --ok-soft: #10281c;
-  --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 8px 24px -16px rgba(0, 0, 0, .6);
+  --warn: #ffb066;
+  --warn-soft: #2a1d0f;
+  --shadow: 0 1px 2px rgba(0, 0, 0, .5), 0 12px 32px -20px rgba(0, 0, 0, .7);
 }
 
 * { box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; scroll-padding-top: 1.5rem; }
 body {
   margin: 0;
   background: var(--paper);
@@ -95,89 +104,138 @@ body {
   padding-inline: 16px;
   padding-block: 0 4rem;
 }
-.wrap { max-width: 68rem; margin: 0 auto; }
+.wrap { max-width: 80rem; margin: 0 auto; }
 a { color: var(--accent-ink); text-decoration: none; border-bottom: 1px solid var(--accent-line); }
 a:hover { border-bottom-color: var(--accent-ink); }
-a:focus-visible, button:focus-visible, [tabindex]:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+a:focus-visible, button:focus-visible, select:focus-visible, [tabindex]:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
 strong { font-weight: 500; }
-code, .mono { font-family: var(--font-mono); font-size: .92em; }
+code, .mono { font-family: var(--font-mono); font-size: .9em; }
 code { background: var(--surface-2); padding: .05em .4em; border-radius: 4px; color: var(--ink-2); }
-h1, h2, h3 { font-family: var(--font-head); text-wrap: balance; margin: 0; color: var(--ink); }
-h1 { font-size: clamp(1.9rem, 1.2rem + 2.4vw, 2.9rem); font-weight: 700; line-height: 1.12; letter-spacing: -.01em; }
-h2 { font-size: 1.45rem; font-weight: 600; line-height: 1.25; }
-h3 { font-size: 1.1rem; font-weight: 600; line-height: 1.3; }
-p { margin: 0; max-width: 68ch; }
+h1, h2, h3 { font-family: var(--font-head); text-wrap: balance; margin: 0; color: var(--ink); font-variation-settings: "opsz" 96; }
+h1 { font-size: clamp(2.2rem, 1.3rem + 3vw, 3.6rem); font-weight: 800; line-height: 1.04; letter-spacing: -.022em; }
+h2 { font-size: 1.65rem; font-weight: 700; line-height: 1.2; letter-spacing: -.012em; }
+h3 { font-size: 1.15rem; font-weight: 700; line-height: 1.3; }
+p { margin: 0; max-width: 68ch; text-wrap: pretty; }
 p + p { margin-top: .75rem; }
+button { font: inherit; color: inherit; }
 .eyebrow {
   font-family: var(--font-head);
-  font-size: .78rem;
-  font-weight: 600;
-  letter-spacing: .08em;
+  font-size: .76rem;
+  font-weight: 700;
+  letter-spacing: .1em;
   text-transform: uppercase;
   color: var(--muted);
 }
 .ico { width: 1.15em; height: 1.15em; vertical-align: -.2em; fill: currentColor; flex: none; }
+.visually-hidden { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; }
 
-/* header */
+/* reading progress */
+.progress { position: fixed; top: 0; left: 0; right: 0; z-index: 60; padding-top: env(safe-area-inset-top, 0px); pointer-events: none; }
+.progress span { display: block; height: 3px; width: 0; background: var(--accent); }
+
+/* masthead */
 .masthead {
-  padding-block: 2.75rem 2rem;
+  padding-block: 3rem 2.25rem;
   border-bottom: 1px solid var(--line);
   display: grid;
-  gap: 1rem;
+  grid-template-columns: minmax(0, 1.5fr) minmax(18rem, 1fr);
+  gap: 2.5rem 4rem;
+  align-items: end;
 }
-.masthead .meta { display: flex; flex-wrap: wrap; gap: .5rem 1.25rem; color: var(--muted); font-size: .95rem; }
+.masthead .intro { display: grid; gap: 1.1rem; }
+.masthead .meta { display: flex; flex-wrap: wrap; gap: .4rem 1.25rem; color: var(--muted); font-size: .95rem; font-weight: 400; }
 .masthead .meta span { display: inline-flex; align-items: center; gap: .4rem; }
-.lede { font-size: 1.12rem; font-weight: 300; color: var(--ink-2); max-width: 62ch; }
+.lede { font-size: 1.15rem; line-height: 1.55; color: var(--ink-2); max-width: 60ch; }
 .lede strong { color: var(--ink); }
-
-/* contents */
-.toc { display: flex; flex-wrap: wrap; gap: .5rem; padding-block: 1.25rem; border-bottom: 1px solid var(--line); }
-.toc a {
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  padding: .3rem .8rem;
-  font-size: .92rem;
-  font-weight: 400;
-  color: var(--ink-2);
+.rules {
   background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1.15rem 1.25rem 1.25rem;
+  display: grid;
+  gap: .75rem;
 }
-.toc a:hover { border-color: var(--accent-line); color: var(--accent-ink); }
+.rules .eyebrow { color: var(--accent-ink); }
+.rules ol { margin: 0; padding: 0; list-style: none; display: grid; gap: .55rem; counter-reset: rule; }
+.rules li { display: grid; grid-template-columns: 1.6rem 1fr; gap: .5rem; align-items: baseline; font-size: .98rem; color: var(--ink-2); line-height: 1.45; }
+.rules li::before { counter-increment: rule; content: counter(rule, decimal-leading-zero); font-family: var(--font-mono); font-size: .8rem; color: var(--muted); }
+.rules li strong { color: var(--ink); font-weight: 500; }
+
+/* page grid with rail */
+.page { display: grid; grid-template-columns: 13.5rem minmax(0, 1fr); gap: 3.5rem; align-items: start; }
+.rail { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 1.25rem); padding-top: 2.25rem; display: grid; gap: 1.25rem; }
+.rail .eyebrow { font-size: .7rem; }
+.toc { display: grid; gap: .1rem; margin: 0; padding: 0; list-style: none; }
+.toc a {
+  display: flex; align-items: baseline; gap: .55rem;
+  padding: .3rem .6rem; margin-left: -.6rem;
+  border: 0; border-left: 2px solid transparent; border-radius: 0 var(--radius-s) var(--radius-s) 0;
+  font-size: .95rem; font-weight: 400; color: var(--ink-2); line-height: 1.35;
+}
+.toc a .n { font-family: var(--font-mono); font-size: .72rem; color: var(--muted); min-width: 1.4rem; }
+.toc a:hover { color: var(--accent-ink); background: var(--accent-soft); }
+.toc a.active { border-left-color: var(--accent); color: var(--ink); font-weight: 500; background: var(--surface); }
+.toc .sub { padding-left: 2.45rem; font-size: .88rem; color: var(--muted); display: grid; gap: .05rem; margin-top: .1rem; }
+.toc .sub a { padding: .12rem .4rem; margin-left: -.4rem; border-left: 0; font-size: .88rem; color: var(--muted); }
+.toc .sub a:hover, .toc .sub a.active { color: var(--accent-ink); background: transparent; font-weight: 400; }
+.tbtn {
+  display: inline-flex; align-items: center; gap: .5rem;
+  background: var(--surface); border: 1px solid var(--line); border-radius: 999px;
+  padding: .35rem .9rem .35rem .7rem; font-size: .88rem; font-weight: 400; color: var(--ink-2); cursor: pointer; width: max-content;
+}
+.tbtn:hover { border-color: var(--accent-line); color: var(--accent-ink); }
+.tbtn .ico { width: 1.05rem; height: 1.05rem; }
+.tbtn [data-mode] { display: none; }
+.tbtn[data-theme-mode="system"] [data-mode="system"],
+.tbtn[data-theme-mode="light"] [data-mode="light"],
+.tbtn[data-theme-mode="dark"] [data-mode="dark"] { display: inline-flex; align-items: center; gap: .5rem; }
+.content { min-width: 0; }
 
 /* sections */
-section { padding-block: 2.5rem 0; }
-.sec-head { display: grid; gap: .5rem; margin-bottom: 1.25rem; }
-.sec-head .title { display: flex; align-items: center; gap: .6rem; }
-.sec-head .title .ico { width: 1.35rem; height: 1.35rem; color: var(--accent); }
-.sec-head p { color: var(--ink-2); }
+section { padding-block: 3rem 0; scroll-margin-top: 1rem; }
+.sec-head { display: grid; gap: .6rem; margin-bottom: 1.4rem; }
+.sec-head::before { content: ""; display: block; width: 2.5rem; height: 3px; background: var(--accent); border-radius: 2px; margin-bottom: .25rem; }
+.sec-head .title { display: flex; align-items: center; gap: .65rem; }
+.sec-head .title .ico { width: 1.4rem; height: 1.4rem; color: var(--accent); }
+.sec-head .title .n { font-family: var(--font-mono); font-size: .85rem; color: var(--muted); }
+.sec-head p { color: var(--ink-2); font-size: 1.02rem; }
 
-/* four questions */
+/* four-cell grids */
 .quad { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
-.quad > div { background: var(--surface); padding: 1.1rem 1.2rem; display: grid; gap: .35rem; align-content: start; }
-.quad .q { font-family: var(--font-head); font-weight: 600; font-size: .95rem; color: var(--accent-ink); }
-.quad p { font-size: 1rem; }
+.quad > div { background: var(--surface); padding: 1.15rem 1.25rem 1.3rem; display: grid; gap: .4rem; align-content: start; }
+.quad .q { font-family: var(--font-head); font-weight: 700; font-size: .95rem; color: var(--accent-ink); letter-spacing: .01em; }
+.quad p { font-size: 1rem; color: var(--ink-2); }
 
 /* layer stack */
-.layers { display: grid; gap: .5rem; }
+.layers { display: grid; gap: .65rem; position: relative; padding-left: 3rem; }
+.layers::before { content: ""; position: absolute; left: 1.05rem; top: .5rem; bottom: .5rem; width: 2px; background: var(--line-2); }
 .layer {
+  position: relative;
   display: grid;
-  grid-template-columns: minmax(11rem, 15rem) 1fr;
-  gap: .25rem 1.5rem;
+  grid-template-columns: minmax(11rem, 14rem) 1fr;
+  gap: .35rem 1.75rem;
   background: var(--surface);
   border: 1px solid var(--line);
-  border-left: 4px solid var(--accent);
-  border-radius: var(--radius-s);
-  padding: .9rem 1.1rem;
+  border-radius: var(--radius);
+  padding: 1rem 1.25rem 1.05rem;
 }
-.layer.l-degisebilir { border-left-color: var(--accent-line); }
-.layer.l-ucucu { border-left-style: dashed; border-left-color: var(--line-2); }
-.layer .name { font-family: var(--font-head); font-weight: 600; font-size: 1.02rem; display: grid; gap: .4rem; align-content: start; }
-.layer .name .ord { font-family: var(--font-mono); font-size: .8rem; color: var(--muted); font-weight: 400; }
-.layer dl { margin: 0; display: grid; grid-template-columns: max-content 1fr; gap: .2rem .9rem; font-size: .98rem; }
+.layer .ord {
+  position: absolute; left: -3rem; top: .95rem;
+  width: 2.15rem; height: 2.15rem; border-radius: 50%;
+  display: grid; place-items: center;
+  font-family: var(--font-mono); font-size: .8rem; font-weight: 400; color: var(--ink-2);
+  background: var(--surface); border: 2px solid var(--line-2);
+}
+.layer.l-kalici .ord { border-color: var(--accent); color: var(--accent-ink); }
+.layer.l-ucucu .ord { border-style: dashed; color: var(--muted); }
+.layer .name { font-family: var(--font-head); font-weight: 700; font-size: 1.08rem; line-height: 1.25; display: grid; gap: .5rem; align-content: start; }
+.layer dl { margin: 0; display: grid; grid-template-columns: max-content 1fr; gap: .25rem 1rem; font-size: .98rem; }
 .layer dt { color: var(--muted); font-weight: 400; }
 .layer dd { margin: 0; color: var(--ink-2); }
 .chip {
   display: inline-flex; align-items: center; gap: .3rem;
-  font-family: var(--font-head); font-size: .74rem; font-weight: 600; letter-spacing: .04em; text-transform: uppercase;
+  font-family: var(--font-head); font-size: .72rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase;
   border-radius: 999px; padding: .12rem .6rem; line-height: 1.5; white-space: nowrap; width: max-content;
 }
 .chip.kalici { background: var(--accent); color: #fff; }
@@ -187,108 +245,229 @@ section { padding-block: 2.5rem 0; }
 .chip.should { background: transparent; color: var(--ink-2); border: 1px solid var(--line-2); }
 .chip.may { background: transparent; color: var(--muted); border: 1px dashed var(--line-2); }
 
+/* mechanism figures */
+.figs { display: grid; gap: 1rem; }
+.fig { margin: 0; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 1rem 1rem .9rem; display: grid; gap: .6rem; }
+.fig svg { width: 100%; height: auto; max-width: 100%; color: var(--ink-2); display: block; }
+.fig svg text { font-family: var(--font-body); fill: currentColor; }
+.fig .ttl { font-size: 13px; font-weight: 500; fill: var(--ink); }
+.fig .sub { font-size: 11px; fill: var(--muted); }
+.fig .lbl { font-size: 11px; fill: var(--muted); }
+.fig .lbl.strong { fill: var(--ink-2); font-weight: 400; }
+.fig .box { fill: var(--surface-2); stroke: var(--line-2); stroke-width: 1.2; }
+.fig .box.accent { fill: var(--accent-soft); stroke: var(--accent); stroke-width: 2; }
+.fig .box.gen { fill: var(--gen-soft); stroke: var(--gen); stroke-width: 2; }
+.fig .box.swap { stroke-dasharray: 4 3; }
+[hidden] { display: none !important; }
+.fig .arrow { stroke: currentColor; fill: none; stroke-width: 1.4; }
+.fig .arrow.dashed { stroke-dasharray: 4 4; }
+.fig .arrow.no { stroke: var(--warn); stroke-width: 1.6; stroke-dasharray: 3 5; }
+.fig .m path { fill: currentColor; }
+.fig .m-warn path { fill: var(--warn); }
+.fig .warn-t { fill: var(--warn); font-size: 11px; font-weight: 400; }
+.fig .accent-t { fill: var(--accent-ink); font-size: 11px; font-weight: 400; }
+.fig .gen-t { fill: var(--gen-ink); font-size: 11px; font-weight: 400; }
+.fig .xmark { stroke: var(--warn); stroke-width: 1.8; fill: var(--surface); }
+figcaption { color: var(--muted); font-size: .95rem; line-height: 1.5; }
+figcaption b { font-weight: 500; color: var(--ink-2); }
+
 /* requirement groups */
-.group { margin-top: 1.75rem; }
+.filters {
+  display: flex; flex-wrap: wrap; align-items: center; gap: .6rem 1rem;
+  padding: .75rem .9rem; margin-bottom: 1.5rem;
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+  position: sticky; top: calc(env(safe-area-inset-top, 0px) + .5rem); z-index: 20;
+  box-shadow: var(--shadow);
+}
+.filters .ico { color: var(--muted); width: 1.1rem; height: 1.1rem; }
+.seg { display: inline-flex; border: 1px solid var(--line-2); border-radius: 999px; overflow: hidden; }
+.seg button { background: transparent; border: 0; padding: .3rem .8rem; font-size: .9rem; font-weight: 400; color: var(--ink-2); cursor: pointer; }
+.seg button + button { border-left: 1px solid var(--line-2); }
+.seg button[aria-pressed="true"] { background: var(--must); color: var(--must-ink); }
+.filters select {
+  font: inherit; font-size: .9rem; font-weight: 400; color: var(--ink-2);
+  background: var(--surface); border: 1px solid var(--line-2); border-radius: 999px; padding: .3rem 2rem .3rem .8rem;
+  appearance: none; -webkit-appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, currentColor 50%), linear-gradient(135deg, currentColor 50%, transparent 50%);
+  background-position: calc(100% - 15px) 55%, calc(100% - 10px) 55%; background-size: 5px 5px, 5px 5px; background-repeat: no-repeat;
+}
+.filters .count { margin-left: auto; font-size: .9rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+.group { margin-top: 2rem; }
 .group:first-of-type { margin-top: 0; }
-.group-head { display: flex; align-items: baseline; gap: .75rem; flex-wrap: wrap; margin-bottom: .6rem; }
-.group-head h3 { display: inline-flex; align-items: center; gap: .5rem; }
-.group-head h3 .ico { color: var(--accent); width: 1.15rem; height: 1.15rem; }
+.group-head { display: flex; align-items: baseline; gap: .75rem; flex-wrap: wrap; margin-bottom: .7rem; }
+.group-head h3 { display: inline-flex; align-items: center; gap: .55rem; }
+.group-head h3 .ico { color: var(--accent); width: 1.2rem; height: 1.2rem; }
 .group-head .why { color: var(--muted); font-size: .95rem; }
-.tbl-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--radius-s); background: var(--surface); }
+.group[data-empty="true"] .tbl-wrap { display: none; }
+.group[data-empty="true"] .group-head::after { content: "Bu filtrede gösterilecek madde yok."; font-size: .9rem; color: var(--muted); }
+.tbl-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
 table { width: 100%; border-collapse: collapse; font-family: var(--font-body); font-size: 1rem; font-weight: 300; }
 thead th {
-  text-align: left; font-family: var(--font-head); font-weight: 600; font-size: .8rem; letter-spacing: .06em; text-transform: uppercase;
-  color: var(--muted); padding: .7rem .9rem; border-bottom: 1px solid var(--line); background: var(--surface-2); white-space: nowrap;
+  text-align: left; font-family: var(--font-head); font-weight: 700; font-size: .74rem; letter-spacing: .09em; text-transform: uppercase;
+  color: var(--muted); padding: .7rem 1rem; border-bottom: 1px solid var(--line-2); white-space: nowrap;
 }
-tbody td { padding: .7rem .9rem; border-bottom: 1px solid var(--line); vertical-align: top; color: var(--ink-2); }
+tbody td { padding: .8rem 1rem; border-bottom: 1px solid var(--line); vertical-align: top; color: var(--ink-2); }
 tbody tr:last-child td { border-bottom: 0; }
-td.id { font-family: var(--font-mono); font-size: .88rem; color: var(--muted); white-space: nowrap; }
+tbody tr:hover td { background: var(--surface-2); }
+td.id { font-family: var(--font-mono); font-size: .86rem; color: var(--muted); white-space: nowrap; }
 td.lvl { white-space: nowrap; }
-td.actor { white-space: nowrap; color: var(--muted); font-weight: 400; }
+td.actor { white-space: nowrap; color: var(--ink-2); font-weight: 400; font-size: .95rem; }
+td.actor::before { content: ""; display: inline-block; width: .55rem; height: .55rem; border-radius: 50%; margin-right: .45rem; background: var(--line-2); vertical-align: 0; }
+tr[data-actor="Sistem"] td.actor::before { background: var(--accent); }
+tr[data-actor="Sunucu"] td.actor::before { background: var(--ink-2); }
+tr[data-actor="Model"] td.actor::before { background: var(--gen); }
+tr[data-actor="Kullanıcı"] td.actor::before { background: var(--ok); }
+tr[data-actor="CI"] td.actor::before { background: var(--warn); }
 td .req { color: var(--ink); font-weight: 400; }
-td .note { display: block; color: var(--muted); font-size: .95rem; margin-top: .15rem; }
-.req-table td:nth-child(3) { min-width: 22rem; }
+td .note { display: block; color: var(--muted); font-size: .95rem; margin-top: .2rem; }
+.req-table td:nth-child(3) { min-width: 24rem; }
 
 /* stack table */
 .stack-table td:nth-child(2) { font-weight: 400; color: var(--ink); }
 .small { font-size: .95rem; color: var(--muted); }
 
 /* experiments */
-.exp { display: grid; grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr)); gap: .75rem; }
-.exp > div { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-s); padding: 1rem 1.1rem; display: grid; gap: .4rem; align-content: start; }
-.exp .t { font-family: var(--font-head); font-weight: 600; font-size: 1rem; color: var(--ink); display: flex; gap: .5rem; align-items: center; }
-.exp .t .ico { color: var(--accent); }
-.exp .pass { color: var(--ink-2); font-size: .98rem; }
-.exp .pass b { font-weight: 500; color: var(--ok); }
+.exp { display: grid; grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr)); gap: .75rem; }
+.exp > div { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 1rem 1.15rem 1.1rem; display: grid; gap: .55rem; align-content: start; }
+.exp .t { font-family: var(--font-head); font-weight: 700; font-size: 1.02rem; color: var(--ink); display: flex; gap: .6rem; align-items: baseline; }
+.exp .t .n { font-family: var(--font-mono); font-size: .8rem; font-weight: 400; color: var(--accent-ink); }
+.exp .row { display: grid; grid-template-columns: 4.2rem 1fr; gap: .5rem; font-size: .97rem; color: var(--ink-2); }
+.exp .lab { font-family: var(--font-head); font-size: .72rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); padding-top: .2rem; }
+.exp .lab.pass { color: var(--ok); }
 
 /* do / don't */
-.dodont { display: grid; grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr)); gap: .75rem; }
-.dodont > div { border-radius: var(--radius-s); padding: 1rem 1.1rem; border: 1px solid var(--line); background: var(--surface); }
-.dodont h3 { display: flex; align-items: center; gap: .5rem; margin-bottom: .6rem; }
+.dodont { display: grid; grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr)); gap: .75rem; }
+.dodont > div { border-radius: var(--radius); padding: 1.1rem 1.25rem; border: 1px solid var(--line); background: var(--surface); }
+.dodont h3 { display: flex; align-items: center; gap: .5rem; margin-bottom: .7rem; }
 .dodont .no h3 .ico { color: var(--warn); }
 .dodont .yes h3 .ico { color: var(--ok); }
-.dodont ul { margin: 0; padding-left: 1.2rem; display: grid; gap: .4rem; color: var(--ink-2); }
+.dodont ul { margin: 0; padding-left: 1.2rem; display: grid; gap: .45rem; color: var(--ink-2); }
 .dodont li::marker { color: var(--muted); }
 
-/* callout */
-.callout {
-  display: grid; grid-template-columns: auto 1fr; gap: .75rem; align-items: start;
-  background: var(--accent-soft); border: 1px solid var(--accent-line); border-radius: var(--radius-s); padding: .9rem 1.1rem; color: var(--ink-2);
-}
-.callout .ico { color: var(--accent-ink); margin-top: .2rem; }
-.callout.warn { background: var(--warn-soft); border-color: transparent; }
-.callout.warn .ico { color: var(--warn); }
-
 /* sources */
-.sources ol { margin: 0; padding-left: 1.4rem; display: grid; gap: .35rem; color: var(--ink-2); font-size: .98rem; }
-.sources li::marker { color: var(--muted); font-family: var(--font-mono); font-size: .85rem; }
+.sources ol { margin: 0; padding-left: 1.6rem; display: grid; gap: .4rem; color: var(--ink-2); font-size: .97rem; }
+.sources li::marker { color: var(--muted); font-family: var(--font-mono); font-size: .82rem; }
 .sources .v { color: var(--muted); }
 
-footer { margin-top: 3rem; padding-top: 1.25rem; border-top: 1px solid var(--line); color: var(--muted); font-size: .92rem; display: flex; flex-wrap: wrap; gap: .5rem 1.5rem; }
+footer { margin-top: 3.5rem; padding-top: 1.25rem; border-top: 1px solid var(--line); color: var(--muted); font-size: .92rem; display: flex; flex-wrap: wrap; gap: .5rem 1.5rem; }
 
+/* back to top */
+.totop {
+  position: fixed; right: 1rem; bottom: calc(env(safe-area-inset-bottom, 0px) + 1rem); z-index: 40;
+  width: 2.6rem; height: 2.6rem; border-radius: 50%; display: grid; place-items: center;
+  background: var(--surface); color: var(--ink-2); border: 1px solid var(--line-2); box-shadow: var(--shadow); cursor: pointer;
+  opacity: 0; transform: translateY(.5rem); pointer-events: none;
+}
+.totop.show { opacity: 1; transform: none; pointer-events: auto; }
+.totop .ico { width: 1.2rem; height: 1.2rem; }
+.totop:hover { color: var(--accent-ink); border-color: var(--accent-line); }
+
+/* responsive */
+@media (max-width: 1099px) {
+  .page { grid-template-columns: 1fr; gap: 0; }
+  .rail { position: static; padding-top: 1.25rem; padding-bottom: .25rem; border-bottom: 1px solid var(--line); gap: .9rem; }
+  .rail .eyebrow { display: none; }
+  .toc { display: flex; flex-wrap: wrap; gap: .45rem; }
+  .toc a { border: 1px solid var(--line); border-radius: 999px; padding: .28rem .8rem; margin: 0; background: var(--surface); font-size: .9rem; }
+  .toc a .n { display: none; }
+  .toc a.active { border-color: var(--accent); background: var(--accent-soft); color: var(--accent-ink); }
+  .toc .sub { display: none; }
+}
+@media (max-width: 899px) {
+  .masthead { grid-template-columns: 1fr; gap: 1.75rem; align-items: start; padding-block: 2.25rem 1.75rem; }
+}
 @media (max-width: 640px) {
-  .layer { grid-template-columns: 1fr; }
+  .layers { padding-left: 2.6rem; }
+  .layers::before { left: .95rem; }
+  .layer { grid-template-columns: 1fr; padding: .9rem 1rem; }
+  .layer .ord { left: -2.6rem; width: 1.95rem; height: 1.95rem; font-size: .72rem; }
   .layer dl { grid-template-columns: 1fr; gap: .1rem; }
-  .layer dt { margin-top: .35rem; }
-  .req-table td:nth-child(3) { min-width: 16rem; }
-  .masthead { padding-block: 2rem 1.5rem; }
+  .layer dt { margin-top: .4rem; }
+  .req-table td:nth-child(3) { min-width: 17rem; }
+  .filters { position: static; box-shadow: none; }
+  .filters .count { margin-left: 0; width: 100%; }
+  .exp .row { grid-template-columns: 1fr; gap: .15rem; }
 }
 @media (prefers-reduced-motion: no-preference) {
-  a, .toc a { transition: color .15s ease, border-color .15s ease; }
+  a, .toc a, .tbtn, .totop, .seg button { transition: color .15s ease, border-color .15s ease, background-color .15s ease, opacity .2s ease, transform .2s ease; }
+  .progress span { transition: width .08s linear; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
 }
 @media print {
   body { background: #fff; color: #000; }
-  .toc { display: none; }
+  .rail, .filters, .totop, .progress { display: none; }
+  .page { grid-template-columns: 1fr; }
   .tbl-wrap { overflow: visible; }
 }
 
 </style>
 </head>
 <body>
+<div class="progress" aria-hidden="true"><span id="progress-bar"></span></div>
 <div class="wrap">
 
 <header class="masthead">
-  <div class="eyebrow">Frontend gereksinim sözleşmesi</div>
-  <h1>GenUI Frontend Gereksinimleri</h1>
-  <p class="lede"><strong>Ant Design merkezde kalır, ama merkez olan şey kütüphane değil, ürüne ait etkileşim çekirdeğidir:</strong> iş yetenekleri, görev durumu, onaylı bileşen kataloğu ve tasarım kararları. GenUI (generative UI, üretken arayüz: modelin hazır ve onaylı bileşenlerden ekran kurması) bu çekirdeği kullanan bir katmandır. Model kod, HTML veya URL üretmez; katalogdan seçer. AI-first UX (yapay zekânın yardımcı özellik değil, birincil etkileşim yolu olması) bu belgede zorunlu gereksinimdir.</p>
-  <div class="meta">
-    <span>Sürüm 1.0</span>
-    <span>28 Eylül 2026</span>
-    <span>Kapsam: SaaS yönetim paneli ve PIM (ürün bilgisi yönetimi)</span>
-    <span>Sürümler ve lisanslar aynı gün npm ve resmi dokümanlardan doğrulandı</span>
+  <div class="intro">
+    <div class="eyebrow">Frontend gereksinim sözleşmesi</div>
+    <h1>GenUI Frontend Gereksinimleri</h1>
+    <p class="lede"><strong>Ant Design merkezde kalır, ama merkez olan şey kütüphane değil, ürüne ait etkileşim çekirdeğidir:</strong> iş yetenekleri, görev durumu, onaylı bileşen kataloğu ve tasarım kararları. GenUI (generative UI, üretken arayüz: modelin hazır ve onaylı bileşenlerden ekran kurması) bu çekirdeği kullanan bir katmandır. Model kod, HTML veya URL üretmez; katalogdan seçer. AI-first UX (yapay zekânın yardımcı özellik değil, birincil etkileşim yolu olması) bu belgede zorunlu gereksinimdir.</p>
+    <div class="meta">
+      <span>Sürüm 1.0</span>
+      <span>28 Eylül 2026</span>
+      <span>Kapsam: SaaS yönetim paneli ve PIM (ürün bilgisi yönetimi)</span>
+      <span>Sürümler ve lisanslar aynı gün npm ve resmi dokümanlardan doğrulandı</span>
+    </div>
   </div>
+  <aside class="rules" aria-labelledby="rules-h">
+    <div class="eyebrow" id="rules-h">Beş değişmez kural</div>
+    <ol>
+      <li><span><strong>Model kod, HTML veya URL üretmez;</strong> sürümlü katalogdan bileşen ve şemalı eylem seçer.</span></li>
+      <li><span><strong>Yetki ve iş kuralı yalnızca sunucudadır;</strong> yazma eylemi imzalı öneri ve insan onayıyla geçer.</span></li>
+      <li><span><strong>Ant Design uygulamaya tek kapıdan girer:</strong> <code>@pim/ui</code> dışında antd import'u ve antd prop'u yoktur.</span></li>
+      <li><span><strong>Görev durumu ekrandan ayrıdır;</strong> görünüm değişince taslak, seçim ve form girdisi kaybolmaz.</span></li>
+      <li><span><strong>Her ekranın YZ'siz klasik görünümü vardır;</strong> kill switch 30 saniye içinde tüm GenUI'ı kapatır.</span></li>
+    </ol>
+  </aside>
 </header>
 
-<nav class="toc" aria-label="İçindekiler">
-  <a href="#karar">Karar</a>
-  <a href="#nedir">GenUI nedir</a>
-  <a href="#katmanlar">Katmanlar</a>
-  <a href="#gereksinimler">Gereksinimler</a>
-  <a href="#yigin">Teknoloji</a>
-  <a href="#deneyler">Kabul deneyleri</a>
-  <a href="#yapma">Yapma / Yap</a>
-  <a href="#kaynaklar">Kaynaklar</a>
-</nav>
+<div class="page">
+<aside class="rail" aria-label="Sayfa gezintisi">
+  <div class="eyebrow">İçindekiler</div>
+  <nav>
+    <ul class="toc">
+      <li><a href="#karar"><span class="n">01</span>Karar</a></li>
+      <li><a href="#nedir"><span class="n">02</span>GenUI nedir</a></li>
+      <li><a href="#katmanlar"><span class="n">03</span>Katman mimarisi</a></li>
+      <li><a href="#mekanizma"><span class="n">04</span>Mekanizma</a></li>
+      <li><a href="#gereksinimler"><span class="n">05</span>Gereksinimler</a>
+        <div class="sub">
+          <a href="#g-a">A. Yığın ve lisans</a>
+          <a href="#g-b">B. Ant Design sınırı</a>
+          <a href="#g-c">C. Katalog ve renderer</a>
+          <a href="#g-d">D. Görev durumu ve akış</a>
+          <a href="#g-e">E. Onay ve eylem güvenliği</a>
+          <a href="#g-f">F. Tarayıcı güvenliği</a>
+          <a href="#g-g">G. Adaptörler</a>
+          <a href="#g-h">H. AI-first UX</a>
+          <a href="#g-i">I. Erişilebilirlik ve i18n</a>
+          <a href="#g-j">J. Kalite ve CI/CD</a>
+        </div>
+      </li>
+      <li><a href="#yigin"><span class="n">06</span>Teknoloji seçimi</a></li>
+      <li><a href="#deneyler"><span class="n">07</span>Kabul deneyleri</a></li>
+      <li><a href="#yapma"><span class="n">08</span>Yapma ve yap</a></li>
+      <li><a href="#kaynaklar"><span class="n">09</span>Kaynaklar</a></li>
+    </ul>
+  </nav>
+  <button type="button" class="tbtn" id="theme-toggle" data-theme-mode="system" aria-label="Temayı değiştir: sistem, aydınlık, koyu">
+    <span data-mode="system"><svg class="ico" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M208,40H48A24,24,0,0,0,24,64V176a24,24,0,0,0,24,24H208a24,24,0,0,0,24-24V64A24,24,0,0,0,208,40Zm8,136a8,8,0,0,1-8,8H48a8,8,0,0,1-8-8V64a8,8,0,0,1,8-8H208a8,8,0,0,1,8,8Zm-48,48a8,8,0,0,1-8,8H96a8,8,0,0,1,0-16h64A8,8,0,0,1,168,224Z"/></svg>Sistem teması</span>
+    <span data-mode="light"><svg class="ico" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M120,40V16a8,8,0,0,1,16,0V40a8,8,0,0,1-16,0Zm72,88a64,64,0,1,1-64-64A64.07,64.07,0,0,1,192,128Zm-16,0a48,48,0,1,0-48,48A48.05,48.05,0,0,0,176,128ZM58.34,69.66A8,8,0,0,0,69.66,58.34l-16-16A8,8,0,0,0,42.34,53.66Zm0,116.68-16,16a8,8,0,0,0,11.32,11.32l16-16a8,8,0,0,0-11.32-11.32ZM192,72a8,8,0,0,0,5.66-2.34l16-16a8,8,0,0,0-11.32-11.32l-16,16A8,8,0,0,0,192,72Zm5.66,114.34a8,8,0,0,0-11.32,11.32l16,16a8,8,0,0,0,11.32-11.32ZM48,128a8,8,0,0,0-8-8H16a8,8,0,0,0,0,16H40A8,8,0,0,0,48,128Zm80,80a8,8,0,0,0-8,8v24a8,8,0,0,0,16,0V216A8,8,0,0,0,128,208Zm112-88H216a8,8,0,0,0,0,16h24a8,8,0,0,0,0-16Z"/></svg>Aydınlık tema</span>
+    <span data-mode="dark"><svg class="ico" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M233.54,142.23a8,8,0,0,0-8-2,88.08,88.08,0,0,1-109.8-109.8,8,8,0,0,0-10-10,104.84,104.84,0,0,0-52.91,37A104,104,0,0,0,136,224a103.09,103.09,0,0,0,62.52-20.88,104.84,104.84,0,0,0,37-52.91A8,8,0,0,0,233.54,142.23ZM188.9,190.34A88,88,0,0,1,65.66,67.11a89,89,0,0,1,31.4-26A106,106,0,0,0,96,56,104.11,104.11,0,0,0,200,160a106,106,0,0,0,14.92-1.06A89,89,0,0,1,188.9,190.34Z"/></svg>Koyu tema</span>
+  </button>
+</aside>
+<main class="content">
 
 <section id="karar">
   <div class="sec-head">
@@ -321,21 +500,21 @@ footer { margin-top: 3rem; padding-top: 1.25rem; border-top: 1px solid var(--lin
     <p>Altı katman. Etiket, katmanın 5 yıllık ömür beklentisini söyler: <span class="chip kalici">kalıcı</span> ürüne aittir ve yeniden yazılmaz; <span class="chip degisebilir">değişebilir</span> kütüphane sürümüyle birlikte evrilir; <span class="chip ucucu">uçucu</span> 12 ayda değişebilir ve değişmesi normaldir.</p>
   </div>
   <div class="layers">
-    <div class="layer">
+    <div class="layer l-kalici">
       <div class="name"><span class="ord">01</span>Yetenek istemcisi<span class="chip kalici">kalıcı</span></div>
       <dl>
         <dt>Nedir</dt><dd>Sunucunun sürümlü iş yetenekleri API'sinden (OpenAPI'den üretilen TypeScript tipleri ve zod şemaları) türeyen tek erişim katmanı. TanStack Query üzerinde çalışır. Kullanıcı, model ve klasik ekran aynı yeteneği bu katmandan çağırır.</dd>
         <dt>Ne yapmaz</dt><dd>Yetki kararı vermez, iş kuralı tekrarlamaz, model sağlayıcısını doğrudan çağırmaz, katalog dışı uç nokta üretmez.</dd>
       </dl>
     </div>
-    <div class="layer">
+    <div class="layer l-kalici">
       <div class="name"><span class="ord">02</span>Görev durumu<span class="chip kalici">kalıcı</span></div>
       <dl>
         <dt>Nedir</dt><dd>Üç ayrı depo: sunucu gerçeği (Query önbelleği, salt okunur), çalışma taslağı (durum makinesi + ileri/geri yama günlüğü, sunucuda sürümlü taslak kaydı) ve görünüm durumu (URL parametreleri). Form girdisi, seçim ve sayfalama taslağa aittir; görünüm değişince kaybolmaz.</dd>
         <dt>Ne yapmaz</dt><dd>Taslağı localStorage'a kayıt sistemi olarak yazmaz. Tek global store kurmaz. Görünüm spec'i ile iş verisini aynı nesnede tutmaz.</dd>
       </dl>
     </div>
-    <div class="layer">
+    <div class="layer l-kalici">
       <div class="name"><span class="ord">03</span>Anlamlı bileşen kataloğu, kayıt ve renderer<span class="chip kalici">kalıcı</span></div>
       <dl>
         <dt>Nedir</dt><dd>Katalog yalnızca veridir: bileşen kimliği, semver, zod prop şeması, izinli çocuklar, veri bağlama noktaları, erişilebilirlik rolü ve riskClass taşıyan eylemler; React'a bağımlı değildir. Kayıt (registry) kimliği <code>@pim/ui</code> bileşenine statik eşler. Renderer saf bir fonksiyondur: (spec, veri, bağlam) → React ağacı.</dd>
@@ -349,7 +528,7 @@ footer { margin-top: 3rem; padding-top: 1.25rem; border-top: 1px solid var(--lin
         <dt>Ne yapmaz</dt><dd>antd token adlarını (<code>colorPrimary</code>) uygulama koduna sızdırmaz. Modelden ham renk veya piksel almaz. antd temasını SCSS veya Less ile ezmez.</dd>
       </dl>
     </div>
-    <div class="layer">
+    <div class="layer l-kalici">
       <div class="name"><span class="ord">05</span>Etkileşim düzenleyici<span class="chip kalici">kalıcı</span></div>
       <dl>
         <dt>Nedir</dt><dd>Her eylemin modu vardır. <strong>direct</strong>: kullanıcı tetikler, klasik davranış. <strong>assisted</strong>: model önerir, kullanıcı diff görüp onaylar. <strong>delegated</strong>: model çok adımlı çalışır, her yazma adımı sunucudan imzalı onay ister. Mod, katalogdaki riskClass ile birleşerek insan onayını (HITL, human-in-the-loop) tek yerde uygular.</dd>
@@ -366,13 +545,133 @@ footer { margin-top: 3rem; padding-top: 1.25rem; border-top: 1px solid var(--lin
   </div>
 </section>
 
+<section id="mekanizma">
+  <div class="sec-head">
+    <div class="title"><svg class="ico" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M149.66,138.34a8,8,0,0,0-11.32,0L120,156.69,99.31,136l18.35-18.34a8,8,0,0,0-11.32-11.32L88,124.69,69.66,106.34a8,8,0,0,0-11.32,11.32L64.69,124,41.37,147.31a32,32,0,0,0,0,45.26l5.38,5.37-28.41,28.4a8,8,0,0,0,11.32,11.32l28.4-28.41,5.37,5.38a32,32,0,0,0,45.26,0L132,191.31l6.34,6.35a8,8,0,0,0,11.32-11.32L131.31,168l18.35-18.34A8,8,0,0,0,149.66,138.34Zm-52.29,65a16,16,0,0,1-22.62,0L52.69,181.25a16,16,0,0,1,0-22.62L76,135.31,120.69,180Zm140.29-185a8,8,0,0,0-11.32,0l-28.4,28.41-5.37-5.38a32.05,32.05,0,0,0-45.26,0L124,64.69l-6.34-6.35a8,8,0,0,0-11.32,11.32l80,80a8,8,0,0,0,11.32-11.32L191.31,132l23.32-23.31a32,32,0,0,0,0-45.26l-5.38-5.37,28.41-28.4A8,8,0,0,0,237.66,18.34Zm-34.35,79L180,120.69,135.31,76l23.32-23.31a16,16,0,0,1,22.62,0l22.06,22A16,16,0,0,1,203.31,97.37Z"/></svg><h2>Mekanizma</h2></div>
+    <p>İki çizim, sözleşmenin dayandığı iki mekanizmayı gösterir: aynı iş yeteneğine giden üç yol ve modelden ekrana giden veri. Her ikisinde de değişmeyen şey, yetkinin sunucuda ve seçim evreninin katalogda olmasıdır.</p>
+  </div>
+  <div class="figs">
+    <figure class="fig">
+      <svg viewBox="0 0 960 290" role="img" aria-label="Kullanıcı, kullanıcı ile model ve ajan olmak üzere üç giriş yolu aynı etkileşim düzenleyicisine, oradan aynı yetenek istemcisine ve tek yetki noktası olan sunucuya gider">
+        <defs>
+          <marker id="f1-ar" class="m" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z"/></marker>
+        </defs>
+        <rect class="box" x="24" y="34" width="196" height="62" rx="6"/>
+        <text class="ttl" x="40" y="60">Kullanıcı</text>
+        <text class="sub" x="40" y="80">doğrudan · klasik ekran</text>
+        <rect class="box" x="24" y="129" width="196" height="62" rx="6"/>
+        <text class="ttl" x="40" y="155">Kullanıcı + model</text>
+        <text class="sub" x="40" y="175">yardımlı · diff önizleme, onay</text>
+        <rect class="box gen" x="24" y="224" width="196" height="62" rx="6"/>
+        <text class="ttl" x="40" y="250">Ajan</text>
+        <text class="sub" x="40" y="270">delege · her yazma adımında onay</text>
+        <line class="arrow" x1="220" y1="65" x2="256" y2="65"/>
+        <line class="arrow" x1="220" y1="160" x2="256" y2="160"/>
+        <line class="arrow" x1="220" y1="255" x2="256" y2="255"/>
+        <line class="arrow" x1="256" y1="65" x2="256" y2="255"/>
+        <line class="arrow" x1="256" y1="160" x2="302" y2="160" marker-end="url(#f1-ar)"/>
+        <rect class="box" x="302" y="98" width="216" height="124" rx="6"/>
+        <text class="ttl" x="318" y="124">Etkileşim düzenleyici</text>
+        <text class="sub" x="318" y="146">mode: direct · assisted · delegated</text>
+        <text class="sub" x="318" y="164">riskClass: read · low · high · irreversible</text>
+        <text class="sub" x="318" y="182">diff önizleme, Durdur, Geri Al</text>
+        <text class="sub" x="318" y="200">onay yorgunluğu kontrolü</text>
+        <text class="lbl" x="410" y="250" text-anchor="middle">üç yol, aynı eylem sözleşmesi</text>
+        <line class="arrow" x1="518" y1="160" x2="610" y2="160" marker-end="url(#f1-ar)"/>
+        <text class="lbl strong" x="564" y="148" text-anchor="middle">invokeCapability</text>
+        <text class="lbl" x="564" y="180" text-anchor="middle">actionId + payload</text>
+        <rect class="box" x="610" y="116" width="170" height="88" rx="6"/>
+        <text class="ttl" x="626" y="142">Yetenek istemcisi</text>
+        <text class="sub" x="626" y="162">sürümlü API istemcisi</text>
+        <text class="sub" x="626" y="180">Idempotency-Key</text>
+        <line class="arrow" x1="780" y1="150" x2="830" y2="150" marker-end="url(#f1-ar)"/>
+        <text class="lbl strong" x="805" y="140" text-anchor="middle">HTTPS /v1</text>
+        <line class="arrow dashed" x1="830" y1="172" x2="780" y2="172" marker-end="url(#f1-ar)"/>
+        <text class="lbl" x="805" y="250" text-anchor="middle">409 · 422 · imzalı öneri · onay token'ı</text>
+        <rect class="box accent" x="830" y="98" width="110" height="124" rx="6"/>
+        <text class="ttl" x="846" y="124">Sunucu</text>
+        <text class="sub" x="846" y="146">yetki kararı</text>
+        <text class="sub" x="846" y="164">iş kuralı</text>
+        <text class="sub" x="846" y="182">imzalı öneri</text>
+        <text class="sub" x="846" y="200">denetim izi</text>
+        <text class="accent-t" x="885" y="275" text-anchor="middle">tek yetki noktası</text>
+      </svg>
+      <figcaption><b>Üç giriş yolu, tek yetenek.</b> Kullanıcı, model destekli kullanıcı ve ajan aynı eylem sözleşmesini kullanır. Yetki kararı yalnızca sunucuda verilir; bir düğmenin gizlenmesi veya modelin "yetkili" demesi güvenlik kontrolü değildir.</figcaption>
+    </figure>
+    <figure class="fig">
+      <svg viewBox="0 0 960 300" role="img" aria-label="Katalog hem modele JSON şeması hem renderer'a kayıt tablosu sağlar; model UI Spec üretir, doğrulama fail-closed geçer, renderer @pim/ui üzerinden antd ile çizer; kod, HTML ve URL modelden ekrana doğrudan geçmez">
+        <defs>
+          <marker id="f2-ar" class="m" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z"/></marker>
+          <marker id="f2-arw" class="m-warn" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z"/></marker>
+        </defs>
+        <rect class="box" x="300" y="18" width="320" height="60" rx="6"/>
+        <text class="ttl" x="316" y="42">Katalog (semver)</text>
+        <text class="sub" x="316" y="62">kimlikler · zod şemaları · eylemler · riskClass</text>
+        <polyline class="arrow dashed" points="300,48 99,48 99,128" marker-end="url(#f2-ar)"/>
+        <text class="lbl" x="200" y="40" text-anchor="middle">z.toJSONSchema → çıktı şeması</text>
+        <rect class="box gen" x="24" y="128" width="150" height="64" rx="6"/>
+        <text class="ttl" x="40" y="154">Model</text>
+        <text class="sub" x="40" y="174">yalnızca seçer</text>
+        <line class="arrow" x1="174" y1="160" x2="236" y2="160" marker-end="url(#f2-ar)"/>
+        <text class="lbl strong" x="205" y="118" text-anchor="middle">UI Spec (JSON)</text>
+        <text class="lbl" x="205" y="210" text-anchor="middle">SSE + JSON Patch</text>
+        <rect class="box" x="236" y="128" width="176" height="64" rx="6"/>
+        <text class="ttl" x="252" y="154">Doğrulama</text>
+        <text class="sub" x="252" y="174">z.strictObject · fail-closed</text>
+        <text class="lbl" x="324" y="232" text-anchor="middle">hata → 2 yeniden üretim, sonra fallback</text>
+        <line class="arrow" x1="412" y1="160" x2="474" y2="160" marker-end="url(#f2-ar)"/>
+        <text class="lbl" x="443" y="118" text-anchor="middle">doğrulanmış spec</text>
+        <line class="arrow dashed" x1="562" y1="78" x2="562" y2="128" marker-end="url(#f2-ar)"/>
+        <text class="lbl" x="572" y="108">registry: kimlik → bileşen</text>
+        <rect class="box" x="474" y="128" width="176" height="64" rx="6"/>
+        <text class="ttl" x="490" y="154">Renderer</text>
+        <text class="sub" x="490" y="174">(spec, veri) → React ağacı</text>
+        <text class="lbl" x="562" y="232" text-anchor="middle">bilinmeyen bileşen → yer tutucu</text>
+        <line class="arrow" x1="650" y1="160" x2="712" y2="160" marker-end="url(#f2-ar)"/>
+        <text class="lbl" x="681" y="210" text-anchor="middle">bileşen</text>
+        <rect class="box" x="712" y="128" width="130" height="64" rx="6"/>
+        <text class="ttl" x="728" y="154">@pim/ui</text>
+        <text class="sub" x="728" y="174">tokenlar → tema</text>
+        <line class="arrow" x1="842" y1="160" x2="880" y2="160" marker-end="url(#f2-ar)"/>
+        <rect class="box swap" x="880" y="128" width="60" height="64" rx="6"/>
+        <text class="ttl" x="892" y="154">antd 6</text>
+        <text class="sub" x="892" y="174">değişir</text>
+        <polyline class="arrow no" points="99,192 99,266 562,266 562,192" marker-end="url(#f2-arw)"/>
+        <circle class="xmark" cx="330" cy="266" r="9"/>
+        <line class="xmark" x1="325" y1="261" x2="335" y2="271"/>
+        <line class="xmark" x1="335" y1="261" x2="325" y2="271"/>
+        <text class="warn-t" x="330" y="291" text-anchor="middle">kod, HTML, className, URL: modelden ekrana doğrudan geçmez</text>
+      </svg>
+      <figcaption><b>Modelden ekrana.</b> Katalog tek kaynaktır: aynı zod şemasından modelin çıktı şeması ve renderer'ın kayıt tablosu üretilir. Model yalnızca seçer; doğrulama fail-closed çalışır; antd yalnızca <code>@pim/ui</code> arkasında görünür ve değiştirilebilir.</figcaption>
+    </figure>
+  </div>
+</section>
+
 <section id="gereksinimler">
   <div class="sec-head">
     <div class="title"><svg class="ico" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M224,128a8,8,0,0,1-8,8H128a8,8,0,0,1,0-16h88A8,8,0,0,1,224,128ZM128,72h88a8,8,0,0,0,0-16H128a8,8,0,0,0,0,16Zm88,112H128a8,8,0,0,0,0,16h88a8,8,0,0,0,0-16ZM82.34,42.34,56,68.69,45.66,58.34A8,8,0,0,0,34.34,69.66l16,16a8,8,0,0,0,11.32,0l32-32A8,8,0,0,0,82.34,42.34Zm0,64L56,132.69,45.66,122.34a8,8,0,0,0-11.32,11.32l16,16a8,8,0,0,0,11.32,0l32-32a8,8,0,0,0-11.32-11.32Zm0,64L56,196.69,45.66,186.34a8,8,0,0,0-11.32,11.32l16,16a8,8,0,0,0,11.32,0l32-32a8,8,0,0,0-11.32-11.32Z"/></svg><h2>Gereksinimler</h2></div>
     <p>Seviyeler RFC 2119 anlamındadır: <span class="chip must">MUST</span> zorunlu, <span class="chip should">SHOULD</span> güçlü öneri, <span class="chip may">MAY</span> isteğe bağlı. Aktör sütunu gereksinimi kimin yerine getirdiğini söyler: Sistem (frontend kodu), Sunucu (BFF, backend-for-frontend: frontend'e özel sunucu katmanı), Model (LLM veya ajan), Kullanıcı, CI (kod gönderildiğinde otomatik koşan kontrol hattı). Sayısal değerler varsayılandır; ekip ADR (mimari karar kaydı) ile yükseltebilir, düşüremez.</p>
   </div>
+  <div class="filters" role="group" aria-label="Gereksinim filtreleri">
+    <svg class="ico" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M230.6,49.53A15.81,15.81,0,0,0,216,40H40A16,16,0,0,0,28.19,66.76l.08.09L96,139.17V216a16,16,0,0,0,24.87,13.32l32-21.34A16,16,0,0,0,160,194.66V139.17l67.74-72.32.08-.09A15.8,15.8,0,0,0,230.6,49.53ZM40,56h0Zm106.18,74.58A8,8,0,0,0,144,136v58.66L112,216V136a8,8,0,0,0-2.16-5.47L40,56H216Z"/></svg>
+    <div class="seg" id="flt-level" role="group" aria-label="Seviye">
+      <button type="button" data-level="ALL" aria-pressed="true">Tümü</button>
+      <button type="button" data-level="MUST" aria-pressed="false">MUST</button>
+      <button type="button" data-level="SHOULD" aria-pressed="false">SHOULD</button>
+    </div>
+    <label class="visually-hidden" for="flt-actor">Aktör</label>
+    <select id="flt-actor">
+      <option value="ALL">Tüm aktörler</option>
+      <option value="Sistem">Sistem</option>
+      <option value="Sunucu">Sunucu</option>
+      <option value="Model">Model</option>
+      <option value="Kullanıcı">Kullanıcı</option>
+      <option value="CI">CI</option>
+    </select>
+    <span class="count" id="flt-count" aria-live="polite"></span>
+  </div>
 
-  <div class="group">
+  <div class="group" id="g-a">
     <div class="group-head"><h3><svg class="ico" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M223.68,66.15,135.68,18h0a15.88,15.88,0,0,0-15.36,0l-88,48.17a16,16,0,0,0-8.32,14v95.64a16,16,0,0,0,8.32,14l88,48.17a15.88,15.88,0,0,0,15.36,0l88-48.17a16,16,0,0,0,8.32-14V80.18A16,16,0,0,0,223.68,66.15ZM128,32h0l80.34,44L128,120,47.66,76ZM40,90l80,43.78v85.79L40,175.82Zm96,129.57V133.82L216,90v85.78Z"/></svg>A. Yığın, bağımlılık ve lisans</h3><span class="why">Beş yıl yaşayacak şey kütüphane değil, sınırların nerede çizildiğidir.</span></div>
     <div class="tbl-wrap"><table class="req-table">
       <thead><tr><th>ID</th><th>Seviye</th><th>Gereksinim</th><th>Aktör</th></tr></thead>
@@ -387,7 +686,7 @@ footer { margin-top: 3rem; padding-top: 1.25rem; border-top: 1px solid var(--lin
     </table></div>
   </div>
 
-  <div class="group">
+  <div class="group" id="g-b">
     <div class="group-head"><h3><svg class="ico" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M40,88H73a32,32,0,0,0,62,0h81a8,8,0,0,0,0-16H135a32,32,0,0,0-62,0H40a8,8,0,0,0,0,16Zm64-24A16,16,0,1,1,88,80,16,16,0,0,1,104,64ZM216,168H199a32,32,0,0,0-62,0H40a8,8,0,0,0,0,16h97a32,32,0,0,0,62,0h17a8,8,0,0,0,0-16Zm-48,24a16,16,0,1,1,16-16A16,16,0,0,1,168,192Z"/></svg>B. Ant Design sınırı ve tasarım tokenları</h3><span class="why">Ant Design tek kütüphanedir, ama uygulamaya tek kapıdan girer.</span></div>
     <div class="tbl-wrap"><table class="req-table">
       <thead><tr><th>ID</th><th>Seviye</th><th>Gereksinim</th><th>Aktör</th></tr></thead>
@@ -402,7 +701,7 @@ footer { margin-top: 3rem; padding-top: 1.25rem; border-top: 1px solid var(--lin
     </table></div>
   </div>
 
-  <div class="group">
+  <div class="group" id="g-c">
     <div class="group-head"><h3><svg class="ico" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M160,112h48a16,16,0,0,0,16-16V48a16,16,0,0,0-16-16H160a16,16,0,0,0-16,16V64H128a24,24,0,0,0-24,24v32H72v-8A16,16,0,0,0,56,96H24A16,16,0,0,0,8,112v32a16,16,0,0,0,16,16H56a16,16,0,0,0,16-16v-8h32v32a24,24,0,0,0,24,24h16v16a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V160a16,16,0,0,0-16-16H160a16,16,0,0,0-16,16v16H128a8,8,0,0,1-8-8V88a8,8,0,0,1,8-8h16V96A16,16,0,0,0,160,112ZM56,144H24V112H56v32Zm104,16h48v48H160Zm0-112h48V96H160Z"/></svg>C. Katalog, kayıt ve renderer</h3><span class="why">Modelin seçebileceği evren burada tanımlanır; buranın dışı yoktur.</span></div>
     <div class="tbl-wrap"><table class="req-table">
       <thead><tr><th>ID</th><th>Seviye</th><th>Gereksinim</th><th>Aktör</th></tr></thead>
@@ -419,7 +718,7 @@ footer { margin-top: 3rem; padding-top: 1.25rem; border-top: 1px solid var(--lin
     </table></div>
   </div>
 
-  <div class="group">
+  <div class="group" id="g-d">
     <div class="group-head"><h3><svg class="ico" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M232,64a32,32,0,1,0-40,31v17a8,8,0,0,1-8,8H96a23.84,23.84,0,0,0-8,1.38V95a32,32,0,1,0-16,0v66a32,32,0,1,0,16,0V144a8,8,0,0,1,8-8h88a24,24,0,0,0,24-24V95A32.06,32.06,0,0,0,232,64ZM64,64A16,16,0,1,1,80,80,16,16,0,0,1,64,64ZM96,192a16,16,0,1,1-16-16A16,16,0,0,1,96,192ZM200,80a16,16,0,1,1,16-16A16,16,0,0,1,200,80Z"/></svg>D. Görev durumu, akış ve dayanıklılık</h3><span class="why">GenUI ekranı değiştirebilir; kullanıcının işini yeniden başlatamaz.</span></div>
     <div class="tbl-wrap"><table class="req-table">
       <thead><tr><th>ID</th><th>Seviye</th><th>Gereksinim</th><th>Aktör</th></tr></thead>
@@ -436,7 +735,7 @@ footer { margin-top: 3rem; padding-top: 1.25rem; border-top: 1px solid var(--lin
     </table></div>
   </div>
 
-  <div class="group">
+  <div class="group" id="g-e">
     <div class="group-head"><h3><svg class="ico" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M196,88a27.86,27.86,0,0,0-13.35,3.39A28,28,0,0,0,144,74.7V44a28,28,0,0,0-56,0v80l-3.82-6.13A28,28,0,0,0,35.73,146l4.67,8.23C74.81,214.89,89.05,240,136,240a88.1,88.1,0,0,0,88-88V116A28,28,0,0,0,196,88Zm12,64a72.08,72.08,0,0,1-72,72c-37.63,0-47.84-18-81.68-77.68l-4.69-8.27,0-.05A12,12,0,0,1,54,121.61a11.88,11.88,0,0,1,6-1.6,12,12,0,0,1,10.41,6,1.76,1.76,0,0,0,.14.23l18.67,30A8,8,0,0,0,104,152V44a12,12,0,0,1,24,0v68a8,8,0,0,0,16,0V100a12,12,0,0,1,24,0v20a8,8,0,0,0,16,0v-4a12,12,0,0,1,24,0Z"/></svg>E. Etkileşim modları, onay ve eylem güvenliği</h3><span class="why">Üretkenlik ve özerklik aynı şey değildir; bu tablo özerkliği yönetir.</span></div>
     <div class="tbl-wrap"><table class="req-table">
       <thead><tr><th>ID</th><th>Seviye</th><th>Gereksinim</th><th>Aktör</th></tr></thead>
@@ -451,7 +750,7 @@ footer { margin-top: 3rem; padding-top: 1.25rem; border-top: 1px solid var(--lin
     </table></div>
   </div>
 
-  <div class="group">
+  <div class="group" id="g-f">
     <div class="group-head"><h3><svg class="ico" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M208,40H48A16,16,0,0,0,32,56v56c0,52.72,25.52,84.67,46.93,102.19,23.06,18.86,46,25.26,47,25.53a8,8,0,0,0,4.2,0c1-.27,23.91-6.67,47-25.53C198.48,196.67,224,164.72,224,112V56A16,16,0,0,0,208,40Zm0,72c0,37.07-13.66,67.16-40.6,89.42A129.3,129.3,0,0,1,128,223.62a128.25,128.25,0,0,1-38.92-21.81C61.82,179.51,48,149.3,48,112l0-56,160,0ZM82.34,141.66a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35a8,8,0,0,1,11.32,11.32l-56,56a8,8,0,0,1-11.32,0Z"/></svg>F. Tarayıcı güvenliği ve telemetri</h3><span class="why">Model çıktısı güvenilmeyen kullanıcı girdisidir (OWASP LLM05).</span></div>
     <div class="tbl-wrap"><table class="req-table">
       <thead><tr><th>ID</th><th>Seviye</th><th>Gereksinim</th><th>Aktör</th></tr></thead>
@@ -466,7 +765,7 @@ footer { margin-top: 3rem; padding-top: 1.25rem; border-top: 1px solid var(--lin
     </table></div>
   </div>
 
-  <div class="group">
+  <div class="group" id="g-g">
     <div class="group-head"><h3><svg class="ico" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M149.66,138.34a8,8,0,0,0-11.32,0L120,156.69,99.31,136l18.35-18.34a8,8,0,0,0-11.32-11.32L88,124.69,69.66,106.34a8,8,0,0,0-11.32,11.32L64.69,124,41.37,147.31a32,32,0,0,0,0,45.26l5.38,5.37-28.41,28.4a8,8,0,0,0,11.32,11.32l28.4-28.41,5.37,5.38a32,32,0,0,0,45.26,0L132,191.31l6.34,6.35a8,8,0,0,0,11.32-11.32L131.31,168l18.35-18.34A8,8,0,0,0,149.66,138.34Zm-52.29,65a16,16,0,0,1-22.62,0L52.69,181.25a16,16,0,0,1,0-22.62L76,135.31,120.69,180Zm140.29-185a8,8,0,0,0-11.32,0l-28.4,28.41-5.37-5.38a32.05,32.05,0,0,0-45.26,0L124,64.69l-6.34-6.35a8,8,0,0,0-11.32,11.32l80,80a8,8,0,0,0,11.32-11.32L191.31,132l23.32-23.31a32,32,0,0,0,0-45.26l-5.38-5.37,28.41-28.4A8,8,0,0,0,237.66,18.34Zm-34.35,79L180,120.69,135.31,76l23.32-23.31a16,16,0,0,1,22.62,0l22.06,22A16,16,0,0,1,203.31,97.37Z"/></svg>G. Adaptörler ve protokoller</h3><span class="why">Protokoller ürünün iş modelinin yerine değil, dış dünyayla konuştuğu sınıra konur.</span></div>
     <div class="tbl-wrap"><table class="req-table">
       <thead><tr><th>ID</th><th>Seviye</th><th>Gereksinim</th><th>Aktör</th></tr></thead>
@@ -481,7 +780,7 @@ footer { margin-top: 3rem; padding-top: 1.25rem; border-top: 1px solid var(--lin
     </table></div>
   </div>
 
-  <div class="group">
+  <div class="group" id="g-h">
     <div class="group-head"><h3><svg class="ico" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M197.58,129.06,146,110l-19-51.62a15.92,15.92,0,0,0-29.88,0L78,110l-51.62,19a15.92,15.92,0,0,0,0,29.88L78,178l19,51.62a15.92,15.92,0,0,0,29.88,0L146,178l51.62-19a15.92,15.92,0,0,0,0-29.88ZM137,164.22a8,8,0,0,0-4.74,4.74L112,223.85,91.78,169A8,8,0,0,0,87,164.22L32.15,144,87,123.78A8,8,0,0,0,91.78,119L112,64.15,132.22,119a8,8,0,0,0,4.74,4.74L191.85,144ZM144,40a8,8,0,0,1,8-8h16V16a8,8,0,0,1,16,0V32h16a8,8,0,0,1,0,16H184V64a8,8,0,0,1-16,0V48H152A8,8,0,0,1,144,40ZM248,88a8,8,0,0,1-8,8h-8v8a8,8,0,0,1-16,0V96h-8a8,8,0,0,1,0-16h8V72a8,8,0,0,1,16,0v8h8A8,8,0,0,1,248,88Z"/></svg>H. AI-first UX</h3><span class="why">Kullanıcı her an neyin yapay zekâdan geldiğini, neden geldiğini ve nasıl geri alacağını bilir.</span></div>
     <div class="tbl-wrap"><table class="req-table">
       <thead><tr><th>ID</th><th>Seviye</th><th>Gereksinim</th><th>Aktör</th></tr></thead>
@@ -497,7 +796,7 @@ footer { margin-top: 3rem; padding-top: 1.25rem; border-top: 1px solid var(--lin
     </table></div>
   </div>
 
-  <div class="group">
+  <div class="group" id="g-i">
     <div class="group-head"><h3><svg class="ico" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M160,40a32,32,0,1,0-32,32A32,32,0,0,0,160,40ZM128,56a16,16,0,1,1,16-16A16,16,0,0,1,128,56ZM231.5,87.71A19.62,19.62,0,0,0,212,72H44a20,20,0,0,0-8.38,38.16l.13,0,50.75,22.35-21,79.72A20,20,0,0,0,102,228.8l26-44.87,26,44.87a20,20,0,0,0,36.4-16.52l-21-79.72,50.75-22.35.13,0A19.64,19.64,0,0,0,231.5,87.71Zm-17.8,7.9-56.93,25.06a8,8,0,0,0-4.51,9.36L175.13,217a7,7,0,0,0,.49,1.35,4,4,0,0,1-5,5.45,4,4,0,0,1-2.25-2.07,6.31,6.31,0,0,0-.34-.63L134.92,164a8,8,0,0,0-13.84,0L88,221.05a6.31,6.31,0,0,0-.34.63,4,4,0,0,1-2.25,2.07,4,4,0,0,1-5-5.45,7,7,0,0,0,.49-1.35L103.74,130a8,8,0,0,0-4.51-9.36L42.3,95.61A4,4,0,0,1,44,88H212a4,4,0,0,1,1.73,7.61Z"/></svg>I. Erişilebilirlik ve i18n</h3><span class="why">Üretilen bölge de kabuk kadar erişilebilir olmalıdır; model landmark veya dil üretmez.</span></div>
     <div class="tbl-wrap"><table class="req-table">
       <thead><tr><th>ID</th><th>Seviye</th><th>Gereksinim</th><th>Aktör</th></tr></thead>
@@ -511,7 +810,7 @@ footer { margin-top: 3rem; padding-top: 1.25rem; border-top: 1px solid var(--lin
     </table></div>
   </div>
 
-  <div class="group">
+  <div class="group" id="g-j">
     <div class="group-head"><h3><svg class="ico" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M232,208a8,8,0,0,1-8,8H32a8,8,0,0,1-8-8V48a8,8,0,0,1,16,0V156.69l50.34-50.35a8,8,0,0,1,11.32,0L128,132.69,180.69,80H160a8,8,0,0,1,0-16h40a8,8,0,0,1,8,8v40a8,8,0,0,1-16,0V91.31l-58.34,58.35a8,8,0,0,1-11.32,0L96,123.31l-56,56V200H224A8,8,0,0,1,232,208Z"/></svg>J. Kalite kapıları, değerlendirme ve CI/CD</h3><span class="why">GenUI kapsamı takvime göre değil, kanıtlanmış görev başarısına göre genişler.</span></div>
     <div class="tbl-wrap"><table class="req-table">
       <thead><tr><th>ID</th><th>Seviye</th><th>Gereksinim</th><th>Aktör</th></tr></thead>
@@ -566,15 +865,15 @@ footer { margin-top: 3rem; padding-top: 1.25rem; border-top: 1px solid var(--lin
     <p>"Değiştirilebilir" sözü belgeyle değil deneyle kanıtlanır. Her deney ilk gerçek iş akışı üzerinde en az bir kez koşar; E1, E5 ve E9 her yayın öncesi tekrarlanır.</p>
   </div>
   <div class="exp">
-    <div><div class="t"><svg class="ico" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M221.69,199.77,160,96.92V40h8a8,8,0,0,0,0-16H88a8,8,0,0,0,0,16h8V96.92L34.31,199.77A16,16,0,0,0,48,224H208a16,16,0,0,0,13.72-24.23ZM110.86,103.25A7.93,7.93,0,0,0,112,99.14V40h32V99.14a7.93,7.93,0,0,0,1.14,4.11L183.36,167c-12,2.37-29.07,1.37-51.75-10.11-15.91-8.05-31.05-12.32-45.22-12.81ZM48,208l28.54-47.58c14.25-1.74,30.31,1.85,47.82,10.72,19,9.61,35,12.88,48,12.88a69.89,69.89,0,0,0,19.55-2.7L208,208Z"/></svg>E1. Modeli değiştir</div><p class="pass">Aynı altın set, katalog ve prompt sürümüyle model kimliği değişir. <b>Geçer:</b> geçme oranı eşik üstü, önceden geçen görev onaysız başarısız olmaz, frontend'de sıfır satır değişiklik.</p></div>
-    <div><div class="t"><svg class="ico" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M221.69,199.77,160,96.92V40h8a8,8,0,0,0,0-16H88a8,8,0,0,0,0,16h8V96.92L34.31,199.77A16,16,0,0,0,48,224H208a16,16,0,0,0,13.72-24.23ZM110.86,103.25A7.93,7.93,0,0,0,112,99.14V40h32V99.14a7.93,7.93,0,0,0,1.14,4.11L183.36,167c-12,2.37-29.07,1.37-51.75-10.11-15.91-8.05-31.05-12.32-45.22-12.81ZM48,208l28.54-47.58c14.25-1.74,30.31,1.85,47.82,10.72,19,9.61,35,12.88,48,12.88a69.89,69.89,0,0,0,19.55-2.7L208,208Z"/></svg>E2. Bileşen implementasyonunu değiştir</div><p class="pass">Bir katalog bileşeninin antd implementasyonu değişir. <b>Geçer:</b> katalog şema snapshot'ı bayt birebir aynı, saklı spec'ler aynı erişilebilirlik ağacını üretir, @pim/ui dışında antd import'u sıfır.</p></div>
-    <div><div class="t"><svg class="ico" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M221.69,199.77,160,96.92V40h8a8,8,0,0,0,0-16H88a8,8,0,0,0,0,16h8V96.92L34.31,199.77A16,16,0,0,0,48,224H208a16,16,0,0,0,13.72-24.23ZM110.86,103.25A7.93,7.93,0,0,0,112,99.14V40h32V99.14a7.93,7.93,0,0,0,1.14,4.11L183.36,167c-12,2.37-29.07,1.37-51.75-10.11-15.91-8.05-31.05-12.32-45.22-12.81ZM48,208l28.54-47.58c14.25-1.74,30.31,1.85,47.82,10.72,19,9.61,35,12.88,48,12.88a69.89,69.89,0,0,0,19.55-2.7L208,208Z"/></svg>E3. Render motorunu değiştir</div><p class="pass">Kurum içi renderer yerine @json-render/react veya @a2ui/react. <b>Geçer:</b> altın spec'lerin tamamı çizilir, UnknownComponent sıfır, eylemler aynı actionId ve hash ile ulaşır, domain paketlerinde import değişikliği yok.</p></div>
-    <div><div class="t"><svg class="ico" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M221.69,199.77,160,96.92V40h8a8,8,0,0,0,0-16H88a8,8,0,0,0,0,16h8V96.92L34.31,199.77A16,16,0,0,0,48,224H208a16,16,0,0,0,13.72-24.23ZM110.86,103.25A7.93,7.93,0,0,0,112,99.14V40h32V99.14a7.93,7.93,0,0,0,1.14,4.11L183.36,167c-12,2.37-29.07,1.37-51.75-10.11-15.91-8.05-31.05-12.32-45.22-12.81ZM48,208l28.54-47.58c14.25-1.74,30.31,1.85,47.82,10.72,19,9.61,35,12.88,48,12.88a69.89,69.89,0,0,0,19.55-2.7L208,208Z"/></svg>E4. Protokol adaptörünü değiştir</div><p class="pass">Özel SSE yerine AG-UI 1.0 veya iç spec yerine A2UI v0.9.1. <b>Geçer:</b> aynı yama fixture'ları aynı içerik hash'ini üretir, farklı sürüm reddedilir, Last-Event-ID ile yeniden bağlanma kayıpsız.</p></div>
-    <div><div class="t"><svg class="ico" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M221.69,199.77,160,96.92V40h8a8,8,0,0,0,0-16H88a8,8,0,0,0,0,16h8V96.92L34.31,199.77A16,16,0,0,0,48,224H208a16,16,0,0,0,13.72-24.23ZM110.86,103.25A7.93,7.93,0,0,0,112,99.14V40h32V99.14a7.93,7.93,0,0,0,1.14,4.11L183.36,167c-12,2.37-29.07,1.37-51.75-10.11-15.91-8.05-31.05-12.32-45.22-12.81ZM48,208l28.54-47.58c14.25-1.74,30.31,1.85,47.82,10.72,19,9.61,35,12.88,48,12.88a69.89,69.89,0,0,0,19.55-2.7L208,208Z"/></svg>E5. Modeli kes, bozuk yanıt ver</div><p class="pass">Bağlantı kesilir, zaman aşımı, 429, sessiz bozuk çıktı, kesik akış. <b>Geçer:</b> klasik görünüm veya son geçerli spec, tüm CRUD çalışır, taslak korunur, yakalanmamış istisna sıfır, hiçbir eylem tetiklenmez.</p></div>
-    <div><div class="t"><svg class="ico" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M221.69,199.77,160,96.92V40h8a8,8,0,0,0,0-16H88a8,8,0,0,0,0,16h8V96.92L34.31,199.77A16,16,0,0,0,48,224H208a16,16,0,0,0,13.72-24.23ZM110.86,103.25A7.93,7.93,0,0,0,112,99.14V40h32V99.14a7.93,7.93,0,0,0,1.14,4.11L183.36,167c-12,2.37-29.07,1.37-51.75-10.11-15.91-8.05-31.05-12.32-45.22-12.81ZM48,208l28.54-47.58c14.25-1.74,30.31,1.85,47.82,10.72,19,9.61,35,12.88,48,12.88a69.89,69.89,0,0,0,19.55-2.7L208,208Z"/></svg>E6. Görev ortasında görünümü değiştir</div><p class="pass">Form yarı dolu ve 3 satır seçiliyken yeni düzen istenir. <b>Geçer:</b> girdiler, seçimler ve sayfalama korunur, önceki görünüm sürüm olarak geri alınabilir, odak body'ye düşmez, tek tamamlanma duyurusu.</p></div>
-    <div><div class="t"><svg class="ico" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M221.69,199.77,160,96.92V40h8a8,8,0,0,0,0-16H88a8,8,0,0,0,0,16h8V96.92L34.31,199.77A16,16,0,0,0,48,224H208a16,16,0,0,0,13.72-24.23ZM110.86,103.25A7.93,7.93,0,0,0,112,99.14V40h32V99.14a7.93,7.93,0,0,0,1.14,4.11L183.36,167c-12,2.37-29.07,1.37-51.75-10.11-15.91-8.05-31.05-12.32-45.22-12.81ZM48,208l28.54-47.58c14.25-1.74,30.31,1.85,47.82,10.72,19,9.61,35,12.88,48,12.88a69.89,69.89,0,0,0,19.55-2.7L208,208Z"/></svg>E7. Eski görevi yeni katalogda aç</div><p class="pass">Katalog major artar; N-1 ve N-2 spec'ler açılır. <b>Geçer:</b> N-1 doğrudan, N-2 göçle %100 çizilir; göç edilemeyen spec metin kartına düşer, boş ekran yok.</p></div>
-    <div><div class="t"><svg class="ico" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M221.69,199.77,160,96.92V40h8a8,8,0,0,0,0-16H88a8,8,0,0,0,0,16h8V96.92L34.31,199.77A16,16,0,0,0,48,224H208a16,16,0,0,0,13.72-24.23ZM110.86,103.25A7.93,7.93,0,0,0,112,99.14V40h32V99.14a7.93,7.93,0,0,0,1.14,4.11L183.36,167c-12,2.37-29.07,1.37-51.75-10.11-15.91-8.05-31.05-12.32-45.22-12.81ZM48,208l28.54-47.58c14.25-1.74,30.31,1.85,47.82,10.72,19,9.61,35,12.88,48,12.88a69.89,69.89,0,0,0,19.55-2.7L208,208Z"/></svg>E8. Tema ve tenant değiştir</div><p class="pass">Aydınlık → koyu → koyu ve compact, tenant rengi değişir. <b>Geçer:</b> yalnızca CSS değişkenleri güncellenir, katalog bileşenleri yeniden render olmaz, reduced-motion'da animasyon yok.</p></div>
-    <div><div class="t"><svg class="ico" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M221.69,199.77,160,96.92V40h8a8,8,0,0,0,0-16H88a8,8,0,0,0,0,16h8V96.92L34.31,199.77A16,16,0,0,0,48,224H208a16,16,0,0,0,13.72-24.23ZM110.86,103.25A7.93,7.93,0,0,0,112,99.14V40h32V99.14a7.93,7.93,0,0,0,1.14,4.11L183.36,167c-12,2.37-29.07,1.37-51.75-10.11-15.91-8.05-31.05-12.32-45.22-12.81ZM48,208l28.54-47.58c14.25-1.74,30.31,1.85,47.82,10.72,19,9.61,35,12.88,48,12.88a69.89,69.89,0,0,0,19.55-2.7L208,208Z"/></svg>E9. Güvenlik kapısı</div><p class="pass">Tedarikçi belgesine gizli talimat, javascript: URL, katalog dışı bileşen enjekte edilir. <b>Geçer:</b> eylem yok, URL düz metin, spec fail-closed reddedilir ve loglanır, CSP ve Trusted Types ihlali sıfır.</p></div>
+    <div><div class="t"><span class="n">E1</span>Modeli değiştir</div><div class="row"><span class="lab">Değişen</span><span>Aynı altın set, katalog ve prompt sürümüyle model kimliği değişir.</span></div><div class="row"><span class="lab pass">Geçer</span><span>Geçme oranı eşik üstü; önceden geçen görev onaysız başarısız olmaz; frontend'de sıfır satır değişiklik.</span></div></div>
+    <div><div class="t"><span class="n">E2</span>Bileşen implementasyonunu değiştir</div><div class="row"><span class="lab">Değişen</span><span>Bir katalog bileşeninin antd implementasyonu değişir.</span></div><div class="row"><span class="lab pass">Geçer</span><span>Katalog şema snapshot'ı bayt birebir aynı; saklı spec'ler aynı erişilebilirlik ağacını üretir; @pim/ui dışında antd import'u sıfır.</span></div></div>
+    <div><div class="t"><span class="n">E3</span>Render motorunu değiştir</div><div class="row"><span class="lab">Değişen</span><span>Kurum içi renderer yerine @json-render/react veya @a2ui/react.</span></div><div class="row"><span class="lab pass">Geçer</span><span>Altın spec'lerin tamamı çizilir; UnknownComponent sıfır; eylemler aynı actionId ve hash ile ulaşır; domain paketlerinde import değişikliği yok.</span></div></div>
+    <div><div class="t"><span class="n">E4</span>Protokol adaptörünü değiştir</div><div class="row"><span class="lab">Değişen</span><span>Özel SSE yerine AG-UI 1.0, veya iç spec yerine A2UI v0.9.1.</span></div><div class="row"><span class="lab pass">Geçer</span><span>Aynı yama fixture'ları aynı içerik hash'ini üretir; farklı sürüm reddedilir; Last-Event-ID ile yeniden bağlanma kayıpsız.</span></div></div>
+    <div><div class="t"><span class="n">E5</span>Modeli kes, bozuk yanıt ver</div><div class="row"><span class="lab">Değişen</span><span>Bağlantı kesilir; zaman aşımı, 429, sessiz bozuk çıktı, kesik akış.</span></div><div class="row"><span class="lab pass">Geçer</span><span>Klasik görünüm veya son geçerli spec; tüm CRUD çalışır; taslak korunur; yakalanmamış istisna sıfır; hiçbir eylem tetiklenmez.</span></div></div>
+    <div><div class="t"><span class="n">E6</span>Görev ortasında görünümü değiştir</div><div class="row"><span class="lab">Değişen</span><span>Form yarı dolu ve 3 satır seçiliyken yeni düzen istenir.</span></div><div class="row"><span class="lab pass">Geçer</span><span>Girdiler, seçimler ve sayfalama korunur; önceki görünüm sürüm olarak geri alınabilir; odak body'ye düşmez; tek tamamlanma duyurusu.</span></div></div>
+    <div><div class="t"><span class="n">E7</span>Eski görevi yeni katalogda aç</div><div class="row"><span class="lab">Değişen</span><span>Katalog major artar; N-1 ve N-2 spec'ler açılır.</span></div><div class="row"><span class="lab pass">Geçer</span><span>N-1 doğrudan, N-2 göçle %100 çizilir; göç edilemeyen spec metin kartına düşer; boş ekran yok.</span></div></div>
+    <div><div class="t"><span class="n">E8</span>Tema ve tenant değiştir</div><div class="row"><span class="lab">Değişen</span><span>Aydınlık → koyu → koyu ve compact; tenant rengi değişir.</span></div><div class="row"><span class="lab pass">Geçer</span><span>Yalnızca CSS değişkenleri güncellenir; katalog bileşenleri yeniden render olmaz; reduced-motion'da animasyon yok.</span></div></div>
+    <div><div class="t"><span class="n">E9</span>Güvenlik kapısı</div><div class="row"><span class="lab">Değişen</span><span>Tedarikçi belgesine gizli talimat, javascript: URL ve katalog dışı bileşen enjekte edilir.</span></div><div class="row"><span class="lab pass">Geçer</span><span>Eylem yok; URL düz metin; spec fail-closed reddedilir ve loglanır; CSP ve Trusted Types ihlali sıfır.</span></div></div>
   </div>
 </section>
 
@@ -647,6 +946,9 @@ footer { margin-top: 3rem; padding-top: 1.25rem; border-top: 1px solid var(--lin
   </ol>
 </section>
 
+</main>
+</div>
+
 <footer>
   <span>GenUI Frontend Gereksinimleri, sürüm 1.0</span>
   <span>Ant Design merkez, AI-first UX zorunlu</span>
@@ -654,6 +956,106 @@ footer { margin-top: 3rem; padding-top: 1.25rem; border-top: 1px solid var(--lin
 </footer>
 
 </div>
+<button type="button" class="totop" id="totop" aria-label="Sayfanın başına dön"><svg class="ico" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M205.66,117.66a8,8,0,0,1-11.32,0L136,59.31V216a8,8,0,0,1-16,0V59.31L61.66,117.66a8,8,0,0,1-11.32-11.32l72-72a8,8,0,0,1,11.32,0l72,72A8,8,0,0,1,205.66,117.66Z"/></svg></button>
+<script>
+(function () {
+  var d = document, root = d.documentElement;
+
+  /* theme: system -> light -> dark */
+  var KEY = 'genui-doc-theme', btn = d.getElementById('theme-toggle');
+  function applyTheme(m) {
+    if (m === 'light' || m === 'dark') { root.setAttribute('data-theme', m); } else { root.removeAttribute('data-theme'); }
+    if (btn) { btn.setAttribute('data-theme-mode', m); }
+  }
+  var saved = null;
+  try { saved = localStorage.getItem(KEY); } catch (e) {}
+  if (saved === 'light' || saved === 'dark') { applyTheme(saved); }
+  else if (btn) { btn.setAttribute('data-theme-mode', root.getAttribute('data-theme') || 'system'); }
+  if (btn) {
+    btn.addEventListener('click', function () {
+      var cur = btn.getAttribute('data-theme-mode');
+      var next = cur === 'system' ? 'light' : cur === 'light' ? 'dark' : 'system';
+      applyTheme(next);
+      try { if (next === 'system') { localStorage.removeItem(KEY); } else { localStorage.setItem(KEY, next); } } catch (e) {}
+    });
+  }
+
+  /* reading progress and back to top */
+  var bar = d.getElementById('progress-bar'), top = d.getElementById('totop');
+  function onScroll() {
+    var h = root.scrollHeight - root.clientHeight;
+    var y = window.scrollY || root.scrollTop || 0;
+    if (bar) { bar.style.width = (h > 0 ? Math.min(100, y / h * 100) : 0) + '%'; }
+    if (top) { top.classList.toggle('show', y > 600); }
+  }
+  d.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
+  onScroll();
+  if (top) { top.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); }); }
+
+  /* section numbers next to headings */
+  var titles = d.querySelectorAll('.content .sec-head .title');
+  for (var i = 0; i < titles.length; i++) {
+    var n = d.createElement('span'); n.className = 'n'; n.textContent = (i + 1 < 10 ? '0' : '') + (i + 1);
+    titles[i].insertBefore(n, titles[i].firstChild);
+  }
+
+  /* active entry in the contents rail */
+  var links = [].slice.call(d.querySelectorAll('.toc a[href^="#"]'));
+  var map = {};
+  links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+  var targets = Object.keys(map).map(function (id) { return d.getElementById(id); }).filter(Boolean);
+  if ('IntersectionObserver' in window && targets.length) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) { return; }
+        links.forEach(function (a) { a.classList.remove('active'); });
+        var a = map[e.target.id];
+        if (!a) { return; }
+        a.classList.add('active');
+        var li = a.closest('li');
+        var parentLi = li && li.parentElement ? li.parentElement.closest('li') : null;
+        if (parentLi) { var pa = parentLi.querySelector('a'); if (pa) { pa.classList.add('active'); } }
+      });
+    }, { rootMargin: '-15% 0px -70% 0px' });
+    targets.forEach(function (t) { io.observe(t); });
+  }
+
+  /* requirement rows: level and actor data, filters */
+  var rows = [].slice.call(d.querySelectorAll('.req-table tbody tr'));
+  rows.forEach(function (tr) {
+    var lvl = tr.querySelector('.chip'), act = tr.querySelector('td.actor');
+    tr.setAttribute('data-level', lvl ? lvl.textContent.trim() : '');
+    tr.setAttribute('data-actor', act ? act.textContent.trim() : '');
+  });
+  var level = 'ALL', actor = 'ALL';
+  var segBtns = [].slice.call(d.querySelectorAll('#flt-level button'));
+  var sel = d.getElementById('flt-actor'), count = d.getElementById('flt-count');
+  function applyFilter() {
+    var shown = 0;
+    rows.forEach(function (tr) {
+      var ok = (level === 'ALL' || tr.getAttribute('data-level') === level) && (actor === 'ALL' || tr.getAttribute('data-actor') === actor);
+      tr.hidden = !ok;
+      if (ok) { shown++; }
+    });
+    [].slice.call(d.querySelectorAll('.group')).forEach(function (g) {
+      var any = [].slice.call(g.querySelectorAll('tbody tr')).some(function (tr) { return !tr.hidden; });
+      g.setAttribute('data-empty', any ? 'false' : 'true');
+    });
+    if (count) { count.textContent = shown + ' / ' + rows.length + ' gereksinim'; }
+  }
+  segBtns.forEach(function (b) {
+    b.addEventListener('click', function () {
+      segBtns.forEach(function (x) { x.setAttribute('aria-pressed', 'false'); });
+      b.setAttribute('aria-pressed', 'true');
+      level = b.getAttribute('data-level');
+      applyFilter();
+    });
+  });
+  if (sel) { sel.addEventListener('change', function () { actor = sel.value; applyFilter(); }); }
+  applyFilter();
+})();
+</script>
 
 </body>
 </html>
