@@ -1,0 +1,31 @@
+{
+ "about": "Keycloak + Headless Frappe kimlik rehberinin kararları. Gereksinim satırlarında \"kimlik:<id>\" etiketiyle eşlenir.",
+ "decisions": [
+  {"id": "idp", "title": "Merkezi kimlik sunucusu Keycloak 26.7; çekirdek fork edilmez, sürüm sabitlenir", "status": "Kararlaştırıldı"},
+  {"id": "is-kurallari", "title": "Üyelik, uygulama yetkisi, abonelik ve KYC/KYB Frappe'de; kritik işlemde canlı kontrol", "status": "Kararlaştırıldı"},
+  {"id": "eslesme", "title": "Kimlik eşlemesi issuer + sub; e-posta yalnızca öznitelik", "status": "Kararlaştırıldı"},
+  {"id": "kopru", "title": "Kendi Frappe kimlik köprüsü; genel Social Login ve hazır köprüler kullanılmaz", "status": "Kararlaştırıldı"},
+  {"id": "frontend", "title": "SPA'lar Frappe ile aynı origin'de; token tarayıcıya inmez", "status": "Kararlaştırıldı"},
+  {"id": "ropc", "title": "Parolayla token alma hiçbir istemcide yok; kod akışı + PKCE", "status": "Kararlaştırıldı"},
+  {"id": "kapilar", "title": "Lisans, branding ve güvenlik kapıları CI'da, insan adımıyla", "status": "Kararlaştırıldı"},
+  {"id": "realm", "title": "Tek realm, tam eşleşme yönlendirme, back-channel logout, kaba kuvvet koruması", "status": "Kararlaştırıldı"},
+  {"id": "passkey", "title": "Passkey yöneticiler ve KYC inceleyicileri için zorunlu", "status": "Kararlaştırıldı"},
+  {"id": "step-up", "title": "KYC belgesi ve yönetim işlemleri için adım yükseltme", "status": "Kararlaştırıldı"},
+  {"id": "tema", "title": "Giriş ve kayıt ekranları Keycloakify ile AEP token'larından", "status": "Kararlaştırıldı"},
+  {"id": "organizations", "title": "Keycloak Organizations MVP'de kullanılmaz", "status": "Kararlaştırıldı"},
+  {"id": "config", "title": "Realm yapılandırması keycloak-config-cli ile git'ten", "status": "Kararlaştırıldı"},
+  {"id": "otp", "title": "OTP gateway: FastAPI, SQLAlchemy 2.0, Alembic; kod saklanmaz", "status": "Kararlaştırıldı"},
+  {"id": "riza", "title": "Rıza Kaydı: KVKK aydınlatma, açık rıza, pazarlama izni", "status": "Kararlaştırıldı"},
+  {"id": "inceleme", "title": "Kimlik çekirdeği değişikliği kodu yazmayan ajan ve teknik kişi incelemesi", "status": "Kararlaştırıldı"},
+  {"id": "yontemler", "title": "Giriş yöntemleri yöntem bazında kabul testiyle", "status": "Koşullu"},
+  {"id": "alternatifler", "title": "Casdoor, Better Auth, Logto çekirdek adayı değil", "status": "Koşullu"},
+  {"id": "magic-link", "title": "Magic link", "status": "Açık"},
+  {"id": "telefon", "title": "Telefon numarasını yazıp giriş", "status": "Açık"},
+  {"id": "tenant", "title": "Tenant modeli", "status": "Açık"},
+  {"id": "e-postasiz", "title": "E-postasız hesap", "status": "Açık"},
+  {"id": "oturum-sure", "title": "Oturum süreleri", "status": "Açık"},
+  {"id": "giris-suresi", "title": "Giriş süresi hedefi", "status": "Açık"},
+  {"id": "inceleyici", "title": "Teknik inceleyici", "status": "Açık"},
+  {"id": "dagitim", "title": "Ticari dağıtım modeli", "status": "Açık"}
+ ]
+}

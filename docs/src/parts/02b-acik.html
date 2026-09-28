@@ -1,0 +1,64 @@
+<section id="acik">
+  <div class="sec-head">
+    <div class="title"><h2>Açık kararlar ve öneriler</h2></div>
+    <p>Bu belgede karar kaydındaki <strong>seçim</strong> bağlayıcıdır; kaydın <strong>önerisi</strong> ancak burada, ayrı ve görünür biçimde durur. Tek istisna kimlik ve oturumdur: daha yeni ve alana özel kimlik rehberinin "Kararlaştırıldı" satırları, karar kaydının oturum seçiminin yerini alır; karar kaydı ADR ile güncellenene kadar bu istisna aşağıda görünür kalır. Karar kaydında 74 kararda seçim öneriden farklıdır ve hiçbirinin gerekçesi henüz yazılmamıştır ("Gerekçe: Henüz yazılmadı"). Aşağıdaki iki tablo, kaynağın kendi içindeki çelişkileri ve bu belgenin geçici çalışma varsayımını gösterir. Her satır bir ADR (mimari karar kaydı) ile kapanır; ADR kapanana kadar geliştirme varsayımla ilerler, üretim taahhüdü verilmez.</p>
+  </div>
+
+  <h3 style="font-size:var(--fs-l)">Kaynağın kendi içindeki çelişkiler</h3>
+  <div class="tbl-wrap" style="margin-top:.6rem"><table class="matrix">
+    <thead><tr><th scope="col">Konu</th><th scope="col">Kararlar</th><th scope="col">Çelişki</th><th scope="col">Bu belgenin çalışma varsayımı</th><th scope="col">Kapatan</th></tr></thead>
+    <tbody>
+      <tr><td>Canlıya geçiş</td><td>migration = tek seferde geçiş; rollout = feature flag + kanarya; yol haritası 00–04 aşamalı</td><td>Seçim tek kesim, yol haritası aşamalı açılış anlatıyor.</td><td>Geliştirme ve doğrulama dikey dilimlerle; canlıya geçiş tek kesimle. Feature flag ve kanarya, canlı sonrası yeni yeteneklerin açılışı içindir (K7).</td><td>ADR: geçiş stratejisi</td></tr>
+      <tr><td>Seçilmiş ileri kapsam</td><td>ai-level = sınırlı otonom ajan; offline = işlem kuyruğu; surface = panel + portal + public</td><td>Yol haritası bunları faz 04'te "gerekiyorsa" diye anlatıyor; kararlar seçilmiş kapsam diyor.</td><td>Seçilmiş kapsamdır; kabul ölçütleri belgede kalır, uygulama zamanı faz etiketiyle ayrılır (L grubu, F7, E3).</td><td>ADR: faz 04 kapsamı</td></tr>
+      <tr id="ak-oturum"><td>Oturum ve origin</td><td>auth = ayrı origin + BFF session; gateway = ayrı BFF; hosting = Frappe yanında reverse proxy; kimlik rehberi = aynı origin, Frappe HttpOnly oturumu, BFF görevini kimlik köprüsü üstlenir</td><td>Karar kaydı oturumu ayrı bir BFF servisinde tutuyor; kimlik rehberi (daha yeni, "Kararlaştırıldı") oturumu Frappe'de ve aynı origin'de tutuyor.</td><td>Kimlik rehberi uygulanır: SPA sunan her hostta SPA'lar, Frappe API'si, Socket.IO ve köprü aynı origin'de, ters vekil arkasında; app ve www ayrı origin'lerdir (M20); tarayıcıda token yok. "BFF" bu belgede aynı origin kenar katmanıdır; ayrı BFF servisi yalnızca birden fazla backend aynı oturumla çağrılınca gelir (B1, B5, B10, M3).</td><td>ADR: oturum ve gateway topolojisi; karar kaydında auth ve gateway güncellenir</td></tr>
+      <tr id="ak-tenant"><td>Kiracı modeli</td><td>tenancy = çok kuruluş / çok site; tenant-isolation = ayrı site; kimlik rehberi = tenant modeli açık (tek site + organizasyon izolasyonu ya da müşteri başına site)</td><td>Karar kaydı seçmiş, rehber yeniden açmış. Rehberin Organizasyon ve Üyelik modeli ve "A'da yönetici, B'de danışman" senaryosu tek site modeline yakın duruyor.</td><td>Sözleşme iki modele dayanıklı yazılır: her istek aktif kiracı ve şirket bağlamı taşır; önbellek, Run, grant ve YZ bağlamı bu anahtarla ayrılır (B9, M10). Çok siteli modelde birden çok siteye üye kullanıcı ortak dizin ister ve ayrı BFF koşulunu tetikler; white-label seviye 2 bu karara bağlıdır.</td><td>ADR: tenant modeli, faz 01 bitmeden</td></tr>
+      <tr id="ak-realtime"><td>Aynı origin realtime</td><td>realtime = Frappe Socket.IO; kimlik rehberi = aynı origin</td><td>Kaynak çelişkisi değil, teknik kısıt: tarayıcı Frappe Socket.IO'ya doğrudan bağlanınca task ve progress odalarına katılımı araya giren bir köprü süzemez; Frappe v16 bu iki aboneliği izin kontrolü yapmadan kabul eder.</td><td>Ürün olayları task ve progress odalarına yayımlanmaz; olaylar yalnızca kayıt referansı ve sayaç taşır, Run durumu ve ilerleme dahil içerik REST ile gelir (B6, B10). Frappe aboneliği yalnızca katılımda yetkilendirdiği için iptal edilen kullanıcının açık soketi sunucuda ayrıca kesilmelidir (M19).</td><td>ADR: realtime iptal mekanizması ve azami gecikme; üretim kapısı</td></tr>
+      <tr><td>Takvim ve Gantt</td><td>schedule-scope = takvim görünümü; specialized = Gantt / scheduler dahil</td><td>Biri yalnız takvim, diğeri kaynak planlayıcı seçiyor.</td><td>Takvim görünümü kapsamda (L4). Gantt ve kaynak planlayıcı, gerçek kısıtlar yazılıp PoC geçene kadar ertelenir.</td><td>ADR + PoC</td></tr>
+      <tr><td>İşbirliği eşitliği</td><td>parity = tam eşitlik; collaboration-flows = "ilk fazda Desk'te devam" da seçili</td><td>Kaynağın kendi tutarlılık uyarısı.</td><td>Yorum, atama ve bildirim parity matrisinde; tek kesim öncesi yeni UI'a taşınmış veya iş sahibince "Desk'te kalır" diye onaylanmış olmalı (B8).</td><td>Parity matrisi</td></tr>
+      <tr><td>Veri yerleşimi</td><td>data-residency = keşif gerekiyor</td><td>Tek açık keşif kalemi.</td><td>Model, telemetri, vektör indeksi ve yedeklerin bölgesi belgelenmeden hiçbir uyum iddiası yapılmaz (G4).</td><td>Keşif + hukuk</td></tr>
+      <tr><td>Autosave ve Frappe kaydı</td><td>drafts = alan bazlı autosave; Frappe'de her kayıt <code>doc.save()</code> ve hook'ları çalıştırır</td><td>Kaynak çelişkisi değil, teknik kısıt: gerçek belgeye autosave yan etkisiz değildir.</td><td>İki model: güvenli sınıflanan DocType'ta gerçek belge autosave, diğerlerinde ayrı çalışma kopyası (E2).</td><td>Hook envanteri</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3 style="margin-top:1.75rem;font-size:var(--fs-l)">Öneriden farklı seçimler: belgenin tutumu</h3>
+  <p style="margin-top:.4rem;color:var(--ink-2)">Frontend sözleşmesini doğrudan etkileyen farklılıklar. Seçim uygulanır; önerinin gerekçesi ve seçimin bedeli ADR'ye girer. 74 farklılığın tamamı sayfa sonundaki karar izlenebilirliği tablosunda.</p>
+  <div class="tbl-wrap" style="margin-top:.6rem"><table class="matrix">
+    <thead><tr><th scope="col">Karar</th><th scope="col">Seçim (bağlayıcı)</th><th scope="col">Kaydın önerisi</th><th scope="col">Uygulandığı madde</th><th scope="col">Üstlenilen bedel</th></tr></thead>
+    <tbody>
+      <tr><td>migration</td><td>Tek seferde geçiş</td><td>Dikey dilimlerle kademeli</td><td>K7</td><td>Geniş geri dönüş ve eğitim hazırlığı, en az iki geçiş provası</td></tr>
+      <tr><td>workspace</td><td>Tam kişisel workspace</td><td>Şablon + kullanıcı override</td><td>D6</td><td>Kurumsal tutarlılık düşer; şablondan başlatma ve "şablona dön"</td></tr>
+      <tr><td>native</td><td>Tutarlı custom kontroller</td><td>Native değeri koru, seçici custom</td><td>J2, C5</td><td>Klavye, IME, locale, ekran okuyucu ve autofill yükü; gerçek cihaz testi</td></tr>
+      <tr><td>scripts</td><td>Tüm davranışları yeniden modelle</td><td>İş kuralını sunucuya taşı</td><td>B4</td><td>En büyük keşif ve regresyon maliyeti</td></tr>
+      <tr><td>css</td><td>Kontrollü CSS-in-JS</td><td>Scoped CSS / Modules + katmanlar</td><td>C4</td><td>Stil ekleme sırası ve runtime maliyeti</td></tr>
+      <tr><td>icons</td><td>Özel domain ikonları</td><td>Ant ikonları + semantik takma ad</td><td>C8</td><td>Çizim, lisans ve bakım</td></tr>
+      <tr><td>a11y-target</td><td>WCAG 2.2 AA</td><td>AA tabanı + seçili AAA</td><td>J1</td><td>AAA hedefleri ürün kapsamında değil; 44 px hedef ayrı karar (targets)</td></tr>
+      <tr><td>realtime</td><td>Frappe Socket.IO adaptörü</td><td>Realtime + yoklama yedeği</td><td>B6</td><td>Yeniden bağlanma ve abonelik yetkisi; yoklama ürün gereksinimi değil</td></tr>
+      <tr><td>layout</td><td>Göreve göre uyarlanan yüzey</td><td>Container + intrinsic layout</td><td>J6</td><td>İki görünüm arasında durum korunumu</td></tr>
+      <tr><td>contract</td><td>Frappe tiplerine yakın map</td><td>Sürümlü semantik şema</td><td>B2</td><td>Backend bağımlılığı görünür kalır; adaptör sınırında tutulur</td></tr>
+      <tr><td>drafts</td><td>Alan bazlı autosave</td><td>Taslak autosave + açık submit</td><td>E2</td><td>Hook yan etkileri; iki model ayrımı</td></tr>
+      <tr><td>ai-level</td><td>Sınırlı otonom ajan</td><td>Taslak ve onaylı değişiklik</td><td>F1, F3, F7</td><td>Kalıcı Run, bütçe, kurtarma ve güçlü değerlendirme</td></tr>
+      <tr><td>auth</td><td>Ayrı origin + BFF session (kimlik rehberiyle geçersiz)</td><td>Aynı origin session</td><td>B5, B10, M3</td><td>İstisna: kimlik rehberi kaydın önerisine döndü; karar kaydındaki seçim ADR ile güncellenmeli</td></tr>
+      <tr><td>tenancy</td><td>Çok kuruluş / çok site</td><td>Tek kuruluş / tek site</td><td>B9, G6, M10</td><td>Provisioning, yükseltme ve izolasyon testleri; kimlik rehberi modeli yeniden açtı (yukarıda)</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3 style="margin-top:1.75rem;font-size:var(--fs-l)">Kimlik rehberinin açık kararları: arayüze etkisi</h3>
+  <p style="margin-top:.4rem;color:var(--ink-2)">Kimlik rehberi dokuz kararın faz 1 bitmeden verilmesini istiyor; tenant modeli yukarıda. Son satır bu belgenin eklediği karardır. "Karar verilene kadar" sütunu geliştirmenin hangi varsayımla ilerlediğini söyler.</p>
+  <div class="tbl-wrap" style="margin-top:.6rem"><table class="matrix">
+    <thead><tr><th scope="col">Karar</th><th scope="col">Seçenekler</th><th scope="col">Arayüze etkisi</th><th scope="col">Karar verilene kadar</th></tr></thead>
+    <tbody>
+      <tr><td>Magic link</td><td>Özgün eklenti (güvenlik incelemeli) / Phase Two ile ticari lisans / ertele</td><td>Giriş ekranında ek yöntem; bağlantının başka cihazda açılması durumu</td><td>Gösterilmez; açık gereksinim olarak listede (M8)</td></tr>
+      <tr><td>Telefonla kimlik</td><td>E-postayla tanıma + SMS kodu / telefon = kullanıcı adı / özgün authenticator</td><td>Kimliği önce soran adımın alanı; kayıt formu</td><td>E-posta birincil kimlik; telefon ikinci kanal</td></tr>
+      <tr><td>E-postasız hesap</td><td>E-posta zorunlu / e-postasız hesap için ayrı model</td><td>Kayıt metinleri; Frappe'de User adı e-postadır</td><td>E-posta zorunlu</td></tr>
+      <tr><td>Oturum süreleri</td><td>Keycloak boşta ve azami süre; Frappe oturum süresi</td><td>Taslak kaydetme sıklığı, oturum sonu uyarısı (WCAG 2.2.1), tek çıkış kaçağı riski</td><td>Frappe oturumu Keycloak oturumundan kısa; süre dolmadan uyarı ve uzatma (M6). Bu süre, kaçan çıkış bildiriminde oturumun açık kalabileceği azami süredir (M18): sayı yazılmadan üretime çıkılmaz</td></tr>
+      <tr><td>Realtime iptal mekanizması</td><td>Soket servisinde oturumu periyodik yeniden doğrulayan handler / olayları süzen relay / kısa ömürlü soket ve yeniden bağlanmada yetki</td><td>Çıkış, devre dışı bırakma ve üyelik iptalinden sonra açık soketin ne kadar süre "değişti" sinyali alabileceği</td><td>Olaylar yalnızca referans ve sayaç taşır; mekanizma ve azami gecikme yazılmadan üretime çıkılmaz (M19)</td></tr>
+      <tr><td>KYC belgesi için YZ işleme yolu</td><td>Yok / ADR ile onaylı yerel model / sözleşmeli dış model</td><td>Onboarding'de belgeden alan önerisinin gösterilip gösterilmeyeceği</td><td>Yok: gerçek kişi KYC belgesi hiçbir modele gitmez, alanlar manuel girilir (M23)</td></tr>
+      <tr><td>Sepet birleştirme kuralı</td><td>Miktarları topla / son sepet kazanır / kullanıcıya sor</td><td>Girişten sonra www sepet ekranı</td><td>Kullanıcıya sor; fiyat ve stok yeniden doğrulanır (M21)</td></tr>
+      <tr><td>Giriş süresi hedefi</td><td>Yük altında kabul edilen azami süre</td><td>Giriş sayfası bütçesi, k6 eşiği</td><td>Ölçülür, yayın kapısı değildir</td></tr>
+      <tr><td>Teknik inceleyici</td><td>Ekipten bir geliştirici / dış güvenlik danışmanı</td><td>K12 kapısının insan adımı</td><td>Kimlik çekirdeğine dokunan PR merge edilmez</td></tr>
+      <tr><td>Ticari dağıtım modeli</td><td>Yalnızca SaaS / müşteriye kurulum</td><td>AGPL ve GPL yükümlülükleri; seviye 3 white-label</td><td>Yalnızca SaaS varsayımı; yasak lisanslı kaynaktan kod kopyalanmaz (A5)</td></tr>
+      <tr><td>Casdoor</td><td>Güvenlik kaydının hedef sürümde düzeldiği gösterilirse yeniden değerlendirme</td><td>Yok; köprü kimlik sağlayıcısından bağımsızdır</td><td>Keycloak</td></tr>
+      <tr><td>White-label derinliği</td><td>Seviye 1 ürün markası / seviye 2 müşteri markası / seviye 3 müşteri alan adı</td><td>Giriş teması çözümleme, alan adı ve TLS, e-posta gönderici, SSO sınırı</td><td>Seviye 1 bağlayıcı; seviye 2 tenant kararına bağlı (M13)</td></tr>
+    </tbody>
+  </table></div>
+</section>

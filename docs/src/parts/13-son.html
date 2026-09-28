@@ -1,0 +1,284 @@
+<section id="yapma">
+  <div class="sec-head">
+    <div class="title"><h2>Yapılmayacaklar ve yapılacaklar</h2></div>
+  </div>
+  <div class="dodont">
+    <div class="no">
+      <h3>{{icon:prohibit}}Yapılmayacaklar</h3>
+      <ul>
+        <li>Desk'in iç endpoint'lerine, <code>frm</code> API'sine veya Client Script davranışına bağımlı kalma; iş kuralını sunucuya taşı.</li>
+        <li>Tarayıcıya erişim token'ı, yenileme token'ı, API anahtarı veya JavaScript'in okuyabildiği oturum bilgisi indirme; oturum yalnızca Frappe'nin HttpOnly çerezinde ve aynı origin'de durur.</li>
+        <li>SPA'da parola veya kod formu yapma; parolayla token almayı (ROPC), implicit akışı veya kodu token uç noktasına gönderen özel grant'leri açma.</li>
+        <li>Müşteri girişi için Frappe'nin genel Social Login akışını veya hazır OIDC köprülerini olduğu gibi kullanma; kimliği e-postayla eşleme.</li>
+        <li>Giriş sayfası markasını URL parametresinden okuma; sessiz girişi iframe ile yapma; realm'i yönetim panelinden elle değiştirme.</li>
+        <li>Sosyal hesabı e-posta eşitliğiyle mevcut hesaba kendiliğinden bağlama; ayrıcalıklı Frappe kullanıcısını kontrollü göç dışında bağlama.</li>
+        <li>Logout token'ını yalnızca imzasıyla kabul etme; Frappe çerezini üst alan adına yazma; iptali istemcinin soketi kapatmasına bırakma.</li>
+        <li>Giriş sağlayıcısı düğmelerindeki Google ve Apple markasını white-label taramasıyla silme; altyapı markasını ("Powered by") ekranda bırakma.</li>
+        <li>Modele kimlik ekranı ürettirme; kimlik doğrulama sırlarını ve oturumu YZ bağlamına koyma; KYC belgesini veri sınıfı tablosu dışında işletme; adım yükseltmeyi modelin kararına bırakma.</li>
+        <li>antd prop, enum veya tip adını katalog, capability ve görev durumu sözleşmelerine sızdırma; sözleşme paketlerine antd import etme.</li>
+        <li>Modelin ürettiği hiçbir şeyi kod olarak çalıştırma; ham SQL, serbest URL, metin filtre veya kayıt kimliği ürettirme. Tipli filtre AST'si serbest, denetlenmeyen ifade yasak.</li>
+        <li>Yetkiyi, risk sınıfını veya docstatus geçişini istemcide ya da sistem promptunda uygulama.</li>
+        <li>İki form store'unu eşzamanlama; öneriyi doğrudan taslağa yazma; kullanıcının düzenlediği alanı model ile ezme.</li>
+        <li>Token akışını sayfaya yazma; iş durumu ve tamamlanmış sonuç modelinden sapma.</li>
+        <li>Barındırılan GenUI servisini, A2UI v1.0 adayını, x-card'ı veya ticari grid'i çekirdek yapma.</li>
+        <li>Tek kesimle canlıya geçişi parity matrisi, geçiş provası ve Desk'e dönüş provası olmadan yapma; envanter olmadan "tam eşitlik" ilan etme; AT-13 geçmeden GenUI kapsamını genişletme.</li>
+        <li>Ürün olaylarını task veya progress odalarına yayımlama; realtime olaylarına veri koyma.</li>
+        <li>Onaylı değişiklik için <code>apply_workflow</code>'u veya REST v2 method yolunu doğrudan çağırma; BFF'de ön kontrol yapıp ayrı RPC ile uygulama.</li>
+        <li>Gerçek belgeye autosave'i hook envanteri olmadan açma; 417'yi tek başına çakışma sayma.</li>
+        <li>Kararın seçimini sessizce öneriyle değiştirme; öneriyi yalnızca Açık kararlar'da göster.</li>
+        <li>Prompt, model çıktısı, spec içeriği veya kayıt verisini frontend telemetrisine yazma.</li>
+        <li>YZ ajanının PR onaylamasına, birleştirmesine veya korumalı dala push etmesine izin verme.</li>
+      </ul>
+    </div>
+    <div class="yes">
+      <h3>{{icon:check-circle}}Yapılacaklar</h3>
+      <ul>
+        <li>Faz 00'ı gerçekten yap: Frappe sürüm ve özelleştirme envanteri, Client Script sınıflandırması, veri hacmi ölçümü.</li>
+        <li>Varsayılan yolculuğu tek DocType üzerinde uçtan uca kur: niyet girişi → kapsam → netleştirme → çalışma alanı → düzeltme → onay → sonuç; AT-14 ile kabul et.</li>
+        <li>Frappe custom app'te capability yürütücüsünü, Run adım günlüğünü, kilidi ve uzlaştırmayı platform ekibinin teslimi olarak planla.</li>
+        <li>Aynı origin ters vekili, Keycloak realm'ini (kodla) ve kimlik köprüsünü ilk sprint'te kur; AT-15, AT-18 ve AT-20'yi tarayıcıda okunabilir token olmadan kanıtla.</li>
+        <li>Tenant modelini ve white-label seviyesini faz 01 bitmeden ADR ile kapat; o zamana kadar sözleşmeyi iki modele dayanıklı yaz.</li>
+        <li>Giriş yöntemlerini hazır olanlarla (parola, Google, passkey) aç; her yeni yöntemi AT-19 ve eklenti kabul listesiyle (K12) ekle.</li>
+        <li>Frappe sosyal giriş bulgusunu, ayrıntısını herkese açık yazmadan önce Frappe'nin güvenlik bildirim kanalına ilet.</li>
+        <li>Açık kararlar tablosundaki her satırı bir ADR ile kapat; seçimlerin gerekçelerini yaz.</li>
+        <li>İlk on iş bileşenini veri sözleşmesi, risk ve kabul koşuluyla kataloğa yaz; genel bileşenleri sarmalama.</li>
+        <li>Metadata codegen ve şema fingerprint'ini ilk sprint'te kur; katalog snapshot'ını CI'a bağla.</li>
+        <li>Capability manifest'ini metadata'dan üret, açık allowlist ile daralt; her capability'ye risk sınıfı ve terslenebilirlik yaz; onay matrisini sunucu politikası olarak uygula.</li>
+        <li>Kill switch, kota, klasik görünüm ve bağlamlı devri YZ'den önce kur.</li>
+        <li>AT-01, AT-05, AT-09, AT-10, AT-11, AT-13, AT-14, AT-15, AT-16, AT-18, AT-20, AT-21 ve AT-22'yi yayın kapısı yap; sonuçları K9 kanıt kaydına yaz.</li>
+        <li>Karar kaydındaki "henüz yazılmadı" gerekçeleri ADR olarak tamamla; iddialı seçimleri tabloda görünür tut.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+{{TRACE}}
+
+<section id="kaynaklar" class="sources">
+  <div class="sec-head">
+    <div class="title"><h2>Kaynaklar</h2></div>
+    <p>Sürüm, API ve lisans bilgileri 28 Eylül 2026 tarihinde bu kaynaklardan doğrulanmıştır. Karar kaydı: Frappe Headless Platform, şema 1, katalog 2026-09-19.2. Kimlik: Keycloak + Headless Frappe kimlik rehberi.</p>
+  </div>
+  <ol>
+    <li><a href="https://github.com/frappe/frappe/releases">Frappe Framework sürümleri</a> <span class="v">v16.35.0, MIT, Python 3.14, Node 24</span></li>
+    <li><a href="https://docs.frappe.io/framework/user/en/api/rest">Frappe REST API</a> ve <a href="https://docs.frappe.io/framework/user/en/guides/integration/rest_api">API v2 rehberi</a> <span class="v">/api/v2/document, /api/v2/doctype/&lt;dt&gt;/meta</span></li>
+    <li><a href="https://docs.frappe.io/framework/user/en/api/realtime">Frappe Realtime</a> <span class="v">Socket.IO, doc_subscribe izin kontrolü, publish_progress</span></li>
+    <li><a href="https://docs.frappe.io/framework/user/en/api/background_jobs">Frappe Background Jobs</a> <span class="v">frappe.enqueue, RQ Job DocType</span></li>
+    <li><a href="https://docs.frappe.io/framework/user/en/basics/doctypes/docfield">Frappe DocField</a> ve <a href="https://docs.frappe.io/framework/user/en/basics/users-and-permissions">kullanıcılar ve izinler</a> <span class="v">fieldtype listesi, depends_on, permlevel, User Permission</span></li>
+    <li><a href="https://docs.frappe.io/framework/user/en/desk/scripting/client-script">Frappe Client Script</a> <span class="v">istemci doğrulaması yalnızca Desk formuna özeldir</span></li>
+    <li><a href="https://docs.frappe.io/framework/user/en/desk/reports/script-report">Frappe raporlar</a>, <a href="https://docs.frappe.io/framework/user/en/desk/workspace">Workspace</a> ve <a href="https://docs.frappe.io/framework/user/en/rate-limiting">rate limiting</a></li>
+    <li><a href="https://github.com/frappe/frappe-ui">frappe-ui (Vue 3)</a> ve <a href="https://github.com/frappe/frappe-react-sdk">frappe-react-sdk (topluluk)</a> <span class="v">resmi React bileşen kütüphanesi yoktur; adaptör gerekir</span></li>
+    <li>Frappe v16.35.0 kaynak kodu: <a href="https://github.com/frappe/frappe/blob/v16.35.0/realtime/handlers.js">realtime/handlers.js</a> <span class="v">task_subscribe ve progress_subscribe izin kontrolsüz</span>, <a href="https://github.com/frappe/frappe/blob/v16.35.0/realtime/middlewares/authenticate.js">authenticate.js</a> <span class="v">sid veya Authorization, site namespace, Origin</span>, <a href="https://github.com/frappe/frappe/blob/v16.35.0/frappe/model/workflow.py">workflow.py</a> <span class="v">apply_workflow load_from_db</span>, <a href="https://github.com/frappe/frappe/blob/v16.35.0/frappe/api/v2.py">api/v2.py</a> <span class="v">update_doc → doc.save(), method yolu</span>, <a href="https://github.com/frappe/frappe/blob/v16.35.0/frappe/exceptions.py">exceptions.py</a> <span class="v">ValidationError 417</span>, <a href="https://github.com/frappe/frappe/blob/v16.35.0/frappe/realtime.py">realtime.py</a> <span class="v">doc odası</span></li>
+    <li><a href="https://github.com/keycloak/keycloak/releases">Keycloak sürümleri</a> ve <a href="https://www.keycloak.org/2026/07/keycloak-2670-released">26.7.0 sürüm notu</a> <span class="v">26.7.4 (16 Eylül 2026), Apache-2.0</span></li>
+    <li><a href="https://www.keycloak.org/docs/latest/server_admin/index.html">Keycloak Server Administration</a>: istemci bazında giriş teması, Direct Access Grants ve token exchange anahtarları, back-channel logout, adım yükseltme (acr/LoA), passkey ve conditional UI, Organizations <span class="v">26.x</span></li>
+    <li><a href="https://www.keycloak.org/ui-customization/themes">Keycloak temaları</a> ve <a href="https://www.keycloak.org/server/hostname">hostname v2, realm Frontend URL</a></li>
+    <li><a href="https://github.com/keycloakify/keycloakify">Keycloakify</a> ve <a href="https://docs.keycloakify.dev/">belgeleri</a> <span class="v">11.16.0, MIT; giriş, hesap ve e-posta teması; istemci bazında</span></li>
+    <li><a href="https://github.com/adorsys/keycloak-config-cli">keycloak-config-cli</a> <span class="v">6.5.1, Apache-2.0; Keycloak 26.5.5'e kadar test edilmiş</span></li>
+    <li><a href="https://www.keycloak.org/extensions">Keycloak eklenti kataloğu</a> <span class="v">denetlenmemiş üçüncü taraf uyarısı</span></li>
+    <li><a href="https://www.keycloak.org/docs/latest/server_admin/index.html#_identity_broker_first_login">Keycloak: ilk sosyal giriş akışı</a> <span class="v">mevcut hesabı doğrulama; otomatik bağlama riski</span></li>
+    <li><a href="https://openid.net/specs/openid-connect-backchannel-1_0.html">OpenID Connect Back-Channel Logout 1.0</a> <span class="v">§2.4–2.8 logout token içeriği, doğrulama ve yanıt</span></li>
+    <li><a href="https://developers.google.com/identity/branding-guidelines">Google ile giriş marka kuralları</a> <span class="v">düğmede Google kimliği korunur</span></li>
+    <li><a href="https://github.com/frappe/frappe/blob/v16.35.0/frappe/utils/oauth.py">Frappe v16.35.0 frappe/utils/oauth.py</a> <span class="v">incelenen sürüm</span></li>
+    <li><a href="https://www.rfc-editor.org/rfc/rfc9700.html">RFC 9700, OAuth 2.0 Güvenlik BCP</a> <span class="v">§2.4 parolayla token alma MUST NOT</span> ve <a href="https://www.rfc-editor.org/info/rfc10017">RFC 10017, tarayıcı tabanlı uygulamalar</a> <span class="v">BCP 212, Ağustos 2026</span></li>
+    <li><a href="https://www.w3.org/WAI/WCAG22/Understanding/accessible-authentication-minimum.html">WCAG 2.2 3.3.8 Accessible Authentication (Minimum)</a> ve <a href="https://html.spec.whatwg.org/multipage/form-control-infrastructure.html">HTML autofill: one-time-code, webauthn</a></li>
+    <li><a href="https://github.com/p2-inc/keycloak-magic-link/blob/main/COPYING">Phase Two keycloak-magic-link lisansı</a> <span class="v">Elastic License 2.0</span> ve <a href="https://github.com/grafana/k6">k6</a> <span class="v">AGPL-3.0, yalnızca CI aracı</span></li>
+    <li><a href="https://www.rfc-editor.org/rfc/rfc9110.html#section-13.2.2">RFC 9110, koşullu istek değerlendirme sırası</a> <span class="v">412 Precondition Failed ile 409 Conflict ayrımı</span></li>
+    <li><a href="https://ant.design/docs/react/migration-v6/">Ant Design v6 geçiş rehberi</a> ve <a href="https://ant.design/docs/react/customize-theme">tema özelleştirme</a> <span class="v">6.6.5, MIT, CSS Variables varsayılan</span></li>
+    <li><a href="https://x.ant.design/docs/react/introduce/">Ant Design X</a> ve <a href="https://x.ant.design/x-cards/introduce/">X Card</a> <span class="v">2.9.0, MIT, A2UI v0.8/v0.9</span></li>
+    <li><a href="https://tanstack.com/form/latest/docs/overview">TanStack Form</a>, <a href="https://tanstack.com/table/latest">TanStack Table</a>, <a href="https://tanstack.com/router/latest/docs/framework/react/guide/search-params">TanStack Router search params</a>, <a href="https://tanstack.com/query/latest">TanStack Query</a></li>
+    <li><a href="https://echarts.apache.org/">Apache ECharts</a> <span class="v">6.1.0, Apache-2.0</span>; <a href="https://www.radix-ui.com/primitives">Radix Primitives</a> ve <a href="https://www.radix-ui.com/colors/docs/overview/usage">Radix Colors</a> <span class="v">MIT</span></li>
+    <li><a href="https://a2ui.org/roadmap/">A2UI yol haritası</a>, <a href="https://github.com/ag-ui-protocol/ag-ui/releases">AG-UI sürümleri</a>, <a href="https://json-render.dev/docs">json-render</a>, <a href="https://modelcontextprotocol.io/specification/2025-06-18/basic/authorization">MCP yetkilendirme (2025-06-18)</a></li>
+    <li><a href="https://cdn.jsdelivr.net/npm/@thesysai/genui-sdk@0.10.3/LICENSE.md">@thesysai/genui-sdk LICENSE.md</a> <span class="v">yalnızca dahili kullanım, dağıtım yasak</span></li>
+    <li><a href="https://genai.owasp.org/llmrisk/llm052025-improper-output-handling/">OWASP LLM05</a>, <a href="https://genai.owasp.org/llmrisk/llm062025-excessive-agency/">LLM06</a> ve <a href="https://cheatsheetseries.owasp.org/cheatsheets/LLM_Prompt_Injection_Prevention_Cheat_Sheet.html">Prompt Injection önleme</a></li>
+    <li><a href="https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html">OWASP CSP</a> ve <a href="https://developer.mozilla.org/en-US/docs/Web/API/Trusted_Types_API">MDN Trusted Types</a></li>
+    <li><a href="https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/">Simon Willison, The Lethal Trifecta</a> <span class="v">özel veri + güvenilmeyen içerik + dış iletişim</span></li>
+    <li><a href="https://zod.dev/json-schema">Zod JSON Schema</a> ve <a href="https://www.typescriptlang.org/tsconfig/noUncheckedIndexedAccess.html">TypeScript noUncheckedIndexedAccess</a></li>
+    <li><a href="https://www.w3.org/TR/WCAG22/">WCAG 2.2</a>, <a href="https://www.w3.org/WAI/WCAG22/Understanding/target-size-enhanced.html">Target Size (Enhanced)</a> ve <a href="https://accessible-eu-centre.ec.europa.eu/content-corner/news/european-accessibility-standard-en-301-549-has-been-updated-2026-09-07_en">EN 301 549 v4.1.1</a></li>
+    <li><a href="https://www.microsoft.com/en-us/haxtoolkit/guideline/update-and-adapt-cautiously/">Microsoft HAX, Guideline 14</a>, <a href="https://developer.apple.com/design/human-interface-guidelines/generative-ai">Apple HIG Generative AI</a>, <a href="https://carbondesignsystem.com/components/ai-label/usage/">IBM Carbon AI label</a></li>
+    <li><a href="https://web.dev/articles/vitals">web.dev Core Web Vitals</a> ve <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Containment/Container_queries">MDN Container queries</a></li>
+    <li><a href="https://www.promptfoo.dev/docs/integrations/ci-cd/">Promptfoo CI/CD</a> ve <a href="https://developers.openai.com/api/docs/deprecations">OpenAI deprecations</a></li>
+    <li><a href="https://react.dev/blog/2026/09/09/react-19-3">React 19.3</a>, <a href="https://vite.dev/blog/announcing-vite8">Vite 8</a>, <a href="https://devblogs.microsoft.com/typescript/announcing-typescript-7-0/">TypeScript 7.0</a>, <a href="https://docs.astro.build/en/install-and-setup/">Astro</a></li>
+    <li><a href="https://docs.github.com/en/copilot/concepts/agents/cloud-agent/risks-and-mitigations">GitHub Copilot cloud agent riskleri</a> ve <a href="https://platform.claude.com/docs/en/about-claude/model-deprecations">Anthropic model emeklilik politikası</a></li>
+  </ol>
+</section>
+</main>
+</div>
+
+<footer>
+  <span>GenUI Frontend Gereksinimleri, sürüm 2.4 (Ant Design + Frappe + Keycloak)</span>
+  <span>Bu belge bir sözleşmedir: değişiklik ADR ve PR ile yapılır</span>
+  <span class="links"><a href="https://github.com/karacaismail/genui">Kaynak kodu</a><a href="https://karacaismail.github.io/genui/">Yayın adresi</a></span>
+</footer>
+
+</div>
+<button type="button" class="totop" id="totop" aria-label="Sayfanın başına dön">{{icon:arrow-up}}</button>
+<script>
+(function () {
+  var d = document, root = d.documentElement;
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var scrollBehavior = reduceMotion ? 'auto' : 'smooth';
+
+  /* theme: system -> light -> dark */
+  var KEY = 'genui-doc-theme', btn = d.getElementById('theme-toggle');
+  var NAMES = { system: 'sistem', light: 'aydınlık', dark: 'koyu' };
+  function applyTheme(m) {
+    if (m === 'light' || m === 'dark') { root.setAttribute('data-theme', m); } else { root.removeAttribute('data-theme'); }
+    if (btn) { btn.setAttribute('data-theme-mode', m); btn.setAttribute('aria-label', 'Tema: ' + NAMES[m] + '. Değiştirmek için tıklayın'); }
+  }
+  var saved = null;
+  try { saved = localStorage.getItem(KEY); } catch (e) {}
+  if (saved === 'light' || saved === 'dark') { applyTheme(saved); }
+  else { applyTheme(root.getAttribute('data-theme') || 'system'); }
+  if (btn) {
+    btn.addEventListener('click', function () {
+      var cur = btn.getAttribute('data-theme-mode');
+      var next = cur === 'system' ? 'light' : cur === 'light' ? 'dark' : 'system';
+      applyTheme(next);
+      try { if (next === 'system') { localStorage.removeItem(KEY); } else { localStorage.setItem(KEY, next); } } catch (e) {}
+    });
+  }
+
+  /* back to top */
+  var top = d.getElementById('totop');
+  function onScroll() { var y = window.scrollY || root.scrollTop || 0; if (top) { top.classList.toggle('show', y > 600); } }
+  d.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+  if (top) {
+    top.addEventListener('click', function () {
+      window.scrollTo({ top: 0, behavior: scrollBehavior });
+      var main = d.getElementById('main'); if (main) { main.focus({ preventScroll: true }); }
+    });
+  }
+
+  /* section numbers next to headings */
+  var titles = d.querySelectorAll('.content .sec-head .title');
+  for (var i = 0; i < titles.length; i++) {
+    var n = d.createElement('span'); n.className = 'n'; n.textContent = (i + 1 < 10 ? '0' : '') + (i + 1);
+    titles[i].insertBefore(n, titles[i].firstChild);
+  }
+
+  /* active entry in the contents rail */
+  var links = [].slice.call(d.querySelectorAll('.toc a[href^="#"]'));
+  var map = {};
+  links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+  var targets = Object.keys(map).map(function (id) { return d.getElementById(id); }).filter(Boolean);
+  if ('IntersectionObserver' in window && targets.length) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) { return; }
+        links.forEach(function (a) { a.classList.remove('active'); a.removeAttribute('aria-current'); });
+        var a = map[e.target.id];
+        if (!a) { return; }
+        a.classList.add('active'); a.setAttribute('aria-current', 'true');
+        var li = a.closest('li');
+        var parentLi = li && li.parentElement ? li.parentElement.closest('li') : null;
+        if (parentLi) { var pa = parentLi.querySelector('a'); if (pa) { pa.classList.add('active'); } }
+      });
+    }, { rootMargin: '-15% 0px -70% 0px' });
+    targets.forEach(function (t) { io.observe(t); });
+  }
+
+  /* requirement rows: level and actor data; filters for level, phase, actor, reading mode */
+  var rows = [].slice.call(d.querySelectorAll('.req-table tbody tr'));
+  rows.forEach(function (tr) {
+    var lvl = tr.querySelector('.chip'), act = tr.querySelector('td.actor');
+    tr.setAttribute('data-level', lvl ? lvl.textContent.trim() : '');
+    tr.setAttribute('data-actor', act ? act.textContent.trim() : '');
+  });
+  var level = 'ALL', phase = 'ALL', actors = { 'Frontend': true, 'BFF': true, 'Frappe': true, 'Kimlik': true, 'Model': true, 'Kullanıcı': true, 'CI': true };
+  var levelBtns = [].slice.call(d.querySelectorAll('#flt-level button'));
+  var phaseBtns = [].slice.call(d.querySelectorAll('#flt-phase button'));
+  var actorBtns = [].slice.call(d.querySelectorAll('#flt-actor .tog'));
+  var modeBtns = [].slice.call(d.querySelectorAll('#flt-mode button'));
+  var count = d.getElementById('flt-count'), notice = d.getElementById('flt-notice');
+  function rowVisible(tr) {
+    return (level === 'ALL' || tr.getAttribute('data-level') === level)
+      && (phase === 'ALL' || tr.getAttribute('data-phase') === phase)
+      && actors[tr.getAttribute('data-actor')] !== false;
+  }
+  function applyFilter() {
+    var shown = 0;
+    rows.forEach(function (tr) { var ok = rowVisible(tr); tr.hidden = !ok; if (ok) { shown++; } });
+    [].slice.call(d.querySelectorAll('.group')).forEach(function (g) {
+      var any = [].slice.call(g.querySelectorAll('.req-table tbody tr')).some(function (tr) { return !tr.hidden; });
+      g.setAttribute('data-empty', any ? 'false' : 'true');
+    });
+    if (count) { count.textContent = shown + ' / ' + rows.length + ' gereksinim'; }
+  }
+  function press(list, active, attr) {
+    list.forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute(attr) === active ? 'true' : 'false'); });
+  }
+  levelBtns.forEach(function (b) { b.addEventListener('click', function () { level = b.getAttribute('data-level'); press(levelBtns, level, 'data-level'); applyFilter(); }); });
+  phaseBtns.forEach(function (b) { b.addEventListener('click', function () { phase = b.getAttribute('data-phase'); press(phaseBtns, phase, 'data-phase'); applyFilter(); }); });
+  actorBtns.forEach(function (b) {
+    b.addEventListener('click', function () {
+      var a = b.getAttribute('data-actor'); actors[a] = actors[a] === false;
+      b.setAttribute('aria-pressed', actors[a] === false ? 'false' : 'true'); applyFilter();
+    });
+  });
+  modeBtns.forEach(function (b) {
+    b.addEventListener('click', function () {
+      var m = b.getAttribute('data-mode'); press(modeBtns, m, 'data-mode');
+      d.body.classList.toggle('mode-ozet', m === 'ozet');
+    });
+  });
+  function resetFilters() {
+    level = 'ALL'; phase = 'ALL';
+    Object.keys(actors).forEach(function (k) { actors[k] = true; });
+    press(levelBtns, 'ALL', 'data-level'); press(phaseBtns, 'ALL', 'data-phase');
+    actorBtns.forEach(function (b) { b.setAttribute('aria-pressed', 'true'); });
+    applyFilter();
+  }
+  applyFilter();
+
+  /* a link to a requirement hidden by the current filter clears the filter instead of landing on nothing */
+  function revealHash() {
+    var id = (location.hash || '').slice(1);
+    if (!id) { return; }
+    var el = d.getElementById(id);
+    if (!el) { return; }
+    var tr = el.closest ? el.closest('tr') : null;
+    if (tr && tr.hidden) {
+      resetFilters();
+      if (notice) { notice.hidden = false; notice.textContent = 'Bağlantı filtrede gizli bir maddeye gidiyordu; filtreler kaldırıldı (' + id + ').'; }
+      el.scrollIntoView({ behavior: scrollBehavior, block: 'start' });
+    }
+  }
+  window.addEventListener('hashchange', revealHash);
+  revealHash();
+
+  /* requirement counts in the contents rail */
+  [].slice.call(d.querySelectorAll('.group[id]')).forEach(function (g) {
+    var a = d.querySelector('.toc .sub a[href="#' + g.id + '"]');
+    if (!a) { return; }
+    var c = d.createElement('span'); c.className = 'c'; c.textContent = g.querySelectorAll('.req-table tbody tr').length;
+    a.appendChild(c);
+  });
+
+  /* live example: AI label, evidence panel, revert. Everything here is a local simulation; nothing is sent anywhere. */
+  var ta = d.getElementById('demo-text'), chip = d.getElementById('demo-chip'), panel = d.getElementById('demo-panel');
+  var revert = d.getElementById('demo-revert'), status = d.getElementById('demo-status');
+  var undo = d.getElementById('demo-undo'), fb = d.getElementById('demo-fb');
+  if (ta && chip && panel && revert && status) {
+    var AI_TEXT = ta.value, aiState = true;
+    function leaveAi(msg, focusTarget) {
+      aiState = false; chip.hidden = true; panel.hidden = true; chip.setAttribute('aria-expanded', 'false');
+      revert.hidden = false; status.textContent = msg;
+      /* the control that had focus is being hidden: move focus explicitly, never let it fall to body */
+      if (focusTarget) { focusTarget.focus(); }
+    }
+    chip.addEventListener('click', function () {
+      var open = panel.hidden; panel.hidden = !open; chip.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    ta.addEventListener('input', function () {
+      if (aiState && ta.value !== AI_TEXT) { leaveAi('Demo: elle düzenlendi. YZ etiketi kaldırıldı; YZ sürümü yerel olarak saklandı. Gerçek üründe kaydetme ayrı ve açık bir eylemdir.', null); }
+    });
+    revert.addEventListener('click', function () {
+      ta.value = AI_TEXT; aiState = true; chip.hidden = false; revert.hidden = true;
+      status.textContent = 'Demo: YZ sürümüne dönüldü, etiket geri geldi.'; ta.focus();
+    });
+    if (undo) { undo.addEventListener('click', function () { ta.value = ''; leaveAi('Demo: YZ önerisi geri alındı (safe write, taslak). Alan boş; YZ sürümü yerel olarak saklandı.', revert); }); }
+    if (fb) { fb.addEventListener('click', function () { status.textContent = 'Demo: geri bildirim yalnızca bu sayfada gösterildi, hiçbir yere gönderilmedi. Gerçek üründe kayıt sunucuya yazılır ve öneri türünün önceliği düşer.'; }); }
+  }
+})();
+</script>

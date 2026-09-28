@@ -1,0 +1,57 @@
+<section id="katmanlar">
+  <div class="sec-head">
+    <div class="title"><h2>Katman mimarisi</h2></div>
+    <p>Yedi katman. Etiket, katmanın değişim maliyetini söyler; hiçbir katman "değişmez" değildir. <span class="chip kalici">kalıcı</span>: sözleşmesi ürüne aittir, sürüm geçişiyle korunur ve değiştirmenin bedeli migration yazmaktır, yeniden yazmak değil. <span class="chip degisebilir">değişebilir</span>: kütüphane sürümüyle birlikte evrilir, adaptör sınırında değişir. <span class="chip ucucu">uçucu</span>: 12 ayda değişebilir ve değişmesi normaldir.</p>
+  </div>
+  <div class="layers">
+    <div class="layer l-kalici">
+      <div class="name"><span class="ord">01</span>Frappe sözleşmesi<span class="chip kalici">kalıcı</span></div>
+      <dl>
+        <dt>Nedir</dt><dd>Aynı origin'deki kenar katmanı (ters vekil, sürümlü API sözleşmesi ve oturumu açan kimlik köprüsü) ve DocType metadata'sından üretilen tipli şemalar: Entity, Field, Report, Workspace, Run. Frappe REST v2 ve RPC bu sözleşmenin arkasındadır; sürüm uyumluluk matrisi burada yaşar. Kimlik ve oturum Kimlik bölümündedir.</dd>
+        <dt>Ne yapmaz</dt><dd>Desk'in iç endpoint'lerine bağlanmaz. İş kuralı, izin veya doğrulama tekrarlamaz. Metadata'dan çıkmayan domain kuralını uydurmaz; o kural Frappe tarafında Server Script veya hook olarak yazılır.</dd>
+      </dl>
+    </div>
+    <div class="layer l-kalici">
+      <div class="name"><span class="ord">02</span>Yetenek istemcisi<span class="chip kalici">kalıcı</span></div>
+      <dl>
+        <dt>Nedir</dt><dd>Capability manifest'inden (metadata'dan üretilmiş ve açık allowlist ile daraltılmış eylem listesi) türeyen tek erişim katmanı; TanStack Query üzerinde çalışır. Kullanıcı, model ve klasik ekran aynı capability'yi buradan çağırır.</dd>
+        <dt>Ne yapmaz</dt><dd>Yetki kararı vermez, model sağlayıcısını çağırmaz, manifest dışı uç nokta veya SQL üretmez, kayıt kimliği tahmin etmez (naming series sunucudadır).</dd>
+      </dl>
+    </div>
+    <div class="layer l-kalici">
+      <div class="name"><span class="ord">03</span>Görev durumu<span class="chip kalici">kalıcı</span></div>
+      <dl>
+        <dt>Nedir</dt><dd>Üç ayrı depo: sunucu gerçeği (Query önbelleği, tenant + kullanıcı + izin sürümü ile anahtarlı), çalışma taslağı (alan bazlı autosave, revizyon numarası, çevrimdışı kuyruk) ve görünüm durumu (şema doğrulanan URL). Uzun işler Run DocType'ında yaşar; tarayıcı kapansa da sürer.</dd>
+        <dt>Ne yapmaz</dt><dd>Taslağı localStorage'da kayıt sistemi olarak tutmaz. İki form store'unu eşzamanlamaz (tek state sahibi). Eski revizyonla kaydetmeye çalışmaz; çakışmayı sunucu reddeder, kullanıcı inceler.</dd>
+      </dl>
+    </div>
+    <div class="layer l-kalici">
+      <div class="name"><span class="ord">04</span>Katalog, kayıt ve renderer<span class="chip kalici">kalıcı</span></div>
+      <dl>
+        <dt>Nedir</dt><dd>Onaylı renderer kataloğu (SchemaForm, EntityTable, EntityPicker, DiffReview, ComparisonTable, MetricGrid, ReportView, ChartView, RunPanel …), her biri zod şeması, izinli çocuklar, veri bağlama noktası ve risk sınıflı eylemlerle. Field registry Frappe fieldtype'larını bu bileşenlere eşler. Renderer saf bir fonksiyondur: (spec, veri, bağlam) → React ağacı.</dd>
+        <dt>Ne yapmaz</dt><dd>antd prop, enum veya tip adı taşımaz. Ham HTML/JSX, className veya style dizesi, dinamik import, eval, serbest URL kabul etmez. Bilinmeyen fieldtype'ı sessizce gizlemez; salt okunur yer tutucu gösterir.</dd>
+      </dl>
+    </div>
+    <div class="layer l-degisebilir">
+      <div class="name"><span class="ord">05</span>Tasarım tokenları<span class="chip degisebilir">değişebilir</span></div>
+      <dl>
+        <dt>Nedir</dt><dd>Primitive → semantic → component token zinciri; Radix palet ölçekleri semantik rollere eşlenir, semantik roller yalnızca domain bileşen katmanında antd Seed/Alias/Component tokenlarına bağlanır. Tema (aydınlık, koyu, yüksek kontrast, çok marka) ile yoğunluk (comfortable, compact, touch) ayrı eksenlerdir.</dd>
+        <dt>Ne yapmaz</dt><dd>antd token adlarını uygulama koduna sızdırmaz. Modelden ham renk veya piksel almaz. Koyu temayı renk ters çevirerek üretmez; ayrı roller tanımlar.</dd>
+      </dl>
+    </div>
+    <div class="layer l-kalici">
+      <div class="name"><span class="ord">06</span>Etkileşim düzenleyici<span class="chip kalici">kalıcı</span></div>
+      <dl>
+        <dt>Nedir</dt><dd>Her eylemin modu vardır: <strong>direct</strong> (kullanıcı tetikler), <strong>assisted</strong> (model ChangeSet önerir, kullanıcı diff'i görüp onaylar), <strong>delegated</strong> (ajan Run içinde, kullanıcının önceden verdiği sınırlı yetki içinde çalışır; kapsam dışı adım onaya düşer). Beş risk sınıfı (read, safe write, reversible, destructive, sensitive) ile birleşerek insan onayını, geri almayı ve toplu sonuçları tek yerde uygular.</dd>
+        <dt>Ne yapmaz</dt><dd>Model metnini komut olarak yorumlamaz. İstemci bayrağıyla delegated moda geçmez. destructive ve sensitive sınıfta onayı kapatmaz. Kullanıcının hariç tuttuğu kaydı uygulamaz.</dd>
+      </dl>
+    </div>
+    <div class="layer l-ucucu">
+      <div class="name"><span class="ord">07</span>Adaptörler<span class="chip ucucu">uçucu</span></div>
+      <dl>
+        <dt>Nedir</dt><dd>Dört port. TransportAdapter: Frappe Socket.IO, aynı origin'de HttpOnly oturum çereziyle. SpecAdapter: iç UI Spec ile A2UI veya json-render arasında dönüşüm. RendererAdapter ve ComponentLibraryAdapter: iç spec'i domain katmanı (bugün antd) ile çizer. ToolAdapter: capability'leri iç tool çağrısına ve dış MCP sunucusuna açar. Sürümler <code>protocol-matrix</code> dosyasında sabittir.</dd>
+        <dt>Ne yapmaz</dt><dd>Dış kütüphane tiplerini domain katmanına sızdırmaz. Tarayıcıdan LLM sağlayıcısını çağırmaz. Token passthrough yapmaz. Tescilli SDK'yı çekirdek yapmaz.</dd>
+      </dl>
+    </div>
+  </div>
+</section>

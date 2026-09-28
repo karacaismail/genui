@@ -1,0 +1,11 @@
+{
+  "name": "genui-doc-qa",
+  "private": true,
+  "description": "Behavior checks for the GenUI requirements page. They test the document UI, not the identity integration.",
+  "scripts": {
+    "check": "node check.js ../../genui-frontend-gereksinimleri.html"
+  },
+  "dependencies": {
+    "playwright-core": "1.56.1"
+  }
+}

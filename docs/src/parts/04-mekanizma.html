@@ -1,0 +1,192 @@
+<section id="mekanizma">
+  <div class="sec-head">
+    <div class="title"><h2>Mekanizma</h2></div>
+    <p>Üç çizim, sözleşmenin dayandığı üç mekanizmayı gösterir: aynı capability'ye giden üç yol ve tek yetki noktası; metadata'dan modele ve ekrana giden veri; uzun bir YZ işinin Run kaydındaki yaşam döngüsü.</p>
+  </div>
+  <div class="figs">
+    <figure class="fig">
+      <div class="canvas"><svg viewBox="0 0 960 300" role="img" aria-label="Kullanıcı, kullanıcı ile model ve ajan olmak üzere üç giriş yolu aynı etkileşim düzenleyicisine, yetenek istemcisine ve aynı origin'deki BFF kenar katmanı üzerinden tek yetki noktası olan Frappe sunucusuna gider">
+        <defs><marker id="f1-ar" class="m" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z"/></marker></defs>
+        <rect class="box" x="24" y="40" width="176" height="56" rx="6"/>
+        <text class="ttl" x="40" y="64">Kullanıcı</text>
+        <text class="sub" x="40" y="84">direct · klasik ekran</text>
+        <rect class="box" x="24" y="130" width="176" height="56" rx="6"/>
+        <text class="ttl" x="40" y="154">Kullanıcı + model</text>
+        <text class="sub" x="40" y="174">assisted · ChangeSet onayı</text>
+        <rect class="box gen" x="24" y="220" width="176" height="56" rx="6"/>
+        <text class="ttl" x="40" y="244">Ajan (Run)</text>
+        <text class="sub" x="40" y="264">delegated · yetki içinde</text>
+        <line class="arrow" x1="200" y1="68" x2="232" y2="68"/>
+        <line class="arrow" x1="200" y1="158" x2="232" y2="158"/>
+        <line class="arrow" x1="200" y1="248" x2="232" y2="248"/>
+        <line class="arrow" x1="232" y1="68" x2="232" y2="248"/>
+        <line class="arrow" x1="232" y1="158" x2="252" y2="158" marker-end="url(#f1-ar)"/>
+        <rect class="box" x="252" y="98" width="190" height="120" rx="6"/>
+        <text class="ttl" x="268" y="124">Etkileşim düzenleyici</text>
+        <text class="sub" x="268" y="146">mode: direct · assisted · delegated</text>
+        <text class="sub" x="268" y="164">risk: read → sensitive</text>
+        <text class="sub" x="268" y="182">diff, kısmi onay, Durdur</text>
+        <text class="sub" x="268" y="200">geri alma sözleşmesi</text>
+        <text class="lbl" x="347" y="250" text-anchor="middle">üç yol, aynı capability sözleşmesi</text>
+        <line class="arrow" x1="442" y1="158" x2="492" y2="158" marker-end="url(#f1-ar)"/>
+        <text class="lbl strong" x="467" y="86" text-anchor="middle">invokeCapability(actionId, payload)</text>
+        <rect class="box" x="492" y="112" width="150" height="92" rx="6"/>
+        <text class="ttl" x="508" y="138">Yetenek istemcisi</text>
+        <text class="sub" x="508" y="158">tipli sözleşme</text>
+        <text class="sub" x="508" y="176">Idempotency-Key</text>
+        <line class="arrow" x1="642" y1="158" x2="690" y2="158" marker-end="url(#f1-ar)"/>
+        <text class="lbl strong" x="666" y="86" text-anchor="middle">HTTPS</text>
+        <rect class="box" x="690" y="112" width="120" height="92" rx="6"/>
+        <text class="ttl" x="706" y="138">BFF kenarı</text>
+        <text class="sub" x="706" y="158">aynı origin, CSRF</text>
+        <text class="sub" x="706" y="176">sürüm matrisi</text>
+        <line class="arrow" x1="810" y1="158" x2="846" y2="158" marker-end="url(#f1-ar)"/>
+        <text class="lbl strong" x="828" y="86" text-anchor="middle">REST v2 · RPC</text>
+        <rect class="box accent" x="846" y="98" width="94" height="120" rx="6"/>
+        <text class="ttl" x="862" y="124">Frappe</text>
+        <text class="sub" x="862" y="146">izin</text>
+        <text class="sub" x="862" y="164">iş kuralı</text>
+        <text class="sub" x="862" y="182">docstatus</text>
+        <text class="sub" x="862" y="200">jobs</text>
+        <line class="arrow dashed" x1="846" y1="192" x2="642" y2="192" marker-end="url(#f1-ar)"/>
+        <text class="lbl" x="744" y="250" text-anchor="middle">exc_type ile ayrışan hata · 403 · onay veya yetki kaydı</text>
+        <text class="accent-t" x="893" y="275" text-anchor="middle">tek yetki noktası</text>
+      </svg></div>
+      <span class="scroll-hint">Aşağıdaki çizim gerçek boyutunda kalır ve yana kaydırılır.</span>
+      <ol class="fig-steps">
+        <li><b>Üç giriş:</b> kullanıcının kendi eylemi (direct), kullanıcının onayladığı öneri (assisted), kullanıcının önceden verdiği sınırlı yetki içinde çalışan ajan (delegated).</li>
+        <li><b>Etkileşim düzenleyici</b> modu ve risk sınıfını belirler, gerekirse diff ve onay ister.</li>
+        <li><b>Yetenek istemcisi</b> aynı capability sözleşmesini Idempotency-Key ile çağırır.</li>
+        <li><b>BFF kenarı</b> (aynı origin ters vekil ve kimlik köprüsü) isteği Frappe'nin HttpOnly oturum çerezi ve CSRF belirteciyle REST v2 veya RPC'ye iletir; tarayıcıda token yoktur.</li>
+        <li><b>Frappe</b> izin, iş kuralı, docstatus ve job kararını verir; tek yetki noktasıdır. Hata türü yanıttaki exc_type ile ayrışır.</li>
+      </ol>
+      <figcaption><b>Üç giriş yolu, tek capability, tek yetki noktası.</b> Kullanıcı, model destekli kullanıcı ve ajan aynı eylem sözleşmesini kullanır. İzin, iş kuralı ve docstatus geçişi yalnızca Frappe'de karar verilir; bir düğmenin gizlenmesi veya modelin "yetkili" demesi güvenlik kontrolü değildir.</figcaption>
+    </figure>
+    <figure class="fig">
+      <div class="canvas"><svg viewBox="0 0 960 320" role="img" aria-label="DocType metadata codegen ile kataloğa dönüşür; katalog hem modele JSON şeması hem renderer'a kayıt tablosu sağlar; model UI Spec veya ChangeSet üretir, doğrulama fail-closed geçer, renderer domain katmanı üzerinden antd ile çizer; kod, HTML, SQL ve URL modelden ekrana doğrudan geçmez">
+        <defs>
+          <marker id="f2-ar" class="m" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z"/></marker>
+          <marker id="f2-arw" class="m-warn" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z"/></marker>
+        </defs>
+        <rect class="box accent" x="24" y="18" width="196" height="56" rx="6"/>
+        <text class="ttl" x="40" y="42">DocType metadata</text>
+        <text class="sub" x="40" y="62">fieldtype · permlevel · depends_on</text>
+        <line class="arrow" x1="220" y1="46" x2="240" y2="46" marker-end="url(#f2-ar)"/>
+        <rect class="box" x="240" y="18" width="140" height="56" rx="6"/>
+        <text class="ttl" x="256" y="42">Codegen</text>
+        <text class="sub" x="256" y="62">Entity · Field · Run şemaları</text>
+        <line class="arrow" x1="380" y1="46" x2="430" y2="46" marker-end="url(#f2-ar)"/>
+        <rect class="box" x="430" y="18" width="250" height="56" rx="6"/>
+        <text class="ttl" x="446" y="42">Katalog (semver)</text>
+        <text class="sub" x="446" y="62">zod şemaları · renderer registry · manifest</text>
+        <polyline class="arrow dashed" points="450,74 450,110 99,110 99,140" marker-end="url(#f2-ar)"/>
+        <text class="lbl" x="275" y="104" text-anchor="middle">JSON Schema → yapılandırılmış çıktı</text>
+        <rect class="box gen" x="24" y="140" width="150" height="64" rx="6"/>
+        <text class="ttl" x="40" y="166">Model</text>
+        <text class="sub" x="40" y="186">yalnızca seçer</text>
+        <line class="arrow" x1="174" y1="172" x2="236" y2="172" marker-end="url(#f2-ar)"/>
+        <text class="lbl strong" x="205" y="130" text-anchor="middle">UI Spec · ChangeSet</text>
+        <text class="lbl" x="205" y="222" text-anchor="middle">tamamlanmış sonuç</text>
+        <rect class="box" x="236" y="140" width="176" height="64" rx="6"/>
+        <text class="ttl" x="252" y="166">Doğrulama</text>
+        <text class="sub" x="252" y="186">z.strictObject · fail-closed</text>
+        <text class="lbl" x="324" y="240" text-anchor="middle">hata → 2 yeniden üretim, sonra fallback</text>
+        <line class="arrow" x1="412" y1="172" x2="474" y2="172" marker-end="url(#f2-ar)"/>
+        <text class="lbl" x="443" y="130" text-anchor="middle">doğrulanmış spec</text>
+        <line class="arrow dashed" x1="555" y1="74" x2="555" y2="140" marker-end="url(#f2-ar)"/>
+        <text class="lbl" x="565" y="118">registry: kimlik → bileşen</text>
+        <rect class="box" x="474" y="140" width="176" height="64" rx="6"/>
+        <text class="ttl" x="490" y="166">Renderer</text>
+        <text class="sub" x="490" y="186">(spec, veri) → React ağacı</text>
+        <text class="lbl" x="562" y="240" text-anchor="middle">bilinmeyen renderer → yer tutucu</text>
+        <line class="arrow" x1="650" y1="172" x2="712" y2="172" marker-end="url(#f2-ar)"/>
+        <text class="lbl" x="681" y="222" text-anchor="middle">bileşen</text>
+        <rect class="box" x="712" y="140" width="130" height="64" rx="6"/>
+        <text class="ttl" x="728" y="166">@aep/ui</text>
+        <text class="sub" x="728" y="186">domain bileşenleri</text>
+        <line class="arrow" x1="842" y1="172" x2="880" y2="172" marker-end="url(#f2-ar)"/>
+        <rect class="box swap" x="880" y="140" width="60" height="64" rx="6"/>
+        <text class="ttl" x="892" y="166">antd 6</text>
+        <text class="sub" x="892" y="186">değişir</text>
+        <polyline class="arrow no" points="99,204 99,274 555,274 555,204" marker-end="url(#f2-arw)"/>
+        <circle class="xmark" cx="330" cy="274" r="9"/>
+        <line class="xmark" x1="325" y1="269" x2="335" y2="279"/>
+        <line class="xmark" x1="335" y1="269" x2="325" y2="279"/>
+        <text class="warn-t" x="330" y="300" text-anchor="middle">kod, HTML, SQL, className, URL: modelden ekrana doğrudan geçmez</text>
+      </svg></div>
+      <span class="scroll-hint">Aşağıdaki çizim gerçek boyutunda kalır ve yana kaydırılır.</span>
+      <ol class="fig-steps">
+        <li><b>DocType metadata</b> (fieldtype, permlevel, depends_on) codegen ile Entity ve Field şemalarına derlenir.</li>
+        <li><b>Katalog</b> bu şemalardan renderer kaydını ve modelin çıktı şemasını üretir.</li>
+        <li><b>Model</b> yalnızca katalogdan seçer ve UI Spec veya ChangeSet üretir.</li>
+        <li><b>Doğrulama</b> fail-closed çalışır; hata iki yeniden üretimden sonra fallback'e düşer.</li>
+        <li><b>Renderer</b> spec'i domain bileşenleriyle çizer; antd bu bileşenlerin arkasında değiştirilebilir.</li>
+        <li><b>Hiçbir</b> kod, HTML, SQL, className veya URL modelden ekrana doğrudan geçmez.</li>
+      </ol>
+      <figcaption><b>Metadata'dan ekrana.</b> DocType metadata tek kaynaktır: codegen ile Entity ve Field şemaları, oradan model çıktı şeması ve renderer kayıt tablosu üretilir. Model yalnızca seçer; doğrulama fail-closed çalışır; antd yalnızca domain katmanı arkasında görünür ve değiştirilebilir.</figcaption>
+    </figure>
+    <figure class="fig">
+      <div class="canvas"><svg viewBox="0 0 960 300" role="img" aria-label="Run durum makinesi: queued, running, awaiting_approval, applying ve done ana yolu; running ve applying durumlarından cancel_requested ile cancelled; applying durumundan partially_done; dış yan etkide zaman aşımında outcome_unknown ve oradan needs_reconciliation; istemci Run belgesinin doc odasına izinli abonelikle bağlanır">
+        <defs><marker id="f3-ar" class="m" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z"/></marker></defs>
+        <rect class="box" x="24" y="60" width="150" height="56" rx="6"/>
+        <text class="ttl" x="40" y="84">queued</text>
+        <text class="sub" x="40" y="104">enqueue · Run kaydı</text>
+        <line class="arrow" x1="174" y1="88" x2="214" y2="88" marker-end="url(#f3-ar)"/>
+        <text class="lbl" x="194" y="48" text-anchor="middle">kilit + lease</text>
+        <rect class="box" x="214" y="60" width="150" height="56" rx="6"/>
+        <text class="ttl" x="230" y="84">running</text>
+        <text class="sub" x="230" y="104">adım günlüğü</text>
+        <line class="arrow" x1="364" y1="88" x2="404" y2="88" marker-end="url(#f3-ar)"/>
+        <text class="lbl" x="384" y="48" text-anchor="middle">yetki dışı adım</text>
+        <rect class="box gen" x="404" y="60" width="150" height="56" rx="6"/>
+        <text class="ttl" x="420" y="84">awaiting_approval</text>
+        <text class="sub" x="420" y="104">worker serbest · TTL</text>
+        <line class="arrow" x1="554" y1="88" x2="594" y2="88" marker-end="url(#f3-ar)"/>
+        <text class="lbl" x="574" y="48" text-anchor="middle">onay + revizyon kontrolü</text>
+        <rect class="box" x="594" y="60" width="150" height="56" rx="6"/>
+        <text class="ttl" x="610" y="84">applying</text>
+        <text class="sub" x="610" y="104">idempotent uygulama</text>
+        <line class="arrow" x1="744" y1="88" x2="784" y2="88" marker-end="url(#f3-ar)"/>
+        <text class="lbl" x="764" y="48" text-anchor="middle">audit</text>
+        <rect class="box ok" x="784" y="60" width="150" height="56" rx="6"/>
+        <text class="ttl" x="800" y="84">done</text>
+        <text class="sub" x="800" y="104">geri alma · export</text>
+        <polyline class="arrow dashed" points="289,116 289,150 330,150" marker-end="url(#f3-ar)"/>
+        <rect class="box swap" x="330" y="130" width="150" height="44" rx="6"/>
+        <text class="ttl" x="346" y="150">cancel_requested</text>
+        <text class="sub" x="346" y="167">adım bitince durur</text>
+        <line class="arrow dashed" x1="480" y1="152" x2="520" y2="152" marker-end="url(#f3-ar)"/>
+        <rect class="box swap" x="520" y="130" width="120" height="44" rx="6"/>
+        <text class="ttl" x="536" y="150">cancelled</text>
+        <text class="sub" x="536" y="167">kısmi sonuç kalır</text>
+        <polyline class="arrow dashed" points="669,116 669,215 640,215" marker-end="url(#f3-ar)"/>
+        <rect class="box swap" x="470" y="194" width="170" height="44" rx="6"/>
+        <text class="ttl" x="486" y="214">partially_done · failed</text>
+        <text class="sub" x="486" y="231">seçmeli yeniden deneme</text>
+        <polyline class="arrow dashed" points="719,116 719,254 760,254" marker-end="url(#f3-ar)"/>
+        <rect class="box swap" x="760" y="234" width="174" height="44" rx="6"/>
+        <text class="ttl" x="776" y="254">outcome_unknown</text>
+        <text class="sub" x="776" y="271">dış çağrı yanıtı kayboldu</text>
+        <line class="arrow dashed" x1="760" y1="270" x2="660" y2="270" marker-end="url(#f3-ar)"/>
+        <rect class="box gen" x="470" y="250" width="190" height="44" rx="6"/>
+        <text class="ttl" x="486" y="270">needs_reconciliation</text>
+        <text class="sub" x="486" y="287">kullanıcı veya operatör karar verir</text>
+        <text class="lbl strong" x="24" y="160">İstemci aboneliği</text>
+        <text class="lbl" x="24" y="178">Run belgesinin doc odası (izinli)</text>
+        <text class="lbl" x="24" y="196">task_subscribe kullanılmaz</text>
+        <text class="lbl" x="24" y="214">olay yalnızca sinyal ve yüzde taşır</text>
+      </svg></div>
+      <span class="scroll-hint">Aşağıdaki çizim gerçek boyutunda kalır ve yana kaydırılır.</span>
+      <ol class="fig-steps">
+        <li><b>queued:</b> iş Frappe job olarak kuyruğa girer, Run kaydı açılır.</li>
+        <li><b>running:</b> worker Run'ı kilit ve lease ile sahiplenir; her adım günlüğe ve checkpoint'e yazılır.</li>
+        <li><b>awaiting_approval:</b> yetki dışındaki adımda durur, worker serbest kalır; onay yeni job başlatır.</li>
+        <li><b>applying:</b> onay ve revizyon Frappe içinde yeniden doğrulanır; her kayıt idempotent uygulanır.</li>
+        <li><b>done:</b> sonuç, geri alma penceresi ve export sunulur; denetim izi yazılır.</li>
+        <li><b>Yan yollar:</b> cancel_requested → cancelled; partially_done veya failed → seçmeli yeniden deneme; dış çağrının yanıtı kaybolursa outcome_unknown → needs_reconciliation.</li>
+        <li><b>Abonelik:</b> istemci Run belgesinin doc odasına izin kontrollü bağlanır; task_subscribe kullanılmaz; olay yalnızca sinyal ve ilerleme yüzdesi taşır.</li>
+      </ol>
+      <figcaption><b>Run yaşam döngüsü.</b> Uzun YZ işi tarayıcı ömründen bağımsız olarak Frappe job'ında koşar ve Run DocType'ında izlenir. Frappe çekirdeği kuyruk ve transaction verir; adım günlüğü, kilit, checkpoint, uzlaştırma ve izinli abonelik Frappe custom app'te platform ekibince geliştirilir (E5, E10).</figcaption>
+    </figure>
+  </div>
+</section>

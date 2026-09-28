@@ -1,0 +1,207 @@
+<section id="kimlik">
+  <div class="sec-head">
+    <div class="title"><h2>Kimlik, oturum ve white-label</h2></div>
+    <p>Bu bölüm "Keycloak + Headless Frappe: Kimlik Rehberi ve Yol Haritası"nı bu belgeye bağlar. Öncelik kuralı açıktır: kimlik, oturum ve giriş konularında rehberin "Kararlaştırıldı" satırları bağlayıcıdır ve karar kaydındaki eski oturum seçiminin (ayrı origin + BFF session) yerini alır; bu tek istisna Açık kararlar'da ADR bekler. Rehberin "Koşullu" ve "Açık" satırları Açık kararlar'dadır. Rehberin veri modeli, OTP gateway tabloları ve eklenti listesi rehberde kalır; burada yalnızca arayüzü, sözleşmeyi ve YZ davranışını bağlayan kısımlar vardır. Satır düzeyindeki gereksinimler M grubunda, kabuller AT-18–AT-23'te.</p>
+  </div>
+
+  <div class="quad">
+    <div><div class="q plain">Bu nedir?</div><p>Ürün ailesinin tüm uygulamaları için tek giriş, kayıt ve oturum düzeni. Keycloak kimliği doğrular; Frappe kimlik köprüsü (Frappe custom app) Frappe oturumunu açar; Frappe iş yetkisini verir; SPA'lar (tek sayfa uygulamalar) Frappe API'siyle aynı origin'den sunulur. Origin: protokol, alan adı ve portun üçü birden.</p></div>
+    <div><div class="q plain">Ne işe yarar?</div><p>Kullanıcı bir kez girer, uygulamalar arasında parola sorulmadan geçer. Seviye 1'de herkes ürün markasını görür; müşteri markası seviye 2 kararıyla gelir. Giriş yöntemleri (parola, Google, passkey, kod) tek yerden eklenir ve her biri kendi kabul testinden geçer. Şirket üyeliği, uygulama yetkisi ve KYC/KYB iş kuralı olarak Frappe'de kalır.</p></div>
+    <div><div class="q plain">Ne yapar?</div><p>Girişi her zaman Keycloak sayfasında, yetkilendirme kodu akışı + PKCE ile yapar. Kimliği issuer + sub ile Frappe kullanıcısına bağlar. Oturumu HttpOnly çerezde tutar. Kritik işlemde doğrulama seviyesini yükseltir. Tek çıkışta bütün oturumları kapatır. Marka token'larını giriş, e-posta ve uygulama ekranlarına aynı kaynaktan dağıtır.</p></div>
+    <div><div class="q plain">Ne yapmaz?</div><p>Tarayıcıya token vermez. SPA'da parola veya kod formu barındırmaz. Yetki kararı vermez; yetkiyi Frappe verir. Model kimlik ekranı üretmez; kimlik doğrulama sırlarına ve oturuma erişmez; KYC belgesini yalnızca veri sınıfı tablosundaki onaylı yolla görür. Kullanıcı adına tek bir yönetici API anahtarıyla istek atmaz.</p></div>
+  </div>
+
+  <div class="figs" style="margin-top:1.5rem">
+    <figure class="fig">
+      <div class="canvas"><svg viewBox="0 0 960 330" role="img" aria-label="Tarayıcıdaki SPA aynı origin'deki ters vekile gider; ters vekil /auth yolunu Frappe kimlik köprüsüne, API ve realtime yollarını Frappe'ye iletir; köprü kullanıcıyı PKCE ile Keycloak'a yönlendirir, dönen kodu arka kanalda token'a çevirip doğrular ve Frappe oturumunu açar; Keycloak kod yöntemlerinde OTP gateway'i kullanır ve çıkışı back-channel logout ile köprüye bildirir">
+        <defs><marker id="f4-ar" class="m" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z"/></marker></defs>
+        <rect class="box" x="24" y="112" width="170" height="108" rx="6"/>
+        <text class="ttl" x="40" y="136">Tarayıcı · SPA'lar</text>
+        <text class="sub" x="40" y="156">app.alanadın /, /crm …</text>
+        <text class="sub" x="40" y="174">token ve API anahtarı yok</text>
+        <text class="sub" x="40" y="192">HttpOnly oturum çerezi</text>
+        <text class="sub" x="40" y="210">CSRF başlığı</text>
+        <line class="arrow" x1="194" y1="166" x2="236" y2="166" marker-end="url(#f4-ar)"/>
+        <rect class="box" x="236" y="112" width="160" height="108" rx="6"/>
+        <text class="ttl" x="252" y="136">Ters vekil</text>
+        <text class="sub" x="252" y="156">aynı origin, TLS</text>
+        <text class="sub" x="252" y="174">/auth → köprü</text>
+        <text class="sub" x="252" y="192">/api · /files</text>
+        <text class="sub" x="252" y="210">/socket.io → Frappe</text>
+        <line class="arrow" x1="396" y1="146" x2="417" y2="146"/>
+        <line class="arrow" x1="417" y1="146" x2="417" y2="83"/>
+        <line class="arrow" x1="417" y1="83" x2="438" y2="83" marker-end="url(#f4-ar)"/>
+        <line class="arrow" x1="396" y1="192" x2="417" y2="192"/>
+        <line class="arrow" x1="417" y1="192" x2="417" y2="251"/>
+        <line class="arrow" x1="417" y1="251" x2="438" y2="251" marker-end="url(#f4-ar)"/>
+        <rect class="box" x="438" y="24" width="196" height="118" rx="6"/>
+        <text class="ttl" x="454" y="48">Frappe kimlik köprüsü</text>
+        <text class="sub" x="454" y="68">BFF görevi · /auth</text>
+        <text class="sub" x="454" y="86">state + nonce + PKCE</text>
+        <text class="sub" x="454" y="104">JWKS · iss · aud · nonce · acr</text>
+        <text class="sub" x="454" y="122">issuer + sub → Kimlik Bağı</text>
+        <line class="arrow" x1="536" y1="142" x2="536" y2="196" marker-end="url(#f4-ar)"/>
+        <text class="lbl strong" x="546" y="174">Frappe oturumu</text>
+        <rect class="box accent" x="438" y="196" width="196" height="110" rx="6"/>
+        <text class="ttl" x="454" y="220">Frappe API ve iş kuralı</text>
+        <text class="sub" x="454" y="240">üyelik · uygulama yetkisi</text>
+        <text class="sub" x="454" y="258">KYC/KYB canlı kontrol</text>
+        <text class="sub" x="454" y="276">izin · docstatus · Run</text>
+        <text class="accent-t" x="536" y="324" text-anchor="middle">yetki otoritesi</text>
+        <line class="arrow" x1="634" y1="58" x2="764" y2="58" marker-end="url(#f4-ar)"/>
+        <text class="lbl strong" x="699" y="50" text-anchor="middle">yönlendir · PKCE S256</text>
+        <line class="arrow" x1="764" y1="96" x2="634" y2="96" marker-end="url(#f4-ar)"/>
+        <text class="lbl strong" x="699" y="88" text-anchor="middle">kod → token (arka kanal)</text>
+        <line class="arrow dashed" x1="764" y1="130" x2="634" y2="130" marker-end="url(#f4-ar)"/>
+        <text class="lbl" x="699" y="122" text-anchor="middle">back-channel logout</text>
+        <rect class="box accent" x="764" y="24" width="172" height="118" rx="6"/>
+        <text class="ttl" x="780" y="48">Keycloak</text>
+        <text class="sub" x="780" y="68">accounts.alanadın</text>
+        <text class="sub" x="780" y="86">Keycloakify teması</text>
+        <text class="sub" x="780" y="104">parola, Google, passkey</text>
+        <text class="sub" x="780" y="122">adım yükseltme (acr)</text>
+        <text class="accent-t" x="850" y="16" text-anchor="middle">kimlik otoritesi</text>
+        <line class="arrow" x1="850" y1="142" x2="850" y2="196" marker-end="url(#f4-ar)"/>
+        <text class="lbl" x="860" y="174">kod teslimi</text>
+        <rect class="box" x="764" y="196" width="172" height="90" rx="6"/>
+        <text class="ttl" x="780" y="220">OTP gateway</text>
+        <text class="sub" x="780" y="240">SMS, WhatsApp, Telegram</text>
+        <text class="sub" x="780" y="258">FastAPI · PostgreSQL</text>
+        <text class="sub" x="780" y="276">kod saklanmaz</text>
+        <text class="lbl strong" x="210" y="252" text-anchor="middle">REST, RPC ve realtime aynı origin'de</text>
+        <text class="lbl" x="210" y="270" text-anchor="middle">sessiz giriş: tam sayfa yönlendirme, iframe yok</text>
+      </svg></div>
+      <span class="scroll-hint">Aşağıdaki çizim gerçek boyutunda kalır ve yana kaydırılır.</span>
+      <ol class="fig-steps">
+        <li><b>SPA</b> oturum yoksa kullanıcıyı tam sayfa olarak köprünün giriş adresine gönderir; dönüş yolu izin listesindedir.</li>
+        <li><b>Köprü</b> state, nonce ve PKCE doğrulayıcısı üretir, bunları tarayıcıya kısa ömürlü HttpOnly çerezle bağlar ve kullanıcıyı Keycloak'a yönlendirir.</li>
+        <li><b>Kullanıcı</b> Keycloakify temalı Keycloak sayfasında parola, Google, passkey veya kabul edilmiş bir kod yöntemiyle girer.</li>
+        <li><b>Köprü</b> dönen kodu arka kanalda PKCE ile token'a çevirir; imzayı JWKS ile, issuer, audience, süre, nonce ve doğrulama seviyesini (acr) kontrol eder.</li>
+        <li><b>Köprü</b> kimliği issuer + sub ile Kimlik Bağı kaydına eşler ve Frappe oturumunu Secure, HttpOnly, SameSite=Lax çerezle açar.</li>
+        <li><b>SPA</b> REST, RPC ve Socket.IO isteklerini aynı origin'de bu çerez ve CSRF belirteciyle yapar; yetki her istekte Frappe'deki üyelik ve uygulama yetkisi kayıtlarından gelir.</li>
+        <li><b>Keycloak</b> kod yöntemlerinde kodu OTP gateway üzerinden SMS, WhatsApp veya Telegram'a gönderir; kodu Keycloak eklentisi doğrular.</li>
+        <li><b>Çıkışta</b> Keycloak back-channel logout ile köprüye bildirir; köprü logout token'ını ID token'dan ayrı kurallarla doğrular (M18) ve ilgili Frappe oturumlarını bütün hostlarda kapatır.</li>
+      </ol>
+      <figcaption><b>Kimlik Keycloak'ta, oturum ve yetki Frappe'de.</b> Tarayıcı hiçbir token taşımaz. Karar kaydındaki BFF görevini (oturumu sunucuda tutmak) aynı origin'de kimlik köprüsü üstlenir; bu belgede "BFF" aktörü bu kenar katmanını, yani ters vekil, sürümlü API sözleşmesi ve kimlik köprüsünü anlatır.</figcaption>
+    </figure>
+  </div>
+
+
+  <h3 style="margin-top:2.25rem">Host, oturum ve çerez kapsamı</h3>
+  <p style="margin-top:.5rem;color:var(--ink-2)">"Aynı origin" her host için ayrı ayrı geçerlidir: app ve www farklı origin'lerdir. Her host kendi API, dosya, realtime ve köprü yollarını kendi origin'inde sunar. Hiçbir çerez üst alan adına yazılmaz; yazılsaydı Frappe oturum çerezi Keycloak'a ve ileride Drupal'a da giderdi.</p>
+  <div class="tbl-wrap" style="margin-top:.6rem"><table class="matrix">
+    <thead><tr><th scope="col">Host</th><th scope="col">Yollar</th><th scope="col">Servis ve istemci</th><th scope="col">Oturum ve çerez</th><th scope="col">Çıkış davranışı</th></tr></thead>
+    <tbody>
+      <tr><td>accounts.alanadın</td><td>Giriş, kayıt, hesap, kurtarma</td><td>Keycloak; ürün realm'i</td><td>Keycloak SSO çerezleri, yalnızca bu host</td><td>Oturum sonu bütün istemcilere back-channel logout gönderir</td></tr>
+      <tr><td>app.alanadın</td><td>/, /crm …, /api, /files, /private/files, /socket.io, /auth</td><td>Ters vekil, Frappe, köprü; site istemcisi, tam eşleşen dönüş adresi</td><td>Frappe sid host-only (Domain yok, Path=/), Secure, HttpOnly, SameSite=Lax</td><td>Aynı origin sekmeler anında; sunucu oturumu köprüde silinir</td></tr>
+      <tr><td>www.alanadın</td><td>Statik sayfalar; /hesap, /sepet, /odeme; /api, /auth</td><td>Astro, ters vekil, Frappe, köprü; aynı istemcide ayrı dönüş adresi</td><td>Ayrı Frappe oturumu, host-only; misafir sepeti kimliği host-only, HttpOnly</td><td>app'ten çıkış bu oturumu back-channel ile kapatır; açık sekme bir sonraki istekte 401 alır</td></tr>
+      <tr><td>Yönetim hostu</td><td>Frappe Desk (geçiş süresince)</td><td>Frappe; IP izin listesi; ayrı dönüş adresi</td><td>Ayrı Frappe oturumu, host-only</td><td>Aynı sid eşlemesiyle kapanır</td></tr>
+      <tr><td>İleride Drupal</td><td>İçerik yönetimi</td><td>Drupal; ayrı Keycloak istemcisi</td><td>Drupal'ın kendi oturumu</td><td>Kendi back-channel logout adresiyle</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3 style="margin-top:2.25rem">Sorumluluk sınırları</h3>
+  <p style="margin-top:.5rem;color:var(--ink-2)">Her katmanın sahip olduğu ve asla yapmadığı iş. Bir hata ayıklama veya güvenlik incelemesi önce bu tabloya bakar: bir işi iki katman birden yapıyorsa sınır ihlali vardır.</p>
+  <div class="tbl-wrap" style="margin-top:.6rem"><table class="matrix">
+    <thead><tr><th scope="col">Katman</th><th scope="col">Sahip olduğu</th><th scope="col">Yapmadığı</th><th scope="col">Aktör</th><th scope="col">Madde</th></tr></thead>
+    <tbody>
+      <tr><td>Keycloak</td><td>Parola, passkey ve kod doğrulama; SSO oturumu; giriş, kayıt, parola sıfırlama ve hesap ekranları; adım yükseltme</td><td>Şirket üyeliği, uygulama yetkisi, KYC/KYB kararı</td><td>Kimlik</td><td>M1, M2, M7, M8</td></tr>
+      <tr><td>Kimlik köprüsü</td><td>Girişi başlatma ve dönüşü karşılama, token doğrulama, kimlik eşleme, Frappe oturumu, tek çıkış</td><td>Parola, kod veya magic link işlemez; yetki vermez</td><td>BFF</td><td>M3, M4</td></tr>
+      <tr><td>Frappe iş katmanı</td><td>Organizasyon, üyelik, uygulama yetkisi, KYC/KYB, rıza, onboarding ilerlemesi; her istekte canlı kontrol</td><td>Kimlik bilgisi saklamaz; token'daki rolü otorite saymaz</td><td>Frappe</td><td>M5, M11, M12</td></tr>
+      <tr><td>SPA'lar (@aep/ui)</td><td>Uygulama kabuğu, şirket seçici, onboarding ekranları, oturum sonu ve çıkış davranışı, markalı arayüz</td><td>Token saklamaz; parola veya kod formu barındırmaz; yetkiyi uygulamaz, yalnızca gösterir</td><td>Frontend</td><td>M6, M10, M13</td></tr>
+      <tr><td>GenUI ve model</td><td>Onboarding'de alan önerisi (veri sınıfı tablosuna bağlı), erişim reddini açıklama, davet metni önerisi</td><td>Kimlik ekranı üretmez; kimlik doğrulama sırlarına ve oturuma erişmez; KYC/KYB belgesini yalnızca veri sınıfı tablosunun izin verdiği yolla işler; adım yükseltmeyi atlamaz; KYC/KYB kararı vermez</td><td>Model</td><td>M9, M23, I9</td></tr>
+      <tr><td>OTP gateway</td><td>Kod teslimi, kanal sırası ve yedek kanal, gönderim sınırı, maliyet alarmı</td><td>Kodu saklamaz ve doğrulamaz; doğrulama Keycloak eklentisindedir</td><td>Kimlik</td><td>M15</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3 style="margin-top:2.25rem">Gelişmiş giriş ve kayıt yolculuğu</h3>
+  <p style="margin-top:.5rem;color:var(--ink-2)">Kimlik doğrulama Keycloak'ta biter; üyelik Frappe'de başlar. Aşağıdaki yedi adım tek bir onboarding kaydıyla izlenir: kullanıcı hangi adımda bırakırsa oradan döner. YZ yalnızca öneri üretir; hiçbir adım YZ açık olmadan tamamlanamaz hâle gelmez.</p>
+  <div class="tbl-wrap" style="margin-top:.6rem"><table class="journey">
+    <thead><tr><th scope="col">Adım</th><th scope="col">Kullanıcı</th><th scope="col">Sistem</th><th scope="col">Nerede</th><th scope="col">Kabul koşulu</th></tr></thead>
+    <tbody>
+      <tr><td>1 · Kimlik</td><td>E-postasını yazar; passkey'i varsa tarayıcı otomatik önerir; hesabı yoksa kayıt olur. Sosyal girişte e-postası mevcut bir hesapla eşleşirse önce o hesabı doğrular.</td><td>Yalnızca etkin yöntemleri gösterir; hesabın var olup olmadığını sızdırmayan metin kullanır.</td><td>Keycloak (Keycloakify)</td><td>Yapıştırma ve parola yöneticisi çalışır; WCAG 2.2 3.3.8 karşılanır (M7).</td></tr>
+      <tr><td>2 · Doğrulama</td><td>E-posta bağlantısını açar veya 6 haneli kodu girer.</td><td>Kod tek kullanımlık, süreli ve deneme sınırlıdır; yeniden gönderme bekleme süresi görünür.</td><td>Keycloak + OTP gateway</td><td>Yanlış, süresi geçmiş ve tekrar kullanılan kod reddedilir (AT-19).</td></tr>
+      <tr><td>3 · İlk giriş</td><td>Hiçbir şey yapmaz; uygulamaya döner.</td><td>Köprü Kimlik Bağı'nı yalnızca bağlama kurallarıyla kurar (M16, M17); Frappe oturumunu açar.</td><td>Kimlik köprüsü</td><td>Başka tarayıcıda başlatılmış girişin dönüşü ve yanlış kullanıcıya bağlanma reddedilir (AT-18).</td></tr>
+      <tr><td>4 · Rıza</td><td>KVKK aydınlatma metnini görür; açık rıza ve pazarlama iznini ayrı ayrı verir veya vermez.</td><td>Her onayı metin sürümü, zaman ve kanalla Rıza Kaydı'na yazar.</td><td>SPA + Frappe</td><td>Önceden işaretli kutu yok; geri çekme verme kadar kolay (M12).</td></tr>
+      <tr><td>5 · Organizasyon</td><td>Yeni şirket oluşturur veya bekleyen daveti kabul eder.</td><td>Organizasyon ve Organizasyon Üyeliği kaydını açar (davetli → aktif).</td><td>SPA + Frappe</td><td>Davet tek kullanımlık, süreli ve davet edilen e-postaya bağlı (M11).</td></tr>
+      <tr><td>6 · KYB / KYC</td><td>Belgeleri yükler. Belge sınıfı için onaylı işleme yolu açıksa YZ'nin önerdiği alanları kabul eder veya düzeltir; yol kapalıysa alanları kendisi girer.</td><td>Başvuruyu taslakta tutar; kararı insan inceleyici verir; ret veya onay canlı olarak işlemleri açar ya da kapatır.</td><td>SPA + Frappe</td><td>Öneri veri sınıfı tablosuna uyar; YZ karar vermez; YZ kapalıyken aynı adım manuel tamamlanır; inceleyici passkey ile girer (M9, M11, M23).</td></tr>
+      <tr><td>7 · İlk görev</td><td>Kabukta yetkili olduğu uygulamaları görür; ilk işe niyet girişinden başlar.</td><td>Uygulama Yetkisi kayıtlarından uygulama listesini ve aktif şirket seçicisini kurar.</td><td>SPA</td><td>Kalan onboarding adımı kabukta görünür; varsayılan yolculuk (04) buradan başlar (M10).</td></tr>
+    </tbody>
+  </table></div>
+
+
+  <h3 style="margin-top:2.25rem">Hata ve kurtarma matrisi</h3>
+  <p style="margin-top:.5rem;color:var(--ink-2)">Her satır bir kabul senaryosudur (AT-25). Hiçbir yol hesabın var olup olmadığını sızdırmaz, taslağı sessizce silmez, iptal edilen adımı otomatik yazmaya çevirmez.</p>
+  <div class="tbl-wrap" style="margin-top:.6rem"><table class="matrix prose">
+    <thead><tr><th scope="col">Tetikleyici</th><th scope="col">Ekran ve mesaj</th><th scope="col">Güvenli ana eylem</th><th scope="col">Korunan</th><th scope="col">Sunucu sonucu</th><th scope="col">Deney</th></tr></thead>
+    <tbody>
+      <tr><td>Doğrulama bağlantısı süresi dolmuş veya kullanılmış</td><td>Keycloak: bağlantı artık geçerli değil</td><td>Yeni bağlantı iste</td><td>Oluşmuş hesap</td><td>Eski bağlantı geçersiz, e-posta doğrulanmamış kalır</td><td>AT-19</td></tr>
+      <tr><td>Yanlış, süresi geçmiş veya tekrar kullanılan kod</td><td>Alana bağlı hata ve kalan deneme</td><td>Kodu yeniden gönder (bekleme süresi görünür)</td><td>Girilen kimlik</td><td>Deneme sayacı artar, kod tüketilmez</td><td>AT-19</td></tr>
+      <tr><td>Hesap geçici olarak kilitli</td><td>Çok fazla deneme; bekleme süresi, hesap varlığını söylemeyen metin</td><td>Parolayı sıfırla veya passkey ile gir</td><td>—</td><td>Kilit süresi işler, olay kaydı düşer</td><td>AT-22</td></tr>
+      <tr><td>Keycloak erişilemez</td><td>SPA: giriş hizmeti yanıt vermiyor; açık oturum sürüyor</td><td>Mevcut oturumla devam et</td><td>Taslaklar ve Run</td><td>Açık Frappe oturumları sürer, yeni giriş yapılamaz</td><td>AT-20</td></tr>
+      <tr><td>Davet başka hesapla açıldı</td><td>Bu davet başka bir e-posta için</td><td>Çıkış yapıp doğru hesapla gir</td><td>Davet</td><td>Davet tüketilmez, denetim kaydı düşer</td><td>AT-21</td></tr>
+      <tr><td>Davet iptal edilmiş veya süresi dolmuş</td><td>Davet artık geçerli değil</td><td>Davet edenden yeni davet iste</td><td>—</td><td>Üyelik açılmaz</td><td>AT-21</td></tr>
+      <tr><td>Passkey kaybı</td><td>Başka bir yöntemle gir, sonra yeni passkey kaydet</td><td>Kurtarma akışı; yönetici ve KYC inceleyicisinde yönetici destekli, iki kişi onaylı kurtarma</td><td>—</td><td>Eski passkey kaldırılır, olay kaydı düşer</td><td>AT-19</td></tr>
+      <tr><td>Adım yükseltme iptal edildi veya başarısız</td><td>İşlem doğrulama gerektiriyor; hiçbir şey uygulanmadı</td><td>Sonra yeniden dene veya manuel yol</td><td>Taslak, seçim, Run</td><td>Run onay bekler; yazma yok</td><td>AT-22</td></tr>
+      <tr><td>Adım yükseltmeden başka kullanıcı veya şirketle dönüş</td><td>Farklı hesapla döndün</td><td>Doğru hesapla gir</td><td>İlk kullanıcının taslağı gösterilmez</td><td>Run sürdürülmez, yeniden inceleme ister</td><td>AT-22</td></tr>
+      <tr><td>Oturum süresi dolmak üzere</td><td>Uyarı ve kalan süre (WCAG 2.2.1)</td><td>Süreyi uzat</td><td>Taslak kaydedilir</td><td>Oturum yenilenir; gerekirse tam sayfa sessiz giriş</td><td>AT-20</td></tr>
+      <tr><td>Üyelik veya KYB oturum açıkken askıya alındı</td><td>Bu şirkette erişim askıda; neden ve sonraki adım</td><td>Başka şirkete geç veya destek</td><td>Taslak kilitlenir</td><td>Yetki ve grant kesilir, Run durur</td><td>AT-21</td></tr>
+      <tr><td>Sosyal girişte e-postası eşleşen mevcut hesap</td><td>Keycloak: hesap zaten var, bağlamak için doğrula</td><td>Mevcut hesapla yeniden doğrula</td><td>—</td><td>Bağ yalnızca doğrulamadan sonra kurulur</td><td>AT-18</td></tr>
+      <tr><td>E-posta başka Frappe kullanıcısıyla çakışıyor</td><td>Girişi tamamlayamadık; destek kodu</td><td>Destekle iletişim</td><td>—</td><td>Giriş durur, denetim kaydı düşer</td><td>AT-18</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3 style="margin-top:2.25rem">Giriş yöntemleri ve arayüz kuralı</h3>
+  <p style="margin-top:.5rem;color:var(--ink-2)">Durumlar rehberdeki gibidir; hazır olmayan hiçbir yöntem hazır gösterilmez. Arayüz yalnızca kabul testi yeşil olan yöntemi gösterir.</p>
+  <div class="tbl-wrap" style="margin-top:.6rem"><table class="matrix">
+    <thead><tr><th scope="col">Yöntem</th><th scope="col">Durum</th><th scope="col">Arayüz kuralı</th></tr></thead>
+    <tbody>
+      <tr><td>Parola + e-posta</td><td>Hazır (Keycloak'ın kendi özelliği)</td><td>Parola kuralları alan yazılmadan önce görünür; göster/gizle düğmesi; <code>autocomplete="new-password"</code> ve <code>"current-password"</code>.</td></tr>
+      <tr><td>Google</td><td>Hazır</td><td>Google'ın düğme kurallarına uygun, Google adı ve logosu korunur. E-postası mevcut bir hesapla eşleşse bile hesaplar kendiliğinden birleşmez; bağlama mevcut hesabın yeniden doğrulanmasıyla olur (M16).</td></tr>
+      <tr><td>Passkey</td><td>Hazır; yönetici ve KYC inceleyicisi için zorunlu</td><td>Kimlik alanı <code>autocomplete="username webauthn"</code> ile otomatik öneri; passkey kaybında kurtarma yolu yazılıdır.</td></tr>
+      <tr><td>Apple</td><td>Aday eklenti; kabul testi bekliyor</td><td>Gizli e-posta mevcut hesaba eşlenmez; bağlama giriş yaptıktan sonra hesap ayarlarından yapılır. Ad yalnız ilk girişte gelir ve o an kaydedilir.</td></tr>
+      <tr><td>SMS, WhatsApp, Telegram kodu</td><td>Prototip; yalnızca müşteri girişi</td><td>Tek kod alanı, <code>autocomplete="one-time-code"</code>, <code>inputmode="numeric"</code>; kanal değiştirme ve yedek kanal bildirimi.</td></tr>
+      <tr><td>E-posta kodu</td><td>Prototip</td><td>Kimliği önce soran adımdan sonra gelir; kod yapıştırılabilir.</td></tr>
+      <tr><td>Magic link</td><td>Açık gereksinim</td><td>E-posta kodu tamamlanınca kapanmış sayılmaz (Açık kararlar).</td></tr>
+      <tr><td>Telefonla giriş</td><td>Açık gereksinim</td><td>Frappe kullanıcı modeli e-posta ister; karar verilene kadar telefon ikinci kanaldır.</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3 style="margin-top:2.25rem">White-label derinliği</h3>
+  <p style="margin-top:.5rem;color:var(--ink-2)">White-label, kullanıcının platformu değil müşterinin markasını görmesidir. Karar kaydı "çok marka" temasını zaten seçti; rehber tek realm, uygulama başına istemci dedi. Derinlik seviyesi tenant modeline ve alan adı düzenine bağlıdır; seviye yükseldikçe maliyet, işletim yükü ve SSO kısıtları artar. Keycloak giriş temasını realm veya istemci düzeyinde seçer; hesap ve e-posta temaları realm düzeyindedir; organizasyon düzeyinde yerel tema seçimi yoktur. Bu yüzden marka her yüzey için ayrı çözülür: giriş istemci kimliğinden, Keycloak hesap ve e-postaları özel tema mantığıyla, Frappe e-postaları organizasyon kaydından. Çözülemeyen marka her zaman ürün markasına düşer, hiçbir zaman başka bir tenant'ın markasına.</p>
+  <div class="tbl-wrap" style="margin-top:.6rem"><table class="matrix">
+    <thead><tr><th scope="col">Seviye</th><th scope="col">Kullanıcının gördüğü</th><th scope="col">Gerektirdiği</th><th scope="col">Durum</th></tr></thead>
+    <tbody>
+      <tr><td>1 · Ürün markası</td><td>AEP markası; accounts.alanadın ve app.alanadın</td><td>Tek token seti, tek Keycloakify teması, tek e-posta şablon seti</td><td>MVP; bağlayıcı</td></tr>
+      <tr><td>2 · Müşteri markası</td><td>Platform alan adı altında müşterinin adı, logosu ve rengi; e-postalarda müşteri adı</td><td>Sınırlı tenant marka paketi ve kontrast doğrulaması; yüzey başına çözümleme: giriş istemci kimliğinden (müşteri başına site modelinde her site ayrı istemcidir), hesap ve Keycloak e-postaları özel tema mantığıyla, Frappe e-postaları organizasyondan; çözülemezse ürün markası</td><td>Tenant kararına bağlı</td></tr>
+      <tr><td>3 · Müşteri alan adı</td><td>app.musteri.com ve giris.musteri.com</td><td>Alan adı başına TLS otomasyonu; ters vekilde host yönlendirme; realm Frontend URL (pratikte müşteri başına realm); müşteri alan adında SPF, DKIM, DMARC; Google ve Apple'da alan adı ve dönüş adresi kaydı; farklı alan adları arasında SSO yalnızca tam sayfa yönlendirmeyle</td><td>Enterprise; açık karar</td></tr>
+    </tbody>
+  </table></div>
+
+
+  <h3 style="margin-top:2.25rem">Kimlik verisi ve YZ işleme sınırı</h3>
+  <p style="margin-top:.5rem;color:var(--ink-2)">Bu tablo bağlayıcıdır (M23). "Model kimlik verisine erişmez" genel cümlesi yerine veri sınıfına göre kural koyar; tam yasak ile onaylı işleme yolu ayrı satırlardadır. YZ önerisi her zaman taslaktır; kararı kullanıcı veya inceleyici verir.</p>
+  <div class="tbl-wrap" style="margin-top:.6rem"><table class="matrix prose">
+    <thead><tr><th scope="col">Veri sınıfı</th><th scope="col">Örnek</th><th scope="col">Modele gidebilir mi</th><th scope="col">Koşul</th><th scope="col">YZ kapalıyken</th></tr></thead>
+    <tbody>
+      <tr><td>Kimlik doğrulama sırları</td><td>Parola, kod, passkey, token, oturum çerezi, kurtarma bağlantısı</td><td>Hiçbir model, hiçbir amaç</td><td>Yalnızca Keycloak ve köprü işler; log'a da düşmez</td><td>—</td></tr>
+      <tr><td>Gerçek kişi KYC belgesi</td><td>Kimlik belgesi görüntüsü, ikamet belgesi; varsa biyometrik veri</td><td>Varsayılan: hayır</td><td>Açılabilecek tek yol: ADR ile onaylı yerel veya sözleşmeli model; veri yerleşimi (G4), KVKK aktarım dayanağı, yalnızca alan çıkarımı amacı, saklama yok, erişim kaydı. Biyometrik veri bu yolda da kapsam dışı</td><td>Kullanıcı alanları kendisi girer; inceleyici belgeyle karşılaştırır</td></tr>
+      <tr><td>Şirket KYB belgesi</td><td>Vergi levhası, faaliyet belgesi, ticaret sicil kaydı, imza sirküleri</td><td>Yalnızca onaylı model yolu açıksa</td><td>İçindeki gerçek kişi verisi (kimlik numarası, imza, doğum tarihi) maskelenmeden gitmez; imza sirküleri gerçek kişi belgesi kuralına tabidir</td><td>Manuel giriş</td></tr>
+      <tr><td>Çıkarılmış ve onaylanmış alanlar</td><td>Ünvan, VKN, vergi dairesi, adres</td><td>Evet, olağan iş verisi gibi</td><td>İzin projeksiyonu ve veri sınıfı politikası; kişisel tanımlayıcılar bağlamda maskeli</td><td>—</td></tr>
+      <tr><td>KYC/KYB kararı</td><td>Durum, kullanıcıya gösterilen gerekçe, inceleyici iç notu</td><td>Yalnızca durum ve kullanıcıya gösterilen gerekçe</td><td>İç not model bağlamına girmez; "neden kapalı" açıklaması bu iki alanla sınırlıdır</td><td>Aynı metin YZ'siz gösterilir</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="protected">
+    <div><span class="t">YZ'nin kimlik ekosistemindeki yeri</span><p>Onboarding'de belgeden alan önerisi (yukarıdaki veri sınıfı tablosunun izin verdiği yolla), "bu işlem neden kapalı" açıklaması (ör. KYB onayı bekleniyor), davet metni önerisi. Hepsi öneridir; kayıt kullanıcıda, karar inceleyicidedir. White-label asistanın adını ve görünümünü değiştirebilir; YZ olduğunu gizleyemez.</p></div>
+    <div><span class="t">YZ'nin girmediği yer</span><p>Giriş, kayıt, parola sıfırlama ve hesap ekranları; kimlik doğrulama sırları, oturum, token ve kodlar; KYC/KYB kararı ve inceleyici iç notu; doğrulama seviyesini düşürme veya atlama. Gerçek kişi KYC belgesi varsayılan olarak hiçbir modele gitmez; tek istisna ADR ile onaylı yoldur (M23, G4).</p></div>
+    <div><span class="t">Adım yükseltme Run'ı bozmaz</span><p>Capability manifesti her eylemin gerektirdiği doğrulama seviyesini taşır. Seviye yetersizse Run onay bekler durumda kalır, taslak ve seçim kaydedilir, kullanıcı Keycloak'a tam sayfa gider. Dönüşte aynı kullanıcı, şirket ve işlem bağlamı, güncel izin, onaylanan revizyon (F8) ve doğrulama yaşı yeniden kontrol edilir; iptal hiçbir zaman otomatik yazmaya dönmez (M9, E5).</p></div>
+  </div>
+
+  <div class="quad" style="margin-top:1.5rem">
+    <div><div class="q safe">Güvenli olan</div><p>Aynı origin, Frappe'nin HttpOnly oturum çerezi, kendi kimlik köprüsü, Keycloakify teması ve kodla yönetilen realm. Giriş her zaman Keycloak sayfasında; tarayıcıda token yok.</p></div>
+    <div><div class="q risk">Riskli olan</div><p>SPA'nın erişim token'ı taşıması; SPA'da özel giriş formu (parolayla token alma, RFC 9700 yasaklar); Frappe'nin genel Social Login akışını olduğu gibi kullanmak; giriş markasını URL parametresinden okumak; iframe ile sessiz giriş; realm'i yönetim panelinden elle değiştirmek.</p></div>
+    <div><div class="q ent">Enterprise seviyede doğru</div><p>Aynı desen, üstüne köprü için yazılı tehdit modeli ve canlı öncesi bağımsız güvenlik testi. Ayrı BFF servisi yalnızca birden fazla backend aynı oturumla çağrılınca (ör. birden çok siteye üye kullanıcı için ortak dizin). Seviye 3 white-label müşteri başına realm ve alan adı otomasyonuyla.</p></div>
+    <div><div class="q prac">Bu proje için pratik öneri</div><p>Seviye 1 markayla ve hazır yöntemlerle (parola, Google, passkey) başla; kod yöntemlerini kabul testiyle ekle. Tenant kararını faz 01 bitmeden ver; seviye 2 white-label o karara bağlı. Köprüyü YZ ajanı yazar, kodu yazmayan ajan ve teknik bir kişi inceler, insan merge eder.</p></div>
+  </div>
+</section>

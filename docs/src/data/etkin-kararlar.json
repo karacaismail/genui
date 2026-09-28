@@ -1,0 +1,9 @@
+{
+ "about": "Karar kaydındaki seçimi sonraki bir kaynakla değişen veya yeniden açılan kararlar. Kaynak seçim tarihçe olarak korunur; izlenebilirlik tablosu etkin durumu bu dosyadan gösterir.",
+ "overrides": {
+  "auth": {"state": "yerine geçti", "effective": "Aynı origin, Frappe HttpOnly oturumu; BFF görevi kimlik köprüsünde", "source": "Kimlik rehberi", "adr": "ak-oturum"},
+  "gateway": {"state": "koşullu", "effective": "Aynı origin kenar katmanı; ayrı BFF servisi yalnızca birden fazla backend aynı oturumla çağrılınca", "source": "Kimlik rehberi", "adr": "ak-oturum"},
+  "tenancy": {"state": "yeniden açıldı", "effective": "Tek site + organizasyon izolasyonu ya da müşteri başına site; sözleşme iki modele dayanıklı", "source": "Kimlik rehberi", "adr": "ak-tenant"},
+  "tenant-isolation": {"state": "yeniden açıldı", "effective": "Tenant modeli kararına bağlı; iki modelde de negatif izolasyon testi", "source": "Kimlik rehberi", "adr": "ak-tenant"}
+ }
+}

@@ -1,0 +1,1618 @@
+{
+ "about": "Temizlenmiş fixture: Frappe Headless Platform karar kaydından yalnızca yayımlanan izlenebilirlik tablosunda zaten görünen alanlar (kimlik, soru, seçim başlıkları, farklıysa önerinin başlığı, durum). Gerekçe, not, risk ve kaynak alanları içermez.",
+ "catalogVersion": "2026-09-19.2",
+ "decisions": [
+  {
+   "id": "audience",
+   "title": "Kimler kullanacak?",
+   "selected": [
+    "Müşteri / iş ortağı",
+    "Operasyon ekibi",
+    "Analist / yönetici",
+    "Sistem yöneticisi"
+   ],
+   "recommended": "Operasyon ekibi + Analist / yönetici",
+   "deviation": true,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "parity",
+   "title": "Frappe Desk ile ne kadar eşitlik hedefliyorsun?",
+   "selected": [
+    "Tam işlevsel eşitlik"
+   ],
+   "recommended": "Aşamalı işlevsel eşitlik",
+   "deviation": true,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "surface",
+   "title": "Hangi yüzeyler olacak?",
+   "selected": [
+    "Oturum gerektiren panel",
+    "Yetkili dış kullanıcı portalı",
+    "Herkese açık içerik"
+   ],
+   "recommended": "Oturum gerektiren panel",
+   "deviation": true,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "tenancy",
+   "title": "Kiracı modeli nasıl?",
+   "selected": [
+    "Çok kuruluş / çok site"
+   ],
+   "recommended": "Tek kuruluş / tek site",
+   "deviation": true,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "scale",
+   "title": "Hangi veri büyüklüğünü hedefliyorsun?",
+   "selected": [
+    "Yoğun veri / analitik"
+   ],
+   "recommended": "Standart operasyon",
+   "deviation": true,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "team",
+   "title": "Ekip kapasitesi hangi düzeyde?",
+   "selected": [
+    "Platform ekibi"
+   ],
+   "recommended": "Küçük ürün ekibi",
+   "deviation": true,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "licensing",
+   "title": "Ticari bileşen lisansı mümkün mü?",
+   "selected": [
+    "Açık kaynak öncelikli"
+   ],
+   "recommended": "İhtiyaçtan sonra değerlendir",
+   "deviation": true,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "success",
+   "title": "İlk sürümün başarısı neyle ölçülecek?",
+   "selected": [
+    "AI kabul ve başarı oranı",
+    "Erişilebilirlik ve hız",
+    "Kritik akış eşitliği",
+    "Görev süresi ve hata"
+   ],
+   "recommended": "Görev süresi ve hata + Kritik akış eşitliği + Erişilebilirlik ve hız",
+   "deviation": true,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "user-scale",
+   "title": "Kaç kullanıcı ve ne kadar eşzamanlı kullanım?",
+   "selected": [
+    "Çok rollü kuruluş"
+   ],
+   "recommended": "Önce ölçelim",
+   "deviation": true,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "devices",
+   "title": "Hangi cihazlarda hangi işler yapılacak?",
+   "selected": [
+    "Masaüstü / dizüstü",
+    "Tablet / saha",
+    "Telefon",
+    "Kiosk / terminal"
+   ],
+   "recommended": "Masaüstü / dizüstü + Telefon",
+   "deviation": true,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "timeline",
+   "title": "İlk teslimin kapsamı ve zaman ufku ne?",
+   "selected": [
+    "Kademeli platform"
+   ],
+   "recommended": "Henüz süre taahhüdü yok",
+   "deviation": true,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "version",
+   "title": "Frappe sürüm stratejin ne?",
+   "selected": [
+    "Sürüm uyumluluk matrisi"
+   ],
+   "recommended": "Önce kurulum envanteri",
+   "deviation": true,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "gateway",
+   "title": "Headless gateway nerede yaşasın?",
+   "selected": [
+    "Ayrı BFF / gateway"
+   ],
+   "recommended": "Frappe custom app",
+   "deviation": true,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "contract",
+   "title": "Metadata sözleşmesi ne kadar bağımsız?",
+   "selected": [
+    "Frappe tiplerine yakın map"
+   ],
+   "recommended": "Sürümlü semantik şema",
+   "deviation": true,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "inventory",
+   "title": "Hangi özelleştirmeler var?",
+   "selected": [
+    "Notification / assignment / workflow",
+    "Özel rapor / print format",
+    "Server Script / hook / izin",
+    "Custom Field / Property Setter",
+    "Client/Form Script ve özel butonlar"
+   ],
+   "recommended": "Envanter çıkarılmadı",
+   "deviation": true,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "scripts",
+   "title": "Client Script’leri nasıl taşıyacaksın?",
+   "selected": [
+    "Tüm davranışları yeniden modelle"
+   ],
+   "recommended": "İş kuralını sunucuya taşı",
+   "deviation": true,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "permissions",
+   "title": "Yetki frontend’e nasıl yansısın?",
+   "selected": [
+    "Capability + alan projeksiyonu"
+   ],
+   "recommended": "",
+   "deviation": false,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "schema-evolution",
+   "title": "Metadata değişince ne olacak?",
+   "selected": [
+    "Schema version + migration"
+   ],
+   "recommended": "",
+   "deviation": false,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "realtime",
+   "title": "Canlı güncellemeler nasıl gelsin?",
+   "selected": [
+    "Frappe Socket.IO adapter"
+   ],
+   "recommended": "Realtime + polling fallback",
+   "deviation": true,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "contract-codegen",
+   "title": "Tip ve runtime şema üretiminin kaynağı ne?",
+   "selected": [
+    "DocType metadata + codegen"
+   ],
+   "recommended": "Elle sürümlü şema + TS türetimi",
+   "deviation": true,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "search-engine",
+   "title": "Arama altyapısı ne zaman ayrılmalı?",
+   "selected": [
+    "Anahtar kelime + vektör"
+   ],
+   "recommended": "Önce Frappe arama adapter’ı",
+   "deviation": true,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "naming",
+   "title": "Belge kimliği ve isimlendirme serileri nasıl?",
+   "selected": [
+    "Sunucu ürettiği kimlik otorite"
+   ],
+   "recommended": "",
+   "deviation": false,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "collaboration-flows",
+   "title": "Yorum, atama ve bildirim akışları taşınacak mı?",
+   "selected": [
+    "Yorum / mention / timeline",
+    "Atama / takip / bekleyen işler",
+    "Bildirim / kullanıcı tercihleri",
+    "İlk fazda Desk’te devam"
+   ],
+   "recommended": "Yorum / mention / timeline + Atama / takip / bekleyen işler + Bildirim / kullanıcı tercihleri",
+   "deviation": true,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "installation",
+   "title": "Mevcut Frappe kurulumu neleri değiştirmene izin veriyor?",
+   "selected": [
+    "Kendi sunucun / container"
+   ],
+   "recommended": "Kurulum yetkileri bilinmiyor",
+   "deviation": true,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "app-runtime",
+   "title": "Asıl ürünün rendering modeli ne?",
+   "selected": [
+    "React panel + Astro public"
+   ],
+   "recommended": "",
+   "deviation": false,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "router",
+   "title": "Routing sahibi kim?",
+   "selected": [
+    "TanStack Router"
+   ],
+   "recommended": "React Router",
+   "deviation": true,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "server-state",
+   "title": "Sunucu verisi nerede yönetilsin?",
+   "selected": [
+    "TanStack Query"
+   ],
+   "recommended": "",
+   "deviation": false,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "ui-state",
+   "title": "Geçici state stratejisi ne?",
+   "selected": [
+    "URL + component state"
+   ],
+   "recommended": "",
+   "deviation": false,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "auth",
+   "title": "Oturum entegrasyonu nasıl?",
+   "selected": [
+    "Ayrı origin + BFF session"
+   ],
+   "recommended": "Aynı origin session",
+   "deviation": true,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "cache-isolation",
+   "title": "Kiracı ve kullanıcı cache’i nasıl ayrılacak?",
+   "selected": [
+    "Tenant/user/permission-version key"
+   ],
+   "recommended": "",
+   "deviation": false,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "concurrency",
+   "title": "Aynı kaydı iki kişi değiştirirse?",
+   "selected": [
+    "Revision kontrolü + diff"
+   ],
+   "recommended": "",
+   "deviation": false,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "offline",
+   "title": "Çevrimdışı gereksinim nedir?",
+   "selected": [
+    "Offline işlem kuyruğu"
+   ],
+   "recommended": "Yerel taslak + online gönderim",
+   "deviation": true,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "url-contract",
+   "title": "URL state sözleşmesi nasıl?",
+   "selected": [
+    "Şema doğrulanan URL state"
+   ],
+   "recommended": "",
+   "deviation": false,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "type-discipline",
+   "title": "TypeScript kalite sınırı ne olsun?",
+   "selected": [
+    "strict + ek güvenlik bayrakları"
+   ],
+   "recommended": "",
+   "deviation": false,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "route-metadata",
+   "title": "Panelin sayfa başlığı ve navigasyon bilgisi nerede?",
+   "selected": [
+    "Route tanımında tipli metadata"
+   ],
+   "recommended": "",
+   "deviation": false,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "form-engine",
+   "title": "Form runtime’ın nasıl kurulacak?",
+   "selected": [
+    "Headless form + özel renderer"
+   ],
+   "recommended": "Ant Form + SchemaFormEngine",
+   "deviation": true,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "conditions",
+   "title": "depends_on benzeri koşullar nasıl değerlendirilsin?",
+   "selected": [
+    "Kısıtlı expression DSL / AST"
+   ],
+   "recommended": "",
+   "deviation": false,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "fields",
+   "title": "İlk field registry hangi türleri kapsasın?",
+   "selected": [
+    "Metin / sayı / para / tarih",
+    "Link / Dynamic Link / MultiSelect",
+    "Child Table",
+    "Dosya / görsel / rich text",
+    "Konum / imza / barkod"
+   ],
+   "recommended": "Metin / sayı / para / tarih + Link / Dynamic Link / MultiSelect + Child Table + Dosya / görsel / rich text",
+   "deviation": true,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "child-edit",
+   "title": "Child table nasıl düzenlensin?",
+   "selected": [
+    "Inline + detay paneli"
+   ],
+   "recommended": "",
+   "deviation": false,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "lifecycle",
+   "title": "Hangi belge işlemleri desteklenecek?",
+   "selected": [
+    "Workflow geçişleri",
+    "Submit / cancel / amend",
+    "Create / read / update / delete"
+   ],
+   "recommended": "",
+   "deviation": false,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "drafts",
+   "title": "Form kaydetme deneyimi nasıl?",
+   "selected": [
+    "Alan bazlı autosave"
+   ],
+   "recommended": "Taslak autosave + açık submit",
+   "deviation": true,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "validation",
+   "title": "Doğrulama ve hatalar nasıl sunulsun?",
+   "selected": [
+    "Sunucu merkezli doğrulama"
+   ],
+   "recommended": "Client ipucu + server doğrulama",
+   "deviation": true,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "workflow-builder",
+   "title": "Workflow tasarımcısı da taşınacak mı?",
+   "selected": [
+    "Görsel state/transition designer"
+   ],
+   "recommended": "Önce yalnız workflow yürütme",
+   "deviation": true,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "form-library",
+   "title": "Headless form state hangi kütüphanede tutulsun?",
+   "selected": [
+    "TanStack Form + şema validator"
+   ],
+   "recommended": "React Hook Form + şema validator",
+   "deviation": true,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "table",
+   "title": "Ana liste motoru hangisi?",
+   "selected": [
+    "TanStack Table"
+   ],
+   "recommended": "Ant Table / ProTable",
+   "deviation": true,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "grid-needs",
+   "title": "Hangi ileri grid davranışları gerekli?",
+   "selected": [
+    "Gruplama / aggregation",
+    "Pivot / çapraz analiz",
+    "Toplu düzenleme / batch commit",
+    "Range / clipboard / fill / undo"
+   ],
+   "recommended": "Standart liste yeterli",
+   "deviation": true,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "advanced-grid",
+   "title": "İleri grid için yaklaşımın ne?",
+   "selected": [
+    "TanStack tabanlı özel yüzey"
+   ],
+   "recommended": "İleri grid’i ikinci faza bırak",
+   "deviation": true,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "reports",
+   "title": "Rapor tasarlama kapsamı ne?",
+   "selected": [
+    "Tek DocType + child raporları"
+   ],
+   "recommended": "",
+   "deviation": false,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "report-storage",
+   "title": "Rapor/workspace tanımları nerede saklansın?",
+   "selected": [
+    "Frappe custom DocType’ları"
+   ],
+   "recommended": "",
+   "deviation": false,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "charts",
+   "title": "Grafik katmanı nasıl olsun?",
+   "selected": [
+    "ECharts tabanlı renderer"
+   ],
+   "recommended": "Önce sınırlı grafik kataloğu",
+   "deviation": true,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "workspace",
+   "title": "Workspace kişiselleştirmesi nasıl?",
+   "selected": [
+    "Tam kişisel workspace"
+   ],
+   "recommended": "Şablon + kullanıcı override",
+   "deviation": true,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "specialized",
+   "title": "Standart UI kit dışındaki hangi engine’ler gerekli?",
+   "selected": [
+    "Asset / file manager",
+    "Tree / hierarchy explorer",
+    "Gantt / scheduler",
+    "Rich text / doküman"
+   ],
+   "recommended": "MVP’de gerekmiyor",
+   "deviation": true,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "exports",
+   "title": "Print ve veri dışa aktarımı neleri kapsasın?",
+   "selected": [
+    "Frappe print/PDF eşitliği",
+    "CSV / Excel",
+    "Büyük export için job"
+   ],
+   "recommended": "",
+   "deviation": false,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "filter-builder",
+   "title": "Filtre kurucu ne kadar gelişmiş olsun?",
+   "selected": [
+    "Chip + görsel AND/OR kurucu"
+   ],
+   "recommended": "",
+   "deviation": false,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "data-import",
+   "title": "Veri içe aktarma deneyimi nasıl?",
+   "selected": [
+    "Frappe Data Import’a yönlendir"
+   ],
+   "recommended": "",
+   "deviation": false,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "editor-engine",
+   "title": "Rich text hangi belge modelini kullansın?",
+   "selected": [
+    "Markdown + önizleme"
+   ],
+   "recommended": "",
+   "deviation": false,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "schedule-scope",
+   "title": "Takvim, Gantt veya kaynak planlama?",
+   "selected": [
+    "Takvim görünümü"
+   ],
+   "recommended": "",
+   "deviation": false,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "map-scope",
+   "title": "Harita gerçekten hangi işi çözecek?",
+   "selected": [
+    "Yönetilen harita servisi"
+   ],
+   "recommended": "MVP’de harita yok",
+   "deviation": true,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "dashboard-layout",
+   "title": "Pano düzenleyici ne kadar serbest olsun?",
+   "selected": [
+    "Sürükle / boyutlandır grid"
+   ],
+   "recommended": "Blok ekle/çıkar + sırala",
+   "deviation": true,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "file-management",
+   "title": "Dosya yönetimi hangi derinlikte gerekli?",
+   "selected": [
+    "Aranabilir varlık kütüphanesi"
+   ],
+   "recommended": "Yetkili attachment listesi",
+   "deviation": true,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "hierarchy",
+   "title": "Hiyerarşi yalnız gezilsin mi, düzenlensin mi?",
+   "selected": [
+    "Tree + yetkili reparent"
+   ],
+   "recommended": "Lazy tree + breadcrumb",
+   "deviation": true,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "ai-level",
+   "title": "AI ilk sürümde ne yapabilsin?",
+   "selected": [
+    "Sınırlı otonom agent"
+   ],
+   "recommended": "Taslak ve onaylı değişiklik",
+   "deviation": true,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "capabilities",
+   "title": "Capability registry nasıl tanımlansın?",
+   "selected": [
+    "Metadata’dan üret + açık allowlist"
+   ],
+   "recommended": "Domain odaklı registry",
+   "deviation": true,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "ai-surfaces",
+   "title": "AI hangi yüzeylerde yer alsın?",
+   "selected": [
+    "Workflow / hata / audit yardımı",
+    "Rapor / dashboard üretimi",
+    "Satır / hücre / toplu seçim",
+    "Alan / form yardımı",
+    "Komut paleti / asistan"
+   ],
+   "recommended": "Komut paleti / asistan + Alan / form yardımı + Satır / hücre / toplu seçim + Rapor / dashboard üretimi",
+   "deviation": true,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "context",
+   "title": "Modele ne gönderilsin?",
+   "selected": [
+    "Manifest + permission-aware retrieval"
+   ],
+   "recommended": "İzinli context manifest",
+   "deviation": true,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "model-host",
+   "title": "Model nerede çalışsın?",
+   "selected": [
+    "Göreve göre yönlendirme"
+   ],
+   "recommended": "Yönetilen model API’si",
+   "deviation": true,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "approval",
+   "title": "AI yazma onayı nasıl verilsin?",
+   "selected": [
+    "Risk bazlı onay"
+   ],
+   "recommended": "Her ChangeSet için onay",
+   "deviation": true,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "undo",
+   "title": "Geri alma semantiği ne?",
+   "selected": [
+    "İşlem bazlı compensation"
+   ],
+   "recommended": "",
+   "deviation": false,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "runs",
+   "title": "Agent işleri nerede yürüsün?",
+   "selected": [
+    "Frappe jobs + Run DocType"
+   ],
+   "recommended": "",
+   "deviation": false,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "batch",
+   "title": "Toplu AI işlemi kısmen başarısız olursa?",
+   "selected": [
+    "Kayıt bazlı sonuç + retry"
+   ],
+   "recommended": "",
+   "deviation": false,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "generative",
+   "title": "AI sonuçları nasıl render edilsin?",
+   "selected": [
+    "Onaylı renderer registry"
+   ],
+   "recommended": "",
+   "deviation": false,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "ai-eval",
+   "title": "AI kalite ve bütçesi nasıl yönetilsin?",
+   "selected": [
+    "Görev eval seti + bütçe"
+   ],
+   "recommended": "",
+   "deviation": false,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "ai-protocol",
+   "title": "Capability’ler dış araçlara hangi protokolle açılsın?",
+   "selected": [
+    "İç tool + dış MCP adapter"
+   ],
+   "recommended": "İç tool calling",
+   "deviation": true,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "ai-gateway",
+   "title": "Model çağrılarını hangi sunucu katmanı yönetsin?",
+   "selected": [
+    "Frappe içi servis"
+   ],
+   "recommended": "",
+   "deviation": false,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "risk-policy",
+   "title": "Capability risk sınıfları nasıl yönetilsin?",
+   "selected": [
+    "Beş domain risk sınıfı"
+   ],
+   "recommended": "",
+   "deviation": false,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "idempotency",
+   "title": "Aynı niyetin yeniden denenmesi nasıl güvenli olsun?",
+   "selected": [
+    "Sunucuda kalıcı idempotency kaydı"
+   ],
+   "recommended": "",
+   "deviation": false,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "diff-review",
+   "title": "ChangeSet incelemesi nasıl yapılacak?",
+   "selected": [
+    "Özet + drill-down + izinli kısmi onay"
+   ],
+   "recommended": "Alan bazlı önce/sonra",
+   "deviation": true,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "knowledge-policy",
+   "title": "Sayısal sorgu ile doküman bilgisini nasıl ayıracaksın?",
+   "selected": [
+    "Yetkili doküman retrieval + domain sorgusu"
+   ],
+   "recommended": "Domain sorgusu + kaynak",
+   "deviation": true,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "handoff",
+   "title": "AI kapalı veya kullanılamazken ne olacak?",
+   "selected": [
+    "Manuel karşılık + bağlamlı devir"
+   ],
+   "recommended": "Manuel karşılık + AI’ı kapatma tercihi",
+   "deviation": true,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "model-lifecycle",
+   "title": "Model veya prompt sürümü değişince ne olacak?",
+   "selected": [
+    "Sürüm kaydı + eval + kontrollü yükseltme"
+   ],
+   "recommended": "",
+   "deviation": false,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "ai-budget",
+   "title": "AI maliyet sınırı nerede uygulanacak?",
+   "selected": [
+    "Kullanıcı/tenant/run kotaları"
+   ],
+   "recommended": "",
+   "deviation": false,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "ui-kit",
+   "title": "Ant Design / Pro sınırı ne olsun?",
+   "selected": [
+    "Ant + domain component katmanı"
+   ],
+   "recommended": "",
+   "deviation": false,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "behavior",
+   "title": "Özel primitive davranışları kim yönetsin?",
+   "selected": [
+    "Gerektiğinde Radix Primitives"
+   ],
+   "recommended": "Gerektiğinde React Aria",
+   "deviation": true,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "tokens",
+   "title": "Token mimarisi nasıl?",
+   "selected": [
+    "Primitive → semantic → component"
+   ],
+   "recommended": "",
+   "deviation": false,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "palette",
+   "title": "Pastel renkleri nasıl üretelim?",
+   "selected": [
+    "Radix palette + semantic roller"
+   ],
+   "recommended": "",
+   "deviation": false,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "themes",
+   "title": "Hangi tema ve yoğunluk seçenekleri?",
+   "selected": [
+    "Çok marka",
+    "Comfortable / compact / touch",
+    "Yüksek kontrast / forced colors",
+    "Açık tema",
+    "Koyu tema"
+   ],
+   "recommended": "Açık tema + Koyu tema + Yüksek kontrast / forced colors + Comfortable / compact / touch",
+   "deviation": true,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "css",
+   "title": "CSS kapsam ve özelleştirme politikası?",
+   "selected": [
+    "Kontrollü CSS-in-JS"
+   ],
+   "recommended": "Scoped CSS / Modules + katmanlar",
+   "deviation": true,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "patterns",
+   "title": "Hangi ortak ekran kalıpları ilk pakette olsun?",
+   "selected": [
+    "Settings / empty / error",
+    "Task / agent run / recovery",
+    "Approval / change review / audit",
+    "Search / report / workspace",
+    "Entity list / detail / edit"
+   ],
+   "recommended": "Entity list / detail / edit + Search / report / workspace + Approval / change review / audit + Settings / empty / error",
+   "deviation": true,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "primitives",
+   "title": "Hangi primitive aileleri platform sözleşmesi olsun?",
+   "selected": [
+    "AI",
+    "Domain data",
+    "Layout",
+    "Interaction",
+    "Foundation"
+   ],
+   "recommended": "",
+   "deviation": false,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "control-patterns",
+   "title": "Hangi etkileşim iyileştirmeleri standardın olsun?",
+   "selected": [
+    "Komut paleti / yönlendiren boş durum",
+    "Inline açılım / güvenli undo",
+    "Seçim eylemleri / filtre chip’leri",
+    "Aranabilir combobox / EntityPicker",
+    "Radio / checkbox kartları",
+    "Segmented kontrol"
+   ],
+   "recommended": "Radio / checkbox kartları + Aranabilir combobox / EntityPicker + Seçim eylemleri / filtre chip’leri + Inline açılım / güvenli undo + Komut paleti / yönlendiren boş durum",
+   "deviation": true,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "icons",
+   "title": "İkonların tek sahibi nasıl tanımlansın?",
+   "selected": [
+    "Özel domain ikonları"
+   ],
+   "recommended": "Ant ikonları + semantic alias",
+   "deviation": true,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "typography",
+   "title": "Font, sayı ve dil fallback politikası ne?",
+   "selected": [
+    "Subset marka fontu + sistem fallback"
+   ],
+   "recommended": "Sistem fontu + script fallback",
+   "deviation": true,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "component-states",
+   "title": "Bileşen state matrisi nasıl zorunlu olsun?",
+   "selected": [
+    "Tipli state sözleşmesi + örnekler"
+   ],
+   "recommended": "",
+   "deviation": false,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "a11y-target",
+   "title": "Erişilebilirlik hedefini nasıl tanımlıyorsun?",
+   "selected": [
+    "WCAG 2.2 AA"
+   ],
+   "recommended": "AA tabanı + seçili AAA",
+   "deviation": true,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "targets",
+   "title": "Dokunma hedef standardın ne?",
+   "selected": [
+    "En az 44×44 CSS px"
+   ],
+   "recommended": "",
+   "deviation": false,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "native",
+   "title": "Safari/platform farklılıklarına yaklaşımın?",
+   "selected": [
+    "Tutarlı custom kontroller"
+   ],
+   "recommended": "Native değeri koru, seçici custom",
+   "deviation": true,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "focus",
+   "title": "Focus ve overlay politikası ne?",
+   "selected": [
+    "Tek overlay/focus sözleşmesi"
+   ],
+   "recommended": "",
+   "deviation": false,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "test-matrix",
+   "title": "Hangi tarayıcı/yardımcı teknoloji matrisi?",
+   "selected": [
+    "Safari + VoiceOver / iOS",
+    "Chrome/Firefox + NVDA",
+    "Edge/Chrome + JAWS",
+    "Android + TalkBack",
+    "Zoom / forced colors / reduced motion"
+   ],
+   "recommended": "Safari + VoiceOver / iOS + Chrome/Firefox + NVDA + Android + TalkBack + Zoom / forced colors / reduced motion",
+   "deviation": true,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "alternatives",
+   "title": "Drag, grafik ve sanal grid alternatifleri?",
+   "selected": [
+    "Eşdeğer erişilebilir kontroller"
+   ],
+   "recommended": "",
+   "deviation": false,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "locales",
+   "title": "Hangi dil/yazı aileleri ilk kapsamda?",
+   "selected": [
+    "Diğer locale’ler",
+    "Arapça / İbranice (RTL)",
+    "Türkçe + İngilizce"
+   ],
+   "recommended": "Türkçe + İngilizce",
+   "deviation": true,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "messages",
+   "title": "Çeviri mimarisi nasıl?",
+   "selected": [
+    "Frappe katalog köprüsü + UI katalog"
+   ],
+   "recommended": "",
+   "deviation": false,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "locale-model",
+   "title": "LocaleContext neyi içersin?",
+   "selected": [
+    "Ayrı locale boyutları"
+   ],
+   "recommended": "",
+   "deviation": false,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "vertical",
+   "title": "Japonca dikey yazı nerede desteklensin?",
+   "selected": [],
+   "recommended": "",
+   "deviation": false,
+   "active": false,
+   "status": "inactive"
+  },
+  {
+   "id": "bidi",
+   "title": "RTL ve karma metin nasıl ele alınsın?",
+   "selected": [
+    "Logical CSS + bidi isolation"
+   ],
+   "recommended": "",
+   "deviation": false,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "regional",
+   "title": "Hangi bölgesel farklılıklar gerekli?",
+   "selected": [
+    "Ölçü birimi / adres / ad biçimi",
+    "Alternatif takvim / sayı sistemi",
+    "Para / ondalık hassasiyeti",
+    "Saat dilimi / DST sınırları"
+   ],
+   "recommended": "Saat dilimi / DST sınırları + Para / ondalık hassasiyeti",
+   "deviation": true,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "locale-testing",
+   "title": "Yerelleştirme hangi kalite kapılarıyla korunacak?",
+   "selected": [
+    "RTL / CJK / print görsel matrisi",
+    "Eksik key / placeholder / sabit metin taraması",
+    "Pseudo-locale / metin genişlemesi",
+    "IME / bidi / locale sort testleri"
+   ],
+   "recommended": "Pseudo-locale / metin genişlemesi + Eksik key / placeholder / sabit metin taraması + IME / bidi / locale sort testleri",
+   "deviation": true,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "time-policy",
+   "title": "Görüntüleme zamanı ile iş günü hangi dilimde?",
+   "selected": [
+    "Kullanıcı gösterimi + açık iş dilimi"
+   ],
+   "recommended": "",
+   "deviation": false,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "layout",
+   "title": "Adaptive fluid yaklaşımı nasıl uygulanacak?",
+   "selected": [
+    "Göreve göre adaptive yüzey"
+   ],
+   "recommended": "Container + intrinsic layout",
+   "deviation": true,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "loading-code",
+   "title": "Kod hangi sinyalle yüklensin?",
+   "selected": [
+    "Route / feature / intent"
+   ],
+   "recommended": "",
+   "deviation": false,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "async",
+   "title": "Kalıcı loading standardı nasıl?",
+   "selected": [
+    "AsyncBoundary + durum sözleşmesi"
+   ],
+   "recommended": "",
+   "deviation": false,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "motion",
+   "title": "Ease-in / ease-out nasıl standart olsun?",
+   "selected": [
+    "Merkezi motion tokenları"
+   ],
+   "recommended": "",
+   "deviation": false,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "performance",
+   "title": "Performans kalite kapısı hangisi?",
+   "selected": [
+    "CWV + route bütçesi"
+   ],
+   "recommended": "",
+   "deviation": false,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "collections",
+   "title": "Büyük koleksiyonlar nasıl işlensin?",
+   "selected": [
+    "Server windowing + virtualization"
+   ],
+   "recommended": "Server pagination/filter/sort",
+   "deviation": true,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "mobile",
+   "title": "Mobil ortam için hangi korumalar gerekli?",
+   "selected": [
+    "Kullanıcı görünüm tercihi",
+    "Yavaş ağ / data saver ipucu",
+    "Pointer / hover / touch ayrımı",
+    "Dynamic viewport / safe area"
+   ],
+   "recommended": "Dynamic viewport / safe area + Pointer / hover / touch ayrımı + Kullanıcı görünüm tercihi",
+   "deviation": true,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "ai-stream",
+   "title": "AI streaming UI nasıl güncellensin?",
+   "selected": [
+    "İş durumu + tamamlanmış sonuç"
+   ],
+   "recommended": "Buffer + yerel güncelleme",
+   "deviation": true,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "adaptive-shell",
+   "title": "Navigasyon ve AI paneli dar alanda neye dönüşsün?",
+   "selected": [
+    "Sabit panel → overlay / sheet"
+   ],
+   "recommended": "",
+   "deviation": false,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "data-access",
+   "title": "Veri erişimi için hangi kurallar yayın kapısı olsun?",
+   "selected": [
+    "Bütçeli niyet bazlı prefetch",
+    "Dedup / cancellation / timeout",
+    "Batch lookup / N+1 kontrolü",
+    "Listeye dar alan projeksiyonu"
+   ],
+   "recommended": "Listeye dar alan projeksiyonu + Batch lookup / N+1 kontrolü + Dedup / cancellation / timeout",
+   "deviation": true,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "tenant-isolation",
+   "title": "Sunucu tenant sınırı nasıl korunacak?",
+   "selected": [
+    "Ayrı site + server tenant resolver"
+   ],
+   "recommended": "",
+   "deviation": false,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "audit",
+   "title": "Denetim kaydı neyi içersin?",
+   "selected": [
+    "User → agent → capability → revision"
+   ],
+   "recommended": "",
+   "deviation": false,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "data-policy",
+   "title": "Hassas veri ve saklama politikası nasıl?",
+   "selected": [
+    "Veri sınıfına göre politika"
+   ],
+   "recommended": "",
+   "deviation": false,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "app-security",
+   "title": "Uygulama güvenliği doğrulaması nasıl?",
+   "selected": [
+    "Tehdit modeli + CI kontrolleri"
+   ],
+   "recommended": "",
+   "deviation": false,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "observability",
+   "title": "Üretim nasıl gözlemlensin?",
+   "selected": [
+    "Uçtan uca correlation + ölçümler"
+   ],
+   "recommended": "",
+   "deviation": false,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "hosting",
+   "title": "Frontend ve gateway nasıl dağıtılsın?",
+   "selected": [
+    "Frappe yanında reverse proxy"
+   ],
+   "recommended": "",
+   "deviation": false,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "recovery",
+   "title": "Kurtarma ve çalışma hedefi ne?",
+   "selected": [
+    "Tanımlı SLO + restore provası"
+   ],
+   "recommended": "",
+   "deviation": false,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "seo",
+   "title": "Public içerik nasıl render edilsin?",
+   "selected": [
+    "Astro SSG"
+   ],
+   "recommended": "",
+   "deviation": false,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "discovery",
+   "title": "SEO / AI arama için ne yayınlanacak?",
+   "selected": [
+    "Sitemap / canonical / hreflang",
+    "Uygun structured data",
+    "Semantik HTML + kaynaklı içerik"
+   ],
+   "recommended": "",
+   "deviation": false,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "impersonation",
+   "title": "Destek ekibine vekil oturum gerekli mi?",
+   "selected": [
+    "Ayrı onayla sınırlı yazma"
+   ],
+   "recommended": "Vekil oturum yok",
+   "deviation": true,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "csp",
+   "title": "CSP ve güvenilir içerik politikası nasıl yayımlansın?",
+   "selected": [
+    "Report-only → ölç → enforce"
+   ],
+   "recommended": "",
+   "deviation": false,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "data-residency",
+   "title": "Veri hangi ortamlara ve bölgelere gidebilir?",
+   "selected": [
+    "Önce veri akışı ve sözleşme envanteri"
+   ],
+   "recommended": "",
+   "deviation": false,
+   "active": true,
+   "status": "discovery"
+  },
+  {
+   "id": "migration",
+   "title": "Nasıl geçiş yapacaksın?",
+   "selected": [
+    "Tek seferde geçiş"
+   ],
+   "recommended": "Dikey dilimlerle kademeli",
+   "deviation": true,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "quality-gates",
+   "title": "Hangi testler yayın kapısı olsun?",
+   "selected": [
+    "AI eval + adversarial test",
+    "Tema / locale görsel matrisi",
+    "Performans / bundle bütçesi",
+    "A11y + manuel AT",
+    "E2E kritik kullanıcı işleri",
+    "Contract / permission testleri"
+   ],
+   "recommended": "",
+   "deviation": false,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "governance",
+   "title": "Paket ve sözleşme sahipliği nasıl?",
+   "selected": [
+    "Sürümlü platform paketleri"
+   ],
+   "recommended": "Tek repo / net modül sınırları",
+   "deviation": true,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "rollout",
+   "title": "Yeni özellikler nasıl açılacak?",
+   "selected": [
+    "Feature flag + canary kullanıcı"
+   ],
+   "recommended": "",
+   "deviation": false,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "discovery-work",
+   "title": "İlk teknik keşifler hangileri olsun?",
+   "selected": [
+    "RTL / CJK / export PoC",
+    "AI capability / security PoC",
+    "A11y / Safari / IME PoC",
+    "Grid / rapor PoC",
+    "Legacy ve API parity PoC"
+   ],
+   "recommended": "Legacy ve API parity PoC + A11y / Safari / IME PoC + AI capability / security PoC",
+   "deviation": true,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "component-docs",
+   "title": "Bileşen dokümanı nasıl canlı tutulacak?",
+   "selected": [
+    "Storybook benzeri state kataloğu"
+   ],
+   "recommended": "",
+   "deviation": false,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "token-pipeline",
+   "title": "Token kaynağından hangi çıktılar üretilecek?",
+   "selected": [
+    "Sürümlü JSON → CSS/TS/tasarım çıktısı"
+   ],
+   "recommended": "CSS değişkenleri + lint/test",
+   "deviation": true,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "ai-codegen",
+   "title": "Geliştirici AI ile kod üretirken hangi sınırlar geçerli?",
+   "selected": [
+    "Arketip + örnek + zorunlu kontroller"
+   ],
+   "recommended": "",
+   "deviation": false,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "adoption",
+   "title": "Kullanıcılar yeni panele nasıl geçecek?",
+   "selected": [
+    "Ürün içi kısa yardım + destek"
+   ],
+   "recommended": "Görev bazlı pilot + eğitim",
+   "deviation": true,
+   "active": true,
+   "status": "decided"
+  },
+  {
+   "id": "unknown-method",
+   "title": "Gerçek unknown unknown’ları nasıl arayacaksın?",
+   "selected": [
+    "Tek uçtan uca dikey dilim",
+    "Kullanıcı gölgeleme / kayıp iş envanteri",
+    "Zaman kutulu teknik deney",
+    "Ön ölüm analizi"
+   ],
+   "recommended": "",
+   "deviation": false,
+   "active": true,
+   "status": "decided"
+  }
+ ]
+}
