@@ -1,0 +1,659 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Ant Design merkezli, AI-first GenUI frontend için gereksinim ve mimari sözleşmesi.">
+<title>GenUI Frontend Gereksinimleri</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Roboto:wght@300;400;500&family=Roboto+Mono:wght@400&display=swap">
+<style>
+:root {
+  --paper: #f5f7fb;
+  --surface: #ffffff;
+  --surface-2: #eef2f8;
+  --ink: #141922;
+  --ink-2: #3a4351;
+  --muted: #667283;
+  --line: #d9dfe8;
+  --line-2: #c4ccd8;
+  --accent: #1677ff;
+  --accent-ink: #0b5bd3;
+  --accent-soft: #e8f1ff;
+  --accent-line: #a6c8ff;
+  --must: #141922;
+  --must-ink: #ffffff;
+  --warn: #ad4e00;
+  --warn-soft: #fff4e6;
+  --ok: #1a7f4b;
+  --ok-soft: #e6f6ec;
+  --shadow: 0 1px 2px rgba(20, 25, 34, .06), 0 8px 24px -16px rgba(20, 25, 34, .18);
+  --radius: 10px;
+  --radius-s: 6px;
+  --font-body: "Roboto", "Helvetica Neue", Arial, sans-serif;
+  --font-head: "Archivo", "Roboto", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "Roboto Mono", "SFMono-Regular", Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --paper: #0e131a;
+    --surface: #151b25;
+    --surface-2: #1b2330;
+    --ink: #e7ecf3;
+    --ink-2: #c3cbd7;
+    --muted: #93a0b2;
+    --line: #273142;
+    --line-2: #344054;
+    --accent: #4d9bff;
+    --accent-ink: #7fb6ff;
+    --accent-soft: #13233b;
+    --accent-line: #2b5a9e;
+    --must: #e7ecf3;
+    --must-ink: #0e131a;
+    --warn: #ffb066;
+    --warn-soft: #2a1d0f;
+    --ok: #5fd39a;
+    --ok-soft: #10281c;
+    --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 8px 24px -16px rgba(0, 0, 0, .6);
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --paper: #0e131a;
+  --surface: #151b25;
+  --surface-2: #1b2330;
+  --ink: #e7ecf3;
+  --ink-2: #c3cbd7;
+  --muted: #93a0b2;
+  --line: #273142;
+  --line-2: #34405a;
+  --accent: #4d9bff;
+  --accent-ink: #7fb6ff;
+  --accent-soft: #13233b;
+  --accent-line: #2b5a9e;
+  --must: #e7ecf3;
+  --must-ink: #0e131a;
+  --warn: #ffb066;
+  --warn-soft: #2a1d0f;
+  --ok: #5fd39a;
+  --ok-soft: #10281c;
+  --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 8px 24px -16px rgba(0, 0, 0, .6);
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: 1rem;
+  line-height: 1.6;
+  padding-inline: 16px;
+  padding-block: 0 4rem;
+}
+.wrap { max-width: 68rem; margin: 0 auto; }
+a { color: var(--accent-ink); text-decoration: none; border-bottom: 1px solid var(--accent-line); }
+a:hover { border-bottom-color: var(--accent-ink); }
+a:focus-visible, button:focus-visible, [tabindex]:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+strong { font-weight: 500; }
+code, .mono { font-family: var(--font-mono); font-size: .92em; }
+code { background: var(--surface-2); padding: .05em .4em; border-radius: 4px; color: var(--ink-2); }
+h1, h2, h3 { font-family: var(--font-head); text-wrap: balance; margin: 0; color: var(--ink); }
+h1 { font-size: clamp(1.9rem, 1.2rem + 2.4vw, 2.9rem); font-weight: 700; line-height: 1.12; letter-spacing: -.01em; }
+h2 { font-size: 1.45rem; font-weight: 600; line-height: 1.25; }
+h3 { font-size: 1.1rem; font-weight: 600; line-height: 1.3; }
+p { margin: 0; max-width: 68ch; }
+p + p { margin-top: .75rem; }
+.eyebrow {
+  font-family: var(--font-head);
+  font-size: .78rem;
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.ico { width: 1.15em; height: 1.15em; vertical-align: -.2em; fill: currentColor; flex: none; }
+
+/* header */
+.masthead {
+  padding-block: 2.75rem 2rem;
+  border-bottom: 1px solid var(--line);
+  display: grid;
+  gap: 1rem;
+}
+.masthead .meta { display: flex; flex-wrap: wrap; gap: .5rem 1.25rem; color: var(--muted); font-size: .95rem; }
+.masthead .meta span { display: inline-flex; align-items: center; gap: .4rem; }
+.lede { font-size: 1.12rem; font-weight: 300; color: var(--ink-2); max-width: 62ch; }
+.lede strong { color: var(--ink); }
+
+/* contents */
+.toc { display: flex; flex-wrap: wrap; gap: .5rem; padding-block: 1.25rem; border-bottom: 1px solid var(--line); }
+.toc a {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: .3rem .8rem;
+  font-size: .92rem;
+  font-weight: 400;
+  color: var(--ink-2);
+  background: var(--surface);
+}
+.toc a:hover { border-color: var(--accent-line); color: var(--accent-ink); }
+
+/* sections */
+section { padding-block: 2.5rem 0; }
+.sec-head { display: grid; gap: .5rem; margin-bottom: 1.25rem; }
+.sec-head .title { display: flex; align-items: center; gap: .6rem; }
+.sec-head .title .ico { width: 1.35rem; height: 1.35rem; color: var(--accent); }
+.sec-head p { color: var(--ink-2); }
+
+/* four questions */
+.quad { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+.quad > div { background: var(--surface); padding: 1.1rem 1.2rem; display: grid; gap: .35rem; align-content: start; }
+.quad .q { font-family: var(--font-head); font-weight: 600; font-size: .95rem; color: var(--accent-ink); }
+.quad p { font-size: 1rem; }
+
+/* layer stack */
+.layers { display: grid; gap: .5rem; }
+.layer {
+  display: grid;
+  grid-template-columns: minmax(11rem, 15rem) 1fr;
+  gap: .25rem 1.5rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--accent);
+  border-radius: var(--radius-s);
+  padding: .9rem 1.1rem;
+}
+.layer.l-degisebilir { border-left-color: var(--accent-line); }
+.layer.l-ucucu { border-left-style: dashed; border-left-color: var(--line-2); }
+.layer .name { font-family: var(--font-head); font-weight: 600; font-size: 1.02rem; display: grid; gap: .4rem; align-content: start; }
+.layer .name .ord { font-family: var(--font-mono); font-size: .8rem; color: var(--muted); font-weight: 400; }
+.layer dl { margin: 0; display: grid; grid-template-columns: max-content 1fr; gap: .2rem .9rem; font-size: .98rem; }
+.layer dt { color: var(--muted); font-weight: 400; }
+.layer dd { margin: 0; color: var(--ink-2); }
+.chip {
+  display: inline-flex; align-items: center; gap: .3rem;
+  font-family: var(--font-head); font-size: .74rem; font-weight: 600; letter-spacing: .04em; text-transform: uppercase;
+  border-radius: 999px; padding: .12rem .6rem; line-height: 1.5; white-space: nowrap; width: max-content;
+}
+.chip.kalici { background: var(--accent); color: #fff; }
+.chip.degisebilir { background: var(--accent-soft); color: var(--accent-ink); border: 1px solid var(--accent-line); }
+.chip.ucucu { background: transparent; color: var(--muted); border: 1px dashed var(--line-2); }
+.chip.must { background: var(--must); color: var(--must-ink); }
+.chip.should { background: transparent; color: var(--ink-2); border: 1px solid var(--line-2); }
+.chip.may { background: transparent; color: var(--muted); border: 1px dashed var(--line-2); }
+
+/* requirement groups */
+.group { margin-top: 1.75rem; }
+.group:first-of-type { margin-top: 0; }
+.group-head { display: flex; align-items: baseline; gap: .75rem; flex-wrap: wrap; margin-bottom: .6rem; }
+.group-head h3 { display: inline-flex; align-items: center; gap: .5rem; }
+.group-head h3 .ico { color: var(--accent); width: 1.15rem; height: 1.15rem; }
+.group-head .why { color: var(--muted); font-size: .95rem; }
+.tbl-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--radius-s); background: var(--surface); }
+table { width: 100%; border-collapse: collapse; font-family: var(--font-body); font-size: 1rem; font-weight: 300; }
+thead th {
+  text-align: left; font-family: var(--font-head); font-weight: 600; font-size: .8rem; letter-spacing: .06em; text-transform: uppercase;
+  color: var(--muted); padding: .7rem .9rem; border-bottom: 1px solid var(--line); background: var(--surface-2); white-space: nowrap;
+}
+tbody td { padding: .7rem .9rem; border-bottom: 1px solid var(--line); vertical-align: top; color: var(--ink-2); }
+tbody tr:last-child td { border-bottom: 0; }
+td.id { font-family: var(--font-mono); font-size: .88rem; color: var(--muted); white-space: nowrap; }
+td.lvl { white-space: nowrap; }
+td.actor { white-space: nowrap; color: var(--muted); font-weight: 400; }
+td .req { color: var(--ink); font-weight: 400; }
+td .note { display: block; color: var(--muted); font-size: .95rem; margin-top: .15rem; }
+.req-table td:nth-child(3) { min-width: 22rem; }
+
+/* stack table */
+.stack-table td:nth-child(2) { font-weight: 400; color: var(--ink); }
+.small { font-size: .95rem; color: var(--muted); }
+
+/* experiments */
+.exp { display: grid; grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr)); gap: .75rem; }
+.exp > div { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-s); padding: 1rem 1.1rem; display: grid; gap: .4rem; align-content: start; }
+.exp .t { font-family: var(--font-head); font-weight: 600; font-size: 1rem; color: var(--ink); display: flex; gap: .5rem; align-items: center; }
+.exp .t .ico { color: var(--accent); }
+.exp .pass { color: var(--ink-2); font-size: .98rem; }
+.exp .pass b { font-weight: 500; color: var(--ok); }
+
+/* do / don't */
+.dodont { display: grid; grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr)); gap: .75rem; }
+.dodont > div { border-radius: var(--radius-s); padding: 1rem 1.1rem; border: 1px solid var(--line); background: var(--surface); }
+.dodont h3 { display: flex; align-items: center; gap: .5rem; margin-bottom: .6rem; }
+.dodont .no h3 .ico { color: var(--warn); }
+.dodont .yes h3 .ico { color: var(--ok); }
+.dodont ul { margin: 0; padding-left: 1.2rem; display: grid; gap: .4rem; color: var(--ink-2); }
+.dodont li::marker { color: var(--muted); }
+
+/* callout */
+.callout {
+  display: grid; grid-template-columns: auto 1fr; gap: .75rem; align-items: start;
+  background: var(--accent-soft); border: 1px solid var(--accent-line); border-radius: var(--radius-s); padding: .9rem 1.1rem; color: var(--ink-2);
+}
+.callout .ico { color: var(--accent-ink); margin-top: .2rem; }
+.callout.warn { background: var(--warn-soft); border-color: transparent; }
+.callout.warn .ico { color: var(--warn); }
+
+/* sources */
+.sources ol { margin: 0; padding-left: 1.4rem; display: grid; gap: .35rem; color: var(--ink-2); font-size: .98rem; }
+.sources li::marker { color: var(--muted); font-family: var(--font-mono); font-size: .85rem; }
+.sources .v { color: var(--muted); }
+
+footer { margin-top: 3rem; padding-top: 1.25rem; border-top: 1px solid var(--line); color: var(--muted); font-size: .92rem; display: flex; flex-wrap: wrap; gap: .5rem 1.5rem; }
+
+@media (max-width: 640px) {
+  .layer { grid-template-columns: 1fr; }
+  .layer dl { grid-template-columns: 1fr; gap: .1rem; }
+  .layer dt { margin-top: .35rem; }
+  .req-table td:nth-child(3) { min-width: 16rem; }
+  .masthead { padding-block: 2rem 1.5rem; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  a, .toc a { transition: color .15s ease, border-color .15s ease; }
+}
+@media print {
+  body { background: #fff; color: #000; }
+  .toc { display: none; }
+  .tbl-wrap { overflow: visible; }
+}
+
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="masthead">
+  <div class="eyebrow">Frontend gereksinim sözleşmesi</div>
+  <h1>GenUI Frontend Gereksinimleri</h1>
+  <p class="lede"><strong>Ant Design merkezde kalır, ama merkez olan şey kütüphane değil, ürüne ait etkileşim çekirdeğidir:</strong> iş yetenekleri, görev durumu, onaylı bileşen kataloğu ve tasarım kararları. GenUI (generative UI, üretken arayüz: modelin hazır ve onaylı bileşenlerden ekran kurması) bu çekirdeği kullanan bir katmandır. Model kod, HTML veya URL üretmez; katalogdan seçer. AI-first UX (yapay zekânın yardımcı özellik değil, birincil etkileşim yolu olması) bu belgede zorunlu gereksinimdir.</p>
+  <div class="meta">
+    <span>Sürüm 1.0</span>
+    <span>28 Eylül 2026</span>
+    <span>Kapsam: SaaS yönetim paneli ve PIM (ürün bilgisi yönetimi)</span>
+    <span>Sürümler ve lisanslar aynı gün npm ve resmi dokümanlardan doğrulandı</span>
+  </div>
+</header>
+
+<nav class="toc" aria-label="İçindekiler">
+  <a href="#karar">Karar</a>
+  <a href="#nedir">GenUI nedir</a>
+  <a href="#katmanlar">Katmanlar</a>
+  <a href="#gereksinimler">Gereksinimler</a>
+  <a href="#yigin">Teknoloji</a>
+  <a href="#deneyler">Kabul deneyleri</a>
+  <a href="#yapma">Yapma / Yap</a>
+  <a href="#kaynaklar">Kaynaklar</a>
+</nav>
+
+<section id="karar">
+  <div class="sec-head">
+    <div class="title"><svg class="ico" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M173.66,98.34a8,8,0,0,1,0,11.32l-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35A8,8,0,0,1,173.66,98.34ZM232,128A104,104,0,1,1,128,24,104.11,104.11,0,0,1,232,128Zm-16,0a88,88,0,1,0-88,88A88.1,88.1,0,0,0,216,128Z"/></svg><h2>Karar</h2></div>
+    <p>Soru "Ant Design mı, GenUI mı?" değildir. Ant Design ekranı çizen katmandır; GenUI hangi bileşenin, ne zaman, hangi veriyle geleceğine karar veren katmandır. İkisi aynı yerde durmaz.</p>
+  </div>
+  <div class="quad">
+    <div><div class="q">Güvenli olan</div><p>Ant Design'ı tek sarmalayıcı pakete (<code>@pim/ui</code>) kapatmak. Modelin yalnızca katalogdaki bileşen kimliklerini ve şemalı eylemleri seçmesi. Yetki ve iş kuralının sunucuda kalması.</p></div>
+    <div><div class="q">Riskli olan</div><p>Barındırılan bir GenUI servisini (Thesys C1 / OpenUI Cloud) veya tek bir protokol sürümünü (A2UI v1.0 hâlâ aday) merkeze koymak. Ant Design prop'larını katalog sözleşmesine sızdırmak. Modele serbest HTML veya kod ürettirmek.</p></div>
+    <div><div class="q">Enterprise seviyede doğru</div><p>İş yetenekleri sürümlü API arkasında. Yazma eylemleri öneri + insan onayı ile geçer. Her üretim denetim izinde. Model, prompt ve katalog sürümleri tek imzalı yapılandırmada. CI kapıları bloklayıcı.</p></div>
+    <div><div class="q">Bu projede pratik öneri</div><p>Vite + React 19 + TypeScript SPA (tek sayfa uygulaması). antd 6 tek bileşen kütüphanesi, @ant-design/x yalnızca sohbet yüzeyleri için. Kendi iç UI Spec formatı ve renderer. A2UI, AG-UI, json-render yalnızca adaptör. İlk pilot tek gerçek iş akışında: eksik ürün özniteliklerini tamamlama.</p></div>
+  </div>
+</section>
+
+<section id="nedir">
+  <div class="sec-head">
+    <div class="title"><svg class="ico" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M197.58,129.06,146,110l-19-51.62a15.92,15.92,0,0,0-29.88,0L78,110l-51.62,19a15.92,15.92,0,0,0,0,29.88L78,178l19,51.62a15.92,15.92,0,0,0,29.88,0L146,178l51.62-19a15.92,15.92,0,0,0,0-29.88ZM137,164.22a8,8,0,0,0-4.74,4.74L112,223.85,91.78,169A8,8,0,0,0,87,164.22L32.15,144,87,123.78A8,8,0,0,0,91.78,119L112,64.15,132.22,119a8,8,0,0,0,4.74,4.74L191.85,144ZM144,40a8,8,0,0,1,8-8h16V16a8,8,0,0,1,16,0V32h16a8,8,0,0,1,0,16H184V64a8,8,0,0,1-16,0V48H152A8,8,0,0,1,144,40ZM248,88a8,8,0,0,1-8,8h-8v8a8,8,0,0,1-16,0V96h-8a8,8,0,0,1,0-16h8V72a8,8,0,0,1,16,0v8h8A8,8,0,0,1,248,88Z"/></svg><h2>GenUI bu projede nedir</h2></div>
+  </div>
+  <div class="quad">
+    <div><div class="q">Bu nedir?</div><p>Modelin, önceden onaylanmış bileşen kataloğundan seçim yaparak kullanıcının görevine göre ekran düzeni kurmasıdır. Çıktı bir JSON belgesidir (UI Spec), çalıştırılabilir kod değildir.</p></div>
+    <div><div class="q">Ne işe yarar?</div><p>Sabit sayfa akışı yerine göreve uygun çalışma alanı kurar: doğru veriyi, doğru bileşenleri ve izinli eylemleri tek yerde toplar. Kullanıcının gezinme ve filtreleme yükünü azaltır.</p></div>
+    <div><div class="q">Ne yapar?</div><p>Bileşen seçer, sunucu verisine bağlar, eylem önerir, akış hâlinde parça parça çizer, kullanıcı düzenlemesine ve onayına açık bırakır. Kullanıcı isterse görünümü sabitler veya klasik ekrana döner.</p></div>
+    <div><div class="q">Ne yapmaz?</div><p>Kod, HTML, CSS veya URL üretmez. Yetki kararı vermez. Veri yazmaz: yalnızca öneri üretir, uygulayan sunucu, onaylayan insandır. Marka kimliğini her istekte yeniden icat etmez.</p></div>
+  </div>
+</section>
+
+<section id="katmanlar">
+  <div class="sec-head">
+    <div class="title"><svg class="ico" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M230.91,172A8,8,0,0,1,228,182.91l-96,56a8,8,0,0,1-8.06,0l-96-56A8,8,0,0,1,36,169.09l92,53.65,92-53.65A8,8,0,0,1,230.91,172ZM220,121.09l-92,53.65L36,121.09A8,8,0,0,0,28,134.91l96,56a8,8,0,0,0,8.06,0l96-56A8,8,0,1,0,220,121.09ZM24,80a8,8,0,0,1,4-6.91l96-56a8,8,0,0,1,8.06,0l96,56a8,8,0,0,1,0,13.82l-96,56a8,8,0,0,1-8.06,0l-96-56A8,8,0,0,1,24,80Zm23.88,0L128,126.74,208.12,80,128,33.26Z"/></svg><h2>Katman mimarisi</h2></div>
+    <p>Altı katman. Etiket, katmanın 5 yıllık ömür beklentisini söyler: <span class="chip kalici">kalıcı</span> ürüne aittir ve yeniden yazılmaz; <span class="chip degisebilir">değişebilir</span> kütüphane sürümüyle birlikte evrilir; <span class="chip ucucu">uçucu</span> 12 ayda değişebilir ve değişmesi normaldir.</p>
+  </div>
+  <div class="layers">
+    <div class="layer">
+      <div class="name"><span class="ord">01</span>Yetenek istemcisi<span class="chip kalici">kalıcı</span></div>
+      <dl>
+        <dt>Nedir</dt><dd>Sunucunun sürümlü iş yetenekleri API'sinden (OpenAPI'den üretilen TypeScript tipleri ve zod şemaları) türeyen tek erişim katmanı. TanStack Query üzerinde çalışır. Kullanıcı, model ve klasik ekran aynı yeteneği bu katmandan çağırır.</dd>
+        <dt>Ne yapmaz</dt><dd>Yetki kararı vermez, iş kuralı tekrarlamaz, model sağlayıcısını doğrudan çağırmaz, katalog dışı uç nokta üretmez.</dd>
+      </dl>
+    </div>
+    <div class="layer">
+      <div class="name"><span class="ord">02</span>Görev durumu<span class="chip kalici">kalıcı</span></div>
+      <dl>
+        <dt>Nedir</dt><dd>Üç ayrı depo: sunucu gerçeği (Query önbelleği, salt okunur), çalışma taslağı (durum makinesi + ileri/geri yama günlüğü, sunucuda sürümlü taslak kaydı) ve görünüm durumu (URL parametreleri). Form girdisi, seçim ve sayfalama taslağa aittir; görünüm değişince kaybolmaz.</dd>
+        <dt>Ne yapmaz</dt><dd>Taslağı localStorage'a kayıt sistemi olarak yazmaz. Tek global store kurmaz. Görünüm spec'i ile iş verisini aynı nesnede tutmaz.</dd>
+      </dl>
+    </div>
+    <div class="layer">
+      <div class="name"><span class="ord">03</span>Anlamlı bileşen kataloğu, kayıt ve renderer<span class="chip kalici">kalıcı</span></div>
+      <dl>
+        <dt>Nedir</dt><dd>Katalog yalnızca veridir: bileşen kimliği, semver, zod prop şeması, izinli çocuklar, veri bağlama noktaları, erişilebilirlik rolü ve riskClass taşıyan eylemler; React'a bağımlı değildir. Kayıt (registry) kimliği <code>@pim/ui</code> bileşenine statik eşler. Renderer saf bir fonksiyondur: (spec, veri, bağlam) → React ağacı.</dd>
+        <dt>Ne yapmaz</dt><dd>antd prop, enum veya tip adı taşımaz. Ham HTML/JSX, className veya style dizesi, dinamik import, eval, serbest URL kabul etmez. RawHtml gibi kaçış bileşeni tanımlamaz.</dd>
+      </dl>
+    </div>
+    <div class="layer l-degisebilir">
+      <div class="name"><span class="ord">04</span>Tasarım tokenları<span class="chip degisebilir">değişebilir</span></div>
+      <dl>
+        <dt>Nedir</dt><dd>Proje semantik token sözlüğü (<code>color.surface.default</code>, <code>space.md</code>, <code>density.compact</code>). Yalnızca <code>@pim/ui</code> içinde antd Seed/Alias/Component tokenlarına eşlenir. antd 6'nın varsayılan CSS Variables modu kullanılır; tema ve tenant değişimi CSS değişkeni güncellemesidir.</dd>
+        <dt>Ne yapmaz</dt><dd>antd token adlarını (<code>colorPrimary</code>) uygulama koduna sızdırmaz. Modelden ham renk veya piksel almaz. antd temasını SCSS veya Less ile ezmez.</dd>
+      </dl>
+    </div>
+    <div class="layer">
+      <div class="name"><span class="ord">05</span>Etkileşim düzenleyici<span class="chip kalici">kalıcı</span></div>
+      <dl>
+        <dt>Nedir</dt><dd>Her eylemin modu vardır. <strong>direct</strong>: kullanıcı tetikler, klasik davranış. <strong>assisted</strong>: model önerir, kullanıcı diff görüp onaylar. <strong>delegated</strong>: model çok adımlı çalışır, her yazma adımı sunucudan imzalı onay ister. Mod, katalogdaki riskClass ile birleşerek insan onayını (HITL, human-in-the-loop) tek yerde uygular.</dd>
+        <dt>Ne yapmaz</dt><dd>Model metnini komut olarak yorumlamaz. İstemci bayrağıyla delegated moda geçmez. high ve irreversible sınıfta onayı kapatmaz.</dd>
+      </dl>
+    </div>
+    <div class="layer l-ucucu">
+      <div class="name"><span class="ord">06</span>Adaptörler<span class="chip ucucu">uçucu</span></div>
+      <dl>
+        <dt>Nedir</dt><dd>Üç port. TransportAdapter: SSE veya AG-UI olay akışı. SpecAdapter: iç UI Spec ile A2UI veya json-render arasında dönüşüm. RendererAdapter ve ComponentLibraryAdapter: iç spec'i <code>@pim/ui</code> (bugün antd) ile çizer. Sürümler <code>protocol-matrix</code> dosyasında sabittir.</dd>
+        <dt>Ne yapmaz</dt><dd>Dış kütüphane tiplerini domain katmanına sızdırmaz. Tarayıcıdan LLM sağlayıcısını çağırmaz. Tescilli SDK'yı çekirdek yapmaz.</dd>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<section id="gereksinimler">
+  <div class="sec-head">
+    <div class="title"><svg class="ico" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M224,128a8,8,0,0,1-8,8H128a8,8,0,0,1,0-16h88A8,8,0,0,1,224,128ZM128,72h88a8,8,0,0,0,0-16H128a8,8,0,0,0,0,16Zm88,112H128a8,8,0,0,0,0,16h88a8,8,0,0,0,0-16ZM82.34,42.34,56,68.69,45.66,58.34A8,8,0,0,0,34.34,69.66l16,16a8,8,0,0,0,11.32,0l32-32A8,8,0,0,0,82.34,42.34Zm0,64L56,132.69,45.66,122.34a8,8,0,0,0-11.32,11.32l16,16a8,8,0,0,0,11.32,0l32-32a8,8,0,0,0-11.32-11.32Zm0,64L56,196.69,45.66,186.34a8,8,0,0,0-11.32,11.32l16,16a8,8,0,0,0,11.32,0l32-32a8,8,0,0,0-11.32-11.32Z"/></svg><h2>Gereksinimler</h2></div>
+    <p>Seviyeler RFC 2119 anlamındadır: <span class="chip must">MUST</span> zorunlu, <span class="chip should">SHOULD</span> güçlü öneri, <span class="chip may">MAY</span> isteğe bağlı. Aktör sütunu gereksinimi kimin yerine getirdiğini söyler: Sistem (frontend kodu), Sunucu (BFF, backend-for-frontend: frontend'e özel sunucu katmanı), Model (LLM veya ajan), Kullanıcı, CI (kod gönderildiğinde otomatik koşan kontrol hattı). Sayısal değerler varsayılandır; ekip ADR (mimari karar kaydı) ile yükseltebilir, düşüremez.</p>
+  </div>
+
+  <div class="group">
+    <div class="group-head"><h3><svg class="ico" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M223.68,66.15,135.68,18h0a15.88,15.88,0,0,0-15.36,0l-88,48.17a16,16,0,0,0-8.32,14v95.64a16,16,0,0,0,8.32,14l88,48.17a15.88,15.88,0,0,0,15.36,0l88-48.17a16,16,0,0,0,8.32-14V80.18A16,16,0,0,0,223.68,66.15ZM128,32h0l80.34,44L128,120,47.66,76ZM40,90l80,43.78v85.79L40,175.82Zm96,129.57V133.82L216,90v85.78Z"/></svg>A. Yığın, bağımlılık ve lisans</h3><span class="why">Beş yıl yaşayacak şey kütüphane değil, sınırların nerede çizildiğidir.</span></div>
+    <div class="tbl-wrap"><table class="req-table">
+      <thead><tr><th>ID</th><th>Seviye</th><th>Gereksinim</th><th>Aktör</th></tr></thead>
+      <tbody>
+        <tr><td class="id">A1</td><td class="lvl"><span class="chip must">MUST</span></td><td><span class="req">Çekirdek yığın: React 19.3, Vite 8, TypeScript 7 (tsgo), antd 6.6, @ant-design/icons 6, zod 4, TanStack Router 1.x ve Query 5.x, Node 22 LTS.</span><span class="note">Tarayıcı hedefi Vite varsayılanı "baseline-widely-available": Chrome/Edge 111+, Firefox 114+, Safari 16.4+. Next.js, React Server Components, TanStack Start ve Supabase kullanılmaz.</span></td><td class="actor">Sistem</td></tr>
+        <tr><td class="id">A2</td><td class="lvl"><span class="chip must">MUST</span></td><td><span class="req">antd, tüm @ant-design/* paketleri ve 0.x sürümlü GenUI paketleri tam sürümle sabitlenir (caret yok); 1.x paketler tilde ile minor'a sabitlenir; lockfile commit edilir.</span><span class="note">Yükseltme ayrı PR'da yapılır ve yalnızca uyumluluk paketi (J1, J2, J4, J5) geçtikten sonra birleşir.</span></td><td class="actor">Sistem</td></tr>
+        <tr><td class="id">A3</td><td class="lvl"><span class="chip must">MUST</span></td><td><span class="req">Lisans allowlist: MIT, Apache-2.0, BSD, ISC. MPL-2.0 yalnızca değiştirilmemiş test bağımlılığı olarak (axe-core).</span><span class="note">AGPL ve "yalnızca dahili kullanım" lisanslı paketler (@thesysai/genui-sdk) engellenir. Apache-2.0 bağımlılıklar için NOTICE dosyası dağıtıma eklenir. Tarama CI'da bloklayıcıdır.</span></td><td class="actor">CI</td></tr>
+        <tr><td class="id">A4</td><td class="lvl"><span class="chip must">MUST</span></td><td><span class="req">pnpm workspace: <code>apps/admin</code> + <code>packages/</code> altında capabilities-client, task-state, catalog, registry, renderer, tokens, orchestration, adapters/*, ui-kit (@pim/ui), i18n, testing.</span><span class="note">Bağımlılık yönü: renderer → registry → ui-kit → tokens; orchestration → task-state → capabilities-client. catalog hiçbir React paketine bağımlı değildir (prompt üretimi için Node'da da çalışır). Dairesel import lint ile kırılır.</span></td><td class="actor">Sistem</td></tr>
+        <tr><td class="id">A5</td><td class="lvl"><span class="chip must">MUST</span></td><td><span class="req">Tedarik zinciri: lockfile bütünlüğü ve provenance doğrulaması, bağımlılık zafiyet taraması (SCA), SBOM (yazılım malzeme listesi) üretimi, postinstall betikleri kapalı, gizli anahtar taraması.</span><span class="note">Kaynak haritaları herkese açık dağıtılmaz. 0.x GenUI paketleri ve haftalık antd yamaları bu kapıyı gerekli kılar.</span></td><td class="actor">CI</td></tr>
+        <tr><td class="id">A6</td><td class="lvl"><span class="chip should">SHOULD</span></td><td><span class="req">ProComponents yalnızca 3.x hattı (antd 6 peer; bugün beta) ve yalnızca <code>@pim/ui</code> içinden. <code>latest</code> etiketi (2.8.x) antd 4/5 içindir, kullanılmaz.</span><span class="note">typescript-eslint TypeScript 7'yi henüz desteklemediği için lint kararı (TS 6 alias veya oxlint) ADR olarak yazılır ve TS 7.1'de yeniden değerlendirilir.</span></td><td class="actor">Sistem</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="group">
+    <div class="group-head"><h3><svg class="ico" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M40,88H73a32,32,0,0,0,62,0h81a8,8,0,0,0,0-16H135a32,32,0,0,0-62,0H40a8,8,0,0,0,0,16Zm64-24A16,16,0,1,1,88,80,16,16,0,0,1,104,64ZM216,168H199a32,32,0,0,0-62,0H40a8,8,0,0,0,0,16h97a32,32,0,0,0,62,0h17a8,8,0,0,0,0-16Zm-48,24a16,16,0,1,1,16-16A16,16,0,0,1,168,192Z"/></svg>B. Ant Design sınırı ve tasarım tokenları</h3><span class="why">Ant Design tek kütüphanedir, ama uygulamaya tek kapıdan girer.</span></div>
+    <div class="tbl-wrap"><table class="req-table">
+      <thead><tr><th>ID</th><th>Seviye</th><th>Gereksinim</th><th>Aktör</th></tr></thead>
+      <tbody>
+        <tr><td class="id">B1</td><td class="lvl"><span class="chip must">MUST</span></td><td><span class="req">antd, @ant-design/x ve pro-components import'ları yalnızca <code>@pim/ui</code> paketinde yapılır; ESLint <code>no-restricted-imports</code> diğer tüm paketlerde engeller.</span><span class="note">message, notification, Modal.confirm gibi statik API'ler de yalnızca sarmalayıcı üzerinden çağrılır.</span></td><td class="actor">Sistem</td></tr>
+        <tr><td class="id">B2</td><td class="lvl"><span class="chip must">MUST</span></td><td><span class="req">Semantik token sözlüğü (<code>packages/tokens</code>) tek kaynaktır. antd Seed/Alias/Component tokenlarına eşleme yalnızca <code>@pim/ui</code> içinde ConfigProvider <code>theme.token</code> ve <code>theme.components</code> ile yapılır.</span><span class="note">Özellik kodunda satır içi renk veya aralık sabiti yazılmaz; <code>theme.useToken()</code> yalnızca @pim/ui'de çağrılır.</span></td><td class="actor">Sistem</td></tr>
+        <tr><td class="id">B3</td><td class="lvl"><span class="chip must">MUST</span></td><td><span class="req">Tema: <code>theme.algorithm</code> dizisi (default, dark, isteğe bağlı compact), CSS Variables modu açık, <code>cssVar.prefix = "pim"</code>, sabit <code>cssVar.key</code>, <code>hashed</code> açık. Tema ve tenant değişimi yalnızca CSS değişkeni güncellemesiyle olur, bileşenler yeniden render edilmez.</span><span class="note">zeroRuntime ilk sürümde kapalıdır (MAY: dinamik tenant temasıyla performans ölçüldükten sonra).</span></td><td class="actor">Sistem</td></tr>
+        <tr><td class="id">B4</td><td class="lvl"><span class="chip must">MUST</span></td><td><span class="req">Görünüm özelleştirmeleri yalnızca bileşen tokenları ve antd 6 semantic <code>classNames</code> / <code>styles</code> API'si ile yapılır. v6'da kaldırılan veya deprecate edilen prop'lar kullanılmaz; antd deprecate taraması CI'da çalışır.</span></td><td class="actor">Sistem</td></tr>
+        <tr><td class="id">B5</td><td class="lvl"><span class="chip must">MUST</span></td><td><span class="req">Modele açık görsel kararlar yalnızca katalogdaki semantik enum'lardır: tone (neutral, info, success, warning, danger), density (comfortable, compact), icon (proje ikon tablosundaki adlar).</span><span class="note">Ham renk, piksel, className veya stil dizesi kabul edilmez. İkon eşlemesi @pim/ui'deki tek kayıt tablosundadır.</span></td><td class="actor">Model</td></tr>
+        <tr><td class="id">B6</td><td class="lvl"><span class="chip should">SHOULD</span></td><td><span class="req">Uygulama düzeyi yerleşim için SCSS (sass-embedded) serbesttir; antd teması SCSS veya Less ile ezilmez.</span><span class="note">Tailwind kullanılırsa yalnızca v4 katman sırası ile ve Preflight kapalı. Flowbite bu projede kullanılmaz: Tailwind Preflight sıfırlaması antd bileşen stilleriyle çakışır.</span></td><td class="actor">Sistem</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="group">
+    <div class="group-head"><h3><svg class="ico" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M160,112h48a16,16,0,0,0,16-16V48a16,16,0,0,0-16-16H160a16,16,0,0,0-16,16V64H128a24,24,0,0,0-24,24v32H72v-8A16,16,0,0,0,56,96H24A16,16,0,0,0,8,112v32a16,16,0,0,0,16,16H56a16,16,0,0,0,16-16v-8h32v32a24,24,0,0,0,24,24h16v16a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V160a16,16,0,0,0-16-16H160a16,16,0,0,0-16,16v16H128a8,8,0,0,1-8-8V88a8,8,0,0,1,8-8h16V96A16,16,0,0,0,160,112ZM56,144H24V112H56v32Zm104,16h48v48H160Zm0-112h48V96H160Z"/></svg>C. Katalog, kayıt ve renderer</h3><span class="why">Modelin seçebileceği evren burada tanımlanır; buranın dışı yoktur.</span></div>
+    <div class="tbl-wrap"><table class="req-table">
+      <thead><tr><th>ID</th><th>Seviye</th><th>Gereksinim</th><th>Aktör</th></tr></thead>
+      <tbody>
+        <tr><td class="id">C1</td><td class="lvl"><span class="chip must">MUST</span></td><td><span class="req">Katalog sözleşmesi proje tanımlı bileşen adları ve zod 4 ile doğrulanan proje tanımlı prop'lardan oluşur; hiçbir antd prop adı, enum'u veya tipi sözleşmede yer almaz.</span><span class="note">Modelin structured-output şeması aynı zod kaynağından <code>z.toJSONSchema</code> ile üretilir. Sağlayıcı şema desteği JSON Schema alt kümesidir; bu yüzden spec sunucuda özgün şemayla yeniden doğrulanır.</span></td><td class="actor">Sistem</td></tr>
+        <tr><td class="id">C2</td><td class="lvl"><span class="chip must">MUST</span></td><td><span class="req">Renderer fail-closed çalışır: <code>z.strictObject</code> + <code>discriminatedUnion</code> ile doğrular; bilinmeyen bileşen veya prop reddedilir ve UnknownComponent yer tutucusu gösterilir.</span><span class="note">Surface (üretilen tek bölge) başına sınırlar: 300 düğüm, derinlik 8, dizi 500 öğe, metin 10.000 karakter. <code>z.object</code> bilinmeyen anahtarı sessizce attığı için kullanılmaz.</span></td><td class="actor">Sistem</td></tr>
+        <tr><td class="id">C3</td><td class="lvl"><span class="chip must">MUST</span></td><td><span class="req">Eylem sözleşmesi: adlandırılmış, şemalı eylemler (<code>invokeCapability</code>, <code>navigate</code>, <code>submitForm</code>) ve zorunlu riskClass (read, low, high, irreversible). actionId → sürümlü API eşlemesi frontend'de statik tablodur.</span><span class="note">Model URL, uç nokta, HTTP metodu, sorgu veya filtre ifadesi, serbest komut üretmez.</span></td><td class="actor">Sistem</td></tr>
+        <tr><td class="id">C4</td><td class="lvl"><span class="chip must">MUST</span></td><td><span class="req">Yetki farkındalığı: sunucu, model çağrısından önce katalog ve eylem evrenini kullanıcının izinlerine göre daraltır. Buna rağmen gelen yetkisiz eylem render edilmez ve güvenlik olayı olarak loglanır.</span><span class="note">Hassas alanlar (maliyet, kişisel veri) katalog veri bağlama noktasında sensitivity etiketi taşır ve maskeleme kuralına uyar.</span></td><td class="actor">Sunucu</td></tr>
+        <tr><td class="id">C5</td><td class="lvl"><span class="chip must">MUST</span></td><td><span class="req">Katalog semver ile sürümlenir; her spec <code>catalogId@version</code> ve <code>specVersion</code> taşır. Kaldırma, daraltma veya zorunlu alan ekleme major; ekleme minor.</span><span class="note">Renderer N-1 major'ı doğrudan açar. Daha eski spec'ler <code>packages/catalog/migrations</code> içindeki testli betiklerle sunucuda göç ettirilir. Göç edilemeyen spec "metin olarak görüntüle" kartına düşer; sohbetin kalanı bozulmaz.</span></td><td class="actor">Sistem</td></tr>
+        <tr><td class="id">C6</td><td class="lvl"><span class="chip must">MUST</span></td><td><span class="req">Veri bağlama: spec içindeki dataModel'i sunucu doldurur. Yenileme, sayfalama ve sıralama yetenek istemcisi üzerinden, sunucudan gelen pageSize üst sınırıyla yapılır; büyük veri kimlik referansıyla taşınır.</span><span class="note">Model satır verisi uydurmaz; yalnızca hangi veri bağlama noktasının kullanılacağını seçer.</span></td><td class="actor">Sistem</td></tr>
+        <tr><td class="id">C7</td><td class="lvl"><span class="chip must">MUST</span></td><td><span class="req">Duyarlı davranış: katalog yerleşim ilkelleri (Grid, Stack, Split) 640 px altında deterministik yığılır; dokunma hedefi en az 24 px (WCAG 2.5.8); %400 yakınlaştırmada yatay kaydırma yok.</span><span class="note">Görsel regresyon 400, 768 ve 1280 px genişliklerinde koşar.</span></td><td class="actor">Sistem</td></tr>
+        <tr><td class="id">C8</td><td class="lvl"><span class="chip should">SHOULD</span></td><td><span class="req">Kataloğa bileşen, prop veya eylem ekleme güvenlik incelemeli PR şablonuyla (tehlikeli prop var mı, dış origin'e erişiyor mu, riskClass, API sürümü) ve CODEOWNERS onayıyla yapılır.</span></td><td class="actor">CI</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="group">
+    <div class="group-head"><h3><svg class="ico" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M232,64a32,32,0,1,0-40,31v17a8,8,0,0,1-8,8H96a23.84,23.84,0,0,0-8,1.38V95a32,32,0,1,0-16,0v66a32,32,0,1,0,16,0V144a8,8,0,0,1,8-8h88a24,24,0,0,0,24-24V95A32.06,32.06,0,0,0,232,64ZM64,64A16,16,0,1,1,80,80,16,16,0,0,1,64,64ZM96,192a16,16,0,1,1-16-16A16,16,0,0,1,96,192ZM200,80a16,16,0,1,1,16-16A16,16,0,0,1,200,80Z"/></svg>D. Görev durumu, akış ve dayanıklılık</h3><span class="why">GenUI ekranı değiştirebilir; kullanıcının işini yeniden başlatamaz.</span></div>
+    <div class="tbl-wrap"><table class="req-table">
+      <thead><tr><th>ID</th><th>Seviye</th><th>Gereksinim</th><th>Aktör</th></tr></thead>
+      <tbody>
+        <tr><td class="id">D1</td><td class="lvl"><span class="chip must">MUST</span></td><td><span class="req">Üç depo: sunucu gerçeği TanStack Query önbelleğinde (salt okunur); çalışma taslağı XState 5 makinesinde (idle → streaming → validating → ready → awaitingApproval → applying → committed | stopped | error) + immer ileri/geri yama günlüğü; görünüm durumu URL search param'larında (zod ile doğrulanır).</span><span class="note">Form girdileri, seçimler ve sayfalama taslağa aittir, görünüm spec'ine değil. Bu yüzden görünüm değişince kaybolmaz.</span></td><td class="actor">Sistem</td></tr>
+        <tr><td class="id">D2</td><td class="lvl"><span class="chip must">MUST</span></td><td><span class="req">Taslak kalıcılığı: taslak sunucuda sürümlü taslak kaydı olarak otomatik kaydedilir (2 s debounce); sayfa veya oturum yenilemesinden sonra geri yüklenir.</span><span class="note">Çakışma ETag / If-Match ile yakalanır; 409'da kullanıcıya yeniden yükle, üzerine yaz veya birleştir seçenekleri sunulur. Kaydedilmemiş değişiklikte beforeunload uyarısı verilir.</span></td><td class="actor">Sistem</td></tr>
+        <tr><td class="id">D3</td><td class="lvl"><span class="chip must">MUST</span></td><td><span class="req">Akış taşıması: fetch + POST + text/event-stream (SSE, sunucudan istemciye tek yönlü olay akışı). Her olay id taşır; yeniden bağlanma Last-Event-ID ile, üstel geri çekilme ve jitter ile en fazla 5 deneme; sunucu tamponu aşıldıysa tam snapshot istenir.</span><span class="note">Sunucu yalnızca RFC 6902 JSON Patch işlem grupları gönderir; her SSE olayı atomiktir (tamamı uygulanır veya hiçbiri). Merge Patch kullanılmaz.</span></td><td class="actor">Sistem</td></tr>
+        <tr><td class="id">D4</td><td class="lvl"><span class="chip must">MUST</span></td><td><span class="req">Kısmi JSON yalnızca önizleme katmanında ayrıştırılır ve iskelet (Skeleton) olarak çizilir. Bir bileşen ancak tam JSON gelip doğrulamayı geçince etkinleşir; doğrulanmamış spec'ten eylem gönderilmez.</span><span class="note">Akış sırasında otomatik kaydırma yapılmaz, düzen zıplaması (layout shift) engellenir.</span></td><td class="actor">Sistem</td></tr>
+        <tr><td class="id">D5</td><td class="lvl"><span class="chip must">MUST</span></td><td><span class="req">Her surface kendi hata sınırıyla (react-error-boundary, <code>resetKeys = [surfaceId, specVersion]</code>) sarılır. Geçersiz spec için tek fallback sırası: (1) son doğrulanmış snapshot + hata kartı, (2) geliştirici tanımlı statik bileşen, (3) markdown veya metin.</span><span class="note">Model servisi erişilemez, zaman aşımı veya kota aşımı durumunda ekran klasik görünüme düşer (H5). Uygulama geneli tek sınır GenUI hatalarını yutmaz.</span></td><td class="actor">Sistem</td></tr>
+        <tr><td class="id">D6</td><td class="lvl"><span class="chip must">MUST</span></td><td><span class="req">Kill switch ve bayraklar: GenUI, global ve tenant başına sunucu bayrağıyla en geç 30 s içinde kapatılabilir; açık akışlar iptal edilir, bekleyen öneriler expired olur, tüm ekranlar klasik görünüme düşer.</span><span class="note">Kanarya ve kademeli açılış sunucuda değerlendirilen feature flag ile; bayrak durumu telemetriye kimlik olarak eklenir. Kim tetikleyebilir ve denetim kaydı runbook'ta yazılıdır.</span></td><td class="actor">Sunucu</td></tr>
+        <tr><td class="id">D7</td><td class="lvl"><span class="chip must">MUST</span></td><td><span class="req">Kota: kullanıcı, tenant ve gün başına token ve istek bütçesi; eşzamanlı akış sınırı 2; aşımda klasik görünüm ve açık mesaj. İptal AbortSignal ile sunucuya iletilir ve üretim durur.</span><span class="note">Sohbet başına en fazla 20 surface, yama günlüğü en fazla 200 adım; eski surface'ler DOM'dan kaldırılır.</span></td><td class="actor">Sunucu</td></tr>
+        <tr><td class="id">D8</td><td class="lvl"><span class="chip should">SHOULD</span></td><td><span class="req">SSE ayrıştırma, yama uygulama ve zod doğrulaması Web Worker'da çalışır; ana iş parçacığına yalnızca doğrulanmış snapshot geçer. 200'den uzun listeler sanallaştırılır (TanStack Virtual veya antd Table virtual).</span></td><td class="actor">Sistem</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="group">
+    <div class="group-head"><h3><svg class="ico" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M196,88a27.86,27.86,0,0,0-13.35,3.39A28,28,0,0,0,144,74.7V44a28,28,0,0,0-56,0v80l-3.82-6.13A28,28,0,0,0,35.73,146l4.67,8.23C74.81,214.89,89.05,240,136,240a88.1,88.1,0,0,0,88-88V116A28,28,0,0,0,196,88Zm12,64a72.08,72.08,0,0,1-72,72c-37.63,0-47.84-18-81.68-77.68l-4.69-8.27,0-.05A12,12,0,0,1,54,121.61a11.88,11.88,0,0,1,6-1.6,12,12,0,0,1,10.41,6,1.76,1.76,0,0,0,.14.23l18.67,30A8,8,0,0,0,104,152V44a12,12,0,0,1,24,0v68a8,8,0,0,0,16,0V100a12,12,0,0,1,24,0v20a8,8,0,0,0,16,0v-4a12,12,0,0,1,24,0Z"/></svg>E. Etkileşim modları, onay ve eylem güvenliği</h3><span class="why">Üretkenlik ve özerklik aynı şey değildir; bu tablo özerkliği yönetir.</span></div>
+    <div class="tbl-wrap"><table class="req-table">
+      <thead><tr><th>ID</th><th>Seviye</th><th>Gereksinim</th><th>Aktör</th></tr></thead>
+      <tbody>
+        <tr><td class="id">E1</td><td class="lvl"><span class="chip must">MUST</span></td><td><span class="req">Her eylem mode taşır. direct: kullanıcı tetikler, klasik davranış. assisted: model önerir; kullanıcı eski → yeni diff'i, etkilenen kayıt sayısını ve hedefi görür, onaylar. delegated: model çok adımlı çalışır; her yazma adımı sunucudan imzalı approvalToken ister; Durdur ve Geri Al görünürdür.</span><span class="note">delegated mod istemci bayrağıyla açılamaz; sunucu politikası açar.</span></td><td class="actor">Sistem</td></tr>
+        <tr><td class="id">E2</td><td class="lvl"><span class="chip must">MUST</span></td><td><span class="req">Yetkilendirme yalnızca sunucudadır. riskClass sunucuda tanımlanır; read dışı sınıflar model tarafından otomatik tetiklenemez. Onay, sunucunun ürettiği imzalı proposalId ve tam parametre hash'ine bağlıdır.</span><span class="note">Öneri ömrü 10 dk (arka plan işlerinde 24 saat), onay token'ı 60 s ve tek kullanımlık; önizlemede değer değişirse yeni öneri oluşur. İstemcide "AI kullanıcısı" token'ı yoktur; her çağrı kullanıcının kendi oturumuyla yapılır.</span></td><td class="actor">Sunucu</td></tr>
+        <tr><td class="id">E3</td><td class="lvl"><span class="chip must">MUST</span></td><td><span class="req">Onay kuralları: read onaysız. low sınıfında kullanıcı eylem türü bazında "bu tür için tekrar sorma" seçebilir; tercih sunucuda saklanır, ayarlardan geri alınır. high ve irreversible her zaman açık onay ister; tenant ayarıyla ikinci onaylayıcı (maker-checker) zorunlu kılınabilir.</span><span class="note">Toplu onay yalnızca low sınıfında ve her öğenin diff'i görünürken. Uygulayan düğme ile Düzenle / Yeniden üret düğmeleri renk ve konumca ayrılır; yıkıcı eylem varsayılan odakta değildir.</span></td><td class="actor">Kullanıcı</td></tr>
+        <tr><td class="id">E4</td><td class="lvl"><span class="chip must">MUST</span></td><td><span class="req">Geri alma modeli: commit öncesi çok adımlı yama günlüğüyle. Commit sonrası low sınıfında 30 s sunucu tarafı geri alma penceresi (soft delete); high sınıfında sunucu telafi eylemi tanımlıysa; irreversible sınıfta geri alma yoktur ve önizleme bunu açıkça yazar.</span><span class="note">Her geri alma denetim izine yazılır.</span></td><td class="actor">Sistem</td></tr>
+        <tr><td class="id">E5</td><td class="lvl"><span class="chip must">MUST</span></td><td><span class="req">delegated sınırları: bir çalıştırma en fazla 20 adım ve 10 dk. irreversible adım zincir içinde otomatik çalışmaz, durur ve onay ister. Durdur, commit edilmiş adımları geri almaz; kalan adımları iptal eder ve özet gösterir.</span><span class="note">Oturum kapanırsa görev sunucuda duraklar; kullanıcı döndüğünde kaldığı yerden sürer.</span></td><td class="actor">Sistem</td></tr>
+        <tr><td class="id">E6</td><td class="lvl"><span class="chip must">MUST</span></td><td><span class="req">Idempotency: her mutasyon denemesi grubu için <code>crypto.randomUUID()</code> ile bir Idempotency-Key üretilir ve tüm yeniden denemelerde aynı kalır. 409 → bekle ve yokla; 422 → alan hatalarını forma eşle ve yeni öneri.</span><span class="note">Oturum: OIDC/SSO, sessiz token yenileme; oturum akış ortasında dolarsa taslak korunur ve yeniden girişten sonra devam eder. Tenant değişiminde açık taslaklar kapatılır, Query önbelleği temizlenir.</span></td><td class="actor">Sistem</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="group">
+    <div class="group-head"><h3><svg class="ico" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M208,40H48A16,16,0,0,0,32,56v56c0,52.72,25.52,84.67,46.93,102.19,23.06,18.86,46,25.26,47,25.53a8,8,0,0,0,4.2,0c1-.27,23.91-6.67,47-25.53C198.48,196.67,224,164.72,224,112V56A16,16,0,0,0,208,40Zm0,72c0,37.07-13.66,67.16-40.6,89.42A129.3,129.3,0,0,1,128,223.62a128.25,128.25,0,0,1-38.92-21.81C61.82,179.51,48,149.3,48,112l0-56,160,0ZM82.34,141.66a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35a8,8,0,0,1,11.32,11.32l-56,56a8,8,0,0,1-11.32,0Z"/></svg>F. Tarayıcı güvenliği ve telemetri</h3><span class="why">Model çıktısı güvenilmeyen kullanıcı girdisidir (OWASP LLM05).</span></div>
+    <div class="tbl-wrap"><table class="req-table">
+      <thead><tr><th>ID</th><th>Seviye</th><th>Gereksinim</th><th>Aktör</th></tr></thead>
+      <tbody>
+        <tr><td class="id">F1</td><td class="lvl"><span class="chip must">MUST</span></td><td><span class="req">Model çıktısı veridir, kod değildir: eval, new Function, dinamik import, dangerouslySetInnerHTML / innerHTML, ham HTML veya JSX, javascript: ve data: URL, serbest className veya style yok. İlgili ESLint kuralları error seviyesindedir.</span><span class="note">Markdown, AST'den React öğelerine çevrilir; ham HTML düğümleri atılır. Böylece HTML sanitizer'a (DOMPurify) ihtiyaç kalmaz.</span></td><td class="actor">Sistem</td></tr>
+        <tr><td class="id">F2</td><td class="lvl"><span class="chip must">MUST</span></td><td><span class="req">Dış iletişim kanalı yoktur: GenUI bileşenleri modelin belirlediği hiçbir origin'e istek atmaz (fetch, img, iframe, form action, sendBeacon dahil). URL'ler yalnızca sunucu verisinden gelir; renderer <code>new URL()</code> ile ayrıştırır, yalnızca https ve allowlist'teki alan adlarını ya da onaylı görsel proxy'sini kabul eder.</span><span class="note">Dış bağlantı <code>rel="noopener noreferrer"</code> ve hedef alan adını gösteren ara sayfayla açılır. Tedarikçi belgelerindeki gizli talimatlar (indirect prompt injection) yalnızca metin olarak görünür, eyleme dönüşmez.</span></td><td class="actor">Sistem</td></tr>
+        <tr><td class="id">F3</td><td class="lvl"><span class="chip must">MUST</span></td><td><span class="req">Strict CSP (Content Security Policy, tarayıcının hangi kaynağı çalıştıracağını belirleyen başlık): default-src 'self'; script-src 'self' + nonce; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'; connect-src ve img-src yalnızca BFF ve onaylı CDN; worker-src 'self'.</span><span class="note">antd stil nonce'u ConfigProvider <code>csp</code> ile taşınır. Trusted Types önce Report-Only, ihlal sıfır olunca enforce. Ek başlıklar: HSTS, COOP, Referrer-Policy, Permissions-Policy. Hedef aralıktaki eski Firefox ve Safari sürümlerinde Trusted Types yoksa CSP tek başına geçerlidir; bu fark ADR'de yazılıdır.</span></td><td class="actor">Sunucu</td></tr>
+        <tr><td class="id">F4</td><td class="lvl"><span class="chip must">MUST</span></td><td><span class="req">Sırlar istemciye ulaşmaz: sistem promptu, yetki yapısı, API anahtarı ve onay imza sırrı yalnızca sunucudadır. Tarayıcı LLM sağlayıcısını doğrudan çağırmaz (x-sdk OpenAIChatProvider dahil); tüm model çağrıları sürümlü BFF üzerinden gider.</span></td><td class="actor">Sistem</td></tr>
+        <tr><td class="id">F5</td><td class="lvl"><span class="chip must">MUST</span></td><td><span class="req">Denetim izi: her öneri ve insan kararı için yapılandırılmış olay: tenantId, userId, conversationId, proposalId, actionId, catalogVersion, parametre hash'i, riskClass, karar (proposed, approved, edited, rejected, expired, failed), UTC zaman.</span><span class="note">Şema hatası, katalog dışı deneme, URL reddi ve CSP veya Trusted Types ihlali güvenlik olayıdır; eşik aşımında uyarı üretir. Denetim izine kimin erişeceği ve saklama süresi tenant politikasında tanımlıdır.</span></td><td class="actor">Sistem</td></tr>
+        <tr><td class="id">F6</td><td class="lvl"><span class="chip must">MUST</span></td><td><span class="req">Telemetri gizliliği: Sentry, RUM (gerçek kullanıcı izleme) ve session replay prompt, model çıktısı, spec içeriği veya ürün verisi taşımaz; beforeSend temizler, replay tüm metni maskeler. OpenTelemetry GenAI içerik yakalama istemcide kapalıdır.</span><span class="note">Yalnızca kimlikler, gecikme, token sayısı ve hata kodu gönderilir. Serbest metin geri bildirimi kişisel veri taramasıyla sunucuda saklanır; saklama süresi ve KVKK/GDPR silme akışı tanımlıdır.</span></td><td class="actor">Sistem</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="group">
+    <div class="group-head"><h3><svg class="ico" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M149.66,138.34a8,8,0,0,0-11.32,0L120,156.69,99.31,136l18.35-18.34a8,8,0,0,0-11.32-11.32L88,124.69,69.66,106.34a8,8,0,0,0-11.32,11.32L64.69,124,41.37,147.31a32,32,0,0,0,0,45.26l5.38,5.37-28.41,28.4a8,8,0,0,0,11.32,11.32l28.4-28.41,5.37,5.38a32,32,0,0,0,45.26,0L132,191.31l6.34,6.35a8,8,0,0,0,11.32-11.32L131.31,168l18.35-18.34A8,8,0,0,0,149.66,138.34Zm-52.29,65a16,16,0,0,1-22.62,0L52.69,181.25a16,16,0,0,1,0-22.62L76,135.31,120.69,180Zm140.29-185a8,8,0,0,0-11.32,0l-28.4,28.41-5.37-5.38a32.05,32.05,0,0,0-45.26,0L124,64.69l-6.34-6.35a8,8,0,0,0-11.32,11.32l80,80a8,8,0,0,0,11.32-11.32L191.31,132l23.32-23.31a32,32,0,0,0,0-45.26l-5.38-5.37,28.41-28.4A8,8,0,0,0,237.66,18.34Zm-34.35,79L180,120.69,135.31,76l23.32-23.31a16,16,0,0,1,22.62,0l22.06,22A16,16,0,0,1,203.31,97.37Z"/></svg>G. Adaptörler ve protokoller</h3><span class="why">Protokoller ürünün iş modelinin yerine değil, dış dünyayla konuştuğu sınıra konur.</span></div>
+    <div class="tbl-wrap"><table class="req-table">
+      <thead><tr><th>ID</th><th>Seviye</th><th>Gereksinim</th><th>Aktör</th></tr></thead>
+      <tbody>
+        <tr><td class="id">G1</td><td class="lvl"><span class="chip must">MUST</span></td><td><span class="req">Kanonik iç UI Spec şeması dış protokollerden bağımsızdır: specVersion, catalogId, catalogVersion, surfaceId, düz elements haritası (id → type, props, children), dataModel, actions. Render katmanı yalnızca bunu tüketir.</span><span class="note">Üç port: TransportAdapter, SpecAdapter, RendererAdapter. Portlar arasında dış kütüphane tipi sızmaz; her port için tek referans gerçekleme yeterlidir, alternatifler kabul deneylerinde (E3, E4) doğrulanır.</span></td><td class="actor">Sistem</td></tr>
+        <tr><td class="id">G2</td><td class="lvl"><span class="chip must">MUST</span></td><td><span class="req"><code>protocol-matrix</code> dosyasında sürümler sabittir: AG-UI wire "1.0"; A2UI "v0.9.x" (hedef v0.9.1, MIME application/a2ui+json); MCP Apps yalnızca etkinleştirilirse "2026-01-26". Farklı sürüm bildiren yük reddedilir ve loglanır.</span><span class="note">A2UI v0.8 üretilmez ve kabul edilmez. A2UI v1.0 (aday, Q4 2026) desteği yalnızca adaptör içinde ve sertifikasyon paketi yayımlandığında eklenir (MAY).</span></td><td class="actor">Sistem</td></tr>
+        <tr><td class="id">G3</td><td class="lvl"><span class="chip must">MUST</span></td><td><span class="req">Oturum başında istemci yetenek bildirimi gönderir: specVersions, catalogIds ve catalogVersion, features (streaming, actions, forms), maxSurfaceCount. Sunucu kesişimi seçer; kesişim yoksa metin ve statik bileşen moduna düşer.</span><span class="note">Pazarlık model çağrısından önce yapılır. Deploy sırasında istemci ile sunucu arasındaki katalog sürüm kayması bu yolla yakalanır.</span></td><td class="actor">Sunucu</td></tr>
+        <tr><td class="id">G4</td><td class="lvl"><span class="chip must">MUST</span></td><td><span class="req">Doğrulama hatası modele yapılandırılmış hata olarak döner; en fazla 2 otomatik yeniden üretimden sonra D5 fallback sırası uygulanır. Her kademe metrik olarak sayılır.</span><span class="note">Vercel AI SDK RSC (streamUI) kullanılmaz; AI SDK tercih edilirse yalnızca AI SDK UI.</span></td><td class="actor">Sistem</td></tr>
+        <tr><td class="id">G5</td><td class="lvl"><span class="chip should">SHOULD</span></td><td><span class="req">Ant ekosistemi: @ant-design/x 2.9.x (Bubble, Sender, Conversations, ThoughtChain, Attachments, Prompts, Actions, Sources) yalnızca <code>@pim/ui/assistant</code> içinde, kök XProvider ile. x-sdk useXChat ve XStream yalnızca projenin SSE API'sine bağlanan özel ChatProvider ile.</span><span class="note">@ant-design/x-card A2UI v0.8 ve v0.9'u destekler, antd bağımlılığı taşımaz; çekirdek renderer değildir, pilotta SpecAdapter arkasında denenebilir.</span></td><td class="actor">Sistem</td></tr>
+        <tr><td class="id">G6</td><td class="lvl"><span class="chip must">MUST</span></td><td><span class="req">Barındırılan GenUI servisleri (Thesys C1 / OpenUI Cloud; @thesysai/genui-sdk lisansı yalnızca dahili kullanım) ve MCP Apps sandbox iframe'i çekirdek bağımlılık olamaz.</span><span class="note">MCP Apps yalnızca varsayılan kapalı, allowlist'li, ayrı origin sandbox ile "açık uçlu" kademe olarak; PIM çekirdek CRUD akışlarında asla.</span></td><td class="actor">Sistem</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="group">
+    <div class="group-head"><h3><svg class="ico" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M197.58,129.06,146,110l-19-51.62a15.92,15.92,0,0,0-29.88,0L78,110l-51.62,19a15.92,15.92,0,0,0,0,29.88L78,178l19,51.62a15.92,15.92,0,0,0,29.88,0L146,178l51.62-19a15.92,15.92,0,0,0,0-29.88ZM137,164.22a8,8,0,0,0-4.74,4.74L112,223.85,91.78,169A8,8,0,0,0,87,164.22L32.15,144,87,123.78A8,8,0,0,0,91.78,119L112,64.15,132.22,119a8,8,0,0,0,4.74,4.74L191.85,144ZM144,40a8,8,0,0,1,8-8h16V16a8,8,0,0,1,16,0V32h16a8,8,0,0,1,0,16H184V64a8,8,0,0,1-16,0V48H152A8,8,0,0,1,144,40ZM248,88a8,8,0,0,1-8,8h-8v8a8,8,0,0,1-16,0V96h-8a8,8,0,0,1,0-16h8V72a8,8,0,0,1,16,0v8h8A8,8,0,0,1,248,88Z"/></svg>H. AI-first UX</h3><span class="why">Kullanıcı her an neyin yapay zekâdan geldiğini, neden geldiğini ve nasıl geri alacağını bilir.</span></div>
+    <div class="tbl-wrap"><table class="req-table">
+      <thead><tr><th>ID</th><th>Seviye</th><th>Gereksinim</th><th>Aktör</th></tr></thead>
+      <tbody>
+        <tr><td class="id">H1</td><td class="lvl"><span class="chip must">MUST</span></td><td><span class="req">YZ etiketi: model tarafından yerleştirilen her bileşen ve YZ ile doldurulan veya değiştirilen her alan tek standart etiketle işaretlenir (eyleme özgü metin: "YZ ile dolduruldu"). Etikete tıklanınca açıklama paneli açılır: Dayanak (kaynak kayıtlara derin bağlantı), Artefaktlar (model ve katalog sürümü, zaman), Ek eylemler (geri al, geri bildirim, klasik görünüm).</span><span class="note">Adım adım muhakeme zinciri varsayılan gösterilmez. İlk temasta YZ ile etkileşim açıkça bildirilir (EU AI Act Md. 50 şeffaflık yükümlülüğü; hukuk ekibiyle doğrulanır).</span></td><td class="actor">Sistem</td></tr>
+        <tr><td class="id">H2</td><td class="lvl"><span class="chip must">MUST</span></td><td><span class="req">Kullanıcı YZ değerini elle değiştirince etiket kalkar ve "YZ sürümüne dön" gelir. Her YZ değişikliğinin yanında Düzenle, Geri Al, Yeniden Dene bulunur.</span><span class="note">Veri yazan tüm öneriler önce diff önizlemesinde gösterilir; toplu işlemde örnek satır önizlemesi varsayılandır; orijinal çıktı onaysız üzerine yazılmaz.</span></td><td class="actor">Kullanıcı</td></tr>
+        <tr><td class="id">H3</td><td class="lvl"><span class="chip must">MUST</span></td><td><span class="req">Güven gösterimi: ham yüzde varsayılan gösterilmez; karar etkisi varsa kategorik (Yüksek, Orta, Düşük). Düşük güvenli çıktı otomatik uygulanmaz. Belirsizlikte model eylem yerine düğme biçiminde netleştirme sorusu sorar.</span><span class="note">Açıklamalar olgusal atıf dilindedir ("aynı kategoride 12 benzer ürün"). İnsanlaştırıcı duygu dili ve suçlayıcı ton yasaktır; model bilmediğini söyler.</span></td><td class="actor">Sistem</td></tr>
+        <tr><td class="id">H4</td><td class="lvl"><span class="chip must">MUST</span></td><td><span class="req">Gecikme bütçesi: 1 s altı gösterge yok; 1 ile 10 s arası iskelet ve ne yapıldığını söyleyen özgül mesaj ("Ürün özniteliklerini eşleştiriyor"); 10 s üstü ilerleme ve iptal. Uzun üretimler arka planda sürer ve bildirim merkezine düşer (kalıcı, okunma durumu, ilgili surface'e derin bağlantı).</span><span class="note">Durdur düğmesi 1 s'den uzun her üretimde aynı konumdadır; durdurulan kısmi çıktı "kısmi" etiketiyle korunur. Yeniden üret önceki sürümü silmez, saklar (en fazla 5 sürüm).</span></td><td class="actor">Sistem</td></tr>
+        <tr><td class="id">H5</td><td class="lvl"><span class="chip must">MUST</span></td><td><span class="req">Kullanıcı kontrolü: "Bu görünümü sabitle" sabitlenen düzeni modelden korur. Her ekranın deterministik, YZ'siz "Klasik görünüm"ü vardır ve varsayılan yapılabilir. "Otomatik değiştirme" global ayardır.</span><span class="note">Model erişilemez, zaman aşımı veya kota aşımında ekran klasik görünüme düşer, tüm iş yetenekleri çalışır, form girdileri korunur. Hata mesajı ne olduğunu ve sonraki adımı düz dille söyler.</span></td><td class="actor">Kullanıcı</td></tr>
+        <tr><td class="id">H6</td><td class="lvl"><span class="chip must">MUST</span></td><td><span class="req">Her YZ çıktısında beğen, beğenme ve "uygunsuz bildir"; geri bildirim sonrası somut etki bildirilir ("Bu öneri türü sizin için gizlendi"). Her YZ giriş noktasında yetenek ve sınır beyanı ile düğme biçiminde örnek istemler vardır.</span><span class="note">Model veya katalog major sürümü değişince kullanıcı oturum başına bir kez bilgilendirilir.</span></td><td class="actor">Sistem</td></tr>
+        <tr><td class="id">H7</td><td class="lvl"><span class="chip should">SHOULD</span></td><td><span class="req">Bilgi mimarisi: sohbet yan panel olarak açılır; ürettiği surface'ler klasik ekranın içine satır içi yerleşir veya tam sayfa çalışma alanı olur. Paylaşılabilir URL spec değil surfaceId taşır. Sohbet geçmişi aranabilir ve silinebilir.</span></td><td class="actor">Sistem</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="group">
+    <div class="group-head"><h3><svg class="ico" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M160,40a32,32,0,1,0-32,32A32,32,0,0,0,160,40ZM128,56a16,16,0,1,1,16-16A16,16,0,0,1,128,56ZM231.5,87.71A19.62,19.62,0,0,0,212,72H44a20,20,0,0,0-8.38,38.16l.13,0,50.75,22.35-21,79.72A20,20,0,0,0,102,228.8l26-44.87,26,44.87a20,20,0,0,0,36.4-16.52l-21-79.72,50.75-22.35.13,0A19.64,19.64,0,0,0,231.5,87.71Zm-17.8,7.9-56.93,25.06a8,8,0,0,0-4.51,9.36L175.13,217a7,7,0,0,0,.49,1.35,4,4,0,0,1-5,5.45,4,4,0,0,1-2.25-2.07,6.31,6.31,0,0,0-.34-.63L134.92,164a8,8,0,0,0-13.84,0L88,221.05a6.31,6.31,0,0,0-.34.63,4,4,0,0,1-2.25,2.07,4,4,0,0,1-5-5.45,7,7,0,0,0,.49-1.35L103.74,130a8,8,0,0,0-4.51-9.36L42.3,95.61A4,4,0,0,1,44,88H212a4,4,0,0,1,1.73,7.61Z"/></svg>I. Erişilebilirlik ve i18n</h3><span class="why">Üretilen bölge de kabuk kadar erişilebilir olmalıdır; model landmark veya dil üretmez.</span></div>
+    <div class="tbl-wrap"><table class="req-table">
+      <thead><tr><th>ID</th><th>Seviye</th><th>Gereksinim</th><th>Aktör</th></tr></thead>
+      <tbody>
+        <tr><td class="id">I1</td><td class="lvl"><span class="chip must">MUST</span></td><td><span class="req">Hedef WCAG 2.2 AA (EN 301 549 v4.1.1; beyan v3.2.1'e de eşlenir). Uygulama kabuğu iki kalıcı canlı bölge oluşturur (role=status polite, role=alert); tüm durum bildirimleri tek <code>announce()</code> servisiyle yazılır.</span><span class="note">antd message ve notification varsayılan role="alert" taşır, yani kesintili duyurur; bu yüzden akış ilerlemesi gibi sık bildirimler toast ile değil polite bölgeyle verilir. Akışta bölge aria-busy olur; başta ve sonda tek duyuru yapılır.</span></td><td class="actor">Sistem</td></tr>
+        <tr><td class="id">I2</td><td class="lvl"><span class="chip must">MUST</span></td><td><span class="req">Odak ve yapı: render veya yeniden üretim odağı çalmaz; odak asla body'ye düşmez. Üretilen surface, kabuğun sağladığı etiketli landmark içinde çizilir (model landmark üretemez). Diyaloglar yalnızca antd Modal ve Drawer ile (odak tetikleyiciye döner).</span><span class="note">İkon-yalnız düğme en az 32 px; tabindex 0'dan büyük değer yasak; prefers-reduced-motion eşleşince antd motion kapalı ve katalog animasyonu çalışmaz.</span></td><td class="actor">Sistem</td></tr>
+        <tr><td class="id">I3</td><td class="lvl"><span class="chip must">MUST</span></td><td><span class="req">Otomatik ve manuel: axe (wcag2a, wcag2aa, wcag21a, wcag21aa, wcag22aa) render tamamlanınca ihlal sıfır. Her major sürümde NVDA ile Chrome ve VoiceOver ile Safari manuel protokolü; forced-colors modu kontrolü; klavye kısayol haritası tek yerde.</span><span class="note">Otomatik kurallar WCAG kriterlerinin bir kısmını yakalar; "ihlal sıfır" tek başına AA kanıtı değildir.</span></td><td class="actor">CI</td></tr>
+        <tr><td class="id">I4</td><td class="lvl"><span class="chip must">MUST</span></td><td><span class="req">i18n sözleşmesi ikilidir. Kontrol metinleri (düğme, etiket, sütun başlığı, boş durum, hata) yalnızca onaylı mesaj kataloğu anahtarı ve ICU MessageFormat argümanı olarak üretilir; bilinmeyen anahtar sunucuda reddedilir. Serbest açıklayıcı metin literal olabilir, lang etiketi taşır, kontrol konumunda kullanılmaz.</span><span class="note">Sayı, para ve tarih model tarafından biçimlendirilmez; ham değer (ISO 8601, ISO 4217) gelir, istemci Intl ile tr-TR biçimler. Türkçe harf dönüşümü <code>toLocaleUpperCase("tr-TR")</code>, sıralama <code>Intl.Collator("tr")</code>. antd locale trTR ile dayjs/locale/tr birlikte yüklenir. Yayın dilleri: tr-TR zorunlu, en-US ikinci; RTL için mantıksal CSS ve ConfigProvider direction hazır tutulur ama hedef dil olmadığı için kapı değildir.</span></td><td class="actor">Model</td></tr>
+        <tr><td class="id">I5</td><td class="lvl"><span class="chip should">SHOULD</span></td><td><span class="req">Sözde yerelleştirme (pseudo-localization) testi: %300 metin genişlemesinde sabit genişlikli düğme veya sütun kırılmaz; test Storybook story'leri üzerinde koşar.</span></td><td class="actor">CI</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="group">
+    <div class="group-head"><h3><svg class="ico" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M232,208a8,8,0,0,1-8,8H32a8,8,0,0,1-8-8V48a8,8,0,0,1,16,0V156.69l50.34-50.35a8,8,0,0,1,11.32,0L128,132.69,180.69,80H160a8,8,0,0,1,0-16h40a8,8,0,0,1,8,8v40a8,8,0,0,1-16,0V91.31l-58.34,58.35a8,8,0,0,1-11.32,0L96,123.31l-56,56V200H224A8,8,0,0,1,232,208Z"/></svg>J. Kalite kapıları, değerlendirme ve CI/CD</h3><span class="why">GenUI kapsamı takvime göre değil, kanıtlanmış görev başarısına göre genişler.</span></div>
+    <div class="tbl-wrap"><table class="req-table">
+      <thead><tr><th>ID</th><th>Seviye</th><th>Gereksinim</th><th>Aktör</th></tr></thead>
+      <tbody>
+        <tr><td class="id">J1</td><td class="lvl"><span class="chip must">MUST</span></td><td><span class="req">Katalog sözleşme snapshot'ı: her bileşen ve eylem için <code>z.toJSONSchema</code> çıktısı repo'da saklanır; uyuşmazlık derlemeyi kırar. Güncelleme yalnızca katalog sürümü değişen PR'da ve CODEOWNERS onayıyla.</span><span class="note">"Eski görevi yeni sürümde aç" testi her major için en az 20 saklı spec ile %100 geçer.</span></td><td class="actor">CI</td></tr>
+        <tr><td class="id">J2</td><td class="lvl"><span class="chip must">MUST</span></td><td><span class="req">Altın görev seti: kritik yetenek başına 10 ile 20 örnek (girdi, bağlam, beklenen ve yasaklı bileşen ve eylemler), en az %20'si çok turlu, sentetik veri. Prompt, model, katalog veya renderer değiştiren her PR'da koşar; geçme oranı %95 altındaysa PR bloklanır.</span><span class="note">Deterministik kontroller (şema, allowlist, URL, düğüm sayısı) tek başına bloklayıcıdır; LLM-yargıç yalnızca kalite boyutları için ve en az 50 insan etiketli örnekle kalibre edilir. Araç: Promptfoo (MIT). OpenAI Evals platformu 30 Kasım 2026'da kapanıyor, kullanılmaz.</span></td><td class="actor">CI</td></tr>
+        <tr><td class="id">J3</td><td class="lvl"><span class="chip must">MUST</span></td><td><span class="req">Günlük ölçütler: şema uyumu ilk geçiş en az %95, onarım sonrası %99; render başarısı %99,5; ilk geri bildirim (iskelet görünür) p95 1 s içinde; son render p95 10 s içinde. Core Web Vitals p75: LCP 2,5 s, INP 200 ms, CLS 0,1. İlk yük JS en fazla 350 KB gzip.</span><span class="note">antd tree-shaking doğrulanır; katalog bileşenleri rota bazlı bölünür. Eşik altı alarm üretir; on-call runbook'ta model geri alma ve kill switch adımları yazılıdır.</span></td><td class="actor">Sistem</td></tr>
+        <tr><td class="id">J4</td><td class="lvl"><span class="chip must">MUST</span></td><td><span class="req">Storybook 10: her katalog bileşeninin her durumu (boş, yükleniyor, hata, dolu, salt okunur) için story zorunlu; katalog id ile story eşleşme testi eksik story'de derlemeyi kırar. Görsel regresyon üç viewport'ta; onaylanmamış fark PR'ı bloklar.</span><span class="note">Vitest 4.1.x'e sabitlenir; Storybook Vitest eklentisi Vitest 5 desteği yayımlayınca yükseltilir.</span></td><td class="actor">CI</td></tr>
+        <tr><td class="id">J5</td><td class="lvl"><span class="chip must">MUST</span></td><td><span class="req">Güvenlik kapıları: ESLint güvenlik kuralları error; CSP başlığı snapshot testi; Trusted Types Report-Only ihlali sıfır. Uçtan uca prompt-injection senaryoları: tedarikçi belgesinde gizli talimat → eylem yok, görsel veya link yok; katalog dışı bileşen → red; javascript: veya data: URL → düz metin.</span><span class="note">Şema fuzz testi (bilinmeyen anahtar, aşırı derinlik). Hata enjeksiyonu (kesik akış, zaman aşımı, 429 fırtınası, sessiz bozuk çıktı) → yakalanmamış istisna sıfır, klasik görünüm veya son geçerli spec.</span></td><td class="actor">CI</td></tr>
+        <tr><td class="id">J6</td><td class="lvl"><span class="chip must">MUST</span></td><td><span class="req">Model sabitleme ve güncelleme kapısı: alias değil tarihli model kimlikleri. Model, prompt, katalog ve renderer sürümü tek imzalı yapılandırma kaydında (prompt deposu CODEOWNERS'lı). Yeni model yayın öncesi altın set + "önceden geçen görev onaysız başarısız olamaz" kuralı + %5 ile %10 tenant bazlı kanarya + tek adımda geri alma.</span><span class="note">Sağlayıcı emeklilik tarihinden en az 30 gün önce yedek model test edilir. Görev başına maliyet model × prompt × katalog kırılımında günlük raporlanır.</span></td><td class="actor">Sunucu</td></tr>
+        <tr><td class="id">J7</td><td class="lvl"><span class="chip must">MUST</span></td><td><span class="req">CI/CD duruşu: main ve release dalları korunur: PR zorunlu, en az 1 insan onayı (bot veya AI onayı sayılmaz), yeni push'ta bayat onay düşer, CODEOWNERS, zorunlu kontroller, force push yasak, imzalı commit. AI ajanları (Claude Code, Copilot) yalnızca PR açar; korumalı dala push edemez, onaylayamaz, birleştiremez; AI PR'ları etiketlenir.</span><span class="note">Frontend build tek adımda geri alınabilir; eski istemci ile yeni BFF bir sürüm penceresi boyunca uyumlu kalır. AI bu hatta yalnızca teşhis eden ve PR açan sistemdir; kodu main'e yazan sistem değildir.</span></td><td class="actor">CI</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+</section>
+
+<section id="yigin">
+  <div class="sec-head">
+    <div class="title"><svg class="ico" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M223.68,66.15,135.68,18h0a15.88,15.88,0,0,0-15.36,0l-88,48.17a16,16,0,0,0-8.32,14v95.64a16,16,0,0,0,8.32,14l88,48.17a15.88,15.88,0,0,0,15.36,0l88-48.17a16,16,0,0,0,8.32-14V80.18A16,16,0,0,0,223.68,66.15ZM128,32h0l80.34,44L128,120,47.66,76ZM40,90l80,43.78v85.79L40,175.82Zm96,129.57V133.82L216,90v85.78Z"/></svg><h2>Teknoloji seçimi</h2></div>
+    <p>Sürümler 28 Eylül 2026'da npm registry ve resmi yayın notlarından okunmuştur. "Konum" sütunu paketin uygulamada nereye girebileceğini söyler; bu sınır sürümden daha önemlidir.</p>
+  </div>
+  <div class="tbl-wrap"><table class="stack-table">
+    <thead><tr><th>Alan</th><th>Seçim</th><th>Sürüm</th><th>Lisans</th><th>Konum ve değiştirilebilirlik</th></tr></thead>
+    <tbody>
+      <tr><td>UI çerçevesi</td><td>React</td><td>19.3.0</td><td>MIT</td><td>Çekirdek; değişmez</td></tr>
+      <tr><td>Derleme</td><td>Vite (Rolldown, Oxc)</td><td>8.3.1</td><td>MIT</td><td>Çekirdek</td></tr>
+      <tr><td>Dil</td><td>TypeScript (tsgo)</td><td>7.0.2</td><td>Apache-2.0</td><td>Çekirdek; lint kararı ADR'de (A6)</td></tr>
+      <tr><td>Bileşen kütüphanesi</td><td>antd</td><td>6.6.5</td><td>MIT</td><td>Yalnızca @pim/ui; katalog sözleşmesi sabit kalarak değiştirilebilir</td></tr>
+      <tr><td>İkonlar</td><td>@ant-design/icons</td><td>6.3.4</td><td>MIT</td><td>@pim/ui ikon kayıt tablosu</td></tr>
+      <tr><td>Sohbet primitifleri</td><td>@ant-design/x + x-sdk</td><td>2.9.0 (peer antd ^6.1.1)</td><td>MIT</td><td>Yalnızca @pim/ui/assistant; isteğe bağlı</td></tr>
+      <tr><td>A2UI kart renderer</td><td>@ant-design/x-card</td><td>2.9.0 (A2UI v0.8, v0.9)</td><td>MIT</td><td>Pilot adaptör; çekirdek değil</td></tr>
+      <tr><td>Pro bileşenler</td><td>@ant-design/pro-components</td><td>3.x hattı (beta 3.1.15-2); latest 2.8.10 antd 4/5</td><td>MIT</td><td>İsteğe bağlı, yalnızca @pim/ui</td></tr>
+      <tr><td>Yönlendirme ve sunucu durumu</td><td>TanStack Router / Query</td><td>1.170 / 5.104</td><td>MIT</td><td>Çekirdek</td></tr>
+      <tr><td>Şema</td><td>zod</td><td>4.6.5</td><td>MIT</td><td>Tek şema kaynağı (katalog, API, URL)</td></tr>
+      <tr><td>Taslak durumu</td><td>XState + immer + rfc6902</td><td>5.33 / 11.1 / 5.3</td><td>MIT</td><td>packages/task-state</td></tr>
+      <tr><td>SSE ayrıştırma</td><td>eventsource-parser</td><td>4.1</td><td>MIT</td><td>TransportAdapter</td></tr>
+      <tr><td>Taşıma protokolü</td><td>AG-UI (@ag-ui/core)</td><td>1.0.0</td><td>MIT</td><td>TransportAdapter; isteğe bağlı</td></tr>
+      <tr><td>UI tanım protokolü</td><td>A2UI spec; @a2ui/react</td><td>v0.9.1 (v1.0 aday); 0.12.0 (peer zod ^3)</td><td>Apache-2.0</td><td>SpecAdapter; zod 3 adaptörde izole</td></tr>
+      <tr><td>Referans render motoru</td><td>@json-render/react</td><td>0.21.0 (peer react ^19.2.3, zod ^4)</td><td>Apache-2.0</td><td>RendererAdapter; kabul deneyi E3</td></tr>
+      <tr><td>Model soyutlaması</td><td>Vercel AI SDK (yalnızca AI SDK UI)</td><td>7.0.x</td><td>Apache-2.0</td><td>Sunucu (BFF); RSC yok</td></tr>
+      <tr><td>Test</td><td>Vitest / Playwright / Storybook / axe-core / MSW</td><td>4.1.x / 1.63 / 10.6 / 4.13 / 2.x</td><td>MIT, Apache-2.0, MPL-2.0 (axe)</td><td>CI</td></tr>
+      <tr><td>LLM değerlendirme</td><td>Promptfoo</td><td>0.123</td><td>MIT</td><td>CI; Braintrust veya LangSmith alternatif</td></tr>
+      <tr><td>Gözlemlenebilirlik</td><td>@sentry/react, web-vitals, OTel GenAI semconv</td><td>11.1 / 6.2 / Development</td><td>MIT, Apache-2.0</td><td>İçerik yakalama istemcide kapalı (F6)</td></tr>
+      <tr><td>Kullanılmaz</td><td>@thesysai/genui-sdk, Next.js, Supabase, Flowbite, Less</td><td>0.10.3 (yalnızca dahili kullanım lisansı)</td><td>Tescilli</td><td>Yasak; gerekçe A3, B6, Karar</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="deneyler">
+  <div class="sec-head">
+    <div class="title"><svg class="ico" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M221.69,199.77,160,96.92V40h8a8,8,0,0,0,0-16H88a8,8,0,0,0,0,16h8V96.92L34.31,199.77A16,16,0,0,0,48,224H208a16,16,0,0,0,13.72-24.23ZM110.86,103.25A7.93,7.93,0,0,0,112,99.14V40h32V99.14a7.93,7.93,0,0,0,1.14,4.11L183.36,167c-12,2.37-29.07,1.37-51.75-10.11-15.91-8.05-31.05-12.32-45.22-12.81ZM48,208l28.54-47.58c14.25-1.74,30.31,1.85,47.82,10.72,19,9.61,35,12.88,48,12.88a69.89,69.89,0,0,0,19.55-2.7L208,208Z"/></svg><h2>Kabul deneyleri</h2></div>
+    <p>"Değiştirilebilir" sözü belgeyle değil deneyle kanıtlanır. Her deney ilk gerçek iş akışı üzerinde en az bir kez koşar; E1, E5 ve E9 her yayın öncesi tekrarlanır.</p>
+  </div>
+  <div class="exp">
+    <div><div class="t"><svg class="ico" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M221.69,199.77,160,96.92V40h8a8,8,0,0,0,0-16H88a8,8,0,0,0,0,16h8V96.92L34.31,199.77A16,16,0,0,0,48,224H208a16,16,0,0,0,13.72-24.23ZM110.86,103.25A7.93,7.93,0,0,0,112,99.14V40h32V99.14a7.93,7.93,0,0,0,1.14,4.11L183.36,167c-12,2.37-29.07,1.37-51.75-10.11-15.91-8.05-31.05-12.32-45.22-12.81ZM48,208l28.54-47.58c14.25-1.74,30.31,1.85,47.82,10.72,19,9.61,35,12.88,48,12.88a69.89,69.89,0,0,0,19.55-2.7L208,208Z"/></svg>E1. Modeli değiştir</div><p class="pass">Aynı altın set, katalog ve prompt sürümüyle model kimliği değişir. <b>Geçer:</b> geçme oranı eşik üstü, önceden geçen görev onaysız başarısız olmaz, frontend'de sıfır satır değişiklik.</p></div>
+    <div><div class="t"><svg class="ico" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M221.69,199.77,160,96.92V40h8a8,8,0,0,0,0-16H88a8,8,0,0,0,0,16h8V96.92L34.31,199.77A16,16,0,0,0,48,224H208a16,16,0,0,0,13.72-24.23ZM110.86,103.25A7.93,7.93,0,0,0,112,99.14V40h32V99.14a7.93,7.93,0,0,0,1.14,4.11L183.36,167c-12,2.37-29.07,1.37-51.75-10.11-15.91-8.05-31.05-12.32-45.22-12.81ZM48,208l28.54-47.58c14.25-1.74,30.31,1.85,47.82,10.72,19,9.61,35,12.88,48,12.88a69.89,69.89,0,0,0,19.55-2.7L208,208Z"/></svg>E2. Bileşen implementasyonunu değiştir</div><p class="pass">Bir katalog bileşeninin antd implementasyonu değişir. <b>Geçer:</b> katalog şema snapshot'ı bayt birebir aynı, saklı spec'ler aynı erişilebilirlik ağacını üretir, @pim/ui dışında antd import'u sıfır.</p></div>
+    <div><div class="t"><svg class="ico" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M221.69,199.77,160,96.92V40h8a8,8,0,0,0,0-16H88a8,8,0,0,0,0,16h8V96.92L34.31,199.77A16,16,0,0,0,48,224H208a16,16,0,0,0,13.72-24.23ZM110.86,103.25A7.93,7.93,0,0,0,112,99.14V40h32V99.14a7.93,7.93,0,0,0,1.14,4.11L183.36,167c-12,2.37-29.07,1.37-51.75-10.11-15.91-8.05-31.05-12.32-45.22-12.81ZM48,208l28.54-47.58c14.25-1.74,30.31,1.85,47.82,10.72,19,9.61,35,12.88,48,12.88a69.89,69.89,0,0,0,19.55-2.7L208,208Z"/></svg>E3. Render motorunu değiştir</div><p class="pass">Kurum içi renderer yerine @json-render/react veya @a2ui/react. <b>Geçer:</b> altın spec'lerin tamamı çizilir, UnknownComponent sıfır, eylemler aynı actionId ve hash ile ulaşır, domain paketlerinde import değişikliği yok.</p></div>
+    <div><div class="t"><svg class="ico" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M221.69,199.77,160,96.92V40h8a8,8,0,0,0,0-16H88a8,8,0,0,0,0,16h8V96.92L34.31,199.77A16,16,0,0,0,48,224H208a16,16,0,0,0,13.72-24.23ZM110.86,103.25A7.93,7.93,0,0,0,112,99.14V40h32V99.14a7.93,7.93,0,0,0,1.14,4.11L183.36,167c-12,2.37-29.07,1.37-51.75-10.11-15.91-8.05-31.05-12.32-45.22-12.81ZM48,208l28.54-47.58c14.25-1.74,30.31,1.85,47.82,10.72,19,9.61,35,12.88,48,12.88a69.89,69.89,0,0,0,19.55-2.7L208,208Z"/></svg>E4. Protokol adaptörünü değiştir</div><p class="pass">Özel SSE yerine AG-UI 1.0 veya iç spec yerine A2UI v0.9.1. <b>Geçer:</b> aynı yama fixture'ları aynı içerik hash'ini üretir, farklı sürüm reddedilir, Last-Event-ID ile yeniden bağlanma kayıpsız.</p></div>
+    <div><div class="t"><svg class="ico" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M221.69,199.77,160,96.92V40h8a8,8,0,0,0,0-16H88a8,8,0,0,0,0,16h8V96.92L34.31,199.77A16,16,0,0,0,48,224H208a16,16,0,0,0,13.72-24.23ZM110.86,103.25A7.93,7.93,0,0,0,112,99.14V40h32V99.14a7.93,7.93,0,0,0,1.14,4.11L183.36,167c-12,2.37-29.07,1.37-51.75-10.11-15.91-8.05-31.05-12.32-45.22-12.81ZM48,208l28.54-47.58c14.25-1.74,30.31,1.85,47.82,10.72,19,9.61,35,12.88,48,12.88a69.89,69.89,0,0,0,19.55-2.7L208,208Z"/></svg>E5. Modeli kes, bozuk yanıt ver</div><p class="pass">Bağlantı kesilir, zaman aşımı, 429, sessiz bozuk çıktı, kesik akış. <b>Geçer:</b> klasik görünüm veya son geçerli spec, tüm CRUD çalışır, taslak korunur, yakalanmamış istisna sıfır, hiçbir eylem tetiklenmez.</p></div>
+    <div><div class="t"><svg class="ico" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M221.69,199.77,160,96.92V40h8a8,8,0,0,0,0-16H88a8,8,0,0,0,0,16h8V96.92L34.31,199.77A16,16,0,0,0,48,224H208a16,16,0,0,0,13.72-24.23ZM110.86,103.25A7.93,7.93,0,0,0,112,99.14V40h32V99.14a7.93,7.93,0,0,0,1.14,4.11L183.36,167c-12,2.37-29.07,1.37-51.75-10.11-15.91-8.05-31.05-12.32-45.22-12.81ZM48,208l28.54-47.58c14.25-1.74,30.31,1.85,47.82,10.72,19,9.61,35,12.88,48,12.88a69.89,69.89,0,0,0,19.55-2.7L208,208Z"/></svg>E6. Görev ortasında görünümü değiştir</div><p class="pass">Form yarı dolu ve 3 satır seçiliyken yeni düzen istenir. <b>Geçer:</b> girdiler, seçimler ve sayfalama korunur, önceki görünüm sürüm olarak geri alınabilir, odak body'ye düşmez, tek tamamlanma duyurusu.</p></div>
+    <div><div class="t"><svg class="ico" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M221.69,199.77,160,96.92V40h8a8,8,0,0,0,0-16H88a8,8,0,0,0,0,16h8V96.92L34.31,199.77A16,16,0,0,0,48,224H208a16,16,0,0,0,13.72-24.23ZM110.86,103.25A7.93,7.93,0,0,0,112,99.14V40h32V99.14a7.93,7.93,0,0,0,1.14,4.11L183.36,167c-12,2.37-29.07,1.37-51.75-10.11-15.91-8.05-31.05-12.32-45.22-12.81ZM48,208l28.54-47.58c14.25-1.74,30.31,1.85,47.82,10.72,19,9.61,35,12.88,48,12.88a69.89,69.89,0,0,0,19.55-2.7L208,208Z"/></svg>E7. Eski görevi yeni katalogda aç</div><p class="pass">Katalog major artar; N-1 ve N-2 spec'ler açılır. <b>Geçer:</b> N-1 doğrudan, N-2 göçle %100 çizilir; göç edilemeyen spec metin kartına düşer, boş ekran yok.</p></div>
+    <div><div class="t"><svg class="ico" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M221.69,199.77,160,96.92V40h8a8,8,0,0,0,0-16H88a8,8,0,0,0,0,16h8V96.92L34.31,199.77A16,16,0,0,0,48,224H208a16,16,0,0,0,13.72-24.23ZM110.86,103.25A7.93,7.93,0,0,0,112,99.14V40h32V99.14a7.93,7.93,0,0,0,1.14,4.11L183.36,167c-12,2.37-29.07,1.37-51.75-10.11-15.91-8.05-31.05-12.32-45.22-12.81ZM48,208l28.54-47.58c14.25-1.74,30.31,1.85,47.82,10.72,19,9.61,35,12.88,48,12.88a69.89,69.89,0,0,0,19.55-2.7L208,208Z"/></svg>E8. Tema ve tenant değiştir</div><p class="pass">Aydınlık → koyu → koyu ve compact, tenant rengi değişir. <b>Geçer:</b> yalnızca CSS değişkenleri güncellenir, katalog bileşenleri yeniden render olmaz, reduced-motion'da animasyon yok.</p></div>
+    <div><div class="t"><svg class="ico" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M221.69,199.77,160,96.92V40h8a8,8,0,0,0,0-16H88a8,8,0,0,0,0,16h8V96.92L34.31,199.77A16,16,0,0,0,48,224H208a16,16,0,0,0,13.72-24.23ZM110.86,103.25A7.93,7.93,0,0,0,112,99.14V40h32V99.14a7.93,7.93,0,0,0,1.14,4.11L183.36,167c-12,2.37-29.07,1.37-51.75-10.11-15.91-8.05-31.05-12.32-45.22-12.81ZM48,208l28.54-47.58c14.25-1.74,30.31,1.85,47.82,10.72,19,9.61,35,12.88,48,12.88a69.89,69.89,0,0,0,19.55-2.7L208,208Z"/></svg>E9. Güvenlik kapısı</div><p class="pass">Tedarikçi belgesine gizli talimat, javascript: URL, katalog dışı bileşen enjekte edilir. <b>Geçer:</b> eylem yok, URL düz metin, spec fail-closed reddedilir ve loglanır, CSP ve Trusted Types ihlali sıfır.</p></div>
+  </div>
+</section>
+
+<section id="yapma">
+  <div class="sec-head">
+    <div class="title"><svg class="ico" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm88,104a87.56,87.56,0,0,1-20.41,56.28L71.72,60.4A88,88,0,0,1,216,128ZM40,128A87.56,87.56,0,0,1,60.41,71.72L184.28,195.6A88,88,0,0,1,40,128Z"/></svg><h2>Yapma ve yap</h2></div>
+  </div>
+  <div class="dodont">
+    <div class="no">
+      <h3><svg class="ico" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm88,104a87.56,87.56,0,0,1-20.41,56.28L71.72,60.4A88,88,0,0,1,216,128ZM40,128A87.56,87.56,0,0,1,60.41,71.72L184.28,195.6A88,88,0,0,1,40,128Z"/></svg>Yapma</h3>
+      <ul>
+        <li>Tüm ürünü baştan evrensel bir arayüz şemasına dönüştürme; tek gerçek iş akışıyla başla.</li>
+        <li>antd'yi @pim/ui dışında import etme; antd prop veya token adını katalog sözleşmesine sızdırma.</li>
+        <li>Modelin ürettiği hiçbir şeyi kod olarak çalıştırma; RawHtml veya CustomJsx kaçış bileşeni tanımlama.</li>
+        <li>Yetkiyi, risk sınıfını veya iş kuralını istemcide ya da sistem promptunda uygulama.</li>
+        <li>Tarayıcıdan LLM sağlayıcısını doğrudan çağırma; tüm çağrılar sürümlü BFF üzerinden.</li>
+        <li>Barındırılan GenUI servisini, A2UI v1.0 adayını veya x-card'ı çekirdek yapma.</li>
+        <li>Sürümleri caret ile bırakma; alias model kimliği yerine tarihli snapshot kullan.</li>
+        <li>Prompt, model çıktısı veya ürün verisini frontend telemetrisine yazma.</li>
+        <li>AI ajanının PR onaylamasına, birleştirmesine veya korumalı dala push etmesine izin verme.</li>
+      </ul>
+    </div>
+    <div class="yes">
+      <h3><svg class="ico" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M173.66,98.34a8,8,0,0,1,0,11.32l-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35A8,8,0,0,1,173.66,98.34ZM232,128A104,104,0,1,1,128,24,104.11,104.11,0,0,1,232,128Zm-16,0a88,88,0,1,0-88,88A88.1,88.1,0,0,0,216,128Z"/></svg>Yap</h3>
+      <ul>
+        <li>Bir gerçek iş akışını (eksik ürün özniteliklerini tamamlama) hem klasik ekranla hem GenUI ile aynı yetenekler üzerinden çalıştır.</li>
+        <li>Görev durumunu ekranlardan ayır; taslağı sunucuda sürümlü sakla.</li>
+        <li>Katalog sözleşmesini önce yaz, snapshot'ını CI'a bağla, sonra bileşenleri doldur.</li>
+        <li>Her yazma eylemine riskClass ve mode ver; onayı sunucunun imzalı önerisine bağla.</li>
+        <li>Kill switch, kota ve klasik görünümü ilk sprint'te kur; GenUI'ı sonra aç.</li>
+        <li>E1, E5 ve E9 deneylerini pilotun kabul ölçütü yap.</li>
+        <li>GenUI kapsamını görev başarısı, düzeltme ihtiyacı ve görev başına maliyet verisiyle genişlet; takvimle değil.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="kaynaklar" class="sources">
+  <div class="sec-head">
+    <div class="title"><h2>Kaynaklar</h2></div>
+    <p>Sürüm ve lisans bilgileri 28 Eylül 2026 tarihinde bu kaynaklardan doğrulanmıştır.</p>
+  </div>
+  <ol>
+    <li><a href="https://ant.design/docs/react/migration-v6/">Ant Design, v5'ten v6'ya geçiş rehberi</a> <span class="v">CSS Variables varsayılan, React 18+, icons 6+</span></li>
+    <li><a href="https://ant.design/docs/react/customize-theme">Ant Design, tema özelleştirme</a> <span class="v">algorithm, cssVar, components, zeroRuntime</span></li>
+    <li><a href="https://github.com/ant-design/ant-design/blob/master/LICENSE">Ant Design LICENSE</a> <span class="v">MIT</span></li>
+    <li><a href="https://www.npmjs.com/package/antd">antd npm</a> <span class="v">6.6.5</span></li>
+    <li><a href="https://x.ant.design/docs/react/introduce/">Ant Design X</a> <span class="v">2.9.0, MIT, paketler x, x-sdk, x-markdown, x-card</span></li>
+    <li><a href="https://x.ant.design/x-cards/introduce/">Ant Design X Card</a> <span class="v">A2UI v0.8 ve v0.9 desteği</span></li>
+    <li><a href="https://www.npmjs.com/package/@ant-design/pro-components">@ant-design/pro-components npm</a> <span class="v">latest 2.8.10 antd 4/5; 3.x beta antd 6</span></li>
+    <li><a href="https://a2ui.org/roadmap/">A2UI yol haritası</a> ve <a href="https://a2ui.org/reference/renderers/">renderer listesi</a> <span class="v">v0.9.1 kararlı, v1.0 aday, Apache-2.0</span></li>
+    <li><a href="https://github.com/ag-ui-protocol/ag-ui/releases">AG-UI sürümleri</a> ve <a href="https://docs.ag-ui.com/concepts/events">olay modeli</a> <span class="v">1.0.0, MIT, StateDelta RFC 6902</span></li>
+    <li><a href="https://json-render.dev/docs">json-render</a> <span class="v">0.21.0, Apache-2.0</span></li>
+    <li><a href="https://cdn.jsdelivr.net/npm/@thesysai/genui-sdk@0.10.3/LICENSE.md">@thesysai/genui-sdk LICENSE.md</a> <span class="v">yalnızca dahili kullanım, dağıtım yasak</span></li>
+    <li><a href="https://ai-sdk.dev/docs/agents/tool-approvals">Vercel AI SDK, araç onayları</a> ve <a href="https://ai-sdk.dev/docs/ai-sdk-rsc/migrating-to-ui">RSC'den UI'a geçiş</a></li>
+    <li><a href="https://genai.owasp.org/llmrisk/llm052025-improper-output-handling/">OWASP LLM05 Improper Output Handling</a> ve <a href="https://genai.owasp.org/llmrisk/llm062025-excessive-agency/">LLM06 Excessive Agency</a></li>
+    <li><a href="https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/">Simon Willison, The Lethal Trifecta</a> <span class="v">özel veri + güvenilmeyen içerik + dış iletişim</span></li>
+    <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP">MDN, Content Security Policy</a> ve <a href="https://developer.mozilla.org/en-US/docs/Web/API/Trusted_Types_API">Trusted Types API</a></li>
+    <li><a href="https://datatracker.ietf.org/doc/html/rfc6902">RFC 6902 JSON Patch</a> ve <a href="https://datatracker.ietf.org/doc/html/draft-ietf-httpapi-idempotency-key-header-07">Idempotency-Key başlığı taslağı</a></li>
+    <li><a href="https://zod.dev/json-schema">Zod, JSON Schema dönüşümü</a> <span class="v">strictObject, toJSONSchema Draft 2020-12</span></li>
+    <li><a href="https://www.w3.org/TR/WCAG22/">WCAG 2.2</a> ve <a href="https://accessible-eu-centre.ec.europa.eu/content-corner/news/european-accessibility-standard-en-301-549-has-been-updated-2026-09-07_en">EN 301 549 v4.1.1 duyurusu</a></li>
+    <li><a href="https://www.microsoft.com/en-us/haxtoolkit/guideline/update-and-adapt-cautiously/">Microsoft HAX, Guideline 14: Update and adapt cautiously</a></li>
+    <li><a href="https://developer.apple.com/design/human-interface-guidelines/generative-ai">Apple HIG, Generative AI</a> ve <a href="https://carbondesignsystem.com/components/ai-label/usage/">IBM Carbon, AI label</a></li>
+    <li><a href="https://www.nngroup.com/articles/progress-indicators/">Nielsen Norman Group, Progress Indicators</a></li>
+    <li><a href="https://www.promptfoo.dev/docs/integrations/ci-cd/">Promptfoo CI/CD</a> ve <a href="https://developers.openai.com/api/docs/deprecations">OpenAI deprecations (Evals kapanışı)</a></li>
+    <li><a href="https://web.dev/articles/vitals">web.dev, Core Web Vitals</a></li>
+    <li><a href="https://react.dev/blog/2026/09/09/react-19-3">React 19.3</a>, <a href="https://vite.dev/blog/announcing-vite8">Vite 8</a>, <a href="https://devblogs.microsoft.com/typescript/announcing-typescript-7-0/">TypeScript 7.0</a></li>
+    <li><a href="https://storybook.js.org/docs/writing-tests/integrations/vitest-addon">Storybook Vitest eklentisi</a></li>
+    <li><a href="https://docs.github.com/en/copilot/concepts/agents/cloud-agent/risks-and-mitigations">GitHub, Copilot cloud agent riskleri</a> ve <a href="https://platform.claude.com/docs/en/about-claude/model-deprecations">Anthropic, model emeklilik politikası</a></li>
+  </ol>
+</section>
+
+<footer>
+  <span>GenUI Frontend Gereksinimleri, sürüm 1.0</span>
+  <span>Ant Design merkez, AI-first UX zorunlu</span>
+  <span>Bu belge bir sözleşmedir: değişiklik ADR ve PR ile yapılır</span>
+</footer>
+
+</div>
+
+</body>
+</html>
