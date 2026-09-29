@@ -971,6 +971,82 @@
   {
    "terim": "EN 301 549",
    "tanim": "Avrupa'nın bilişim ürünleri için erişilebilirlik standardı; WCAG'e eşlenir."
+  },
+  {
+   "terim": "DPR",
+   "tanim": "Device Pixel Ratio: bir CSS pikselinin ekranda kaç fiziksel pikselle çizildiği. 4K bir ekranda DPR 2 ise sayfa 1920 CSS px genişlik görür; yerleşim profili fiziksel pikselden değil CSS genişliğinden seçilir."
+  },
+  {
+   "terim": "UUIDv7",
+   "tanim": "Zaman sıralı, istemcide çakışma kaygısı olmadan üretilebilen 128 bitlik benzersiz kimlik biçimi. Yeni taslağın kalıcı geçici kimliği (draft_id) bu biçimdedir."
+  },
+  {
+   "terim": "Alt kapsam",
+   "tanim": "Birden çok dilimde teslim edilen bir gereksinimin tek dilime ait parçası (ör. G6-vekil, Dilim 3). Kendi kimliği, dilimi ve testi vardır; dilim kapısı alt kapsam düzeyinde değerlendirilir.",
+   "esanlam": [
+    "alt kapsamlar",
+    "alt kapsamı",
+    "alt kapsamları"
+   ]
+  },
+  {
+   "terim": "Deney parçası",
+   "tanim": "Bir kabul deneyinin sonraki bir dilime ait ek senaryosu; kendi dilimi, ön koşulu ve kanıtladığı alt kapsamı vardır. Deneyin ana senaryosu sonraki dilimin işine bağlanamaz.",
+   "esanlam": [
+    "deney parçaları",
+    "deney parçalarını"
+   ]
+  },
+  {
+   "terim": "Bağlam sürümü",
+   "tanim": "Bir tarayıcıdaki SSO oturumu için sunucuda tutulan ve aktif şirket her değiştiğinde artan sayı. Eski sürümle gelen istek context_changed ile reddedilir.",
+   "esanlam": [
+    "bağlam sürümünü"
+   ]
+  },
+  {
+   "terim": "Yerleşim profili",
+   "tanim": "Cihaz adına değil kullanılabilir CSS alanına göre seçilen yerleşim ve gezinti paketi: telefon, tablet, masaüstü, geniş, televizyon, akıllı tahta, kiosk. Giriş yetenekleri profili değiştirmez.",
+   "esanlam": [
+    "yerleşim profilleri",
+    "yerleşim profiline"
+   ]
+  },
+  {
+   "terim": "Histerezis",
+   "tanim": "Bir sınırın iki yönünde farklı eşik kullanarak (ör. ±40 CSS px) sınır üzerinde ileri geri titremeyi önleme."
+  },
+  {
+   "terim": "Anahtar kirası",
+   "tanim": "Hassas taslak anahtarının sayfada geçerli kaldığı süre (15 dakika); bağlantı varken yenilenir, dolunca anahtar bellekten atılır ve taslak kilitlenir.",
+   "esanlam": [
+    "kira",
+    "kirası"
+   ]
+  },
+  {
+   "terim": "Test vektörü",
+   "tanim": "Bir algoritmanın girdisi ve beklenen çıktısıyla birlikte yayımlanan örnek; iki farklı uygulamanın aynı sonucu ürettiğini kanıtlamak için kullanılır.",
+   "esanlam": [
+    "test vektörleri",
+    "test vektörlerini"
+   ]
+  },
+  {
+   "terim": "Projeksiyon",
+   "tanim": "Parmak izi hesaplanmadan önce veriden yalnızca listelenmiş alanların, belirli sırayla alınması; zaman damgası gibi sunucu alanları dışarıda kalır.",
+   "esanlam": [
+    "projeksiyona",
+    "projeksiyonları"
+   ]
+  },
+  {
+   "terim": "Onay bekleyen yorum",
+   "tanim": "Karar kitabı cevabını kapsam, zaman veya seçim bakımından daraltan ya da yorumlayan öneri. Yürürlükte bir karar değildir; ilgili dilim kapısı onay gelmeden açılmaz.",
+   "esanlam": [
+    "onay bekleyen yorumlar",
+    "onay bekleyen yorumu"
+   ]
   }
  ],
  "yaygin": [

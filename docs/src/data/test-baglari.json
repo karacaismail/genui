@@ -1,5 +1,5 @@
 {
- "about": "Otomatik test paketleri (TP), gereksinim → test bağları ve kabul deneylerinin künyesi. build.py her MUST satırının en az bir bağı olduğunu ve her bağın bilinen bir TP veya AT'ye gittiğini denetler.",
+ "about": "Otomatik test paketleri (TP), gereksinim → test bağları ve kabul deneylerinin künyesi. Bir gereksinim birden çok dilimde teslim ediliyorsa bağ 'kapsamlar' listesidir: her alt kapsamın kimliği, dilimi, kısa kapsamı ve testleri vardır; satırın dilimi alt kapsamların en küçüğüdür. Bir kabul deneyi sonraki dilimlerde ek senaryo taşıyorsa bunlar deneyin 'parcalar' listesindedir (dilim, ön koşul, değişen, geçer). build.py denetler: her MUST alt kapsamı kendi diliminde çalışan en az bir teste bağlıdır; bir deney kendi diliminden sonraki bir alt kapsamı kanıtlıyorsa o dilim için parçası vardır (yoksa önceki dilimin kapısı sonraki dilimin işine bağlanmış olur); her parça en az bir alt kapsamca kullanılır; deney metinleri kendi diliminden sonra gelen özellik adlarını taşımaz.",
  "paketler": {
   "TP-01": {
    "ad": "Sözleşme örnekleri",
@@ -203,11 +203,29 @@
   "B8": [
    "TP-08"
   ],
-  "B9": [
-   "TP-05",
-   "AT-12",
-   "AT-21"
-  ],
+  "B9": {
+   "kapsamlar": [
+    {
+     "id": "B9-paylasimli",
+     "dilim": 1,
+     "kapsam": "Paylaşımlı site: Organizasyon kaydıyla izolasyon, oturumda tek aktif şirket ve bağlam sürümü",
+     "test": [
+      "TP-05",
+      "AT-12",
+      "AT-21"
+     ]
+    },
+    {
+     "id": "B9-ayri-site",
+     "dilim": 3,
+     "kapsam": "Ayrı site modeli: host adından site çözümü, site ad alanı, iki modelin negatif izolasyon testi",
+     "test": [
+      "TP-05",
+      "AT-21"
+     ]
+    }
+   ]
+  },
   "B10": [
    "TP-12",
    "AT-15"
@@ -257,12 +275,29 @@
    "TP-01",
    "TP-11"
   ],
-  "D1": [
-   "TP-01",
-   "TP-06",
-   "AT-03",
-   "AT-33"
-  ],
+  "D1": {
+   "kapsamlar": [
+    {
+     "id": "D1-katalog",
+     "dilim": 1,
+     "kapsam": "Onaylı renderer kataloğu, fail-closed doğrulama, surface sınırları",
+     "test": [
+      "TP-01",
+      "TP-06",
+      "AT-03"
+     ]
+    },
+    {
+     "id": "D1-rapor",
+     "dilim": 2,
+     "kapsam": "Doğal dilden raporda FilterChips onay adımı",
+     "test": [
+      "TP-06",
+      "AT-33"
+     ]
+    }
+   ]
+  },
   "D2": [
    "TP-06",
    "TP-01"
@@ -296,7 +331,8 @@
   ],
   "D9": [
    "TP-04",
-   "TP-08"
+   "TP-08",
+   "AT-11"
   ],
   "D10": [
    "TP-09",
@@ -415,11 +451,28 @@
    "TP-04",
    "TP-18"
   ],
-  "G6": [
-   "TP-05",
-   "AT-12",
-   "AT-37"
-  ],
+  "G6": {
+   "kapsamlar": [
+    {
+     "id": "G6-izolasyon",
+     "dilim": 1,
+     "kapsam": "İki tenant ile negatif erişim testi her yayında: resource, RPC, Socket.IO, dosya, YZ bağlamı",
+     "test": [
+      "TP-05",
+      "AT-12"
+     ]
+    },
+    {
+     "id": "G6-vekil",
+     "dilim": 3,
+     "kapsam": "Onaylı, süreli ve işaretli vekil oturum; YZ yazması kapalı; gerçek aktör kaydı",
+     "test": [
+      "TP-05",
+      "AT-37"
+     ]
+    }
+   ]
+  },
   "G7": [
    "TP-18",
    "TP-04"
@@ -450,10 +503,29 @@
   "H6": [
    "TP-02"
   ],
-  "I1": [
-   "TP-08",
-   "AT-38"
-  ],
+  "I1": {
+   "kapsamlar": [
+    {
+     "id": "I1-temel",
+     "dilim": 1,
+     "kapsam": "Komut paleti ve asistan, alan ve form yardımı, satır ve toplu seçim eylemleri; her birinin manuel eşdeğeri",
+     "test": [
+      "TP-08",
+      "AT-38"
+     ]
+    },
+    {
+     "id": "I1-rapor",
+     "dilim": 2,
+     "kapsam": "Doğal dilden rapor ve pano üretimi; workflow, hata ve denetim yardımı",
+     "test": [
+      "TP-08",
+      "AT-33",
+      "AT-38"
+     ]
+    }
+   ]
+  },
   "I2": [
    "TP-06",
    "TP-08"
@@ -490,17 +562,36 @@
   ],
   "I11": [
    "TP-08",
-   "TP-18"
+   "TP-18",
+   "AT-27"
   ],
   "I12": [
    "TP-11",
    "TP-05",
    "AT-39"
   ],
-  "I13": [
-   "TP-11",
-   "AT-38"
-  ],
+  "I13": {
+   "kapsamlar": [
+    {
+     "id": "I13-d2",
+     "dilim": 2,
+     "kapsam": "(1) belgeden kayıt, (3) anlamsal arama, (7) içe aktarma eşlemesi, (8) anomali açıklaması, (9) bağlamsal yardım",
+     "test": [
+      "TP-11",
+      "AT-38"
+     ]
+    },
+    {
+     "id": "I13-d3",
+     "dilim": 3,
+     "kapsam": "(2) veri kalitesi, (4) kayıt özeti, (5) yanıt taslağı, (6) çeviri, (10) talep sınıflandırma",
+     "test": [
+      "TP-11",
+      "AT-38"
+     ]
+    }
+   ]
+  },
   "J1": [
    "TP-07"
   ],
@@ -511,9 +602,27 @@
   "J3": [
    "TP-07"
   ],
-  "J4": [
-   "TP-19"
-  ],
+  "J4": {
+   "kapsamlar": [
+    {
+     "id": "J4-tr-en",
+     "dilim": 1,
+     "kapsam": "Türkçe ve İngilizce; çeviri köprüsü; modelin metin sözleşmesi; logical CSS ve bidi kuralları baştan",
+     "test": [
+      "TP-19"
+     ]
+    },
+    {
+     "id": "J4-rtl",
+     "dilim": 4,
+     "kapsam": "Arapça ve İbranice (RTL) dillerinin açılması ve RTL görsel matrisi",
+     "test": [
+      "TP-19",
+      "TP-09"
+     ]
+    }
+   ]
+  },
   "J5": [
    "TP-19"
   ],
@@ -528,11 +637,49 @@
   "J8": [
    "TP-19"
   ],
-  "J9": [
-   "TP-09",
-   "TP-15",
-   "AT-35"
-  ],
+  "J9": {
+   "kapsamlar": [
+    {
+     "id": "J9-d1",
+     "dilim": 1,
+     "kapsam": "Profil tespiti ve uyarlamalı teslim mekanizması; telefon ve masaüstü profilleri, iki yön",
+     "test": [
+      "TP-09",
+      "TP-15",
+      "AT-35"
+     ]
+    },
+    {
+     "id": "J9-tablet",
+     "dilim": 2,
+     "kapsam": "Tablet profili: bölünmüş ekran, kalem ve harici klavye",
+     "test": [
+      "TP-09",
+      "TP-15",
+      "AT-35"
+     ]
+    },
+    {
+     "id": "J9-kiosk",
+     "dilim": 3,
+     "kapsam": "Kiosk profili (oturum kuralları M27)",
+     "test": [
+      "TP-15",
+      "AT-35",
+      "AT-32"
+     ]
+    },
+    {
+     "id": "J9-genis",
+     "dilim": 4,
+     "kapsam": "Geniş ekran (4K, 5K), televizyon ve akıllı tahta profilleri",
+     "test": [
+      "TP-15",
+      "AT-35"
+     ]
+    }
+   ]
+  },
   "J10": [
    "TP-07",
    "TP-09"
@@ -611,7 +758,8 @@
   ],
   "L5": [
    "TP-05",
-   "TP-08"
+   "TP-08",
+   "AT-11"
   ],
   "L6": [
    "TP-08",
@@ -663,22 +811,92 @@
    "TP-07",
    "AT-19"
   ],
-  "M8": [
-   "TP-12",
-   "AT-19"
-  ],
-  "M9": [
-   "TP-12",
-   "AT-22"
-  ],
+  "M8": {
+   "kapsamlar": [
+    {
+     "id": "M8-d1",
+     "dilim": 1,
+     "kapsam": "Parola ve e-posta doğrulaması, Google, passkey; önce kimliği soran akış; kullanıcı adı telefon olamaz; şirket politikasında e-posta kanalı ve passkey ikinci adımı",
+     "test": [
+      "TP-12",
+      "AT-19"
+     ]
+    },
+    {
+     "id": "M8-d2",
+     "dilim": 2,
+     "kapsam": "Apple ile giriş ve e-posta ile gelen kod",
+     "test": [
+      "TP-12",
+      "AT-19",
+      "AT-18",
+      "AT-25"
+     ]
+    },
+    {
+     "id": "M8-d3",
+     "dilim": 3,
+     "kapsam": "SMS, WhatsApp ve Telegram kodu (M15); şirket politikasında telefon kanalı ve \"2 aşamalı\" seçeneği",
+     "test": [
+      "TP-12",
+      "AT-19",
+      "AT-25"
+     ]
+    }
+   ]
+  },
+  "M9": {
+   "kapsamlar": [
+    {
+     "id": "M9-d1",
+     "dilim": 1,
+     "kapsam": "Capability başına doğrulama seviyesi ve yaşı; yönetim işlemleri için passkey; şirket politikası yükseltmesi",
+     "test": [
+      "TP-12",
+      "AT-22",
+      "AT-21"
+     ]
+    },
+    {
+     "id": "M9-kyc",
+     "dilim": 4,
+     "kapsam": "KYC belgesi görüntülemede passkey seviyesi ve erişim kaydı",
+     "test": [
+      "TP-12",
+      "AT-22"
+     ]
+    }
+   ]
+  },
   "M10": [
    "TP-05",
-   "AT-21"
+   "AT-21",
+   "AT-20"
   ],
-  "M11": [
-   "TP-08",
-   "TP-12"
-  ],
+  "M11": {
+   "kapsamlar": [
+    {
+     "id": "M11-d1",
+     "dilim": 1,
+     "kapsam": "Kayıt formu ve zorunlu e-posta; rıza → organizasyon oluştur veya davet kabul → uygulama yetkisi → ilk görev; davet kuralları",
+     "test": [
+      "TP-08",
+      "TP-12",
+      "AT-21"
+     ]
+    },
+    {
+     "id": "M11-kyc",
+     "dilim": 4,
+     "kapsam": "KYB ve KYC adımı, insan inceleyici kararı ve ret gösterimi, alan çıkarımı ayarı",
+     "test": [
+      "TP-12",
+      "AT-22",
+      "AT-21"
+     ]
+    }
+   ]
+  },
   "M12": [
    "TP-08",
    "TP-04"
@@ -713,10 +931,31 @@
    "TP-05",
    "AT-26"
   ],
-  "M20": [
-   "TP-12",
-   "AT-24"
-  ],
+  "M20": {
+   "kapsamlar": [
+    {
+     "id": "M20-app",
+     "dilim": 1,
+     "kapsam": "Müşteri hostları ve yönetim hostu: host-only çerez, tam eşleşen dönüş adresi, hostlar arası sessiz geçiş",
+     "test": [
+      "TP-12",
+      "AT-20",
+      "AT-21"
+     ]
+    },
+    {
+     "id": "M20-www",
+     "dilim": 3,
+     "kapsam": "www hostu: app ↔ www geçişi ve çerez kapsamı",
+     "test": [
+      "TP-12",
+      "AT-24",
+      "AT-20",
+      "AT-26"
+     ]
+    }
+   ]
+  },
   "M21": [
    "TP-08",
    "AT-24"
@@ -725,18 +964,54 @@
    "TP-12",
    "TP-01"
   ],
-  "M23": [
-   "TP-11",
-   "TP-05"
-  ],
+  "M23": {
+   "kapsamlar": [
+    {
+     "id": "M23-d1",
+     "dilim": 1,
+     "kapsam": "Kimlik verisi sınıfları; sırlar modele ve log'a gitmez; bağlam manifestinde veri sınıfı",
+     "test": [
+      "TP-11",
+      "TP-05"
+     ]
+    },
+    {
+     "id": "M23-kyc",
+     "dilim": 4,
+     "kapsam": "KYC belgesinden yerel modelle alan çıkarımı; KYB belgesinde maskeleme; inceleyici notu bağlama girmez",
+     "test": [
+      "TP-11",
+      "AT-22"
+     ]
+    }
+   ]
+  },
   "M24": [
    "TP-12",
    "AT-25"
   ],
-  "M25": [
-   "TP-12",
-   "AT-20"
-  ],
+  "M25": {
+   "kapsamlar": [
+    {
+     "id": "M25-d1",
+     "dilim": 1,
+     "kapsam": "Boşta kalma ve mutlak bitiş; yönetici, KYC inceleyici ve operasyon süreleri; çok rollü kullanıcıda en kısa süre",
+     "test": [
+      "TP-12",
+      "AT-20"
+     ]
+    },
+    {
+     "id": "M25-portal",
+     "dilim": 3,
+     "kapsam": "Portal kullanıcısı süreleri (1 saat / 24 saat)",
+     "test": [
+      "TP-12",
+      "AT-20"
+     ]
+    }
+   ]
+  },
   "M26": [
    "TP-04",
    "AT-31"
@@ -811,7 +1086,15 @@
    "dilim": 1,
    "tur": "otomatik",
    "sahip": "CI",
-   "onkosul": "Açık oturumda rol ve User Permission değişikliği"
+   "onkosul": "Açık oturumda rol ve User Permission değişikliği",
+   "parcalar": [
+    {
+     "dilim": 2,
+     "onkosul": "Dışa aktarım (D9), anahtar kelime ve vektör araması (L1), dosya kütüphanesi (L5)",
+     "degisen": "Aynı izin kaldırma, dışa aktarım işi sürerken, arama indeksleri doluyken ve kütüphanede paylaşılmış dosya varken tekrarlanır.",
+     "gecer": "Süren dışa aktarım yeni satır üretmez ve indirme bağlantısı geçersizleşir; anahtar kelime ve vektör aramasında yetkisiz kaydın başlığı, sayısı ve önerisi görünmez; kütüphanedeki dosya indirilemez."
+    }
+   ]
   },
   "AT-12": {
    "dilim": 1,
@@ -853,31 +1136,89 @@
    "dilim": 1,
    "tur": "yarı otomatik",
    "sahip": "CI + dış güvenlik danışmanı",
-   "onkosul": "Keycloak test realm'i; kurcalanmış token fikstürleri"
+   "onkosul": "Keycloak test realm'i; kurcalanmış token fikstürleri",
+   "parcalar": [
+    {
+     "dilim": 2,
+     "onkosul": "Apple kimlik sağlayıcısı eklentisi (M8)",
+     "degisen": "Apple'ın gizli e-postasıyla ilk giriş; aynı kişinin mevcut parola hesabı var.",
+     "gecer": "Gizli e-posta mevcut hesaba eşlenmez; kullanıcıya \"zaten hesabın var mı\" yolu sunulur; bağlama yalnızca giriş yaptıktan sonra hesap ayarlarından ve yeniden doğrulamayla yapılır (M16)."
+    }
+   ]
   },
   "AT-19": {
    "dilim": 1,
    "tur": "yarı otomatik",
    "sahip": "CI + proje sahibi (ekran okuyucu)",
-   "onkosul": "Yöntemin dilimi açık; Mailpit ve OTP taklidi"
+   "onkosul": "Yöntemin dilimi açık; Mailpit ve OTP taklidi",
+   "parcalar": [
+    {
+     "dilim": 2,
+     "onkosul": "Apple eklentisi ve e-posta kodu eklentisi etkin; Mailpit",
+     "degisen": "Apple ve e-posta ile gelen kod için aynı senaryolar; ayrıca 6 haneli kod: yanlış, süresi geçmiş ve daha önce kullanılmış kod; yeniden gönderme bekleme süresi; yapıştırma ve one-time-code otomatik doldurma.",
+     "gecer": "Yanlış kod deneme sayacını artırır, süresi geçmiş kod geçersiz kalır, kullanılmış kod yeni oturum veya yan etki üretmez; bekleme süresi dolmadan yeni kod gitmez; Apple girişi mevcut hesaba yalnızca yeniden doğrulamayla bağlanır."
+    },
+    {
+     "dilim": 3,
+     "onkosul": "OTP gateway (M15) test modunda; WhatsApp authentication şablonu ve Telegram Gateway test hesabı",
+     "degisen": "SMS, WhatsApp ve Telegram kodu için aynı senaryolar; kanal değiştirme ve yedek kanala (SMS) düşme; şirketin doğrulama politikası \"telefon\" ve \"2 aşamalı\" yapılır; yalnız e-posta politikalı A şirketinden \"2 aşamalı\" B şirketine geçilir.",
+     "gecer": "Her kanal adıyla yeşil; yedek kanala düşme kullanıcıya bildirilir; telefonu doğrulanmamış üye B'ye girerken telefon doğrulamasına yönlenir ve taslağı korunur; \"2 aşamalı\" şirkette her girişte telefon kodu istenir; politika sıkılaşınca açık oturumlar bir sonraki istekte yükseltme ister (M10)."
+    }
+   ]
   },
   "AT-20": {
    "dilim": 1,
    "tur": "otomatik",
    "sahip": "CI",
-   "onkosul": "İki host; rol bazlı süreler; düşürülmüş logout bildirimi"
+   "onkosul": "İki müşteri hostu ve yönetim hostu; rol bazlı süreler; düşürülmüş logout bildirimi",
+   "parcalar": [
+    {
+     "dilim": 3,
+     "onkosul": "www hostu ve portal rolü",
+     "degisen": "Panel → www hesap sayfası geçişi; app'ten çıkış yapılırken www sekmesi açık; portal kullanıcısı için 1 saat / 24 saat sınırı.",
+     "gecer": "Geçişte parola sorulmaz; çıkış www'deki Frappe oturumunu da kapatır, www sekmesi bir sonraki istekte 401 alır; portal kullanıcısının boşta kalma ve mutlak sınırı tablodaki değerdedir."
+    }
+   ]
   },
   "AT-21": {
    "dilim": 1,
    "tur": "otomatik",
    "sahip": "CI",
-   "onkosul": "İki şirket, çok şirketli kullanıcı, davetler"
+   "onkosul": "İki şirket ve iki müşteri hostu; çok şirketli kullanıcı; farklı doğrulama politikaları; davetler",
+   "parcalar": [
+    {
+     "dilim": 3,
+     "onkosul": "Ayrı sitede bir müşteri (B9)",
+     "degisen": "Aynı izolasyon senaryoları paylaşımlı sitedeki şirket ile ayrı sitedeki şirket arasında; ayrı sitedeki şirkete üye kullanıcı paylaşımlı sitedeki şirketine geçer.",
+     "gecer": "Hiçbir yolda çapraz erişim yok; ayrı site kendi bağlamını taşır ve paylaşımlı sitenin bağlam sürümünü değiştirmez; iki site arasında geçiş ayrı giriş olarak görünür (B9)."
+    },
+    {
+     "dilim": 4,
+     "onkosul": "KYB akışı (M11)",
+     "degisen": "Oturum açıkken şirketin KYB başvurusu reddedilir.",
+     "gecer": "Kritik işlemler bir sonraki istekte kapanır, grant'ler iptal olur, Run'lar yeni yan etki başlatmadan durur; kullanıcı nedeni ve sonraki adımı görür (M5)."
+    }
+   ]
   },
   "AT-22": {
    "dilim": 1,
    "tur": "otomatik",
    "sahip": "CI",
-   "onkosul": "Adım yükseltme gerektiren capability; kod deneme fırtınası betiği"
+   "onkosul": "Adım yükseltme gerektiren yönetim capability'si; parola deneme fırtınası betiği",
+   "parcalar": [
+    {
+     "dilim": 3,
+     "onkosul": "OTP gateway (M15)",
+     "degisen": "Kod isteme fırtınası; numara, IP ve ülke başına gönderim sınırı aşılır; +90 dışı numara; sahte numara listesiyle toplu kod isteği (SMS pumping).",
+     "gecer": "Gönderim sınırı ve deneme kilidi devreye girer; +90 dışı numaraya kod gitmez; maliyet alarmı çalışır; hiçbir log'da kod yoktur."
+    },
+    {
+     "dilim": 4,
+     "onkosul": "KYC akışı ve kendi sunucumuzdaki model (M11, M23)",
+     "degisen": "YZ Run'ı ortasında KYC belgesi görüntüleme gerekir; kullanıcı passkey'siz oturumdadır; şirketin KYC çıkarım yolu kapalıyken ve açıkken belge yüklenir.",
+     "gecer": "Run onay bekler; passkey seviyesiyle dönüşte güncel izin ve revizyon yeniden kontrol edilir; erişim kaydı yazılır; çıkarım yolu kapalıyken alanlar elle girilir, açıkken yalnızca yerel model çağrılır ve dış sağlayıcıya çağrı sıfırdır; inceleyici notu model bağlamına girmez."
+    }
+   ]
   },
   "AT-23": {
    "dilim": 1,
@@ -895,19 +1236,49 @@
    "dilim": 1,
    "tur": "yarı otomatik",
    "sahip": "CI + proje sahibi",
-   "onkosul": "Hata ve kurtarma matrisinin her satırı için fikstür"
+   "onkosul": "Hata ve kurtarma matrisinin her satırı için fikstür",
+   "parcalar": [
+    {
+     "dilim": 2,
+     "onkosul": "E-posta kodu eklentisi (M8)",
+     "degisen": "Hata matrisinin kod satırları: yanlış, süresi geçmiş ve kullanılmış kod; yeniden gönderme.",
+     "gecer": "Her satır tanımlı ekranı ve güvenli ana eylemi gösterir; kullanılmış kod tekrar denemeyle geri alınmaz; hiçbir mesaj hesabın varlığını sızdırmaz."
+    },
+    {
+     "dilim": 3,
+     "onkosul": "OTP gateway (M15)",
+     "degisen": "Aynı kod satırları SMS, WhatsApp ve Telegram için; kanal değişikliği ve yedek kanal.",
+     "gecer": "Aynı sonuçlar; kanal değişikliği taslağı silmez."
+    }
+   ]
   },
   "AT-26": {
    "dilim": 1,
    "tur": "otomatik",
    "sahip": "CI",
-   "onkosul": "Açık oturumlar, soket, grant ve Run; Keycloak adımı hata benzetimi"
+   "onkosul": "Açık oturumlar, soket, grant ve Run; Keycloak adımı hata benzetimi",
+   "parcalar": [
+    {
+     "dilim": 3,
+     "onkosul": "www hostu",
+     "degisen": "Kullanıcının www'de de açık oturumu varken hesap devre dışı bırakılır.",
+     "gecer": "www'deki REST istekleri de Frappe adımından sonra anında reddedilir; www soketi 60 saniyelik azami gecikmeden sonra olay almaz."
+    }
+   ]
   },
   "AT-27": {
    "dilim": 1,
    "tur": "otomatik",
    "sahip": "CI",
-   "onkosul": "Üç eşzamanlı kullanıcı; tenant ve global bayrak"
+   "onkosul": "Üç eşzamanlı kullanıcı; tenant ve global bayrak",
+   "parcalar": [
+    {
+     "dilim": 2,
+     "onkosul": "Proaktif öneri alanı (I11)",
+     "degisen": "Bir kullanıcı ekran kenarında proaktif öneri görürken kill switch önce tenant için, sonra global kapatılır.",
+     "gecer": "30 saniye içinde proaktif öneriler kaybolur ve yeni proaktif çağrı yapılmaz; bütçe sayacı durur."
+    }
+   ]
   },
   "AT-28": {
    "dilim": 1,
@@ -955,7 +1326,27 @@
    "dilim": 1,
    "tur": "yarı otomatik",
    "sahip": "CI + cihaz çiftliği",
-   "onkosul": "Dilimde açık cihaz sınıfları; iki yön"
+   "onkosul": "Telefon ve masaüstü profilleri; üretim derlemesi, manifest ve ağ kaydı",
+   "parcalar": [
+    {
+     "dilim": 2,
+     "onkosul": "Tablet profili (J9); gerçek tablet, kalem ve harici klavye",
+     "degisen": "Tablet dikey ve yatay; bölünmüş ekranda pencere 599, 600 ve 601 CSS px'e getirilir; harici klavye takılır ve çıkarılır.",
+     "gecer": "Profil kullanılabilir CSS genişliğine göre değişir, taslak, seçim ve odak korunur; klavye takılınca profil değişmez, yalnız klavye yetenekleri açılır; ağ kaydında yalnız tablet profil paketi vardır."
+    },
+    {
+     "dilim": 3,
+     "onkosul": "Kayıtlı kiosk cihazı (M27)",
+     "degisen": "Kiosk profilinde varsayılan yolculuk ve bir form görevi; dikey tutuş.",
+     "gecer": "Görev tamamlanır; kiosk profili dışındaki profil paketleri ağdan inmez; oturum kuralları M27'deki gibidir."
+    },
+    {
+     "dilim": 4,
+     "onkosul": "4K ve 5K ekran, televizyon, akıllı tahta; elle, kanıt kaydıyla (K9)",
+     "degisen": "Geniş profilde 3840 CSS px'lik pencere; DPR 2'deki 4K ekran (1920 CSS px); televizyonda yalnızca uzaktan kumanda; akıllı tahtada ayakta dokunma; 2559, 2560 ve 2561 CSS px sınırı.",
+     "gecer": "DPR 2'deki 4K ekran masaüstü profilini alır, çünkü profil fiziksel pikselden değil kullanılabilir CSS genişliğinden seçilir; geniş profil yalnızca 2560 CSS px ve üstünde; televizyonda bütün eylemlere yön tuşlarıyla ulaşılır; tahtada ana eylemler ekranın alt yarısındadır."
+    }
+   ]
   },
   "AT-36": {
    "dilim": 1,
@@ -973,7 +1364,21 @@
    "dilim": 1,
    "tur": "yarı otomatik",
    "sahip": "CI + proje sahibi",
-   "onkosul": "Her yüzeyin görev seti ve klasik yol ölçümü"
+   "onkosul": "Her yüzeyin görev seti ve klasik yol ölçümü",
+   "parcalar": [
+    {
+     "dilim": 2,
+     "onkosul": "Doğal dilden rapor, workflow yardımı ve Dilim 2 ek yüzeyleri",
+     "degisen": "Rapor (AT-33), workflow ve hata yardımı ile I13'ün (1), (3), (7), (8) ve (9) yüzeyleri kendi görev setleriyle ölçülür.",
+     "gecer": "Her yüzeyin en az 50 örneği, sahibi ve metrik tablosundaki eşiği vardır; eşik altı yüzey açılmaz; manuel eşdeğer aynı işi tamamlar."
+    },
+    {
+     "dilim": 3,
+     "onkosul": "CRM ve destek uygulamaları",
+     "degisen": "I13'ün (2), (4), (5), (6) ve (10) yüzeyleri kendi görev setleriyle ölçülür.",
+     "gecer": "Her yüzeyin en az 50 örneği, sahibi ve metrik tablosundaki eşiği vardır; eşik altı yüzey açılmaz; (5) yalnızca taslak üretir."
+    }
+   ]
   },
   "AT-39": {
    "dilim": 2,
@@ -981,5 +1386,50 @@
    "sahip": "CI",
    "onkosul": "İki şirket; hafıza kayıtları; kötü niyetli düzeltme fikstürü"
   }
+ },
+ "dilim_terimleri": {
+  "www": 3,
+  "sepet": 3,
+  "portal": 3,
+  "kiosk": 3,
+  "vekil": 3,
+  "SMS": 3,
+  "WhatsApp": 3,
+  "Telegram": 3,
+  "OTP": 3,
+  "ülke": 3,
+  "ayrı site": 3,
+  "ayrı sitede": 3,
+  "Apple": 2,
+  "e-posta kodu": 2,
+  "e-posta ile gelen kod": 2,
+  "6 haneli kod": 2,
+  "kod deneme": 2,
+  "yeniden gönderme": 2,
+  "süresi geçmiş kod": 2,
+  "kullanılmış kod": 2,
+  "tablet": 2,
+  "dışa aktarım": 2,
+  "export": 2,
+  "doğal dilden rapor": 2,
+  "düzeltme hafızası": 2,
+  "proaktif": 2,
+  "hesap kapat": 2,
+  "Gantt": 2,
+  "anlamsal arama": 2,
+  "arama önerisi": 2,
+  "pano": 2,
+  "KYC": 4,
+  "KYB": 4,
+  "e-Fatura": 4,
+  "yasal belge": 4,
+  "çevrimdışıyken": 4,
+  "çevrimdışı kuyruk": 4,
+  "RTL": 4,
+  "televizyon": 4,
+  "akıllı tahta": 4,
+  "4K": 4,
+  "5K": 4,
+  "8K": 4
  }
 }

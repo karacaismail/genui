@@ -210,6 +210,147 @@
    "yasak": [
     "Autosave alan bazındadır"
    ]
+  },
+  {
+   "id": "Q01-onay",
+   "kaynak": "v2.6 eleştiri raporu, v2.7",
+   "konu": "Yorum ile onaylanmış karar ayrı statüdedir",
+   "zorunlu": [
+    "yürürlüğe girmiş bir karar değildir"
+   ],
+   "yasak": [
+    "Onay vermezsen satır olduğu gibi kalır"
+   ]
+  },
+  {
+   "id": "Q02-dilim",
+   "kaynak": "v2.6 eleştiri raporu, v2.7",
+   "konu": "Deney kendi diliminden sonraki işe bağlanmaz; çok dilimli gereksinim alt kapsamlıdır",
+   "zorunlu": [
+    "Bir deney kendi diliminden sonra gelen bir işe bağlanamaz",
+    "birden çok dilimde teslim edilen gereksinim alt kapsamlarla yazılır"
+   ],
+   "yasak": [
+    "o dilime atanmış bütün MUST satırları"
+   ]
+  },
+  {
+   "id": "Q03-sozlesme",
+   "kaynak": "v2.6 eleştiri raporu, v2.7",
+   "konu": "Sözleşme örnekleri doğrulanmış gibi sunulmaz",
+   "zorunlu": [
+    "temsili örnek, şema doğrulaması bekliyor"
+   ],
+   "yasak": [
+    "buradaki JSON örnekleri o şemalardan geçen geçerli örneklerdir"
+   ]
+  },
+  {
+   "id": "Q04-aktif-sirket",
+   "kaynak": "v2.6 eleştiri raporu, v2.7",
+   "konu": "Tek aktif şirketin kapsamı ve bağlam sürümü",
+   "zorunlu": [
+    "kapsamı bir tarayıcıdaki Keycloak SSO oturumudur",
+    "context_changed ile reddedilir"
+   ],
+   "yasak": []
+  },
+  {
+   "id": "Q05-anahtar",
+   "kaynak": "v2.6 eleştiri raporu, v2.7",
+   "konu": "Açık cihazdaki anahtar için mutlak iptal vaadi yok",
+   "zorunlu": [
+    "sunucu yeni anahtar teslimini engeller",
+    "Anahtarı almış ve açık duran bir sayfadaki anahtar uzaktan geri alınamaz"
+   ],
+   "yasak": [
+    "kaybolan cihazdaki kopya okunamaz hâle gelir"
+   ]
+  },
+  {
+   "id": "Q06-doctype",
+   "kaynak": "v2.6 eleştiri raporu, v2.7",
+   "konu": "Yeni taslak kimliği ve bayrak hedefi",
+   "zorunlu": [
+    "target_key",
+    "Benzersiz \\(flag_key, scope_type, target\\)"
+   ],
+   "yasak": [
+    "Benzersiz \\(user, doctype, docname\\)",
+    "Benzersiz \\(scope, key\\)"
+   ]
+  },
+  {
+   "id": "Q07-api",
+   "kaynak": "v2.6 eleştiri raporu, v2.7",
+   "konu": "API sürüm seçimi ve şema kimlikleri",
+   "zorunlu": [
+    "tarihli sürüm\\s+başlığıyla seçilir",
+    "api_version_unknown",
+    "Şema kimlikleri"
+   ],
+   "yasak": []
+  },
+  {
+   "id": "Q08-hafiza",
+   "kaynak": "v2.6 eleştiri raporu, v2.7",
+   "konu": "Hafıza, isteyen kullanıcının yetkisiyle süzülür",
+   "zorunlu": [
+    "Şirket filtresi tek başına yetmez"
+   ],
+   "yasak": []
+  },
+  {
+   "id": "Q09-profil",
+   "kaynak": "v2.6 eleştiri raporu, v2.7",
+   "konu": "Yerleşim profili ile giriş yeteneği ayrıdır",
+   "zorunlu": [
+    "Yetenekler profili değiştirmez"
+   ],
+   "yasak": [
+    "cihaz sınıfı ekran boyutu, giriş biçimi"
+   ]
+  },
+  {
+   "id": "Q11-metrik",
+   "kaynak": "v2.6 eleştiri raporu, v2.7",
+   "konu": "Metrik tanımı ve yük modeli",
+   "zorunlu": [
+    "750 sayısı tek başına yük modeli değildir",
+    "Tanım \\(pay / payda\\)"
+   ],
+   "yasak": []
+  },
+  {
+   "id": "Q12-kvkk",
+   "kaynak": "v2.6 eleştiri raporu, v2.7",
+   "konu": "Standart sözleşme kanunun tek yolu gibi anlatılmaz",
+   "zorunlu": [
+    "Bu proje için önerilen mekanizma standart sözleşmedir"
+   ],
+   "yasak": [
+    "yeterlilik kararı yoksa Kurul'un standart sözleşmesi imzalanır"
+   ]
+  },
+  {
+   "id": "Q13-politika",
+   "kaynak": "v2.6 eleştiri raporu, v2.7",
+   "konu": "Şirket politikası ile mevcut SSO oturumu karşılaştırılır",
+   "zorunlu": [
+    "sessiz giriş yalnızca politika zaten karşılanıyorsa yapılır"
+   ],
+   "yasak": []
+  },
+  {
+   "id": "Q14-marka",
+   "kaynak": "v2.6 eleştiri raporu, v2.7",
+   "konu": "E-posta markası kullanıcı özniteliğinden çözülmez",
+   "zorunlu": [
+    "Kullanıcı özniteliği marka kaynağı olamaz"
+   ],
+   "yasak": [
+    "kullanıcının marka özniteliğine bakan"
+   ]
   }
  ]
 }

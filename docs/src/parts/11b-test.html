@@ -26,8 +26,8 @@
     <thead><tr><th scope="col">Alan</th><th scope="col">Anlamı</th></tr></thead>
     <tbody>
       <tr><td>Kimlik ve ad</td><td>AT-xx ve kısa ad</td></tr>
-      <tr><td>Gereksinimler</td><td>Deneyin kanıtladığı gereksinim satırları</td></tr>
-      <tr><td>Dilim</td><td>Deneyin ilk kez "geçti" olması gereken dilim</td></tr>
+      <tr><td>Kanıtladığı kapsam</td><td>Deneyin kanıtladığı gereksinim satırları veya alt kapsamları (ör. G6-vekil); künye satırında veriden üretilir</td></tr>
+      <tr><td>Dilim ve parçalar</td><td>Deneyin kapısında koştuğu dilim; sonraki dilimlere ait senaryolar ayrı "parça" satırlarıdır ve her parçanın kendi dilimi, ön koşulu ve kanıtladığı kapsamı vardır. Deneyin kendi senaryosu sonraki dilimin işine bağlanamaz (K7, K16)</td></tr>
       <tr><td>Ön koşul</td><td>Ortam, örnek veri, kullanıcı ve bayrak durumu</td></tr>
       <tr><td>Adımlar ("Değişen")</td><td>Deneyde değiştirilen ve yapılan her şey</td></tr>
       <tr><td>Beklenen sonuç ("Geçer")</td><td>Ölçülebilir geçme koşulları</td></tr>
@@ -36,6 +36,44 @@
       <tr><td>Kanıt</td><td>K9 kaydına giden ekran görüntüsü, HAR, video veya log</td></tr>
     </tbody>
   </table></div>
+
+  <h3 id="metrik-protokol" style="margin-top:1.75rem;font-size:var(--fs-l)">Metrik ve ölçüm protokolü</h3>
+  <p style="margin-top:.4rem;color:var(--ink-2)">Ürün başarısı ile sistem gecikmesi ayrı protokollerle kabul edilir. Bu tablolardaki eşikler ve yük modeli <b>önerilen başlangıç değerleridir</b>; açık performans kararının (T04, <a href="#ak-performans">ak-performans</a>) kapanması bu tabloların proje sahibi ve teknik inceleyici tarafından onaylanması demektir. Onaya kadar ölçüm bu değerlerle yapılır ama hiçbiri canlı taahhüdü değildir. Eşikler yalnızca sıkılaşır; her değişiklik ölçüm ve ADR ister.</p>
+
+  <h4 style="margin-top:1.1rem">Ürün başarısı: metrik sözlüğü (K13, AT-13, AT-38)</h4>
+  <div class="tbl-wrap" style="margin-top:.6rem"><table class="matrix prose">
+    <thead><tr><th scope="col">Metrik</th><th scope="col">Tanım (pay / payda)</th><th scope="col">Birim</th><th scope="col">En az örnek</th><th scope="col">Pencere</th><th scope="col">Eşik kaynağı</th><th scope="col">Alarm ve eylem</th></tr></thead>
+    <tbody>
+      <tr><td>Doğru tamamlanan iş</td><td>Altın sonuçla veya inceleyiciyle doğru bulunan görev / başlatılan görev</td><td>Görev</td><td>Pilotta kullanıcı başına 10, toplam 50</td><td>Pilot çalışması; canlıda 7 gün kayan</td><td>Klasik yol ölçümü (Y11)</td><td>Klasik yolun altına düşerse kapsam genişlemesi durur</td></tr>
+      <tr><td>Görev süresi</td><td>Niyet girişinden sonucun kabulüne kadar geçen sürenin medyanı ve 90. yüzdeliği</td><td>Görev</td><td>50</td><td>Pilot; 7 gün</td><td>Klasik yol ölçümü; başlangıç hedefi %30 daha kısa</td><td>Medyan klasik yoldan uzunsa yüzey kanaryaya daralır</td></tr>
+      <tr><td>Onay yükü</td><td>(Onay bekleme + inceleme süresi) / toplam görev süresi</td><td>Görev</td><td>50</td><td>7 gün</td><td>Ürün kuralı: en fazla %20</td><td>İki gün üst üste aşılırsa toplu onay tasarımı incelenir</td></tr>
+      <tr><td>Öneri kabulü</td><td>Olduğu gibi kabul edilen öneri / gösterilen öneri</td><td>Alan önerisi</td><td>Yüzey başına 200</td><td>7 gün kayan</td><td>Pilotun ilk iki haftalık taban ölçümü (klasik karşılığı yok)</td><td>Tabanın 10 puan altına düşerse yüzey kanaryaya daralır</td></tr>
+      <tr><td>Kabulden önce düzenleme</td><td>Düzenlenerek kabul edilen / kabul edilen öneri</td><td>Alan önerisi</td><td>200</td><td>7 gün</td><td>Taban ölçüm</td><td>Taban + 10 puan</td></tr>
+      <tr><td>Geri alma</td><td>Geri alınan uygulanmış değişiklik (30 s penceresi ve telafi dahil) / uygulanan değişiklik</td><td>Kayıt</td><td>200</td><td>7 gün</td><td>Taban ölçüm</td><td>Tabanın iki katı</td></tr>
+      <tr><td>Grant ile uygulananın geri alınması</td><td>Grant ile onaysız uygulanıp sonra geri alınan / grant ile uygulanan</td><td>Kayıt</td><td>100</td><td>7 gün</td><td>Ürün kuralı: en fazla %2</td><td>Aşılırsa o capability için grant kendiliğinden kapanır (F3)</td></tr>
+      <tr><td>Klasik yola dönüş</td><td>YZ ile başlayıp klasik görünümde biten görev / YZ ile başlayan görev</td><td>Görev</td><td>100</td><td>7 gün</td><td>Taban ölçüm</td><td>Taban + 10 puan</td></tr>
+      <tr><td>Bırakma</td><td>24 saat içinde sürdürülmeyen yarım Run / başlatılan Run</td><td>Run</td><td>100</td><td>7 gün</td><td>Taban ölçüm</td><td>Taban + 10 puan</td></tr>
+      <tr><td>Proaktif öneri kapatma</td><td>Kapatılan / gösterilen proaktif öneri</td><td>Öneri türü</td><td>200</td><td>7 gün</td><td>Ürün kuralı: %50</td><td>Aşan öneri türü kendiliğinden kısılır (I11)</td></tr>
+      <tr><td>Belirsiz kayıt</td><td>Belirsiz ayrılan kayıt / işlenen kayıt</td><td>Kayıt</td><td>200</td><td>7 gün</td><td>Değerlendirme seti</td><td>Tabanın 1,5 katı</td></tr>
+      <tr><td>"Yüksek" etiket kesinliği (kalibrasyon)</td><td>"Yüksek" etiketli ve doğru çıkan / "Yüksek" etiketli; insan etiketli örnekte</td><td>Görev türü</td><td>Görev türü başına 200 insan etiketli örnek</td><td>Her model, prompt veya katalog değişikliğinde (K2)</td><td>Ürün kuralı: %95 güven aralığının alt sınırı en az %95; grant ile otomatik uygulama için en az %98</td><td>Alt sınır düşerse etiket kapanır; grant ile otomatik uygulama durur</td></tr>
+    </tbody>
+  </table></div>
+  <p style="margin-top:.5rem">Yanlış pozitifin maliyeti: "Yüksek" etiketli yanlış bir öneri grant yolunda onaysız uygulanır ve geri alma gerektirir; bu yüzden grant eşiği etiket eşiğinden sıkıdır. Metrikler kişi bazında performans değerlendirmesi için kullanılmaz.</p>
+
+  <h4 style="margin-top:1.1rem">Sistem gecikmesi: görev sınıfları (K3)</h4>
+  <div class="tbl-wrap" style="margin-top:.6rem"><table class="matrix prose">
+    <thead><tr><th scope="col">Görev sınıfı</th><th scope="col">Tanım</th><th scope="col">Ölçülen</th><th scope="col">Hedef (p95)</th></tr></thead>
+    <tbody>
+      <tr><td>Etkileşimli YZ yardımı</td><td>Tek kayıt, tek adım: alan önerisi, komut paleti, açıklama</td><td>İlk geri bildirim; tamamlanmış sonuç</td><td>1 s; 10 s</td></tr>
+      <tr><td>Toplu Run</td><td>Çok kayıt, adımlı iş (ör. manifestte 200 kayıt, 600 s üst sınır)</td><td>İlk ilerleme sinyali; kayıt başına işleme; toplam</td><td>2 s; 3 s; manifestteki <code>timeout_s</code> içinde</td></tr>
+      <tr><td>Doğal dilden rapor</td><td>Filtre çipleri ve onaylı sorgu</td><td>Çiplerin görünmesi; onaydan sonra sonuç</td><td>3 s; indeksli alanlarda 5 s</td></tr>
+      <tr><td>Klasik liste ve form</td><td>Sayfa açılışı, sayfalama, kaydetme</td><td>Sunucu yanıtı</td><td>Liste 1 s; kaydetme 1 s</td></tr>
+      <tr><td>Giriş</td><td>Keycloak sayfasının açılışından SPA'ya dönüş</td><td>Toplam süre</td><td>5 s (K09)</td></tr>
+    </tbody>
+  </table></div>
+
+  <h4 style="margin-top:1.1rem">Yük modeli (750 eşzamanlı oturum)</h4>
+  <p style="margin-top:.4rem">750 oturum, 500 eşzamanlı kullanıcının 1,5 katıdır (U11). Etkin oran: herhangi bir anda oturumların %40'ı istek üretir; düşünme süresi 5–30 saniye arasında düzgün dağılır. İstek karışımı: %45 liste ve arama, %25 form açma, %15 kaydetme, %10 YZ isteği (bunun %80'i etkileşimli, %20'si toplu Run başlatma), %5 rapor. Şirketler: paylaşımlı sitede 50 şirket; en büyük şirket oturumların %20'sini, ilk 10 şirket %60'ını üretir. Veri: toplam 5 milyon ürün, en büyük şirkette 1 milyon; 50 bin tedarikçi belgesi. Profil: soğuk başlangıç, 30 dakika kararlı yük, 5 dakika tepe (1,5 kat). Ölçüm cihaz ve ağ profili K3'tedir; sonuç K9 kanıt kaydına yazılır.</p>
 
   <h3 style="margin-top:1.75rem;font-size:var(--fs-l)">Otomatik test paketleri</h3>
   {{TEST_PAKETLERI}}

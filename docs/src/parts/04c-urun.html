@@ -25,29 +25,30 @@
   </table></div>
 
   <h3 style="margin-top:1.75rem;font-size:var(--fs-l)">Kullanıcılar (personalar)</h3>
-  <p style="margin-top:.4rem;color:var(--ink-2)">Birincil kullanıcı operasyon ekibidir (karar kitabı U05); diğer üç kullanıcı kitlesi de sürüm 1.0'dadır (U06). Kullanıcı araştırmasına pilot müşterilerden 5–8 gerçek kullanıcı katılır (T07; AT-13).</p>
+  <p style="margin-top:.4rem;color:var(--ink-2)">Birincil kullanıcı operasyon ekibidir (karar kitabı U05). U06 dört kullanıcı kitlesini de ilk teslim için seçti; analist ve müşteri personalarının ilk teslimin dışında kalması bir öneridir ve onay bekler. Kullanıcı araştırmasına pilot müşterilerden 5–8 gerçek kullanıcı katılır (T07; AT-13).</p>
   <div class="tbl-wrap" style="margin-top:.6rem"><table class="matrix prose">
     <thead><tr><th scope="col">Persona</th><th scope="col">Kim</th><th scope="col">İlk üç görev</th><th scope="col">Başlıca cihaz</th><th scope="col">Dilim</th></tr></thead>
     <tbody>
       <tr><td>Operasyon uzmanı (birincil)</td><td>Gün boyu kayıt giren, güncelleyen, onaylayan kişi</td><td>Seçili ürünlerin eksik alanlarını belgelerden tamamlamak; toplu alan güncellemek; yarım kalan Run'a dönmek</td><td>Masaüstü; yolda telefon</td><td>Dilim 1</td></tr>
       <tr><td>Sistem yöneticisi</td><td>Kullanıcı, rol ve şirket ayarlarını yöneten kişi</td><td>Kullanıcı davet etmek; rol atamak; şirketin doğrulama kanalını ve YZ ayarlarını seçmek</td><td>Masaüstü</td><td>Dilim 1</td></tr>
-      <tr><td>Analist ve yönetici</td><td>Rapor ve karar kullanıcısı</td><td>Doğal dille rapor kurmak; panoyu düzenlemek; raporu paylaşmak ve dışa aktarmak</td><td>Masaüstü, tablet</td><td>Dilim 2</td></tr>
-      <tr><td>Müşteri veya iş ortağı</td><td>Portal kullanıcısı</td><td>Kendi siparişini ve belgesini görmek; talep açmak; www'de alışveriş yapmak</td><td>Telefon</td><td>Dilim 3</td></tr>
+      <tr><td>Analist ve yönetici</td><td>Rapor ve karar kullanıcısı</td><td>Doğal dille rapor kurmak; panoyu düzenlemek; raporu paylaşmak ve dışa aktarmak</td><td>Masaüstü, tablet</td><td>Dilim 2 (öneri; U06 ilk teslimde istedi, <a href="#ck-analist">onay bekliyor</a>)</td></tr>
+      <tr><td>Müşteri veya iş ortağı</td><td>Portal kullanıcısı</td><td>Kendi siparişini ve belgesini görmek; talep açmak; www'de alışveriş yapmak</td><td>Telefon</td><td>Dilim 3 (öneri; U06 ile R11 çelişiyor, <a href="#ck-musteri">onay bekliyor</a>)</td></tr>
     </tbody>
   </table></div>
 
-  <h3 id="cihaz-matrisi" style="margin-top:1.75rem;font-size:var(--fs-l)">Cihaz sınıfı ve yön matrisi</h3>
-  <p style="margin-top:.4rem;color:var(--ink-2)">Tasarım 320 CSS px telefondan başlar ve cihaz sınıfına göre ayrı yüzey paketiyle teslim edilir (karar kitabı U12, R08; J9). Genişlik aralıkları sınıf tespitinde tek ölçü değildir: giriş biçimi (dokunma, işaretçi, uzaktan kumanda) ve kullanıcının seçimi de sayılır. Her sınıf dikey ve yatay tutuşta ayrı kabul edilir; bir yön o sınıfta anlamsızsa (ör. televizyonda dikey) kabul kaydında gerekçeli "uygulanmaz" olur (K9).</p>
+  <h3 id="cihaz-matrisi" style="margin-top:1.75rem;font-size:var(--fs-l)">Yerleşim profili, giriş yeteneği ve yön matrisi</h3>
+  <p style="margin-top:.4rem;color:var(--ink-2)">Tasarım 320 CSS px telefondan başlar ve yerleşim profiline göre ayrı yüzey paketiyle teslim edilir (karar kitabı U12, R08; J9). Profil cihaz adından değil kullanılabilir CSS alanından seçilir; 4K bir ekran piksel yoğunluğu 2 ise 1920 CSS px'tir ve masaüstü profilini alır. Giriş yetenekleri (dokunma, işaretçi, hover, klavye, uzaktan kumanda) ayrı modellenir ve profili değiştirmez. Sinyaller çatışırsa sıra: kullanıcının o cihazda kaydettiği seçim, cihaz kaydı, kullanılabilir genişlik. Her profil dikey ve yatay tutuşta ayrı kabul edilir; bir yön anlamsızsa (ör. televizyonda dikey) kabul kaydında gerekçeli "uygulanmaz" olur (K9).</p>
   <div class="tbl-wrap" style="margin-top:.6rem"><table class="matrix prose">
-    <thead><tr><th scope="col">Sınıf</th><th scope="col">Yaklaşık genişlik (CSS px)</th><th scope="col">Giriş biçimi</th><th scope="col">Yön</th><th scope="col">Yüzey paketi</th><th scope="col">Test</th><th scope="col">Dilim</th></tr></thead>
+    <thead><tr><th scope="col">Profil</th><th scope="col">Seçim kuralı</th><th scope="col">Tipik giriş yetenekleri (profili değiştirmez)</th><th scope="col">Yön</th><th scope="col">Yüzey paketi</th><th scope="col">Test</th><th scope="col">Dilim</th></tr></thead>
     <tbody>
-      <tr><td>Telefon</td><td>320–599</td><td>Dokunma, sanal klavye</td><td>Dikey ve yatay</td><td><code>surfaces/telefon</code></td><td>Her PR'da gerçek iPhone (Safari) ve Android (Chrome)</td><td>Dilim 1</td></tr>
-      <tr><td>Dizüstü ve masaüstü</td><td>1024–2559</td><td>İşaretçi ve klavye; dokunmatik dizüstü</td><td>Yatay (dikey monitör ayrı kabul)</td><td><code>surfaces/masaustu</code></td><td>Her PR'da CI tarayıcıları; dokunmatik dizüstü sürümde</td><td>Dilim 1</td></tr>
-      <tr><td>Tablet</td><td>600–1023</td><td>Dokunma, kalem, harici klavye; bölünmüş ekran</td><td>Dikey ve yatay</td><td><code>surfaces/tablet</code></td><td>Her PR'da gerçek tablet</td><td>Dilim 2</td></tr>
-      <tr><td>Kiosk</td><td>Cihaza göre; çoğu 1080×1920 dikey</td><td>Dokunma</td><td>Çoğunlukla dikey</td><td><code>surfaces/kiosk</code></td><td>Sürümde gerçek cihaz; oturum kuralları M27</td><td>Dilim 3</td></tr>
-      <tr><td>4K ve 5K ekran</td><td>2560 ve üstü, yüksek piksel yoğunluğu</td><td>İşaretçi ve klavye</td><td>Yatay; dikey monitör ayrı</td><td><code>surfaces/genis</code></td><td>Sürümde elle, kanıt kaydıyla</td><td>Dilim 4</td></tr>
-      <tr><td>8K televizyon</td><td>Ölçekli; 3 metreden okunur yazı</td><td>Uzaktan kumanda (yön tuşları ve seçim)</td><td>Yatay</td><td><code>surfaces/tv</code></td><td>Sürümde elle, kanıt kaydıyla</td><td>Dilim 4</td></tr>
-      <tr><td>Akıllı tahta</td><td>Büyük fiziksel ekran; 1920–3840</td><td>Çoklu dokunma, kalem, ayakta kullanım</td><td>Yatay</td><td><code>surfaces/tahta</code></td><td>Sürümde elle, kanıt kaydıyla</td><td>Dilim 4</td></tr>
+      <tr><td>Telefon</td><td>Kullanılabilir genişlik 600 CSS px altı; tablet profili gelene kadar 1024 altı</td><td>Dokunma, sanal klavye</td><td>Dikey ve yatay</td><td><code>surfaces/telefon</code></td><td>Her PR'da gerçek iPhone (Safari) ve Android (Chrome)</td><td>Dilim 1</td></tr>
+      <tr><td>Masaüstü</td><td>1024–2559 CSS px</td><td>İşaretçi ve klavye; dokunmatik dizüstünde dokunma da</td><td>Yatay (dikey monitör ayrı kabul)</td><td><code>surfaces/masaustu</code></td><td>Her PR'da CI tarayıcıları; dokunmatik dizüstü sürümde</td><td>Dilim 1</td></tr>
+      <tr><td>Tablet</td><td>600–1023 CSS px (bölünmüş ekranda bölmenin genişliği)</td><td>Dokunma, kalem; harici klavye takılınca kısayollar</td><td>Dikey ve yatay</td><td><code>surfaces/tablet</code></td><td>Her PR'da gerçek tablet</td><td>Dilim 2</td></tr>
+      <tr><td>Kiosk</td><td>Cihaz kaydı (M27); boyuttan çıkarılmaz</td><td>Dokunma</td><td>Çoğunlukla dikey</td><td><code>surfaces/kiosk</code></td><td>Sürümde gerçek cihaz; oturum kuralları M27</td><td>Dilim 3</td></tr>
+      <tr><td>Geniş ekran</td><td>2560 CSS px ve üstü (fiziksel piksel değil)</td><td>İşaretçi ve klavye</td><td>Yatay; dikey monitör ayrı</td><td><code>surfaces/genis</code></td><td>Sürümde elle, kanıt kaydıyla</td><td>Dilim 4</td></tr>
+      <tr><td>Televizyon</td><td>Kullanıcı seçimi veya cihaz kaydı; boyuttan çıkarılmaz</td><td>Uzaktan kumanda (yön tuşları ve seçim)</td><td>Yatay</td><td><code>surfaces/tv</code></td><td>Sürümde elle, kanıt kaydıyla</td><td>Dilim 4</td></tr>
+      <tr><td>Akıllı tahta</td><td>Kullanıcı seçimi veya cihaz kaydı</td><td>Çoklu dokunma, kalem, ayakta kullanım</td><td>Yatay</td><td><code>surfaces/tahta</code></td><td>Sürümde elle, kanıt kaydıyla</td><td>Dilim 4</td></tr>
     </tbody>
   </table></div>
+  <p style="margin-top:.8rem">Kabul matrisi (AT-35): her profil × iki yön × sınır genişlikleri (N−1, N, N+1: 599, 600, 601; 1023, 1024, 1025; 2559, 2560, 2561) × önbellek durumu (soğuk, sıcak, service worker kurulu). Ölçüm üretim derlemesinin manifesti ve ağ kaydıyla (HAR) yapılır: aktif profil dışındaki hiçbir profil paketi, preload ve prefetch dahil, istenmez; yön veya profil değişince yalnızca yeni profilin paketi iner. Geçişte odak aynı mantıksal öğede kalır, taslak ve seçim korunur. Her cihaz adı için ayrı uygulama üretilmez.</p>
 </section>

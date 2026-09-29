@@ -1,35 +1,61 @@
 <section id="api-hata">
   <div class="sec-head">
     <div class="title"><h2>API yüzeyi, hata kataloğu ve dağıtım</h2></div>
-    <p>Bu bölüm üç tabloyu tek yerde tutar: platformun uç noktaları (karar kitabı X02; B12), tek hata biçiminin kod kataloğu (X01; B11) ve ortamlar ile önbellek politikası (X06, X07; K15). Ne yapar: frontend'in hangi uç noktayı hangi yetkiyle, hangi tekrar korumasıyla çağırdığını ve her hatada ekranın ne yapacağını belirler. Ne yapmaz: Frappe REST v2'nin kendi uç noktalarını (<code>/api/v2/document</code>, <code>/api/v2/doctype/&lt;dt&gt;/meta</code>) yeniden tanımlamaz; onlar B1'de. Bütün platform metotları <code>/api/v2/method/genui.api.v1.&lt;ad&gt;</code> altında yaşar; kimlik köprüsünün yolları <code>/auth</code> altındadır. Şemaların adları Sözleşme ekindeki zod şemalarıdır.</p>
+    <p>Bu bölüm üç tabloyu tek yerde tutar: platformun uç noktaları (karar kitabı X02; B12), tek hata biçiminin kod kataloğu (X01; B11) ve ortamlar ile önbellek politikası (X06, X07; K15). Ne yapar: frontend'in hangi uç noktayı hangi şemayla, hangi yetkiyle, CSRF ile ve hangi tekrar korumasıyla çağırdığını ve her hatada ekranın ne yapacağını belirler. Ne yapmaz: Frappe REST v2'nin kendi uç noktalarını (<code>/api/v2/document</code>, <code>/api/v2/doctype/&lt;dt&gt;/meta</code>) yeniden tanımlamaz; onlar B1'de. Bütün platform metotları <code>/api/v2/method/genui.api.v1.&lt;ad&gt;</code> altında yaşar; kimlik köprüsünün yolları <code>/auth</code> altındadır.</p>
   </div>
 
-  <h3 style="font-size:var(--fs-l)">API yüzeyi</h3>
+  <div class="protected" style="margin-top:0">
+    <div><span class="t">Şema kimlikleri</span><p>Her uç noktanın istek ve yanıt şeması zod'da <code>genui.contracts/&lt;ad&gt;.req@1</code> ve <code>&lt;ad&gt;.res@1</code> kimliğiyle yazılır. Tabloda "ek" işaretli olanlar <a href="#sozlesme-eki">sözleşme ekinde</a> örneklidir; diğerlerinin şeması, geçerli ve geçersiz örneği ilgili dilimin sözleşme adımında (dilim planı, adım 3) yazılır, o zamana kadar yalnızca kimliği sabittir.</p></div>
+    <div><span class="t">CSRF</span><p>GET istekleri durum değiştirmez ve CSRF belirteci taşımaz. Bütün POST istekleri <code>X-Frappe-CSRF-Token</code> ister (M6). Tek istisna, sunucudan sunucuya gelen back-channel logout'tur; onu logout token doğrulaması korur (M18).</p></div>
+    <div><span class="t">Tekrar koruması</span><p>Yan etkili POST istekleri gövdede <code>idempotency_key</code> taşır. Anahtar (organization, user, key) kapsamında 7 gün saklanır (GenUI Idempotency Key); aynı anahtar aynı gövdeyle ilk yanıtı döner, farklı gövdeyle idempotency_payload_mismatch alır. Taslak kaydı anahtar yerine <code>expected_version</code> kullanır.</p></div>
+  </div>
+
+  <h3 style="margin-top:1.5rem;font-size:var(--fs-l)">API yüzeyi</h3>
   <div class="tbl-wrap" style="margin-top:.6rem"><table class="matrix prose">
-    <thead><tr><th scope="col">Yöntem ve ad</th><th scope="col">Amaç</th><th scope="col">Yetki</th><th scope="col">Tekrar koruması</th><th scope="col">Başlıca hata kodları</th><th scope="col">Dilim</th></tr></thead>
+    <thead><tr><th scope="col">Yöntem ve ad</th><th scope="col">Amaç</th><th scope="col">Şema (istek → yanıt)</th><th scope="col">Yetki</th><th scope="col">CSRF</th><th scope="col">Tekrar koruması</th><th scope="col">Başlıca hata kodları</th><th scope="col">Dilim</th></tr></thead>
     <tbody>
-      <tr><td>GET /auth/login, /auth/callback</td><td>Girişi başlatır ve dönüşü karşılar (M4)</td><td>Anonim; state tarayıcıya bağlı</td><td>state tek kullanımlık</td><td>auth_required, upstream_unavailable</td><td>Dilim 1</td></tr>
-      <tr><td>GET /auth/session</td><td>Oturum özeti (M22)</td><td>Oturum çerezi</td><td>—</td><td>auth_required</td><td>Dilim 1</td></tr>
-      <tr><td>POST /auth/logout, /auth/backchannel-logout</td><td>Çıkış ve tek çıkış (M18)</td><td>Oturum; logout token doğrulaması</td><td>jti önbelleği</td><td>validation_failed</td><td>Dilim 1</td></tr>
-      <tr><td>GET capabilities.manifest</td><td>Kullanıcının izinli capability listesi (B3)</td><td>Oturum, aktif şirket</td><td>—</td><td>permission_denied</td><td>Dilim 1</td></tr>
-      <tr><td>POST context.build</td><td>Bağlam manifesti ve parmak izi (I9, F9)</td><td>Oturum, izin projeksiyonu</td><td>—</td><td>permission_denied, contract_version_mismatch</td><td>Dilim 1</td></tr>
-      <tr><td>POST runs.start</td><td>Run başlatır (Sözleşme eki 2)</td><td>Capability izni; mod politikası</td><td>idempotency_key</td><td>quota_exceeded, ai_disabled, idempotency_in_progress</td><td>Dilim 1</td></tr>
-      <tr><td>GET runs.get</td><td>Durum, adım, ilerleme, sonuç (C03)</td><td>Run sahibi veya yönetici</td><td>—</td><td>permission_denied, not_found</td><td>Dilim 1</td></tr>
-      <tr><td>POST runs.cancel, runs.retry_failed</td><td>Durdurma ve seçmeli yeniden deneme</td><td>Run sahibi</td><td>idempotency_key</td><td>revision_conflict</td><td>Dilim 1</td></tr>
-      <tr><td>GET changesets.get; POST changesets.approve, changesets.reject</td><td>Öneriyi okuma, onaylama, reddetme (Sözleşme eki 3–4)</td><td>Onay yetkisi; gerekirse adım yükseltme</td><td>idempotency_key; parmak izi</td><td>approval_stale, approval_expired, step_up_required, legal_document_blocked</td><td>Dilim 1</td></tr>
-      <tr><td>GET grants.list; POST grants.create, grants.revoke</td><td>Sınırlı grant yönetimi (F3)</td><td>Sahibi; yönetici iptal eder</td><td>idempotency_key</td><td>grant_scope_exceeded, validation_failed</td><td>Dilim 1</td></tr>
-      <tr><td>POST suggestions.accept, suggestions.reject</td><td>Öneri katmanından taslağa geçiş (C13)</td><td>Öneri sahibi</td><td>idempotency_key</td><td>revision_conflict</td><td>Dilim 1</td></tr>
-      <tr><td>GET drafts.get; POST drafts.save</td><td>Sunucudaki taslak (E2)</td><td>Taslak sahibi</td><td>Revizyon</td><td>revision_conflict</td><td>Dilim 1</td></tr>
-      <tr><td>GET budget.status</td><td>Şirketin aylık YZ bütçesi (Y10)</td><td>Şirket üyesi; ayrıntı yöneticiye</td><td>—</td><td>permission_denied</td><td>Dilim 1</td></tr>
-      <tr><td>POST flags.set</td><td>Kill switch ve bayraklar (E7)</td><td>Sistem yöneticisi, adım yükseltme</td><td>idempotency_key</td><td>step_up_required</td><td>Dilim 1</td></tr>
-      <tr><td>POST conversations.delete_text</td><td>Sohbet metnini silme (V04)</td><td>Sohbet sahibi</td><td>idempotency_key</td><td>not_found</td><td>Dilim 1</td></tr>
-      <tr><td>POST reports.interpret, reports.run</td><td>Doğal dilden filtre çipleri ve onaylı rapor (Y04)</td><td>Rapor izni</td><td>—</td><td>validation_failed, quota_exceeded</td><td>Dilim 2</td></tr>
-      <tr><td>GET memory.list; POST memory.delete</td><td>Şirket düzeltme hafızası (I12)</td><td>Şirket yöneticisi</td><td>idempotency_key</td><td>permission_denied</td><td>Dilim 2</td></tr>
-      <tr><td>POST account.close; organizations.transfer_ownership, organizations.close</td><td>Hesap kapatma, son yönetici devri, şirket kapanışı (M26)</td><td>Kullanıcı veya şirket yöneticisi; adım yükseltme</td><td>idempotency_key</td><td>last_admin_blocked, step_up_required</td><td>Dilim 2</td></tr>
-      <tr><td>POST support.impersonation.request, .approve, .end</td><td>Vekil oturum (G6)</td><td>Destek ister, müşteri onaylar</td><td>idempotency_key</td><td>permission_denied</td><td>Dilim 3</td></tr>
+      <tr><td>GET /auth/login, /auth/callback</td><td>Girişi başlatır ve dönüşü karşılar (M4)</td><td>Yönlendirme; gövde yok</td><td>Anonim; state tarayıcıya bağlı</td><td>Yok (state)</td><td>state tek kullanımlık</td><td>auth_required, upstream_unavailable</td><td>Dilim 1</td></tr>
+      <tr><td>GET /auth/session</td><td>Oturum özeti (M22)</td><td>— → auth.session.res@1</td><td>Oturum çerezi</td><td>Yok</td><td>—</td><td>auth_required</td><td>Dilim 1</td></tr>
+      <tr><td>POST /auth/logout, /auth/backchannel-logout</td><td>Çıkış ve tek çıkış (M18)</td><td>auth.logout.req@1; logout token</td><td>Oturum; logout token doğrulaması</td><td>Çıkış: var; back-channel: logout token</td><td>jti önbelleği</td><td>validation_failed</td><td>Dilim 1</td></tr>
+      <tr><td>POST context.switch</td><td>Aktif şirketi değiştirir, bağlam sürümünü artırır, hedef hostu döner (M10)</td><td>context.switch.req@1 → .res@1</td><td>Hedef şirkette etkin üyelik; hedef politikanın kanıtı</td><td>Var</td><td>idempotency_key</td><td>permission_denied, step_up_required, context_changed</td><td>Dilim 1</td></tr>
+      <tr><td>GET capabilities.manifest</td><td>Kullanıcının izinli capability listesi (B3)</td><td>— → capabilities.manifest.res@1 (ek 1)</td><td>Oturum, aktif şirket</td><td>Yok</td><td>—</td><td>permission_denied, context_changed</td><td>Dilim 1</td></tr>
+      <tr><td>POST intents.interpret</td><td>Niyet girişinden capability ve kapsam önerisi; yolculuğun ilk iki adımı (yan etkisiz)</td><td>intents.interpret.req@1 → .res@1</td><td>Oturum, aktif şirket</td><td>Var</td><td>— (yan etkisiz)</td><td>quota_exceeded, ai_disabled, validation_failed</td><td>Dilim 1</td></tr>
+      <tr><td>POST context.build</td><td>Bağlam manifesti ve parmak izi (I9, F9); kullanıcı çipleri çıkarınca yeniden kurulur</td><td>context.build.req@1 → .res@1 (ek 2)</td><td>Oturum, izin projeksiyonu</td><td>Var</td><td>— (yan etkisiz)</td><td>permission_denied, contract_version_mismatch</td><td>Dilim 1</td></tr>
+      <tr><td>POST runs.start</td><td>Run başlatır; kapsam düzenlemesi seçim ve exclude alanlarıyla gelir</td><td>runs.start.req@1 → .res@1 (ek 3)</td><td>Capability izni; mod politikası</td><td>Var</td><td>idempotency_key</td><td>quota_exceeded, ai_disabled, idempotency_in_progress, context_changed</td><td>Dilim 1</td></tr>
+      <tr><td>POST runs.answer</td><td>Netleştirme sorusunu cevaplar (I4, Y06)</td><td>runs.answer.req@1 → runs.get.res@1</td><td>Run sahibi</td><td>Var</td><td>idempotency_key</td><td>revision_conflict, context_changed</td><td>Dilim 1</td></tr>
+      <tr><td>GET runs.get</td><td>Durum, adım, ilerleme, kayıt başına sonuç (C03)</td><td>— → runs.get.res@1 (ek 6)</td><td>Run sahibi veya yönetici</td><td>Yok</td><td>—</td><td>permission_denied, not_found</td><td>Dilim 1</td></tr>
+      <tr><td>POST runs.cancel, runs.retry_failed, runs.undo</td><td>Durdurma; yalnız çakışan ve başarısız kayıtları yeniden deneme; geri alma penceresinde geri alma (F5)</td><td>runs.cancel.req@1, runs.retry_failed.req@1, runs.undo.req@1 → runs.get.res@1</td><td>Run sahibi</td><td>Var</td><td>idempotency_key</td><td>revision_conflict, undo_window_closed</td><td>Dilim 1</td></tr>
+      <tr><td>GET changesets.get; POST changesets.update_item, changesets.approve, changesets.reject</td><td>Öneriyi okuma; kayıt başına değeri düzeltme (yeni ChangeSet parmak izi üretir); kısmi onay; reddetme</td><td>changesets.update_item.req@1, changesets.approve.req@1 (ek 4), changesets.reject.req@1 → changesets.get.res@1 (ek 3)</td><td>Onay yetkisi; gerekirse adım yükseltme</td><td>POST: var</td><td>idempotency_key; parmak izi</td><td>approval_stale, approval_expired, step_up_required, legal_document_blocked, context_changed</td><td>Dilim 1</td></tr>
+      <tr><td>GET grants.list; POST grants.create, grants.revoke</td><td>Sınırlı grant yönetimi (F3)</td><td>grants.*.req@1 → grants.list.res@1</td><td>Sahibi; yönetici iptal eder</td><td>POST: var</td><td>idempotency_key</td><td>grant_scope_exceeded, validation_failed</td><td>Dilim 1</td></tr>
+      <tr><td>POST suggestions.accept, suggestions.reject</td><td>Öneri katmanından taslağa geçiş (C13)</td><td>suggestions.*.req@1 → drafts.get.res@1</td><td>Öneri sahibi</td><td>Var</td><td>idempotency_key</td><td>revision_conflict</td><td>Dilim 1</td></tr>
+      <tr><td>GET drafts.get; POST drafts.save</td><td>Sunucudaki taslak (E2); yeni belgede draft_id ile</td><td>drafts.save.req@1 → drafts.get.res@1</td><td>Taslak sahibi</td><td>POST: var</td><td>expected_version</td><td>revision_conflict</td><td>Dilim 1</td></tr>
+      <tr><td>GET budget.status</td><td>Şirketin aylık YZ bütçesi (Y10)</td><td>— → budget.status.res@1</td><td>Şirket üyesi; ayrıntı yöneticiye</td><td>Yok</td><td>—</td><td>permission_denied</td><td>Dilim 1</td></tr>
+      <tr><td>POST flags.set</td><td>Kill switch ve bayraklar; flag_key, scope_type ve organization ile (E7)</td><td>flags.set.req@1 → .res@1</td><td>Sistem yöneticisi, adım yükseltme</td><td>Var</td><td>idempotency_key</td><td>step_up_required, validation_failed</td><td>Dilim 1</td></tr>
+      <tr><td>POST organizations.update_policy</td><td>Şirket doğrulama politikası (M8, M10); politika sürümünü artırır</td><td>organizations.update_policy.req@1 → .res@1</td><td>Şirket yöneticisi, adım yükseltme</td><td>Var</td><td>idempotency_key</td><td>step_up_required, validation_failed</td><td>Dilim 1</td></tr>
+      <tr><td>POST conversations.delete_text</td><td>Sohbet metnini silme (V04)</td><td>conversations.delete_text.req@1 → .res@1</td><td>Sohbet sahibi</td><td>Var</td><td>idempotency_key</td><td>not_found</td><td>Dilim 1</td></tr>
+      <tr><td>POST reports.interpret, reports.run</td><td>Doğal dilden filtre çipleri ve onaylı rapor (Y04)</td><td>reports.*.req@1 → .res@1</td><td>Rapor izni</td><td>Var</td><td>— (yan etkisiz)</td><td>validation_failed, quota_exceeded</td><td>Dilim 2</td></tr>
+      <tr><td>GET memory.list; POST memory.delete</td><td>Şirket düzeltme hafızası (I12)</td><td>memory.*.req@1 → memory.list.res@1</td><td>Şirket yöneticisi</td><td>POST: var</td><td>idempotency_key</td><td>permission_denied</td><td>Dilim 2</td></tr>
+      <tr><td>POST account.close; organizations.transfer_ownership, organizations.close</td><td>Hesap kapatma, son yönetici devri, şirket kapanışı (M26)</td><td>ilgili .req@1 → .res@1</td><td>Kullanıcı veya şirket yöneticisi; adım yükseltme</td><td>Var</td><td>idempotency_key</td><td>last_admin_blocked, step_up_required</td><td>Dilim 2</td></tr>
+      <tr><td>POST support.impersonation.request, .approve, .end</td><td>Vekil oturum (G6)</td><td>support.impersonation.*.req@1 → .res@1</td><td>Destek ister, müşteri onaylar</td><td>Var</td><td>idempotency_key</td><td>permission_denied</td><td>Dilim 3</td></tr>
     </tbody>
   </table></div>
-  <p style="margin-top:.8rem">Sürüm kuralı (B12): bu tablo <code>v1</code>'dir. Geriye uyumsuz değişiklik yeni tarihli sürüm açar; eski sürüm dönüşüm katmanıyla çalışmaya devam eder ve kaldırılmaz. Dışa açık entegrasyonlar oluşturuldukları sürüme sabitlenir; SPA en az iki sürüm veya 90 gün uyumlu kalır.</p>
+  <p style="margin-top:.8rem">Varsayılan yolculuğun her adımı bir uç noktaya bağlıdır: niyet girişi ve kapsam önerisi → intents.interpret; kapsam çipleri → context.build; başlatma ve kapsam düzenleme (seçim, exclude) → runs.start; netleştirme → runs.answer; değer düzeltme → changesets.update_item; kısmi onay → changesets.approve (approved_items, excluded_items); sonuç → runs.get; seçmeli yeniden deneme → runs.retry_failed; geri alma → runs.undo.</p>
+
+  <h3 id="api-surum" style="margin-top:1.75rem;font-size:var(--fs-l)">Sürüm seçimi</h3>
+  <p style="margin-top:.4rem">İki katman ayrıdır (B12). Ad alanındaki <code>genui.api.v1</code> yalnızca bütün API yeniden tasarlanırsa değişir. Günlük geriye uyumsuz değişiklik yeni bir tarihli sürüm açar ve sürüm <code>Genui-Version</code> başlığıyla seçilir. Varsayılan: SPA her istekte kendi derlemesinin sürümünü gönderir; dış entegrasyonun isteğinde başlık yoksa API anahtarının oluşturulduğu tarihteki sürüm kullanılır; başlık, desteklenen herhangi bir sürümü açıkça seçebilir (kademeli geçiş ve test için). Bilinmeyen sürüm <code>api_version_unknown</code> (400) alır. SPA'nın destek penceresi (iki sürüm veya 90 gün) dışındaki sürüm <code>api_version_unsupported</code> (410) alır ve SPA sayfayı yenilemeye yönlendirir; dış API sürümleri kaldırılmadığı için dış istemci 410 almaz (<a href="#ck-api-surum">onay bekleyen yorum</a>). Dönüşüm zinciri: sunucu yalnızca en yeni sürümü uygular; istek eski sürümden en yeniye doğru, yanıt en yeniden istenen sürüme doğru, sürüm değişim modülleri sırayla uygulanarak dönüştürülür. Her modül tek bir tarihli değişikliği tarif eder ve kendi sözleşme testini taşır; yanıt kullandığı sürümü aynı başlıkla geri yazar.</p>
+<pre><code>POST /api/v2/method/genui.api.v1.runs.start HTTP/1.1
+Host: musteri-a.app.alanadi
+Content-Type: application/json
+Genui-Version: 2026-09-29
+X-Frappe-CSRF-Token: &lt;oturum uç noktasından alınan belirteç&gt;
+
+{ "capability": "pim.fill_missing_attributes", "capability_version": "1.0.0", … }   ← gövde: sözleşme eki 3
+
+HTTP/1.1 202 Accepted
+Genui-Version: 2026-09-29
+Content-Type: application/json
+
+{ "run_id": "RUN-2026-00418", "status": "queued", … }</code></pre>
 
   <h3 style="margin-top:1.75rem;font-size:var(--fs-l)">Hata kataloğu</h3>
   <p style="margin-top:.4rem;color:var(--ink-2)">Her hata tek JSON biçimindedir: <code>code</code>, <code>http_status</code>, <code>frappe_exc_type</code>, <code>retryable</code>, <code>correlation_id</code>, <code>message_key</code>, <code>fields</code>. Katalogda olmayan kod yayımlanamaz (B11).</p>
@@ -51,6 +77,10 @@
       <tr><td>rate_limited</td><td>429</td><td>Evet, Retry-After</td><td>İstek hızı sınırı</td><td>Geri çekil ve tekrar dene; kullanıcıya bekleme süresi</td></tr>
       <tr><td>idempotency_in_progress</td><td>409</td><td>Evet, Retry-After</td><td>Aynı anahtarla istek hâlâ işleniyor</td><td>Bekle ve yokla (E3)</td></tr>
       <tr><td>idempotency_payload_mismatch</td><td>422</td><td>Hayır</td><td>Aynı anahtar farklı gövdeyle geldi</td><td>İstemci hatası; güvenlik olayı olarak kaydedilir</td></tr>
+      <tr><td>context_changed</td><td>409</td><td>Hayır</td><td>İstek eski bağlam sürümüyle geldi: aktif şirket başka sekmede veya hostta değişti (M10)</td><td>Yazma yapılmaz; "aktif şirket değişti" uyarısı, yeni şirkete geç veya bu şirkete dön; taslak korunur</td></tr>
+      <tr><td>undo_window_closed</td><td>409</td><td>Hayır</td><td>Geri alma penceresi kapandı (F5)</td><td>Tanımlı telafi komutu varsa önerilir; yoksa neden gösterilir</td></tr>
+      <tr><td>api_version_unknown</td><td>400</td><td>Hayır</td><td><code>Genui-Version</code> başlığındaki sürüm tanınmıyor</td><td>İstemci hatası; telemetriye düşer</td></tr>
+      <tr><td>api_version_unsupported</td><td>410</td><td>Hayır</td><td>SPA sürümü destek penceresinin dışında (iki sürüm veya 90 gün)</td><td>Taslak kaydedilir, sayfa yenilenir</td></tr>
       <tr><td>contract_version_mismatch</td><td>409</td><td>Hayır</td><td>Katalog, şema veya sözleşme sürümü uyuşmuyor (H3)</td><td>Sayfayı yenile; kesişim yoksa metin moduna düş</td></tr>
       <tr><td>validation_failed</td><td>422</td><td>Hayır</td><td>Frappe doğrulama hatası (ValidationError ailesi, 417 yerine)</td><td>Alan hataları forma eşlenir; odak ilk hatalı alana</td></tr>
       <tr><td>not_found</td><td>404</td><td>Hayır</td><td>Kayıt yok veya kullanıcıdan gizli</td><td>Varlığını sızdırmayan metin</td></tr>

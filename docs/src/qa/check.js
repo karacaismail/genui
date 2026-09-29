@@ -136,16 +136,17 @@ const rec = (check, ok, detail) => results.push({ check, status: ok === null ? '
     await page.close();
   }
 
-  // 8. slice (dilim) filter: one button per slice that rows carry; each slice shows exactly its rows; "Tümü" restores all
+  // 8. slice (dilim) filter: one button per slice that rows carry; each slice shows exactly the rows delivered in it
+  //    (a row with sub-scopes in several slices shows under each); "Tümü" restores all
   {
     const page = await browser.newPage({ viewport: { width: 1280, height: 900 } });
     await page.goto(url);
     const info = await page.evaluate(() => {
       // the universe is every requirement row, not only rows that already carry a slice attribute
       const rows = [].slice.call(document.querySelectorAll('.req-table tbody tr'));
-      const missing = rows.filter(r => !/^[1-4]$/.test(r.getAttribute('data-dilim') || '')).map(r => r.id);
+      const missing = rows.filter(r => !/^[1-4]$/.test(r.getAttribute('data-dilim') || '') || !/^[1-4]( [1-4])*$/.test(r.getAttribute('data-dilimler') || '')).map(r => r.id);
       if (missing.length) return { total: rows.length, slices: ['missing:' + missing.join(',')], btns: [] };
-      const slices = Array.from(new Set(rows.map(r => r.getAttribute('data-dilim')))).sort();
+      const slices = Array.from(new Set([].concat.apply([], rows.map(r => r.getAttribute('data-dilimler').split(' '))))).sort();
       const btns = [].slice.call(document.querySelectorAll('#flt-phase button')).map(b => b.getAttribute('data-dilim')).filter(p => p !== 'ALL').sort();
       return { total: rows.length, slices, btns };
     });
@@ -159,7 +160,7 @@ const rec = (check, ok, detail) => results.push({ check, status: ok === null ? '
       for (const sl of info.slices) {
         await page.locator('#flt-phase button[data-dilim="' + sl + '"]').click();
         const ids = await visible();
-        const expected = await page.evaluate(p => [].slice.call(document.querySelectorAll('tr[data-dilim="' + p + '"]')).map(r => r.id), sl);
+        const expected = await page.evaluate(p => [].slice.call(document.querySelectorAll('.req-table tbody tr[data-dilimler~="' + p + '"]')).map(r => r.id), sl);
         const same = JSON.stringify(ids) === JSON.stringify(expected);
         ok = ok && same; detail.push(sl + ':' + ids.length + (same ? '' : '!=' + expected.length));
       }
@@ -226,6 +227,50 @@ const rec = (check, ok, detail) => results.push({ check, status: ok === null ? '
     await page.locator('#flt-mode button[data-mode="ozet"]').click();
     const hidden = await page.evaluate(() => { const t = document.querySelector('.req-table .tst'); return t ? getComputedStyle(t).display : 'none'; });
     rec('tests: every MUST row links to a test; summary mode hides test lines', r.missing.length === 0 && r.must > 0 && hidden === 'none', 'must=' + r.must + ' missing=' + r.missing.join(',') + ' ozet display=' + hidden);
+    await page.close();
+  }
+
+  // 13. narrow screens with every appendix open (glossary, decision tables, test matrix): no root overflow.
+  // The glossary is opened with the keyboard first (focus its summary, press Enter), the rest are opened in script.
+  for (const w of [320, 360, 390]) {
+    const page = await browser.newPage({ viewport: { width: w, height: 740 } });
+    await page.goto(url);
+    await page.locator('#sozluk-kutu > summary').focus();
+    await page.keyboard.press('Enter');
+    const kb = await page.evaluate(() => document.getElementById('sozluk-kutu').open);
+    const r = await page.evaluate(() => {
+      const ds = [].slice.call(document.querySelectorAll('details'));
+      ds.forEach(d => { d.open = true; });
+      const de = document.documentElement;
+      // elements inside a container that scrolls or clips sideways (tables, code, the contents rail) cannot widen the page
+      const inScroller = e => { for (let a = e.parentElement; a && a !== document.body; a = a.parentElement) { if (getComputedStyle(a).overflowX !== 'visible') return true; } return false; };
+      const wide = [].slice.call(document.querySelectorAll('body *'))
+        .filter(e => e.getBoundingClientRect().right > de.clientWidth + 1 && !inScroller(e))
+        .slice(0, 5).map(e => e.tagName + '.' + (e.className || '').toString().split(' ')[0] + ' ' + Math.round(e.getBoundingClientRect().right));
+      return { details: ds.length, ov: de.scrollWidth - de.clientWidth, wide };
+    });
+    rec(w + 'px: glossary opens with the keyboard; no root overflow with every appendix open',
+      kb && r.ov <= 0 && r.wide.length === 0, 'keyboard open=' + kb + ' details=' + r.details + ' overflow=' + r.ov + 'px ' + r.wide.join(', '));
+    await page.close();
+  }
+
+  // 14. multi-slice rows: a requirement delivered over several slices appears under each of them
+  {
+    const page = await browser.newPage({ viewport: { width: 1280, height: 900 } });
+    await page.goto(url);
+    const multi = await page.evaluate(() => [].slice.call(document.querySelectorAll('.req-table tbody tr[data-dilimler]'))
+      .filter(r => r.getAttribute('data-dilimler').split(' ').length > 1).map(r => ({ id: r.id, s: r.getAttribute('data-dilimler').split(' ') })));
+    let ok = multi.length > 0; const detail = [];
+    for (const sl of ['1', '2', '3', '4']) {
+      const btn = page.locator('#flt-phase button[data-dilim="' + sl + '"]');
+      if (!(await btn.count())) continue;
+      await btn.click();
+      const visIds = await page.evaluate(() => [].slice.call(document.querySelectorAll('.req-table tbody tr')).filter(r => !r.hidden).map(r => r.id));
+      const want = multi.filter(m => m.s.includes(sl)).map(m => m.id);
+      const miss = want.filter(id => !visIds.includes(id));
+      if (miss.length) { ok = false; detail.push(sl + ' missing ' + miss.join(',')); } else detail.push(sl + ':' + want.length);
+    }
+    rec('slice filter: rows delivered over several slices show under each slice', ok, 'multi-slice rows=' + multi.length + ' ' + detail.join(' '));
     await page.close();
   }
 

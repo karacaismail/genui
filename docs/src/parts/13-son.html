@@ -28,7 +28,8 @@
         <li>Kimlik çekirdeğini veya güvenlik açısından kritik custom app kodunu dış güvenlik incelemesi olmadan canlıya çıkarma.</li>
         <li>Ürün olaylarını task veya progress odalarına yayımlama; realtime olaylarına veri veya ilerleme yüzdesi koyma.</li>
         <li>Onaylı değişiklik için <code>apply_workflow</code>'u veya REST v2 method yolunu doğrudan çağırma; BFF'de ön kontrol yapıp ayrı RPC ile uygulama.</li>
-        <li>Kararın seçimini sessizce değiştirme; karar kaydıyla, kimlik rehberiyle veya karar kitabıyla değişen her karar izlenebilirlikte ve çelişki tablosunda görünür.</li>
+        <li>Kararın seçimini sessizce değiştirme; karar kaydıyla, kimlik rehberiyle veya karar kitabıyla değişen her karar izlenebilirlikte ve çelişki tablosunda görünür. Onay bekleyen bir yorumu yürürlükteki karar gibi sunma.</li>
+        <li>Bir kabul deneyini kendi diliminden sonraki işe bağlama; kısaltılmış veya elle yazılmış parmak izi örneği yayımlama; e-posta markasını kullanıcı özniteliğinden çözme; açık sayfadaki şifreleme anahtarının uzaktan silinebildiğini vaat etme.</li>
         <li>Prompt, model çıktısı, spec içeriği veya kayıt verisini frontend telemetrisine yazma; test ortamına gerçek kişisel veri koyma.</li>
         <li>YZ ajanının PR onaylamasına, birleştirmesine veya korumalı dala push etmesine izin verme; otomasyonun canlı sisteme kendiliğinden dokunmasına izin verme.</li>
         <li>Yerel geliştirmede Docker Desktop kullanma; yerel container çalışma ortamı Colima'dır.</li>
@@ -39,7 +40,8 @@
       <ul>
         <li>Frappe sosyal giriş kodundaki bulgunun bildirim taslağını (29 Eylül 2026'da proje sahibine ayrıca verildi) Frappe'nin güvenlik adresine gönder; ayrıntıyı bildirimden önce herkese açık yazma (karar kitabı K19).</li>
         <li>Dilim 1'e başlamadan önce test stratejisini, Dilim 1'in DocType satırlarını ve sözleşme ekini kırmızıdan yeşile dönen sözleşme testleriyle hazırla (T02, V08, V09).</li>
-        <li>Dilim 1'e bağlı açık kararları sahibine göre kapat: KVKK aktarım dayanağı ve rıza metinleri (hukukçu), model sağlayıcısı ve yerel model, performans ölçüm koşulu, YZ bütçesi aşım davranışı, Keycloak e-posta markası, SLO ve RPO/RTO, kod adı, iş takibi aracı.</li>
+        <li>Onay bekleyen yorumları karara bağla (<a href="#celiskiler">Karar çelişkileri</a>): önce "Dilim 1 test planından önce" gerekenler (ilk teslim kapsamı, analist ve müşteri personaları, aktif şirket kapsamı, "2 aşamalı" doğrulama, şelale ve dilim yorumu), sonra dilim kapısına kadar gerekenler.</li>
+        <li>Dilim 1'e bağlı açık kararları sahibine göre kapat: KVKK aktarım dayanağı ve rıza metinleri (hukukçu), model sağlayıcısı ve yerel model, performans ölçüm koşulu ve metrik tablosunun onayı, YZ bütçesi aşım davranışı, Keycloak e-posta markası, SLO ve RPO/RTO, kod adı, iş takibi aracı.</li>
         <li>Varsayılan yolculuğu PIM'de uçtan uca kur: niyet girişi → kapsam → netleştirme → çalışma alanı → düzeltme → onay → sonuç; AT-13 ve AT-14 ile kabul et; önce klasik yolun ölçümünü yap (Y11).</li>
         <li>Capability yürütücüsünü, Run adım günlüğünü, lease ve sahiplik numarasını, grant rezervasyonunu ve uzlaştırmayı Frappe custom app'te kur; güvenlik açısından kritik bu parçaları dilim kapısında dış danışmana incelet.</li>
         <li>Aynı origin ters vekili (nginx, nonce), Keycloak realm'ini (kodla), kimlik köprüsünü, müşteri başına host ve istemciyi ilk sprint'te kur; AT-15, AT-18 ve AT-20'yi tarayıcıda okunabilir token olmadan kanıtla.</li>
@@ -48,8 +50,8 @@
         <li>Metadata codegen'i, zod'dan JSON Schema paketini ve şema parmak izini ilk sprint'te kur; katalog snapshot'ını ve sözleşme örneklerini CI'a bağla.</li>
         <li>Kill switch, aylık YZ bütçesi, klasik görünüm ve bağlamlı devri YZ'den önce kur; AT-27 ile 30 saniyeyi ölç.</li>
         <li>Her PR'da gerçek cihaz testinin süresini ve maliyetini ilk ay ölç; sonucu K4'teki kurala göre değerlendir.</li>
-        <li>Yayın kapısı deneylerini dilimlerine göre K9'daki dört sonuçlu kanıt kaydına bağla: Dilim 1'de AT-01, AT-05, AT-09–AT-18, AT-20–AT-23, AT-25–AT-28, AT-30, AT-35, AT-36, AT-38.</li>
-        <li>KVKK standart sözleşmesini, rıza metinlerini, saklama sürelerini ve müşteri kurulum sözleşmesini hukukçuya teyit ettir (G8, A5, DocType kataloğu).</li>
+        <li>Yayın kapısı deneylerini ve deney parçalarını dilimlerine göre K9'daki dört sonuçlu kanıt kaydına bağla; hangi deneyin veya parçanın hangi dilimde koştuğu <a href="#plan">dilim planındaki</a> özet tablodadır.</li>
+        <li>KVKK yurt dışı aktarım mekanizmasını (önerilen: standart sözleşme), rıza metinlerini, saklama sürelerini ve müşteri kurulum sözleşmesini hukukçuya teyit ettir (G8, A5, DocType kataloğu).</li>
         <li>Karar kaydındaki "henüz yazılmadı" gerekçeleri ve karar kitabıyla değişen kararları ADR olarak yaz; karar kaydını güncelle.</li>
       </ul>
     </div>
@@ -66,6 +68,7 @@
   <div class="tbl-wrap"><table class="matrix prose">
     <thead><tr><th scope="col">Sürüm</th><th scope="col">Tarih</th><th scope="col">Değişiklik</th></tr></thead>
     <tbody>
+      <tr><td>2.7</td><td>29 Eylül 2026</td><td>v2.6 eleştiri raporu (Q01–Q14): karar çelişkileri veriden üretilir ve her kayıt ham cevabı, önerilen çözümü, onaya kadar yürürlükte olanı, kapsam farkını ve onay durumunu ayrı tutar; onay bekleyen yorumdan etkilenen satırlar işaretlidir. Birden çok dilimde teslim edilen gereksinimler alt kapsamlara bölündü (B9, D1, G6, I1, I13, J4, J9, M8, M9, M11, M20, M23, M25); kabul deneyleri sonraki dilim senaryolarını ayrı parça olarak taşır ve derleme, bir deneyin kendi diliminden sonraki işe bağlanmasını yakalar. Sözleşme eki tek fixture'dan üretilir: tutarlı kayıt akışı, parmak izi projeksiyonları, gerçek SHA-256 test vektörleri, Run durum makinesi ve geçersiz örnekler; derleme hepsini yeniden hesaplar. Aktif şirketin kapsamı ve bağlam sürümü (M10), şirket doğrulama politikası ile SSO oturumunun karşılaştırılması (M8–M10), hassas taslak anahtarının kira ve garanti sınırı (E2), yeni taslak kimliği ve bayrak hedefi (DocType kataloğu), düzeltme hafızasının izin kökeni (I12), yerleşim profili ve giriş yeteneği ayrımı (J9), API şema kimlikleri, CSRF ve tarihli sürüm seçimi, metrik sözlüğü ve yük modeli, KVKK aktarım mekanizmalarının doğru anlatımı (G8), e-posta markasının işlem bağlamından çözülmesi (M13). 320 px'te açık sözlükte taşma giderildi; dar ekran kontrolleri bütün ekler açıkken koşar.</td></tr>
       <tr><td>2.6</td><td>29 Eylül 2026</td><td>Karar kitabının 104 sorusuna verilen cevaplar işlendi (98 cevap, 3 erteleme, 3 uygulanmaz): fazlar kaldırıldı, Dilim 1–4 dikey dilimler ve O1–O4 olgunluk seviyeleri; ürün sıfırdan (Desk geçişi yok); hibrit tenant; yalnız Frappe v16; her şey <code>@genui/ui</code> ile sarmalanır; "AEP" kaldırıldı; SCSS Modules; ikon kayıt mekanizması; canlıda sınırlı grant ve bütçe rezervasyonu; iki yazma yolu; yasal belge sınıfı; çevrimdışı kuyruk ve şifreli taslak; güç kesintisinde taslak koruması; göreve göre model yönlendirmesi ve yurt dışı işleme; rol bazlı oturum süreleri; 60 saniyelik realtime iptali; yedi giriş yöntemi; seviye 2 müşteri markası; dokuz cihaz sınıfı ve erişilebilirlik modu. Yeni gereksinimler: A8, B11, B12, E11, F9, F10, G8, I11–I13, J9, J10, K13–K16, L10, M26, M27. Yeni bölümler: okuma yolu ve sözlük, karar kitabı sonuçları, karar çelişkileri, ürün ailesi ve cihazlar, test stratejisi, sözleşme eki, DocType kataloğu, API ve hata kataloğu, dilim planı, değişiklik günlüğü. Yeni kabul deneyleri: AT-27–AT-39. Belge kontrolleri: dilim, test bağı, sözlük, kapanan bulgu regresyonu ve gönderme denetimleri.</td></tr>
       <tr><td>2.5</td><td>29 Eylül 2026</td><td>Doğrulama eki (V24-1–V24-5): ilk bağ için taze bağlama kanıtı, mutlak oturum bitişi, devre dışı bırakma orkestrasyonu; faz doğrulamasının düzeltilmesi.</td></tr>
       <tr><td>2.4</td><td>28 Eylül 2026</td><td>Keycloak inceleme raporu (R1–R10): hesap bağlama, logout token doğrulaması, sunucu tarafı iptal, host ve çerez kapsamı, oturum uç noktası, veri sınıfları, kurtarma matrisi.</td></tr>
@@ -132,6 +135,9 @@
     <li><a href="https://github.com/klausbetz/apple-identity-provider-keycloak">Apple kimlik sağlayıcısı eklentisi (Keycloak)</a> <span class="v">Apache-2.0, 26.x destekli; Apple Keycloak'ta yerleşik değil</span> ve <a href="https://github.com/sky-cloak/keycloak-magic-link">sky-cloak magic link</a> <span class="v">Apache-2.0, Eylül 2026, olgunlaşmamış</span></li>
     <li><a href="https://developers.facebook.com/docs/whatsapp/business-management-api/authentication-templates">WhatsApp authentication şablonları</a> ve <a href="https://core.telegram.org/gateway">Telegram Gateway API</a> <span class="v">tek kullanımlık kod teslimi</span></li>
     <li><a href="https://www.keycloak.org/ui-customization/themes">Keycloak tema seçimi</a> <span class="v">istemci başına yalnız giriş teması; e-posta teması realm düzeyinde; şablonlar kullanıcı özniteliklerini okuyabilir</span></li>
+    <li><a href="https://www.kvkk.gov.tr/Icerik/7938/Standart-Sozlesmeler-ve-Baglayici-Sirket-Kurallarina-Iliskin-Dokumanlar-Hakkinda-Kamuoyu-Duyurusu">KVKK: standart sözleşmeler ve bağlayıcı şirket kuralları duyurusu</a> ve <a href="https://www.kvkk.gov.tr/Icerik/8170/Yurt-Disina-Kisisel-Veri-Aktariminda-Kullanilacak-Standart-Sozlesmelerde-Dikkat-Edilmesi-Gereken-Hususlara-Iliskin-Kamuoyu-Duyurusu">standart sözleşmelerde dikkat edilecek hususlar</a> <span class="v">uygun güvenceler; standart sözleşmede 5 iş günü bildirim</span></li>
+    <li><a href="https://www.w3.org/TR/webcrypto/#security-considerations">W3C Web Cryptography API: güvenlik değerlendirmeleri</a> <span class="v">extractable=false dışa aktarmayı kısıtlar, anahtarla işlemi engellemez</span></li>
+    <li><a href="https://www.keycloak.org/docs/latest/server_development/index.html#_implementing_spi">Keycloak Server Developer Guide: SPI uygulama</a> <span class="v">ThemeSelectorProvider örneği; tema istemci bağlamına göre seçilebilir</span> ve <a href="https://github.com/keycloak/keycloak/blob/26.7.4/services/src/main/java/org/keycloak/authentication/authenticators/browser/CookieAuthenticator.java">Keycloak 26.7.4 CookieAuthenticator</a> <span class="v">mevcut SSO oturumu giriş akışında yeniden kullanılır; hedef şirket politikası kendiliğinden karşılanmaz</span></li>
     <li><a href="https://www.hetzner.com/dedicated-rootserver/matrix-gpu/">Hetzner GPU sunucuları</a> <span class="v">GEX45 (Helsinki), GEX131 (Falkenstein); 29 Eylül 2026</span></li>
     <li><a href="https://www.w3.org/TR/WCAG22/">WCAG 2.2</a> <span class="v">1.4.6 Contrast (Enhanced) 7:1, 2.4.13 Focus Appearance, 2.5.5 Target Size (Enhanced) 44×44, 2.5.8 Target Size (Minimum) 24×24</span></li>
   </ol>
@@ -140,7 +146,7 @@
 </div>
 
 <footer>
-  <span>GenUI Frontend Gereksinimleri, sürüm 2.6 (Ant Design + Frappe + Keycloak)</span>
+  <span>GenUI Frontend Gereksinimleri, sürüm 2.7 (Ant Design + Frappe + Keycloak)</span>
   <span>Bu belge bir sözleşmedir: değişiklik ADR ve PR ile yapılır</span>
   <span class="links"><a href="https://github.com/karacaismail/genui">Kaynak kodu</a><a href="https://karacaismail.github.io/genui/">Yayın adresi</a></span>
 </footer>
@@ -213,7 +219,8 @@
     targets.forEach(function (t) { io.observe(t); });
   }
 
-  /* requirement rows: level and actor data; filters for level, slice (dilim), actor, reading mode */
+  /* requirement rows: level and actor data; filters for level, slice (dilim), actor, reading mode.
+     A row delivered over several slices (data-dilimler) shows under each of its slices. */
   var rows = [].slice.call(d.querySelectorAll('.req-table tbody tr'));
   rows.forEach(function (tr) {
     var lvl = tr.querySelector('.chip'), act = tr.querySelector('td.actor');
@@ -228,7 +235,7 @@
   var count = d.getElementById('flt-count'), notice = d.getElementById('flt-notice');
   function rowVisible(tr) {
     return (level === 'ALL' || tr.getAttribute('data-level') === level)
-      && (phase === 'ALL' || tr.getAttribute('data-dilim') === phase)
+      && (phase === 'ALL' || (tr.getAttribute('data-dilimler') || tr.getAttribute('data-dilim') || '').split(' ').indexOf(phase) >= 0)
       && actors[tr.getAttribute('data-actor')] !== false;
   }
   function applyFilter() {

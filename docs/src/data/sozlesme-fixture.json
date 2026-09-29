@@ -1,0 +1,538 @@
+{
+ "about": "Sözleşme ekinin tek kaynağı: ilk akışın uçtan uca örnekleri, parmak izi test vektörleri, Run durum makinesi ve geçersiz örnekler. build.py her parmak izini RFC 8785 (JCS) + SHA-256 ile yeniden hesaplar, kimlik tutarlılığını ve durum geçişlerini denetler; biri tutmazsa derleme kırılır. Zod şemaları ve TypeScript/Python CI doğrulaması henüz yazılmadı; bunlar Dilim 1'in sözleşme adımında bu dosyadaki örneklerle kırmızıdan yeşile döner.",
+ "meta_snapshot": {
+  "doctype": "Item",
+  "catalog_version": "3.2.0",
+  "fields": [
+   {
+    "fieldname": "description",
+    "fieldtype": "Text Editor",
+    "permlevel": 0
+   },
+   {
+    "fieldname": "item_group",
+    "fieldtype": "Link",
+    "permlevel": 0
+   },
+   {
+    "fieldname": "item_name",
+    "fieldtype": "Data",
+    "permlevel": 0
+   },
+   {
+    "fieldname": "power_w",
+    "fieldtype": "Int",
+    "permlevel": 0
+   }
+  ]
+ },
+ "alintilar": [
+  {
+   "source": "SUP-2291",
+   "version": 3,
+   "page": 3,
+   "quote": "Gövde: paslanmaz çelik. Kapasite: 1,7 L."
+  },
+  {
+   "source": "SUP-2317",
+   "version": 1,
+   "page": 2,
+   "quote": "Gövde: borosilikat cam. Kapasite: 1,5 L."
+  },
+  {
+   "source": "SUP-2291",
+   "version": 3,
+   "page": 5,
+   "quote": "Çift duvar yapısı, 1,7 L hazne."
+  }
+ ],
+ "manifest": {
+  "capability": "pim.fill_missing_attributes",
+  "version": "1.0.0",
+  "doctype": "Item",
+  "modes": [
+   "assisted",
+   "delegated"
+  ],
+  "risk": {
+   "base": "reversible",
+   "escalate_when": {
+    "records_over": 50,
+    "sensitive_fields": true,
+    "submit_or_delete": true
+   }
+  },
+  "reversibility": {
+   "kind": "previous_value",
+   "undo_window_s": 30
+  },
+  "grant_eligible": true,
+  "step_up": null,
+  "offline_allowed": false,
+  "retry": "retryable",
+  "params_schema": "genui.contracts/runs.start.req@1",
+  "limits": {
+   "max_records": 200,
+   "max_steps": 20,
+   "timeout_s": 600
+  }
+ },
+ "context": {
+  "capability": "pim.fill_missing_attributes",
+  "capability_version": "1.0.0",
+  "catalog_version": "3.2.0",
+  "schema_fingerprint": "37951257e56b692e42b511ee4841ae4e34725fa8efc6530c768c6d6ec7bcf04b",
+  "selection": {
+   "doctype": "Item",
+   "filter": {
+    "op": "and",
+    "args": [
+     {
+      "field": "item_group",
+      "op": "=",
+      "value": "Küçük Ev Aletleri"
+     },
+     {
+      "field": "description",
+      "op": "is_empty"
+     }
+    ]
+   },
+   "exclude": [
+    "ITEM-00017"
+   ]
+  },
+  "records": [
+   {
+    "doctype": "Item",
+    "name": "ITEM-00012",
+    "revision": "2026-09-29 10:14:02.118"
+   },
+   {
+    "doctype": "Item",
+    "name": "ITEM-00020",
+    "revision": "2026-09-29 09:58:40.020"
+   },
+   {
+    "doctype": "Item",
+    "name": "ITEM-00024",
+    "revision": "2026-09-29 10:02:11.301"
+   },
+   {
+    "doctype": "Item",
+    "name": "ITEM-00031",
+    "revision": "2026-09-29 08:47:05.772"
+   }
+  ],
+  "fields": [
+   "description",
+   "item_group",
+   "item_name",
+   "power_w"
+  ],
+  "data_classes": [
+   "iç"
+  ],
+  "evidence_sources": [
+   {
+    "source": "SUP-2291",
+    "version": 3
+   },
+   {
+    "source": "SUP-2317",
+    "version": 1
+   }
+  ],
+  "fingerprint": "340e34757099f874fd599945b83e55901c4a2072ae2d768fccba27323692c5c8",
+  "generated_at": "2026-09-29 10:14:05.000"
+ },
+ "start_req": {
+  "capability": "pim.fill_missing_attributes",
+  "capability_version": "1.0.0",
+  "mode": "assisted",
+  "selection": {
+   "doctype": "Item",
+   "filter": {
+    "op": "and",
+    "args": [
+     {
+      "field": "item_group",
+      "op": "=",
+      "value": "Küçük Ev Aletleri"
+     },
+     {
+      "field": "description",
+      "op": "is_empty"
+     }
+    ]
+   },
+   "exclude": [
+    "ITEM-00017"
+   ]
+  },
+  "context_manifest_fingerprint": "340e34757099f874fd599945b83e55901c4a2072ae2d768fccba27323692c5c8",
+  "idempotency_key": "01J9ZK3T6Q8M4R2W7Y5N0B1C3D"
+ },
+ "start_res": {
+  "run_id": "RUN-2026-00418",
+  "status": "queued",
+  "risk_class": "reversible",
+  "params_fingerprint": "7f4d1989fdc2ba4e2bfc28038fe23b60419fdbb4fb78db63067e214d00548953",
+  "estimate": {
+   "records": 4,
+   "seconds": 40,
+   "cost_units": 12
+  },
+  "created_at": "2026-09-29 10:14:06.200"
+ },
+ "changeset": {
+  "changeset_id": "CS-2026-00418",
+  "run_id": "RUN-2026-00418",
+  "base": {
+   "catalog_version": "3.2.0",
+   "schema_fingerprint": "37951257e56b692e42b511ee4841ae4e34725fa8efc6530c768c6d6ec7bcf04b"
+  },
+  "items": [
+   {
+    "doctype": "Item",
+    "name": "ITEM-00012",
+    "revision": "2026-09-29 10:14:02.118",
+    "risk": "reversible",
+    "status": "proposed",
+    "changes": [
+     {
+      "field": "description",
+      "old": null,
+      "new": "Paslanmaz çelik gövdeli, 1,7 litre kapasiteli su ısıtıcısı.",
+      "evidence": [
+       {
+        "source": "SUP-2291",
+        "version": 3,
+        "page": 3,
+        "quote_fingerprint": "81f2bac562d805ba15aacff9b58fc3e30e1649dd8145953c7baa5728121b1a6b"
+       }
+      ],
+      "confidence": null
+     }
+    ]
+   },
+   {
+    "doctype": "Item",
+    "name": "ITEM-00020",
+    "revision": "2026-09-29 09:58:40.020",
+    "risk": "reversible",
+    "status": "proposed",
+    "changes": [
+     {
+      "field": "description",
+      "old": null,
+      "new": "Cam gövdeli, 1,5 litre kapasiteli su ısıtıcısı.",
+      "evidence": [
+       {
+        "source": "SUP-2317",
+        "version": 1,
+        "page": 2,
+        "quote_fingerprint": "3d6e68f9b498e9a4f0c0e9e38a9d19d1bce859dc0e79dd42cf6360f8c42f6416"
+       }
+      ],
+      "confidence": null
+     }
+    ]
+   },
+   {
+    "doctype": "Item",
+    "name": "ITEM-00024",
+    "revision": "2026-09-29 10:02:11.301",
+    "risk": "reversible",
+    "status": "proposed",
+    "changes": [
+     {
+      "field": "description",
+      "old": null,
+      "new": "Çift duvarlı, 1,7 litre kapasiteli su ısıtıcısı.",
+      "evidence": [
+       {
+        "source": "SUP-2291",
+        "version": 3,
+        "page": 5,
+        "quote_fingerprint": "65fc7bf68dd210350c6cefc16f3b1047a9ccea110c25fd21bc0194b93f2a5580"
+       }
+      ],
+      "confidence": null
+     }
+    ]
+   },
+   {
+    "doctype": "Item",
+    "name": "ITEM-00031",
+    "revision": "2026-09-29 08:47:05.772",
+    "status": "ambiguous",
+    "reason": "İki tedarikçi belgesinde farklı güç değeri"
+   }
+  ],
+  "fingerprint": "e36e363888b0e6b0cd0517e7dcd80facb585cc8dd0b15206bfea21cc8c4e4439"
+ },
+ "approve_req": {
+  "changeset_id": "CS-2026-00418",
+  "changeset_fingerprint": "e36e363888b0e6b0cd0517e7dcd80facb585cc8dd0b15206bfea21cc8c4e4439",
+  "approved_items": [
+   "ITEM-00012",
+   "ITEM-00024"
+  ],
+  "excluded_items": [
+   "ITEM-00020"
+  ],
+  "idempotency_key": "01J9ZK4B2C7D8E9F0G1H2J3K4M"
+ },
+ "approve_res": {
+  "approval_id": "APR-2026-00911",
+  "decision": "partially_approved",
+  "approver": "kullanici-1",
+  "via": "user",
+  "grant_id": null,
+  "approval_fingerprint": "ebca808f25fc1e3576a8b4cd3cceace6cf95b27f5e8a495b4b1686ec64dfc29c",
+  "approved_at": "2026-09-29 10:20:31.004",
+  "expires_at": "2026-09-29 10:30:31.004"
+ },
+ "result": {
+  "run_id": "RUN-2026-00418",
+  "status": "partially_done",
+  "results": [
+   {
+    "name": "ITEM-00012",
+    "outcome": "applied",
+    "revision": "2026-09-29 10:21:40.552"
+   },
+   {
+    "name": "ITEM-00020",
+    "outcome": "excluded"
+   },
+   {
+    "name": "ITEM-00024",
+    "outcome": "conflict",
+    "error": {
+     "code": "revision_conflict",
+     "retryable": false
+    },
+    "current_revision": "2026-09-29 10:19:12.090"
+   },
+   {
+    "name": "ITEM-00031",
+    "outcome": "ambiguous"
+   }
+  ],
+  "undo_until": "2026-09-29 10:22:10.552",
+  "audit_ref": "AUD-2026-118204"
+ },
+ "spec": {
+  "specVersion": "1",
+  "catalogId": "genui.core",
+  "catalogVersion": "3.2.0",
+  "schemaFingerprint": "37951257e56b692e42b511ee4841ae4e34725fa8efc6530c768c6d6ec7bcf04b",
+  "surfaceId": "run-result-RUN-2026-00418",
+  "elements": {
+   "root": {
+    "type": "Stack",
+    "children": [
+     "summary",
+     "remaining"
+    ]
+   },
+   "summary": {
+    "type": "BatchResult",
+    "props": {
+     "run": "RUN-2026-00418"
+    }
+   },
+   "remaining": {
+    "type": "EntityTable",
+    "props": {
+     "doctype": "Item",
+     "columns": [
+      "item_name",
+      "description"
+     ]
+    }
+   }
+  },
+  "dataBindings": {
+   "remaining": {
+    "capability": "pim.list",
+    "filter": {
+     "op": "in",
+     "field": "name",
+     "valueRef": "run:RUN-2026-00418:unresolved"
+    }
+   }
+  },
+  "actions": [
+   {
+    "id": "retry",
+    "capability": "runs.retry_failed",
+    "risk": "reversible"
+   }
+  ]
+ },
+ "run_durumlari": [
+  {
+   "durum": "queued",
+   "anlam": "İstek kabul edildi, iş kuyrukta",
+   "kim": "Sunucu",
+   "sonraki": [
+    "running",
+    "cancelled"
+   ],
+   "arayuz": "RunPanel \"sırada\"; iptal edilebilir"
+  },
+  {
+   "durum": "running",
+   "anlam": "Worker adımları işliyor; her adım günlüğe yazılıyor",
+   "kim": "Worker",
+   "sonraki": [
+    "awaiting_approval",
+    "applying",
+    "cancel_requested",
+    "partially_done",
+    "failed",
+    "outcome_unknown"
+   ],
+   "arayuz": "İlerleme REST ile; Durdur hep aynı yerde"
+  },
+  {
+   "durum": "awaiting_approval",
+   "anlam": "Onay, netleştirme cevabı veya adım yükseltme bekleniyor; worker serbest",
+   "kim": "Worker",
+   "sonraki": [
+    "running",
+    "applying",
+    "cancelled"
+   ],
+   "arayuz": "ApprovalBar, ChangeReview; red, süre dolması veya Durdur doğrudan cancelled"
+  },
+  {
+   "durum": "applying",
+   "anlam": "Onay ve revizyon Frappe içinde doğrulanıp kayıt kayıt uygulanıyor (F8)",
+   "kim": "Yürütücü",
+   "sonraki": [
+    "done",
+    "partially_done",
+    "failed",
+    "outcome_unknown",
+    "cancel_requested"
+   ],
+   "arayuz": "\"Uygulanıyor\"; Durdur bir sonraki kayıttan önce etkili olur"
+  },
+  {
+   "durum": "cancel_requested",
+   "anlam": "Kullanıcı durdurdu; çalışan adım veya kayıt bitince durur",
+   "kim": "Kullanıcı",
+   "sonraki": [
+    "cancelled"
+   ],
+   "arayuz": "\"Durduruluyor\""
+  },
+  {
+   "durum": "cancelled",
+   "anlam": "Durdu; kısmi sonuç korunur",
+   "kim": "Worker",
+   "sonraki": [],
+   "arayuz": "Özet ve manuel devam yolu"
+  },
+  {
+   "durum": "done",
+   "anlam": "Bütün onaylı kayıtlar uygulandı",
+   "kim": "Yürütücü",
+   "sonraki": [],
+   "arayuz": "BatchResult; geri alma penceresinde runs.undo yeni bir telafi Run'ı başlatır"
+  },
+  {
+   "durum": "partially_done",
+   "anlam": "Bir kısmı uygulandı; çakışan, başarısız veya belirsiz kayıt var",
+   "kim": "Yürütücü",
+   "sonraki": [
+    "running"
+   ],
+   "arayuz": "Kayıt başına sonuç; seçmeli yeniden deneme; manuel kuyruk"
+  },
+  {
+   "durum": "failed",
+   "anlam": "Hiçbir kayıt uygulanmadı",
+   "kim": "Worker",
+   "sonraki": [
+    "running"
+   ],
+   "arayuz": "Neden ve sonraki adım"
+  },
+  {
+   "durum": "outcome_unknown",
+   "anlam": "Dış işlemin sonucu bilinmiyor; tekrar korumasız adım tekrarlanmaz (E10)",
+   "kim": "Worker",
+   "sonraki": [
+    "needs_reconciliation",
+    "done"
+   ],
+   "arayuz": "\"İşlem olmuş olabilir\" uyarısı"
+  },
+  {
+   "durum": "needs_reconciliation",
+   "anlam": "Kullanıcı veya operatör kararı gerekiyor",
+   "kim": "Sistem",
+   "sonraki": [
+    "done",
+    "failed"
+   ],
+   "arayuz": "Uzlaştırma ekranı"
+  }
+ ],
+ "ornek_yol": [
+  "queued",
+  "running",
+  "awaiting_approval",
+  "applying",
+  "partially_done"
+ ],
+ "gecersiz": [
+  {
+   "yapi": "runs.start",
+   "degisiklik": "Gövdeye serbest sorgu metni taşıyan bir \"sql\" alanı eklenir",
+   "hata": "validation_failed",
+   "not": "Şema strictObject; güvenlik olayı yazılır (G1, G5)"
+  },
+  {
+   "yapi": "runs.start",
+   "degisiklik": "capability_version \"0.9.0\" (manifestte 1.0.0)",
+   "hata": "contract_version_mismatch",
+   "not": "Kesişim yoksa metin moduna düşülür (H3)"
+  },
+  {
+   "yapi": "runs.start",
+   "degisiklik": "Aynı idempotency_key, farklı selection",
+   "hata": "idempotency_payload_mismatch",
+   "not": "Güvenlik olayı olarak kaydedilir"
+  },
+  {
+   "yapi": "changesets.approve",
+   "degisiklik": "changeset_fingerprint'in son karakteri değişir",
+   "hata": "approval_stale",
+   "not": "Yeniden inceleme ekranı; hiçbir şey uygulanmaz"
+  },
+  {
+   "yapi": "changesets.approve",
+   "degisiklik": "approved_items içine belirsiz ITEM-00031 eklenir",
+   "hata": "validation_failed",
+   "not": "Belirsiz kayıt onaylanamaz (Y06)"
+  },
+  {
+   "yapi": "changesets.approve",
+   "degisiklik": "ITEM-00020 hem approved_items hem excluded_items içinde",
+   "hata": "validation_failed",
+   "not": "Kümeler ayrık olmalıdır"
+  },
+  {
+   "yapi": "changesets.approve",
+   "degisiklik": "ITEM-00024 ne onaylanır ne hariç tutulur",
+   "hata": "validation_failed",
+   "not": "Her önerilen kayıt açıkça onaylanır veya hariç tutulur"
+  }
+ ]
+}

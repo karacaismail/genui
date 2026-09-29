@@ -4,7 +4,8 @@
 Usage: python3 docs/src/qa/validate.py docs/genui-frontend-gereksinimleri.html
 
 Checks: balanced tags, duplicate ids, local #fragment links that point nowhere, requirement rows
-with a valid slice (dilim 1-4), every MUST row linked to a test, every AT-xx and TP-xx mention
+with a valid slice (dilim 1-4), sub-scopes that match the row's slices, every MUST row linked to a test,
+full 64-digit fingerprints in the contract appendix, an approval state on every conflict record, every AT-xx and TP-xx mention
 resolving to an experiment or test suite, every acronym defined in the glossary, the closed-findings
 regression list (docs/src/qa/kapanan-bulgular.json), and the inline script's syntax (needs `node`).
 Exits 1 on any failure. These checks cover the document only; they do not run the product's tests
@@ -81,6 +82,38 @@ def main(path, findings_path=HERE / "kapanan-bulgular.json"):
     untested = [rid for rid, _, inner in req_rows
                 if 'class="chip must"' in inner and not re.search(r'<span class="tst">Test: <a href="#', inner)]
     results.append(("every MUST row links to a test", len(req_rows) > 0 and not untested, " ".join(untested)))
+
+    # a requirement delivered over several slices lists one sub-scope per slice; the row slice is the smallest
+    bad_sl = []
+    for rid, attrs, inner in req_rows:
+        dm = re.search(r'\bdata-dilim="([1-4])"', attrs)
+        dl = re.search(r'\bdata-dilimler="([1-4](?: [1-4])*)"', attrs)
+        if not (dm and dl):
+            bad_sl.append(rid)
+            continue
+        sls = [int(x) for x in dl.group(1).split()]
+        kps = re.findall(r'<span class="kp" id="([^"]+)"><span class="kd">Dilim (\d)</span>', inner)
+        if int(dm.group(1)) != min(sls) or ((len(sls) > 1 or kps) and sorted(int(d) for _, d in kps) != sorted(sls)) \
+                or any(not k.startswith(rid + "-") for k, _ in kps):
+            bad_sl.append(rid)
+    results.append(("slice scopes are consistent", len(req_rows) > 0 and not bad_sl, " ".join(bad_sl)))
+
+    # contract appendix: fingerprints are full 64-digit SHA-256 values, never shortened
+    sec = re.search(r'<section id="sozlesme-eki">(.*?)</section>', src, re.S)
+    short_fp = []
+    if sec:
+        body_sz = html.unescape(sec.group(1))
+        short_fp = re.findall(r'"[a-z_]*fingerprint"\s*:\s*"(?![0-9a-f]{64}")[^"]*"', body_sz, re.I)
+        short_fp += re.findall(r"[0-9a-f]{4}…[0-9a-f]{4}", body_sz)
+        short_fp += [h for h in re.findall(r'<code class="hash">([^<]*)</code>', body_sz) if not re.fullmatch(r"[0-9a-f]{64}", h)]
+    results.append(("contract appendix shows full fingerprints", bool(sec) and not short_fp, " ".join(short_fp[:3])))
+
+    # conflict records: every row carries an approval state; a pending one names its owner and deadline
+    ck = re.findall(r'<tr id="(ck-[a-z0-9-]+)">(.*?)</tr>', src, re.S)
+    bad_ck = [cid for cid, inner in ck
+              if not re.search(r'<span class="st [a-z]+">(onay bekliyor|onay gerekmez|onaylandı|değiştirildi)</span>', inner)
+              or ("onay bekliyor</span>" in inner and not re.search(r"Sahip: .+?\. Son: .+?\.", inner))]
+    results.append(("conflict records carry an approval state", len(ck) > 0 and not bad_ck, " ".join(bad_ck)))
 
     main_html = src.split("<main", 1)[-1].split("</main>", 1)[0]
     text = plain_text(main_html)
