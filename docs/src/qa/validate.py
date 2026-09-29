@@ -148,6 +148,8 @@ def main(path, findings_path=HERE / "kapanan-bulgular.json"):
     current = main_html
     for sec in ("kitap-sonuc", "izlenebilirlik", "gunluk", "kaynaklar"):
         current = re.sub(rf'<section id="{sec}".*?</section>', " ", current, flags=re.S)
+    # superseded wording kept on a conflict record ("Önceki durum") is history too
+    current = re.sub(r'<span class="dev gecmis">.*?</span>', " ", current, flags=re.S)
     current_text = plain_text(current)
     findings = json.loads(pathlib.Path(findings_path).read_text(encoding="utf-8"))["bulgular"]
     regress = []

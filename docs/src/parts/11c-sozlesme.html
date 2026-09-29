@@ -9,31 +9,31 @@
     <div><span class="t">Akışın hikâyesi</span><p>Filtre dört kaydı getirir (ITEM-00017 kullanıcı tarafından baştan çıkarıldı). Model üç kayıt için açıklama önerir, ITEM-00031'i belirsiz ayırır. Kullanıcı ITEM-00020'yi hariç tutar, diğer ikisini onaylar. Onaydan önce başka bir kullanıcı ITEM-00024'ü değiştirmiştir; yürütücü uygulama anında revizyonu karşılaştırır ve o kaydı çakışma olarak durdurur (F8, AT-16). Sonuç: bir kayıt uygulandı, biri hariç, biri çakışma, biri belirsiz.</p></div>
   </div>
 
-  <h3 style="margin-top:1.5rem;font-size:var(--fs-l)">1 · Capability manifesti</h3>
+  <h3 id="ek-1" style="margin-top:1.5rem;font-size:var(--fs-l)">1 · Capability manifesti</h3>
   {{SZ_MANIFEST}}
   <p style="margin-top:.5rem">Manifest tamamen sunucu verisidir (S); metadata'dan üretilir ve açık allowlist ile daraltılır. <code>risk.escalate_when</code>, C01 kararının makine okunur hâlidir: 50'yi aşan küme ve hassas alan içeren küme sınıf yükseltir.</p>
 
-  <h3 style="margin-top:1.5rem;font-size:var(--fs-l)">2 · Bağlam manifesti (context.build yanıtı)</h3>
+  <h3 id="ek-2" style="margin-top:1.5rem;font-size:var(--fs-l)">2 · Bağlam manifesti (context.build yanıtı)</h3>
   {{SZ_CONTEXT}}
   <p style="margin-top:.5rem">Tamamı S; izin projeksiyonundan geçer (I9). Kullanıcı çiplerden öğe çıkarırsa manifest yeniden kurulur ve parmak izi değişir. <code>fingerprint</code> ve <code>generated_at</code> parmak izine girmez.</p>
 
-  <h3 style="margin-top:1.5rem;font-size:var(--fs-l)">3 · Run başlatma</h3>
+  <h3 id="ek-3" style="margin-top:1.5rem;font-size:var(--fs-l)">3 · Run başlatma</h3>
   {{SZ_START}}
   <p style="margin-top:.5rem">İstekte Z ve İ: capability, capability_version, mode, selection, context_manifest_fingerprint, idempotency_key; selection.exclude isteğe bağlıdır. Yanıtta S: <code>run_id</code>, <code>risk_class</code> (sunucu hesaplar), <code>params_fingerprint</code>, <code>estimate</code>, <code>created_at</code>; tenant ve kullanıcı oturumdan gelir.</p>
 
-  <h3 style="margin-top:1.5rem;font-size:var(--fs-l)">4 · Öneri (ChangeSet)</h3>
+  <h3 id="ek-4" style="margin-top:1.5rem;font-size:var(--fs-l)">4 · Öneri (ChangeSet)</h3>
   {{SZ_CHANGESET}}
   <p style="margin-top:.5rem">Tamamı S. <code>confidence</code> kalibrasyon bitene kadar <code>null</code>'dır (I4, Y05) ve parmak izine girmez. <code>ambiguous</code> kayıt değişiklik taşımaz ve uygulanmaz (Y06). Kullanıcının kayıt başına değer düzeltmesi (changesets.update_item) yeni bir parmak izi üretir; eski parmak iziyle gelen onay reddedilir.</p>
 
-  <h3 style="margin-top:1.5rem;font-size:var(--fs-l)">5 · Onay</h3>
+  <h3 id="ek-5" style="margin-top:1.5rem;font-size:var(--fs-l)">5 · Onay</h3>
   {{SZ_APPROVE}}
   <p style="margin-top:.5rem">İstekte Z ve İ: changeset_id, changeset_fingerprint, approved_items, idempotency_key; excluded_items isteğe bağlıdır ama her önerilen kayıt ya onaylanır ya hariç tutulur. Yanıtta S: <code>approval_id</code>, <code>decision</code> (approved veya partially_approved), onaylayan, <code>via</code> (user veya grant ve <code>grant_id</code>), <code>approval_fingerprint</code> (sunucu ayrıca imzalar), <code>approved_at</code>, <code>expires_at</code> (öneride 10 dakika).</p>
 
-  <h3 style="margin-top:1.5rem;font-size:var(--fs-l)">6 · Sonuç</h3>
+  <h3 id="ek-6" style="margin-top:1.5rem;font-size:var(--fs-l)">6 · Sonuç</h3>
   {{SZ_RESULT}}
   <p style="margin-top:.5rem">Tamamı S ve izinli REST ile okunur; Socket.IO yalnızca "Run değişti" sinyali taşır (B6, C03). Kayıt başına sonuç F6'ya uyar; seçmeli yeniden deneme yalnızca <code>conflict</code> ve <code>failed</code> kayıtları hedefler. <code>current_revision</code>, çakışmanın hangi değişiklikten doğduğunu gösterir.</p>
 
-  <h3 style="margin-top:1.5rem;font-size:var(--fs-l)">7 · Görünüm (UI Spec)</h3>
+  <h3 id="ek-7" style="margin-top:1.5rem;font-size:var(--fs-l)">7 · Görünüm (UI Spec)</h3>
   {{SZ_SPEC}}
   <p style="margin-top:.5rem">Spec veri taşımaz, yalnızca veri bağlama referansı taşır (D7); renderer kataloğu dışında tip veya prop reddedilir (D1). Model bu spec'i önerir; sunucu doğrular, istemci çizmeden önce yeniden doğrular.</p>
 

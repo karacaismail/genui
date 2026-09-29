@@ -172,6 +172,8 @@ for c in CK:
     if o["durum"] == "onay bekliyor":
         for t in c["etkiledigi"]:
             pending_by_target.setdefault(t, []).append(c["id"])
+    elif re.search(r"onay bekl|çalışma varsayım|onaya kadar", c["yururluk"], re.I):
+        errors.append(f"{c['id']}: '{o['durum']}' but what is in force still reads as pending: move it to onceki_yururluk")
 if len(set(CK_IDS)) != len(CK_IDS):
     errors.append("duplicate conflict ids")
 
@@ -565,12 +567,14 @@ for c in CK:
     ck_rows.append(
         f'<tr id="{c["id"]}"><td><b>{esc(c["baslik"])}</b><br><span class="dev">{c["id"]}</span><br>{q_links}</td>'
         f'<td>{esc(c["ham_cevap"])}<br><span class="dev">Sorun: {esc(c["sorun"])}</span></td>'
-        f'<td>{esc(c["oneri"])}</td><td>{esc(c["yururluk"])}</td><td>{esc(c["kapsam_farki"])}</td>'
+        f'<td>{esc(c["oneri"])}</td><td>{esc(c["yururluk"])}'
+        + (f'<br><span class="dev gecmis">Önceki durum: {esc(c["onceki_yururluk"])}</span>' if c.get("onceki_yururluk") else "")
+        + f'</td><td>{esc(c["kapsam_farki"])}</td>'
         f'<td><span class="st {st_cls}">{o["durum"]}</span><br>{who}</td><td>{t_links}</td></tr>')
 n_pend = sum(1 for c in CK if c["onay"]["durum"] == "onay bekliyor")
 CELISKILER = f'''<p class="ck-ozet" style="margin-top:.4rem"><b>{len(CK)}</b> kayıt: <b>{n_pend}</b> onay bekliyor, <b>{sum(1 for c in CK if c["onay"]["durum"] == "onay gerekmez")}</b> onay gerektirmiyor, <b>{sum(1 for c in CK if c["onay"]["durum"] in ("onaylandı", "değiştirildi"))}</b> onaylandı veya değiştirildi. Kaynak: <code>docs/src/data/celiskiler.json</code>.</p>
   <div class="tbl-wrap" style="margin-top:.6rem"><table class="matrix prose ck">
-    <thead><tr><th scope="col">Çelişki ve cevaplar</th><th scope="col">Ham cevap ve sorun</th><th scope="col">Önerilen çözüm (yorum)</th><th scope="col">Onaya kadar yürürlükte</th><th scope="col">Kapsam farkı</th><th scope="col">Onay</th><th scope="col">Etkilediği</th></tr></thead>
+    <thead><tr><th scope="col">Çelişki ve cevaplar</th><th scope="col">Ham cevap ve sorun</th><th scope="col">Çözüm (onaylanmadıysa öneri)</th><th scope="col">Yürürlükte olan</th><th scope="col">Kapsam farkı</th><th scope="col">Onay</th><th scope="col">Etkilediği</th></tr></thead>
     <tbody>
       {chr(10).join(ck_rows)}
     </tbody>
@@ -802,6 +806,28 @@ body = re.sub(r"\{\{icon:([a-z0-9-]+)(?:\|([a-z0-9 -]+))?\}\}", icon, body)
 leftover = re.findall(r"\{\{[A-Z0-9_]+\}\}", body)
 if leftover:
     errors.append("unfilled placeholders: " + " ".join(leftover))
+
+# approval wording outside the conflict table must point to a record that is still pending
+PENDING = {c["id"] for c in CK if c["onay"]["durum"] == "onay bekliyor"}
+_scan = body
+for _sec in ("celiskiler-bolum", "kitap-sonuc", "gunluk"):
+    _scan = re.sub(rf'<(section|div) id="{_sec}".*?</\1>', " ", _scan, flags=re.S)
+_scan = re.sub(r'<h3 id="celiskiler".*?</table></div>', " ", _scan, flags=re.S)
+for _m in re.finditer(r"onay bekl\w*", _scan):
+    # records named after the wording must still be pending
+    _refs = re.findall(r"ck-[a-z0-9-]+", _scan[_m.start():_m.start() + 220])
+    _stale = [r for r in _refs if r not in PENDING and r in CK_IDS]
+    # an annotation such as "(ck-x, onay bekliyor)" must name a pending record on either side
+    _annot = re.match(r"onay bekliyor\)|onay bekliyor</a>|onay bekleyen öneri \(", _scan[_m.start():_m.start() + 40])
+    _near = re.findall(r"ck-[a-z0-9-]+", _scan[max(0, _m.start() - 160):_m.start() + 220])
+    if _stale or (_annot and not any(r in PENDING for r in _near)):
+        errors.append("stale approval wording: " + re.sub(r"<[^>]+>", "", _scan[max(0, _m.start() - 80):_m.start() + 60]).strip())
+
+# references to the contract appendix ("ek N: Başlık") must name the right example
+_ek_titles = {n: t for n, t in re.findall(r'<h3 id="ek-(\d)"[^>]*>\d · ([^<]+)</h3>', body)}
+for _n, _t in re.findall(r'<a href="#ek-(\d)">ek \d: ([^<]+)</a>', body):
+    if _ek_titles.get(_n, "").strip() != _t.strip():
+        errors.append(f"appendix reference 'ek {_n}: {_t}' does not match heading '{_ek_titles.get(_n)}'")
 
 # every decision-book target must exist in the final page
 ids = set(re.findall(r'\sid="([^"]+)"', body))

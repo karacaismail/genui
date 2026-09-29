@@ -406,9 +406,10 @@
     "M8",
     "M10",
     "M11",
-    "ck-iki-asamali"
+    "ck-iki-asamali",
+    "ck-iki-asamali-yontem"
    ],
-   "ozet": "E-posta birincil; kullanıcı adı telefon olamaz; \"2 aşamalı\" şirket yöneticisinin seçimi, sunulup sunulmaması platform ayarı."
+   "ozet": "E-posta birincil; kullanıcı adı telefon olamaz; iki aşamalı doğrulama şirket yöneticisi için isteğe bağlı, isteğe bağlı olup olmamasını platform sahibi ayarlar; yöntem ve sıklık öneri, onay bekliyor."
   },
   "K08": {
    "durum": "uygulandı",
@@ -542,7 +543,7 @@
     "M22",
     "ck-aktif-sirket"
    ],
-   "ozet": "Tek aktif şirket tarayıcı başına (SSO oturumu); sunucu bağlam sürümü (onaylandı)."
+   "ozet": "Tek aktif şirket tarayıcı başına, ayrı siteler dahil; sunucu bağlam sürümü (onaylandı)."
   },
   "V03": {
    "durum": "uygulandı",
@@ -722,9 +723,10 @@
     "plan",
     "K7",
     "ck-ilk-teslim",
-    "ck-analist"
+    "ck-analist",
+    "ak-takvim"
    ],
-   "ozet": "İlk teslim sürüm 1.0'ın tamamı; 3 ay hedefi kalktı; tarih kayar, kapı kısalmaz (proje sahibi kararı)."
+   "ozet": "Bütün kapsam ilk teslimde; 3 aylık hedef yürürlükte, sığıp sığmadığı ölçülen hızla yeniden tahmin edilir (ak-takvim)."
   },
   "E08": {
    "durum": "uygulandı",

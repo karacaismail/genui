@@ -1162,7 +1162,7 @@
      "dilim": 3,
      "onkosul": "OTP gateway (M15) test modunda; WhatsApp authentication şablonu ve Telegram Gateway test hesabı",
      "degisen": "SMS, WhatsApp ve Telegram kodu için aynı senaryolar; kanal değiştirme ve yedek kanala (SMS) düşme; şirketin doğrulama politikası \"telefon\" ve \"2 aşamalı\" yapılır; yalnız e-posta politikalı A şirketinden \"2 aşamalı\" B şirketine geçilir.",
-     "gecer": "Her kanal adıyla yeşil; yedek kanala düşme kullanıcıya bildirilir; telefonu doğrulanmamış üye B'ye girerken telefon doğrulamasına yönlenir ve taslağı korunur; \"2 aşamalı\" şirkette her girişte telefon kodu istenir; politika sıkılaşınca açık oturumlar bir sonraki istekte yükseltme ister (M10)."
+     "gecer": "Her kanal adıyla yeşil; yedek kanala düşme kullanıcıya bildirilir; telefonu doğrulanmamış üye B'ye girerken telefon doğrulamasına yönlenir ve taslağı korunur; \"2 aşamalı\" şirkette ikinci adım, ck-iki-asamali-yontem ile onaylanan yöntem ve sıklıkla istenir (telefon kodu ancak o karar telefonu yöntem olarak seçerse bu parçaya girer); politika sıkılaşınca açık oturumlar bir sonraki istekte yükseltme ister (M10)."
     }
    ]
   },
@@ -1188,9 +1188,9 @@
    "parcalar": [
     {
      "dilim": 3,
-     "onkosul": "Ayrı sitede bir müşteri (B9)",
-     "degisen": "Aynı izolasyon senaryoları paylaşımlı sitedeki şirket ile ayrı sitedeki şirket arasında; ayrı sitedeki şirkete üye kullanıcı paylaşımlı sitedeki şirketine geçer.",
-     "gecer": "Hiçbir yolda çapraz erişim yok; ayrı site kendi bağlamını taşır ve paylaşımlı sitenin bağlam sürümünü değiştirmez; iki site arasında geçiş ayrı giriş olarak görünür (B9)."
+     "onkosul": "Ayrı sitede bir müşteri (B9); paylaşımlı sitedeki ortak bağlam kaydı",
+     "degisen": "Aynı izolasyon senaryoları paylaşımlı sitedeki A şirketi ile ayrı sitedeki B şirketi arasında; aynı tarayıcıda A sekmesi açıkken kullanıcı ayrı sitedeki B'ye geçer ve A sekmesi bir yazma isteği gönderir; ortak bağlam kaydına ayrı siteden ulaşılamaz hâle getirilir.",
+     "gecer": "Hiçbir yolda çapraz erişim yok; B'ye geçiş ortak bağlam kaydını B yapar ve A sekmesinin isteği context_changed ile reddedilir, hiçbir yazma olmaz; kayda ulaşılamazken ayrı sitedeki yazma istekleri reddedilir, okuma son bilinen bağlamla sürer; bağlam kaydında iş verisi yoktur (M10)."
     },
     {
      "dilim": 4,
@@ -1332,7 +1332,7 @@
      "dilim": 2,
      "onkosul": "Tablet profili (J9); gerçek tablet, kalem ve harici klavye",
      "degisen": "Tablet dikey ve yatay; bölünmüş ekranda pencere 599, 600 ve 601 CSS px'e getirilir; harici klavye takılır ve çıkarılır.",
-     "gecer": "Profil kullanılabilir CSS genişliğine göre değişir, taslak, seçim ve odak korunur; klavye takılınca profil değişmez, yalnız klavye yetenekleri açılır; ağ kaydında yalnız tablet profil paketi vardır."
+     "gecer": "Profil kullanılabilir CSS alanına göre değişir, taslak, seçim ve odak korunur; klavye takılınca profil değişmez, yalnız klavye yetenekleri açılır; profil geçiş penceresinin ağ kaydında yalnızca tablet paketi eklenir, telefon paketi önbellekte kalabilir."
     },
     {
      "dilim": 3,

@@ -410,6 +410,64 @@
    "yasak": [
     "Keycloak e-postaları ürün markasıyla çıkar"
    ]
+  },
+  {
+   "id": "R8-takvim",
+   "kaynak": "v2.8 kontrol raporu, v2.9",
+   "konu": "\"Hepsi ilk teslimde\" takvim kararı değildir",
+   "zorunlu": [
+    "3 aylık hedef \\(E07\\) yürürlüktedir"
+   ],
+   "yasak": [
+    "3 aylık hedef kalktı",
+    "3 ay hedefi kalktı",
+    "3 ay hedefi proje sahibinin kararıyla kalktı"
+   ]
+  },
+  {
+   "id": "R8-iki-asamali",
+   "kaynak": "v2.8 kontrol raporu, v2.9",
+   "konu": "İki aşamalı doğrulamada zorunluluk sunucuda; yöntem karar değil",
+   "zorunlu": [
+    "platform_policy_locked",
+    "henüz karar değildir"
+   ],
+   "yasak": [
+    "sunulup sunulmayacağını platform sahibi platform ayarından belirler",
+    "her girişte ikinci adım olarak telefona kod istenmesi demektir",
+    "her girişte telefon kodu istenir",
+    "telefona kod, passkey; her girişte istenir"
+   ]
+  },
+  {
+   "id": "R8-tek-sirket",
+   "kaynak": "v2.8 kontrol raporu, v2.9",
+   "konu": "Tek aktif şirket ayrı siteleri de kapsar",
+   "zorunlu": [
+    "Tek aktif şirket kuralı ayrı siteleri de kapsar"
+   ],
+   "yasak": [
+    "iki site arasında aktif şirket ve bağlam sürümü paylaşılmaz",
+    "ayrı site kendi bağlamını tutar"
+   ]
+  },
+  {
+   "id": "R8-eski-onay",
+   "kaynak": "v2.8 kontrol raporu, v2.9",
+   "konu": "Onaylanmış karar için eski onay ifadesi kalmaz",
+   "zorunlu": [],
+   "yasak": [
+    "PoC başarısızsa Keycloak e-posta markası burada, onay bekliyor"
+   ]
+  },
+  {
+   "id": "R8-yatay",
+   "kaynak": "v2.8 kontrol raporu, v2.9",
+   "konu": "Yatay telefon tablet paketine geçmez",
+   "zorunlu": [
+    "844×390"
+   ],
+   "yasak": []
   }
  ]
 }

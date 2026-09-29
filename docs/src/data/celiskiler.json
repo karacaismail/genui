@@ -13,14 +13,14 @@
    ],
    "ham_cevap": "E07: ilk teslim 3 ay. K05, C11, C12 ve Y03'te birçok özellik için \"ilk sürümde\" seçildi (yedi giriş yöntemi, Gantt, işbirliği, beş YZ yüzeyi).",
    "sorun": "3 ay seçeneğinin kendi sonucu \"kapsam en küçük dilime iner\" idi; \"ilk sürümde\" denen işlerin hepsi 3 aya sığmaz.",
-   "oneri": "İlk teslim sürüm 1.0'dır: \"ilk sürümde\" denen her şey ilk teslimdedir (yedi giriş yöntemi, Gantt, işbirliği, beş YZ yüzeyi ve dört dilimin tamamı). Dilimler paralel geliştirilen iş paketleridir; canlıya ilk çıkış dört dilimin kabul kapısı birlikte geçince olur.",
-   "yururluk": "Proje sahibinin kararı yürürlükte. E07'deki 3 ay hedefi kalktı; tarih, dilim çalışmalarının ölçülen hızından tahmin edilir. Güvenlik ve kimlik kapıları tarih için kısaltılmaz (K7).",
-   "kapsam_farki": "Önerilen küçük ilk teslim yerine bütün sürüm 1.0 ilk teslimde; süre 3 aydan uzun.",
+   "oneri": "Bütün kapsam (sürüm 1.0: \"ilk sürümde\" denen her şey ve dört dilimin tamamı) ilk teslimdedir. Dilimler paralel geliştirilir (ck-dilim).",
+   "yururluk": "Bütün kapsam ilk teslimde. E07'deki 3 aylık hedef yürürlükte; proje sahibi takvimi değiştirmedi. Bütün kapsamın 3 aya sığıp sığmadığı ölçülen hızla yeniden tahmin edilir; tahmin başka bir tarih gösterirse fark ayrı karar olarak sunulur (ak-takvim).",
+   "kapsam_farki": "Önerilen küçük ilk teslim yerine bütün sürüm 1.0 ilk teslimde. Takvim değişmedi; kapsamın 3 aya sığmama riski belge yazarının teknik tahminidir, karar değildir.",
    "onay": {
     "durum": "değiştirildi",
     "onaylayan": "Proje sahibi (karacaismail)",
     "tarih": "29 Eylül 2026",
-    "not": "\"Hepsi ilk teslimde\" seçildi."
+    "not": "\"Hepsi ilk teslimde\" seçildi. Seçeneğin açıklamasındaki \"3 ay tutmaz, süre uzar\" belge yazarının tahminiydi; takvim kararı sayılmaz. v2.8'de yanlışlıkla hedefin kaldırıldığı yazılmıştı; v2.9'da düzeltildi."
    },
    "etkiledigi": [
     "plan",
@@ -29,8 +29,10 @@
     "B8",
     "L10",
     "I1",
-    "I13"
-   ]
+    "I13",
+    "ak-takvim"
+   ],
+   "onceki_yururluk": "Proje sahibinin kararı yürürlükte. E07'deki 3 ay hedefi kalktı; tarih, dilim çalışmalarının ölçülen hızından tahmin edilir. Güvenlik ve kimlik kapıları tarih için kısaltılmaz (K7)."
   },
   {
    "id": "ck-analist",
@@ -137,7 +139,7 @@
    "ham_cevap": "V06: son tamamlanan adımdan otomatik tekrar.",
    "sorun": "Düz tekrar, sonucu bilinmeyen dış işlemi ikinci kez yapabilir: çift ödeme, çift e-Fatura, çift e-posta.",
    "oneri": "Otomatik tekrar varsayılandır. Tek istisna: sonucu bilinmeyen dış yan etki, sağlayıcı aynı tekrar koruma anahtarıyla güvenli tekrarı desteklemiyorsa tekrarlanmaz, uzlaştırmaya gider; eski worker sahiplik numarasıyla reddedilir (E10).",
-   "yururluk": "Seçim yürürlükte; istisna seçimi daraltır ve onay bekler. Onaya kadar istisna uygulanır, çünkü onun kaldırılması çift ödeme riskini açar.",
+   "yururluk": "Proje sahibinin kararı: son tamamlanan adımdan otomatik tekrar; sonucu bilinmeyen dış işlem tekrarlanmaz, uzlaştırmaya gider (E10).",
    "kapsam_farki": "Tekrar korumasız dış adımlar otomatik tekrar edilmez.",
    "onay": {
     "durum": "onaylandı",
@@ -147,7 +149,8 @@
    },
    "etkiledigi": [
     "E10"
-   ]
+   ],
+   "onceki_yururluk": "Seçim yürürlükte; istisna seçimi daraltır ve onay bekler. Onaya kadar istisna uygulanır, çünkü onun kaldırılması çift ödeme riskini açar."
   },
   {
    "id": "ck-unut",
@@ -222,7 +225,7 @@
    "ham_cevap": "K16: seçilen seçenek 30 gün; notta 185 gün.",
    "sorun": "Seçenek ile not farklı.",
    "oneri": "Not son niyet sayıldı: 185 gün salt okunur ve dışa aktarım, sonra arşiv veya silme (M26).",
-   "yururluk": "Öneri çalışma varsayımıdır; M26 Dilim 2'de geldiği için Dilim 1'i etkilemez.",
+   "yururluk": "Proje sahibinin kararı: 185 gün salt okunur ve dışa aktarım, sonra arşiv veya silme (M26).",
    "kapsam_farki": "Saklama 30 gün yerine 185 gün.",
    "onay": {
     "durum": "onaylandı",
@@ -232,7 +235,8 @@
    },
    "etkiledigi": [
     "M26"
-   ]
+   ],
+   "onceki_yururluk": "Öneri çalışma varsayımıdır; M26 Dilim 2'de geldiği için Dilim 1'i etkilemez."
   },
   {
    "id": "ck-adi",
@@ -304,7 +308,7 @@
    "ham_cevap": "X02: önerilen varsayılan (sürümlü ad alanı, API tablosu, iki sürümlük geçiş penceresi); not: \"stripe api'leri gibi, 20 yıl geriye dönük uyumlu olmalı\".",
    "sorun": "Seçilen seçenek iki sürümlük pencere diyor, not 20 yıl diyor.",
    "oneri": "20 yıl dışa açık API'ye (entegrasyonlar, API anahtarları) uygulanır: yayımlanmış tarihli sürüm kaldırılmaz. Ürünün kendi SPA'ları dış istemci değildir; iki sürüm veya 90 gün uyumlu kalır (B12, H3).",
-   "yururluk": "Öneri çalışma varsayımıdır; onaya kadar dışa açık API yayımlanmaz (dış API zaten Dilim 3–4'te).",
+   "yururluk": "Proje sahibinin kararı: 20 yıl yalnızca dışa açık API'ye; SPA iki sürüm veya 90 gün uyumlu kalır (B12, H3).",
    "kapsam_farki": "SPA için 20 yıl değil, iki sürüm veya 90 gün.",
    "onay": {
     "durum": "onaylandı",
@@ -316,7 +320,8 @@
     "B12",
     "H3",
     "api-hata"
-   ]
+   ],
+   "onceki_yururluk": "Öneri çalışma varsayımıdır; onaya kadar dışa açık API yayımlanmaz (dış API zaten Dilim 3–4'te)."
   },
   {
    "id": "ck-eposta-marka",
@@ -350,42 +355,64 @@
    ],
    "ham_cevap": "V02: oturumda tek aktif şirket; değişince tüm sekmeler uyarılır.",
    "sorun": "Seviye 2 marka her şirkete ayrı host verir (U09) ve her hostun ayrı Frappe oturumu vardır; \"oturum\" kelimesi Frappe oturumu, Keycloak SSO oturumu veya kullanıcının bütün oturumları olabilir.",
-   "oneri": "Kapsam, bir tarayıcıdaki Keycloak SSO oturumudur: aynı tarayıcıdaki bütün hostlarda tek aktif şirket vardır ve sunucu bunu bağlam sürümüyle her istekte denetler (M10). Aynı kullanıcının başka cihazdaki SSO oturumu kendi aktif şirketini taşır. Ayrı sitedeki büyük müşteri (Dilim 3) kendi sitesinde ayrı bağlamdır; iki site arasında bağlam paylaşılmaz (B9).",
-   "yururluk": "Öneri çalışma varsayımıdır; Dilim 1'in veri modeli (GenUI Session Context) bu yorumla yazılır.",
-   "kapsam_farki": "Başka cihazda başka şirket açık olabilir; ayrı site kendi bağlamını taşır.",
+   "oneri": "Tek aktif şirket kuralı bir tarayıcıdaki Keycloak SSO oturumunun bütün hostlarında ve bütün Frappe sitelerinde geçerlidir; ayrı sitedeki büyük müşteri istisna değildir. Aynı kullanıcının başka cihazındaki oturum kendi aktif şirketini taşır.",
+   "yururluk": "Proje sahibinin kararı: tarayıcı başına tek aktif şirket, paylaşımlı ve ayrı siteler birlikte. Uygulama yöntemi (ortak bağlam kaydı) teknik tasarımdır, M10'da yazılıdır.",
+   "kapsam_farki": "Başka cihazda başka şirket açık olabilir. Ayrı site istisnası yoktur.",
    "onay": {
     "durum": "onaylandı",
     "onaylayan": "Proje sahibi (karacaismail)",
     "tarih": "29 Eylül 2026",
-    "not": "\"Tarayıcı başına\" seçildi."
+    "not": "\"Tarayıcı başına\" seçildi. v2.8'de ayrı Frappe siteleri için onaylanmamış bir istisna yazılmıştı; v2.9'da kaldırıldı."
    },
    "etkiledigi": [
     "B9",
     "M10",
     "M20"
-   ]
+   ],
+   "onceki_yururluk": "Öneri çalışma varsayımıdır; Dilim 1'in veri modeli (GenUI Session Context) bu yorumla yazılır."
   },
   {
    "id": "ck-iki-asamali",
-   "baslik": "\"2 aşamalı\" doğrulama",
+   "baslik": "\"2 aşamalı\" doğrulamanın yönetimi",
    "cevaplar": [
     "K07"
    ],
    "ham_cevap": "K07 notu: e-posta ya da telefon tenant yöneticisinin opsiyonu; \"2 aşamalı (hem telefon hem eposta) bu da yine tenant yöneticisi için opsiyonel seçenek\".",
    "sorun": "\"2 aşamalı\" iki şey olabilir: hesapta iki kanalın da doğrulanmış olması (bir kez) ya da her girişte ikinci adım.",
-   "oneri": "\"2 aşamalı\" doğrulama, her girişte ikinci bir adım istenmesidir (parola veya sosyal girişten sonra telefona kod). Şirket yöneticisi bunu şirketi için açar veya kapatır; bu seçeneğin şirket yöneticilerine sunulup sunulmayacağını platform sahibi platform ayarından belirler. Telefon kodu OTP gateway ile Dilim 3'te gelir.",
-   "yururluk": "Proje sahibinin kararı yürürlükte. \"2 aşamalı\" kelimesi yaygın anlamıyla (her girişte ikinci adım) okundu.",
-   "kapsam_farki": "Platform ayarı eklenir: şirket yöneticisinin \"2 aşamalı\" seçeneğini görüp görmediğini platform sahibi belirler.",
+   "oneri": "Platform sahibi, platform politikasıyla iki aşamalı doğrulamanın şirketler için isteğe bağlı mı zorunlu mu olduğunu belirler. \"Şirket seçer\" durumunda şirket yöneticisi şirketi için açar veya kapatır. \"Zorunlu\" durumunda bütün şirketlerde açıktır, şirket yöneticisi kapatamaz; sunucu kapatma isteğini reddeder (platform_policy_locked). Zorunluluk arayüzde gizlemeyle değil sunucuda uygulanır.",
+   "yururluk": "Proje sahibinin kararı: şirket yöneticisi için isteğe bağlı; isteğe bağlı olup olmamasını platform sahibi ayarlar. Doğrulamanın yöntemi ve ne zaman istendiği bu kararın parçası değildir (ck-iki-asamali-yontem).",
+   "kapsam_farki": "Platform politikası (şirket seçer, zorunlu) ve şirket tercihi ayrı alanlardır; zorunlu politika şirket tercihinin üstündedir.",
    "onay": {
-    "durum": "değiştirildi",
+    "durum": "onaylandı",
     "onaylayan": "Proje sahibi (karacaismail)",
     "tarih": "29 Eylül 2026",
-    "not": "Şirket yöneticisi için isteğe bağlı; isteğe bağlı olup olmaması platform sahibince ayarlanır."
+    "not": "\"Şirket yöneticisi tarafından opsiyonel; opsiyonel olup olmaması platform sahibi tarafından ayarlanabilir.\" v2.8'de bu, yanlışlıkla seçeneği gösterme/gizleme ayarına indirgenmiş ve \"her girişte telefona kod\" kesin karar gibi yazılmıştı; v2.9'da düzeltildi."
    },
    "etkiledigi": [
     "M8",
-    "M10",
-    "M11"
+    "M10"
+   ],
+   "onceki_yururluk": "Proje sahibinin kararı yürürlükte. \"2 aşamalı\" kelimesi yaygın anlamıyla (her girişte ikinci adım) okundu."
+  },
+  {
+   "id": "ck-iki-asamali-yontem",
+   "baslik": "\"2 aşamalı\" doğrulamanın yöntemi ve sıklığı",
+   "cevaplar": [
+    "K07"
+   ],
+   "ham_cevap": "K07 notu: \"2 aşamalı (hem telefon hem eposta) bu da yine tenant yöneticisi için opsiyonel seçenek.\"",
+   "sorun": "Cevaplar ikinci adımın yöntemini (telefona kod, e-postaya kod, passkey) ve ne zaman istendiğini (her girişte, belirli aralıkla, yalnız hassas işlemde) seçmiyor.",
+   "oneri": "Belge yazarının önerisi: ikinci adım passkey veya hesabın doğrulanmış telefonuna kod (telefon kodu OTP gateway ile Dilim 3'te); her yeni girişte istenir, aynı tarayıcı oturumundaki hostlar arası geçişte tekrar istenmez.",
+   "yururluk": "Karar verilene kadar geliştirme yalnızca passkey ile ikinci adımı kurar; telefon ve e-posta kodu ikinci adım olarak devreye alınmaz. Sıklık için geliştirmede \"her yeni giriş\" kullanılır ama canlıya çıkış bu kararı bekler.",
+   "kapsam_farki": "Yöntem ve sıklık seçilmedi.",
+   "onay": {
+    "durum": "onay bekliyor",
+    "sahip": "Proje sahibi",
+    "son": "Dilim 3 kapısı (telefon kodu gelmeden önce)"
+   },
+   "etkiledigi": [
+    "M8",
+    "M10"
    ]
   }
  ]

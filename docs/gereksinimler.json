@@ -385,7 +385,7 @@
    "actor": "BFF",
    "title": "Kiracılık: hibrit model",
    "requirement": "Tenant modeli hibrittir (karar kitabı K01): müşterilerin çoğu tek bir paylaşımlı Frappe sitesindedir ve Organizasyon kaydıyla ayrılır; büyük veya regüle müşteri kendi ayrı sitesini alır. Sözleşme iki modelde aynıdır: her istek aktif kiracı ve şirket bağlamını taşır; önbellek, Run, grant ve YZ bağlamı bu anahtarla ayrılır. Paylaşımlı sitede izolasyon Organizasyon Üyeliği ile her istekte Frappe'de uygulanır; ayrı sitede ters vekil host adından siteyi çözer ve Socket.IO site ad alanını kullanır. Oturumda tek aktif şirket vardır (karar kitabı V02); kapsamı, sunucudaki bağlam sürümü ve şirket değişiminde eski isteklerin reddi M10'dadır.",
-   "note": "İki modelin de negatif izolasyon testi her yayında koşar (G6, K5); iş yükü bu yüzden en fazladır. Dilim 1 yalnızca paylaşımlı siteyle açılır; ayrı site modeli Dilim 3'te, ilk regüle müşteriden önce kanıtlanır. Ayrı sitedeki şirket kendi sitesinde ayrı bağlamdır: iki site arasında aktif şirket ve bağlam sürümü paylaşılmaz (proje sahibi onayladı, ck-aktif-sirket). Birden çok siteye üye kullanıcı (ör. ayrı sitedeki müşteriye de danışmanlık veren mali müşavir) her site için ayrı giriş görür; ortak dizin ve ayrı BFF servisi ancak bu durum ürün gereksinimi olursa ADR ile gelir. Sekme başına farklı şirket desteklenmez; mali müşavir gibi çok şirketli kullanıcı şirketler arasında seçiciyle geçer.",
+   "note": "İki modelin de negatif izolasyon testi her yayında koşar (G6, K5); iş yükü bu yüzden en fazladır. Dilim 1 yalnızca paylaşımlı siteyle açılır; ayrı site modeli Dilim 3'te, ilk regüle müşteriden önce kanıtlanır. Tek aktif şirket kuralı ayrı siteleri de kapsar: aynı tarayıcıda paylaşımlı sitedeki bir şirket ile ayrı sitedeki bir şirket aynı anda aktif olamaz (proje sahibinin kararı, ck-aktif-sirket; yöntem M10'da). Birden çok siteye üye kullanıcı (ör. ayrı sitedeki müşteriye de danışmanlık veren mali müşavir) her site için ayrı giriş görür; ortak dizin ve ayrı BFF servisi ancak bu durum ürün gereksinimi olursa ADR ile gelir. Sekme başına farklı şirket desteklenmez; mali müşavir gibi çok şirketli kullanıcı şirketler arasında seçiciyle geçer.",
    "tests": [
     "TP-05",
     "AT-12",
@@ -2391,7 +2391,7 @@
    ],
    "actor": "Frontend",
    "title": "Cihaz sınıfı ve yön matrisi, uyarlamalı teslim",
-   "requirement": "Tasarım telefondan başlar: taban 320 CSS px genişliktir (karar kitabı U12 notu: \"320 px önce\"). Uyarlamalı teslim (adaptive delivery) cihaz adına değil iki ayrı modele dayanır. (1) Yerleşim profili: telefon, tablet, masaüstü, geniş, televizyon, akıllı tahta, kiosk. Profil kullanılabilir CSS alanından seçilir (pencerenin veya bölünmüş ekrandaki bölmenin genişliği; fiziksel piksel veya piksel yoğunluğu değil): 600 CSS px altı telefon, 600–1023 tablet, 1024–2559 masaüstü, 2560 ve üstü geniş; tablet profili gelene kadar (Dilim 2) 1024 altı telefondur. Televizyon, akıllı tahta ve kiosk boyuttan çıkarılamaz; cihaz kaydıyla (kiosk, M27) veya kullanıcı seçimiyle açılır. (2) Giriş yetenekleri: dokunma, hassas işaretçi, hover, fiziksel klavye, uzaktan kumanda. Yetenekler profili değiştirmez; profil içinde hedef boyutunu, hover alternatiflerini ve klavye kısayollarını açar (dokunmatik dizüstü masaüstü profilinde dokunma hedefleriyle, harici klavyeli tablet tablet profilinde kısayollarla çalışır). Sinyaller çatışırsa sıra: kullanıcının o cihazda kaydettiği seçim, sonra cihaz kaydı, sonra kullanılabilir CSS genişliği. Bilinmeyen yetenekte temel deneyim uygulanır: 44 px hedefler, hover'sız eylemler, tam klavye erişimi. Yön ayrı bir çarpandır: her profil dikey ve yatay tutuşta ayrı kabul edilir. Profil sınırında değişim ±40 CSS px'lik aralıkla (histerezis) yapılır, titremez; profil veya yön değişince iş durumu, taslak, seçim ve odak (aynı mantıksal öğe) korunur. Yalnızca aktif profilin paketi (packages/surfaces/*) yüklenir: başka profil için preload veya prefetch yapılmaz, service worker yalnızca ortak çekirdeği ve aktif profili önbelleğe alır, profil değişince yeni paket o anda istenir. Profil ayrı bir uygulama değildir; ortak çekirdek, sözleşme ve domain bileşenleri üzerinde yerleşim ve gezinti paketidir. Profil tespiti yalnızca sunum içindir; yetki, veri ve iş kuralı cihaza göre değişmez.",
+   "requirement": "Tasarım telefondan başlar: taban 320 CSS px genişliktir (karar kitabı U12 notu: \"320 px önce\"). Uyarlamalı teslim (adaptive delivery) cihaz adına değil iki ayrı modele dayanır. (1) Yerleşim profili: telefon, tablet, masaüstü, geniş, televizyon, akıllı tahta, kiosk. Profil kullanılabilir CSS alanının genişliği ve yüksekliğiyle birlikte seçilir (pencerenin veya bölünmüş ekrandaki bölmenin yerleşim alanı; fiziksel piksel veya piksel yoğunluğu değil): genişlik 600 CSS px altındaysa ya da yükseklik 500 altında ve genişlik 1024 altındaysa telefon; genişlik 600–1023 ve yükseklik en az 500 ise tablet; genişlik 1024–2559 masaüstü; 2560 ve üstü geniş. Böylece yatay tutulan telefon telefon profilinin yatay düzeninde kalır: 390×844 döndürülünce 844×390 olur ve tablet paketine geçmez. Tablet paketi hazır olana kadar 1024 altı telefondur. Ölçüm görsel viewport'tan değil yerleşim alanından yapılır; sanal klavye yüksekliği geçici düşürdüğü için klavye açıkken profil değişmez; yön değişiminde ölçüm boyut oturduktan sonra yapılır. Televizyon, akıllı tahta ve kiosk boyuttan çıkarılamaz; cihaz kaydıyla (kiosk, M27) veya kullanıcı seçimiyle açılır. (2) Giriş yetenekleri: dokunma, hassas işaretçi, hover, fiziksel klavye, uzaktan kumanda. Yetenekler profili değiştirmez; profil içinde hedef boyutunu, hover alternatiflerini ve klavye kısayollarını açar (dokunmatik dizüstü masaüstü profilinde dokunma hedefleriyle, harici klavyeli tablet tablet profilinde kısayollarla çalışır). Sinyaller çatışırsa sıra: kullanıcının o cihazda kaydettiği seçim, sonra cihaz kaydı, sonra kullanılabilir CSS genişliği. Bilinmeyen yetenekte temel deneyim uygulanır: 44 px hedefler, hover'sız eylemler, tam klavye erişimi. Yön ayrı bir çarpandır: her profil dikey ve yatay tutuşta ayrı kabul edilir. Profil sınırında değişim ±40 CSS px'lik aralıkla (histerezis) yapılır, titremez; profil veya yön değişince iş durumu, taslak, seçim ve odak (aynı mantıksal öğe) korunur. İlk açılışta yalnızca ortak çekirdek ve aktif profilin paketi (packages/surfaces/*) yüklenir: başka profil için preload veya prefetch yapılmaz, service worker yalnızca ortak çekirdeği ve aktif profili önbelleğe alır. Profil değişince yalnızca yeni profilin paketi o anda istenir; önceki profilin paketi önbellekte kalabilir. Profil değiştirmeyen yön değişimi hiçbir profil paketi istemez. Profil ayrı bir uygulama değildir; ortak çekirdek, sözleşme ve domain bileşenleri üzerinde yerleşim ve gezinti paketidir. Profil tespiti yalnızca sunum içindir; yetki, veri ve iş kuralı cihaza göre değişmez.",
    "note": "Her sınıfın kendine özgü kuralı vardır: televizyonda uzaktan kumanda ile odak gezintisi (yön tuşları) ve 3 metreden okunur yazı ölçeği; akıllı tahtada çoklu dokunma, ayakta kullanım ve eylemlerin ekranın alt yarısında olması; 4K–8K'da yoğun bilgi yerine ölçekli düzen ve görsel keskinlik; kioskta M27'deki oturum kuralları. \"iPhone 4 önce\" notu 320 CSS px genişlik tabanı olarak uygulanır; iPhone 4'ün tarayıcısı bu yığını çalıştıramaz ve desteklenmez (A2). Dilimler alt kapsamlarda: telefon ve masaüstü Dilim 1; tablet Dilim 2; kiosk Dilim 3; geniş ekran, televizyon ve akıllı tahta Dilim 4. Profil matrisi ve kabul matrisi (profil × yön × sınır genişlikleri × önbellek durumu) Ürün ailesi ve cihaz matrisi bölümünde; kabul: AT-35.",
    "tests": [
     "TP-09",
@@ -2627,7 +2627,7 @@
    "actor": "CI",
    "title": "Dikey dilim kapısı ve canlıya çıkış",
    "requirement": "Faz yoktur; iş uçtan uca dikey dilimlerle ilerler (karar kitabı C05) ve her dilim kendi içinde her katmanı bitirir. Dilimler paralel ilerleyebilir (proje sahibinin kararı, ck-dilim); her dilimin içi aynı sırayı izler: test planı → veri modeli (DocType kataloğu) → sözleşme ve örnekler → geliştirme → kabul (karar kitabı V09 notu, T02). Bir dilimin kapısı şunlar olmadan açılmaz: o dilimde teslim edilen bütün MUST kapsamları (tek dilimli satırlar ve çok dilimli satırların o dilime ait alt kapsamları) en az \"kanıtlı\" (O2); o dilimde çalışan yayın kapısı deneyleri ve deney parçaları \"geçti\"; o dilime bağlı açık kararlar kapanmış ve onay bekleyen yorumlar onaylanmış veya değiştirilmiş. Bir deney kendi diliminden sonra gelen bir işe bağlanamaz; sonraki dilimin senaryosu o dilimin parçası olarak yazılır ve belge derlemesi bunu denetler (K16). Bir dilimin kapısı staging'de kanıtı verir; canlıya çıkış değildir. İlk teslim sürüm 1.0'dır (proje sahibinin kararı, ck-ilk-teslim): dört dilimin kapısı birlikte geçince ürün pilot müşterilere çıkar.",
-   "note": "Ürün sıfırdan kurulduğu için Desk'ten geçiş, parity matrisi, geçiş provası ve Desk'e dönüş provası yoktur (karar kitabı U01; C10 uygulanmaz). Feature flag ve kanarya, canlıdaki bir dilimin içinde yeni yeteneklerin açılışı içindir; hatalı renderer veya capability tek başına kapatılabilir; veri migration'ı için bayrak kapatmak tek başına rollback değildir. Tarih ile kapı çatışırsa tarih kayar, kapı kısaltılmaz: güvenlik ve kimlik kapıları hiçbir takvim için atlanmaz. 3 aylık hedef kalktı; tarih dilimlerin ölçülen hızından tahmin edilir (ck-ilk-teslim).",
+   "note": "Ürün sıfırdan kurulduğu için Desk'ten geçiş, parity matrisi, geçiş provası ve Desk'e dönüş provası yoktur (karar kitabı U01; C10 uygulanmaz). Feature flag ve kanarya, canlıdaki bir dilimin içinde yeni yeteneklerin açılışı içindir; hatalı renderer veya capability tek başına kapatılabilir; veri migration'ı için bayrak kapatmak tek başına rollback değildir. Tarih ile kapı çatışırsa kapı kısaltılmaz: güvenlik ve kimlik kapıları hiçbir takvim için atlanmaz. 3 aylık hedef (E07) yürürlüktedir; bütün kapsamın bu süreye sığıp sığmadığı ölçülen hızla yeniden tahmin edilir ve tarihin veya kapsamın değişmesi proje sahibinin kararıdır (ak-takvim).",
    "tests": [
     "TP-17"
    ],
@@ -3266,7 +3266,7 @@
    ],
    "actor": "Kimlik",
    "title": "Giriş yöntemleri yöntem bazında kabul edilir",
-   "requirement": "Sürüm 1.0'da yedi yöntem vardır (karar kitabı K05) ve her biri kendi kabul testi (AT-19) yeşil olmadan arayüzde görünmez. Dilim 1: parola + e-posta doğrulaması, Google, passkey (Keycloak'ın kendi özellikleri). Dilim 2: Apple (Keycloak'ta yerleşik değildir; aday eklenti Apache-2.0 lisanslı ve 26.x destekli) ve e-posta ile gelen kod (eklenti). Dilim 3: SMS kodu, WhatsApp ve Telegram kodu (OTP gateway, M15). Passkey yöneticiler ve KYC inceleyicileri için zorunludur; SMS, WhatsApp ve Telegram kodu yalnızca müşteri girişinde kullanılır. E-posta birincil kimliktir; telefon ikinci kanaldır (karar kitabı K07). Kullanıcı adı telefon numarası olamaz; kayıt ve profil doğrulaması bunu reddeder. Şirket doğrulama politikası tenant yöneticisinin seçimidir, şirket ayarında durur ve iki ayrı alandır (M10): doğrulanmış kanal şartı (yalnız e-posta, yalnız telefon, ikisi; hesapta kayıtta ve kanal değişiminde bir kez doğrulanır) ve giriş ikinci adımı (yok, telefona kod, passkey; her girişte istenir). \"2 aşamalı\" seçeneği, her girişte ikinci adım olarak telefona kod istenmesi demektir (iki kanal da doğrulanmış olmalıdır). Şirket yöneticisi bu seçeneği şirketi için açar veya kapatır; seçeneğin şirket yöneticilerine sunulup sunulmayacağını platform sahibi platform ayarından belirler (proje sahibinin kararı, ck-iki-asamali). Telefon kanalı ve telefona kod OTP gateway ile Dilim 3'te açılır; Dilim 1–2'de şirket yalnızca e-posta kanalını ve passkey ikinci adımını seçebilir.",
+   "requirement": "Sürüm 1.0'da yedi yöntem vardır (karar kitabı K05) ve her biri kendi kabul testi (AT-19) yeşil olmadan arayüzde görünmez. Dilim 1: parola + e-posta doğrulaması, Google, passkey (Keycloak'ın kendi özellikleri). Dilim 2: Apple (Keycloak'ta yerleşik değildir; aday eklenti Apache-2.0 lisanslı ve 26.x destekli) ve e-posta ile gelen kod (eklenti). Dilim 3: SMS kodu, WhatsApp ve Telegram kodu (OTP gateway, M15). Passkey yöneticiler ve KYC inceleyicileri için zorunludur; SMS, WhatsApp ve Telegram kodu yalnızca müşteri girişinde kullanılır. E-posta birincil kimliktir; telefon ikinci kanaldır (karar kitabı K07). Kullanıcı adı telefon numarası olamaz; kayıt ve profil doğrulaması bunu reddeder. Şirket doğrulama politikası tenant yöneticisinin seçimidir, şirket ayarında durur ve iki ayrı alandır (M10): doğrulanmış kanal şartı (yalnız e-posta, yalnız telefon, ikisi; hesapta kayıtta ve kanal değişiminde bir kez doğrulanır) ve iki aşamalı doğrulamanın şirkette açık olup olmadığı (aşağıdaki platform politikasının izin verdiği ölçüde). \"2 aşamalı\" doğrulamanın yönetimi (proje sahibinin kararı, ck-iki-asamali): platform sahibi platform politikasıyla doğrulamanın şirketler için isteğe bağlı mı zorunlu mu olduğunu belirler. \"Şirket seçer\" durumunda şirket yöneticisi şirketi için açar veya kapatır. \"Zorunlu\" durumunda bütün şirketlerde açıktır; şirket yöneticisi kapatamaz ve kapatma isteği arayüzden de API'den de sunucuda reddedilir (platform_policy_locked); şirketin kayıtlı tercihi silinmez, politika \"şirket seçer\"e dönünce yeniden geçerli olur. Politika değişince bütün şirketlerin politika sürümü artar ve açık oturumlar bir sonraki istekte yeniden değerlendirilir (M10). İkinci adımın yöntemi (passkey, telefona kod, e-postaya kod) ve ne zaman istendiği henüz karar değildir (ck-iki-asamali-yontem, onay bekliyor). Telefon kanalı ve telefona kod OTP gateway ile Dilim 3'te açılır; o zamana kadar ikinci adım olarak yalnızca passkey vardır.",
    "note": "Magic link ertelendi (karar kitabı K06) ve açık gereksinim olarak görünür kalır: gelecekse Keycloak üzerinden gelir, ayrı bir servisle gelmez. Keycloak'ın kendisinde magic link yoktur; bilinen olgun eklenti Elastic License 2.0'dır ve yasaktır (A5); Apache-2.0 lisanslı tek aday Eylül 2026'da yayımlanmış ve olgunlaşmamıştır, K12'deki altı koşulu geçmeden seçilmez. Arayüz kimliği önce soran akışı kullanır: önce e-posta, sonra o hesap için etkin yöntemler; passkey tarayıcının otomatik önerisiyle (conditional mediation) gelir. Yalnızca ikinci faktör olarak tasarlanmış eklentilerde tek faktör kullanımı ayrıca test edilir. Numara devri ve SIM değiştirme riski nedeniyle yönetici erişimi ve KYC belgeleri SMS ile açılmaz; iki aşamalı doğrulamada bile ayrıcalıklı rol için passkey şarttır.",
    "tests": [
     "TP-12",
@@ -3312,7 +3312,9 @@
      ]
     }
    ],
-   "pendingApprovals": []
+   "pendingApprovals": [
+    "ck-iki-asamali-yontem"
+   ]
   },
   {
    "id": "M9",
@@ -3371,7 +3373,7 @@
    "actor": "Frontend",
    "title": "Uygulama kabuğu ve aktif şirket bağlamı",
    "requirement": "Ortak kabuk (@genui/ui) kullanıcının yetkili olduğu uygulamaları Frappe'deki Uygulama Yetkisi kayıtlarından ve ürün ailesi kataloğundan (A8) listeler ve aktif şirket seçicisini barındırır. Seçilen şirket her istekte Frappe'de üyelikle yeniden doğrulanır. Tek aktif şirket kuralının (karar kitabı V02) kapsamı bir tarayıcıdaki Keycloak SSO oturumudur (proje sahibi onayladı, ck-aktif-sirket): köprü bu SSO oturumu için sunucuda aktif şirketi ve artan bir bağlam sürümünü tutar (GenUI Session Context); her Frappe oturumu açıldığı şirketi ve bağlam sürümünü taşır ve her istekte ikisi karşılaştırılır. Şirket değişimi context.switch ile sunucuda yapılır, bağlam sürümü artar ve kullanıcı yeni şirketin hostuna tam sayfa geçer (M20). Eski sürümle gelen istek, hangi hosttan gelirse gelsin, context_changed (409) ile reddedilir ve hiçbir yazma yapmaz; aynı origin'deki sekmeler BroadcastChannel ile hemen, başka hosttaki sekmeler bir sonraki isteklerinde uyarılır ve taslakları korunur; açık soketler M19'daki yeniden doğrulamayla en geç 60 saniyede kesilir. Uçuştaki istekler iptal edilir; sorgu önbelleği, grant'ler ve YZ bağlam manifesti şirket anahtarıyla ayrılır; başka şirketin verisi bağlama girmez. Önceki şirkette çalışan Run, sahibinin o şirketteki üyeliğiyle sürer (M19); sonucu ve bildirimi yalnızca o şirket aktifken görünür, onay bekleyen Run başka şirket bağlamından onaylanamaz. Aynı hosttaki uygulamalar arası geçiş yeniden giriş istemez. Şirket doğrulama politikası (M8): şirkete girişte ve şirket değişiminde köprü SSO oturumunun kanıtını (acr, amr, kimlik doğrulama zamanı, hesabın doğrulanmış kanalları) hedef şirketin politikasıyla karşılaştırır; sessiz giriş yalnızca politika zaten karşılanıyorsa yapılır, değilse Keycloak'a istenen seviye ve azami kimlik doğrulama yaşıyla yönlenilir ya da eksik kanalın doğrulaması istenir. Yönetici politikayı sıkılaştırınca politika sürümü artar; açık oturumlar bir sonraki istekte yeniden karşılaştırılır ve gerekirse step_up_required alır; doğrulanmış kanalı eksik üyelik \"doğrulama bekliyor\" durumuna geçer, askıya alınmaz.",
-   "note": "A şirketinde yönetici, B şirketinde danışman olan kullanıcının yetkileri karışmaz; URL veya parametre değiştirerek başka şirketin kaydına erişim reddedilir (AT-21). Düğme gizlemek güvenlik değildir; asıl kontrol Frappe API izinlerindedir. Üyelik iptalinin sunucudaki yürürlüğü M19'dadır. Tenant modeli hibrittir (karar kitabı K01; B9): paylaşımlı sitede şirket bir Organizasyon kaydıdır, ayrı sitedeki büyük veya regüle müşteride bir sitedir; sözleşme iki modelde aynıdır. Aynı kullanıcının başka cihazdaki SSO oturumu kendi aktif şirketini taşır; ayrı site kendi bağlamını tutar, iki site arasında bağlam sürümü paylaşılmaz. Keycloak'ın mevcut oturumu yeniden kullanması (cookie ile giriş) hedef şirketin politikasını kendiliğinden karşılamaz; karşılaştırma köprüdedir. Kabul: AT-19, AT-21.",
+   "note": "A şirketinde yönetici, B şirketinde danışman olan kullanıcının yetkileri karışmaz; URL veya parametre değiştirerek başka şirketin kaydına erişim reddedilir (AT-21). Düğme gizlemek güvenlik değildir; asıl kontrol Frappe API izinlerindedir. Üyelik iptalinin sunucudaki yürürlüğü M19'dadır. Tenant modeli hibrittir (karar kitabı K01; B9): paylaşımlı sitede şirket bir Organizasyon kaydıdır, ayrı sitedeki büyük veya regüle müşteride bir sitedir; sözleşme iki modelde aynıdır. Aynı kullanıcının başka cihazdaki SSO oturumu kendi aktif şirketini taşır. Kural ayrı siteleri de kapsar (proje sahibinin kararı). Teknik yöntem (öneri): bağlam kaydı paylaşımlı sitededir; ayrı sitenin köprüsü aynı kaydı sunucudan sunucuya imzalı çağrıyla okur ve değiştirir; yazma isteklerinde her seferinde, okumada en fazla 5 saniyelik önbellekle. Kayda ulaşılamazsa yazma istekleri reddedilir, okuma son bilinen bağlamla sürer. Kayıt yalnızca SSO oturum kimliği, kullanıcı, organizasyon ve sürüm taşır, iş verisi taşımaz; yurt içinde saklama gereken ayrı site için bu kaydın konumu hukuk incelemesine girer (ak-hukuk). Aynı tarayıcıda paylaşımlı sitedeki A açıkken ayrı sitedeki B'ye geçilirse kayıt B olur ve A sekmesinin sonraki isteği context_changed alır. Keycloak'ın mevcut oturumu yeniden kullanması (cookie ile giriş) hedef şirketin politikasını kendiliğinden karşılamaz; karşılaştırma köprüdedir. Kabul: AT-19, AT-21.",
    "tests": [
     "TP-05",
     "AT-21",
@@ -3385,7 +3387,9 @@
     "kimlik:tenant"
    ],
    "scopes": [],
-   "pendingApprovals": []
+   "pendingApprovals": [
+    "ck-iki-asamali-yontem"
+   ]
   },
   {
    "id": "M11",
@@ -4145,7 +4149,7 @@
      "dilim": 3,
      "onkosul": "OTP gateway (M15) test modunda; WhatsApp authentication şablonu ve Telegram Gateway test hesabı",
      "degisen": "SMS, WhatsApp ve Telegram kodu için aynı senaryolar; kanal değiştirme ve yedek kanala (SMS) düşme; şirketin doğrulama politikası \"telefon\" ve \"2 aşamalı\" yapılır; yalnız e-posta politikalı A şirketinden \"2 aşamalı\" B şirketine geçilir.",
-     "gecer": "Her kanal adıyla yeşil; yedek kanala düşme kullanıcıya bildirilir; telefonu doğrulanmamış üye B'ye girerken telefon doğrulamasına yönlenir ve taslağı korunur; \"2 aşamalı\" şirkette her girişte telefon kodu istenir; politika sıkılaşınca açık oturumlar bir sonraki istekte yükseltme ister (M10)."
+     "gecer": "Her kanal adıyla yeşil; yedek kanala düşme kullanıcıya bildirilir; telefonu doğrulanmamış üye B'ye girerken telefon doğrulamasına yönlenir ve taslağı korunur; \"2 aşamalı\" şirkette ikinci adım, ck-iki-asamali-yontem ile onaylanan yöntem ve sıklıkla istenir (telefon kodu ancak o karar telefonu yöntem olarak seçerse bu parçaya girer); politika sıkılaşınca açık oturumlar bir sonraki istekte yükseltme ister (M10)."
     }
    ],
    "gate": false,
@@ -4189,9 +4193,9 @@
    "parcalar": [
     {
      "dilim": 3,
-     "onkosul": "Ayrı sitede bir müşteri (B9)",
-     "degisen": "Aynı izolasyon senaryoları paylaşımlı sitedeki şirket ile ayrı sitedeki şirket arasında; ayrı sitedeki şirkete üye kullanıcı paylaşımlı sitedeki şirketine geçer.",
-     "gecer": "Hiçbir yolda çapraz erişim yok; ayrı site kendi bağlamını taşır ve paylaşımlı sitenin bağlam sürümünü değiştirmez; iki site arasında geçiş ayrı giriş olarak görünür (B9)."
+     "onkosul": "Ayrı sitede bir müşteri (B9); paylaşımlı sitedeki ortak bağlam kaydı",
+     "degisen": "Aynı izolasyon senaryoları paylaşımlı sitedeki A şirketi ile ayrı sitedeki B şirketi arasında; aynı tarayıcıda A sekmesi açıkken kullanıcı ayrı sitedeki B'ye geçer ve A sekmesi bir yazma isteği gönderir; ortak bağlam kaydına ayrı siteden ulaşılamaz hâle getirilir.",
+     "gecer": "Hiçbir yolda çapraz erişim yok; B'ye geçiş ortak bağlam kaydını B yapar ve A sekmesinin isteği context_changed ile reddedilir, hiçbir yazma olmaz; kayda ulaşılamazken ayrı sitedeki yazma istekleri reddedilir, okuma son bilinen bağlamla sürer; bağlam kaydında iş verisi yoktur (M10)."
     },
     {
      "dilim": 4,
@@ -4423,7 +4427,7 @@
      "dilim": 2,
      "onkosul": "Tablet profili (J9); gerçek tablet, kalem ve harici klavye",
      "degisen": "Tablet dikey ve yatay; bölünmüş ekranda pencere 599, 600 ve 601 CSS px'e getirilir; harici klavye takılır ve çıkarılır.",
-     "gecer": "Profil kullanılabilir CSS genişliğine göre değişir, taslak, seçim ve odak korunur; klavye takılınca profil değişmez, yalnız klavye yetenekleri açılır; ağ kaydında yalnız tablet profil paketi vardır."
+     "gecer": "Profil kullanılabilir CSS alanına göre değişir, taslak, seçim ve odak korunur; klavye takılınca profil değişmez, yalnız klavye yetenekleri açılır; profil geçiş penceresinin ağ kaydında yalnızca tablet paketi eklenir, telefon paketi önbellekte kalabilir."
     },
     {
      "dilim": 3,
@@ -4523,14 +4527,14 @@
    ],
    "ham_cevap": "E07: ilk teslim 3 ay. K05, C11, C12 ve Y03'te birçok özellik için \"ilk sürümde\" seçildi (yedi giriş yöntemi, Gantt, işbirliği, beş YZ yüzeyi).",
    "sorun": "3 ay seçeneğinin kendi sonucu \"kapsam en küçük dilime iner\" idi; \"ilk sürümde\" denen işlerin hepsi 3 aya sığmaz.",
-   "oneri": "İlk teslim sürüm 1.0'dır: \"ilk sürümde\" denen her şey ilk teslimdedir (yedi giriş yöntemi, Gantt, işbirliği, beş YZ yüzeyi ve dört dilimin tamamı). Dilimler paralel geliştirilen iş paketleridir; canlıya ilk çıkış dört dilimin kabul kapısı birlikte geçince olur.",
-   "yururluk": "Proje sahibinin kararı yürürlükte. E07'deki 3 ay hedefi kalktı; tarih, dilim çalışmalarının ölçülen hızından tahmin edilir. Güvenlik ve kimlik kapıları tarih için kısaltılmaz (K7).",
-   "kapsam_farki": "Önerilen küçük ilk teslim yerine bütün sürüm 1.0 ilk teslimde; süre 3 aydan uzun.",
+   "oneri": "Bütün kapsam (sürüm 1.0: \"ilk sürümde\" denen her şey ve dört dilimin tamamı) ilk teslimdedir. Dilimler paralel geliştirilir (ck-dilim).",
+   "yururluk": "Bütün kapsam ilk teslimde. E07'deki 3 aylık hedef yürürlükte; proje sahibi takvimi değiştirmedi. Bütün kapsamın 3 aya sığıp sığmadığı ölçülen hızla yeniden tahmin edilir; tahmin başka bir tarih gösterirse fark ayrı karar olarak sunulur (ak-takvim).",
+   "kapsam_farki": "Önerilen küçük ilk teslim yerine bütün sürüm 1.0 ilk teslimde. Takvim değişmedi; kapsamın 3 aya sığmama riski belge yazarının teknik tahminidir, karar değildir.",
    "onay": {
     "durum": "değiştirildi",
     "onaylayan": "Proje sahibi (karacaismail)",
     "tarih": "29 Eylül 2026",
-    "not": "\"Hepsi ilk teslimde\" seçildi."
+    "not": "\"Hepsi ilk teslimde\" seçildi. Seçeneğin açıklamasındaki \"3 ay tutmaz, süre uzar\" belge yazarının tahminiydi; takvim kararı sayılmaz. v2.8'de yanlışlıkla hedefin kaldırıldığı yazılmıştı; v2.9'da düzeltildi."
    },
    "etkiledigi": [
     "plan",
@@ -4539,8 +4543,10 @@
     "B8",
     "L10",
     "I1",
-    "I13"
-   ]
+    "I13",
+    "ak-takvim"
+   ],
+   "onceki_yururluk": "Proje sahibinin kararı yürürlükte. E07'deki 3 ay hedefi kalktı; tarih, dilim çalışmalarının ölçülen hızından tahmin edilir. Güvenlik ve kimlik kapıları tarih için kısaltılmaz (K7)."
   },
   {
    "id": "ck-analist",
@@ -4647,7 +4653,7 @@
    "ham_cevap": "V06: son tamamlanan adımdan otomatik tekrar.",
    "sorun": "Düz tekrar, sonucu bilinmeyen dış işlemi ikinci kez yapabilir: çift ödeme, çift e-Fatura, çift e-posta.",
    "oneri": "Otomatik tekrar varsayılandır. Tek istisna: sonucu bilinmeyen dış yan etki, sağlayıcı aynı tekrar koruma anahtarıyla güvenli tekrarı desteklemiyorsa tekrarlanmaz, uzlaştırmaya gider; eski worker sahiplik numarasıyla reddedilir (E10).",
-   "yururluk": "Seçim yürürlükte; istisna seçimi daraltır ve onay bekler. Onaya kadar istisna uygulanır, çünkü onun kaldırılması çift ödeme riskini açar.",
+   "yururluk": "Proje sahibinin kararı: son tamamlanan adımdan otomatik tekrar; sonucu bilinmeyen dış işlem tekrarlanmaz, uzlaştırmaya gider (E10).",
    "kapsam_farki": "Tekrar korumasız dış adımlar otomatik tekrar edilmez.",
    "onay": {
     "durum": "onaylandı",
@@ -4657,7 +4663,8 @@
    },
    "etkiledigi": [
     "E10"
-   ]
+   ],
+   "onceki_yururluk": "Seçim yürürlükte; istisna seçimi daraltır ve onay bekler. Onaya kadar istisna uygulanır, çünkü onun kaldırılması çift ödeme riskini açar."
   },
   {
    "id": "ck-unut",
@@ -4732,7 +4739,7 @@
    "ham_cevap": "K16: seçilen seçenek 30 gün; notta 185 gün.",
    "sorun": "Seçenek ile not farklı.",
    "oneri": "Not son niyet sayıldı: 185 gün salt okunur ve dışa aktarım, sonra arşiv veya silme (M26).",
-   "yururluk": "Öneri çalışma varsayımıdır; M26 Dilim 2'de geldiği için Dilim 1'i etkilemez.",
+   "yururluk": "Proje sahibinin kararı: 185 gün salt okunur ve dışa aktarım, sonra arşiv veya silme (M26).",
    "kapsam_farki": "Saklama 30 gün yerine 185 gün.",
    "onay": {
     "durum": "onaylandı",
@@ -4742,7 +4749,8 @@
    },
    "etkiledigi": [
     "M26"
-   ]
+   ],
+   "onceki_yururluk": "Öneri çalışma varsayımıdır; M26 Dilim 2'de geldiği için Dilim 1'i etkilemez."
   },
   {
    "id": "ck-adi",
@@ -4814,7 +4822,7 @@
    "ham_cevap": "X02: önerilen varsayılan (sürümlü ad alanı, API tablosu, iki sürümlük geçiş penceresi); not: \"stripe api'leri gibi, 20 yıl geriye dönük uyumlu olmalı\".",
    "sorun": "Seçilen seçenek iki sürümlük pencere diyor, not 20 yıl diyor.",
    "oneri": "20 yıl dışa açık API'ye (entegrasyonlar, API anahtarları) uygulanır: yayımlanmış tarihli sürüm kaldırılmaz. Ürünün kendi SPA'ları dış istemci değildir; iki sürüm veya 90 gün uyumlu kalır (B12, H3).",
-   "yururluk": "Öneri çalışma varsayımıdır; onaya kadar dışa açık API yayımlanmaz (dış API zaten Dilim 3–4'te).",
+   "yururluk": "Proje sahibinin kararı: 20 yıl yalnızca dışa açık API'ye; SPA iki sürüm veya 90 gün uyumlu kalır (B12, H3).",
    "kapsam_farki": "SPA için 20 yıl değil, iki sürüm veya 90 gün.",
    "onay": {
     "durum": "onaylandı",
@@ -4826,7 +4834,8 @@
     "B12",
     "H3",
     "api-hata"
-   ]
+   ],
+   "onceki_yururluk": "Öneri çalışma varsayımıdır; onaya kadar dışa açık API yayımlanmaz (dış API zaten Dilim 3–4'te)."
   },
   {
    "id": "ck-eposta-marka",
@@ -4860,42 +4869,64 @@
    ],
    "ham_cevap": "V02: oturumda tek aktif şirket; değişince tüm sekmeler uyarılır.",
    "sorun": "Seviye 2 marka her şirkete ayrı host verir (U09) ve her hostun ayrı Frappe oturumu vardır; \"oturum\" kelimesi Frappe oturumu, Keycloak SSO oturumu veya kullanıcının bütün oturumları olabilir.",
-   "oneri": "Kapsam, bir tarayıcıdaki Keycloak SSO oturumudur: aynı tarayıcıdaki bütün hostlarda tek aktif şirket vardır ve sunucu bunu bağlam sürümüyle her istekte denetler (M10). Aynı kullanıcının başka cihazdaki SSO oturumu kendi aktif şirketini taşır. Ayrı sitedeki büyük müşteri (Dilim 3) kendi sitesinde ayrı bağlamdır; iki site arasında bağlam paylaşılmaz (B9).",
-   "yururluk": "Öneri çalışma varsayımıdır; Dilim 1'in veri modeli (GenUI Session Context) bu yorumla yazılır.",
-   "kapsam_farki": "Başka cihazda başka şirket açık olabilir; ayrı site kendi bağlamını taşır.",
+   "oneri": "Tek aktif şirket kuralı bir tarayıcıdaki Keycloak SSO oturumunun bütün hostlarında ve bütün Frappe sitelerinde geçerlidir; ayrı sitedeki büyük müşteri istisna değildir. Aynı kullanıcının başka cihazındaki oturum kendi aktif şirketini taşır.",
+   "yururluk": "Proje sahibinin kararı: tarayıcı başına tek aktif şirket, paylaşımlı ve ayrı siteler birlikte. Uygulama yöntemi (ortak bağlam kaydı) teknik tasarımdır, M10'da yazılıdır.",
+   "kapsam_farki": "Başka cihazda başka şirket açık olabilir. Ayrı site istisnası yoktur.",
    "onay": {
     "durum": "onaylandı",
     "onaylayan": "Proje sahibi (karacaismail)",
     "tarih": "29 Eylül 2026",
-    "not": "\"Tarayıcı başına\" seçildi."
+    "not": "\"Tarayıcı başına\" seçildi. v2.8'de ayrı Frappe siteleri için onaylanmamış bir istisna yazılmıştı; v2.9'da kaldırıldı."
    },
    "etkiledigi": [
     "B9",
     "M10",
     "M20"
-   ]
+   ],
+   "onceki_yururluk": "Öneri çalışma varsayımıdır; Dilim 1'in veri modeli (GenUI Session Context) bu yorumla yazılır."
   },
   {
    "id": "ck-iki-asamali",
-   "baslik": "\"2 aşamalı\" doğrulama",
+   "baslik": "\"2 aşamalı\" doğrulamanın yönetimi",
    "cevaplar": [
     "K07"
    ],
    "ham_cevap": "K07 notu: e-posta ya da telefon tenant yöneticisinin opsiyonu; \"2 aşamalı (hem telefon hem eposta) bu da yine tenant yöneticisi için opsiyonel seçenek\".",
    "sorun": "\"2 aşamalı\" iki şey olabilir: hesapta iki kanalın da doğrulanmış olması (bir kez) ya da her girişte ikinci adım.",
-   "oneri": "\"2 aşamalı\" doğrulama, her girişte ikinci bir adım istenmesidir (parola veya sosyal girişten sonra telefona kod). Şirket yöneticisi bunu şirketi için açar veya kapatır; bu seçeneğin şirket yöneticilerine sunulup sunulmayacağını platform sahibi platform ayarından belirler. Telefon kodu OTP gateway ile Dilim 3'te gelir.",
-   "yururluk": "Proje sahibinin kararı yürürlükte. \"2 aşamalı\" kelimesi yaygın anlamıyla (her girişte ikinci adım) okundu.",
-   "kapsam_farki": "Platform ayarı eklenir: şirket yöneticisinin \"2 aşamalı\" seçeneğini görüp görmediğini platform sahibi belirler.",
+   "oneri": "Platform sahibi, platform politikasıyla iki aşamalı doğrulamanın şirketler için isteğe bağlı mı zorunlu mu olduğunu belirler. \"Şirket seçer\" durumunda şirket yöneticisi şirketi için açar veya kapatır. \"Zorunlu\" durumunda bütün şirketlerde açıktır, şirket yöneticisi kapatamaz; sunucu kapatma isteğini reddeder (platform_policy_locked). Zorunluluk arayüzde gizlemeyle değil sunucuda uygulanır.",
+   "yururluk": "Proje sahibinin kararı: şirket yöneticisi için isteğe bağlı; isteğe bağlı olup olmamasını platform sahibi ayarlar. Doğrulamanın yöntemi ve ne zaman istendiği bu kararın parçası değildir (ck-iki-asamali-yontem).",
+   "kapsam_farki": "Platform politikası (şirket seçer, zorunlu) ve şirket tercihi ayrı alanlardır; zorunlu politika şirket tercihinin üstündedir.",
    "onay": {
-    "durum": "değiştirildi",
+    "durum": "onaylandı",
     "onaylayan": "Proje sahibi (karacaismail)",
     "tarih": "29 Eylül 2026",
-    "not": "Şirket yöneticisi için isteğe bağlı; isteğe bağlı olup olmaması platform sahibince ayarlanır."
+    "not": "\"Şirket yöneticisi tarafından opsiyonel; opsiyonel olup olmaması platform sahibi tarafından ayarlanabilir.\" v2.8'de bu, yanlışlıkla seçeneği gösterme/gizleme ayarına indirgenmiş ve \"her girişte telefona kod\" kesin karar gibi yazılmıştı; v2.9'da düzeltildi."
    },
    "etkiledigi": [
     "M8",
-    "M10",
-    "M11"
+    "M10"
+   ],
+   "onceki_yururluk": "Proje sahibinin kararı yürürlükte. \"2 aşamalı\" kelimesi yaygın anlamıyla (her girişte ikinci adım) okundu."
+  },
+  {
+   "id": "ck-iki-asamali-yontem",
+   "baslik": "\"2 aşamalı\" doğrulamanın yöntemi ve sıklığı",
+   "cevaplar": [
+    "K07"
+   ],
+   "ham_cevap": "K07 notu: \"2 aşamalı (hem telefon hem eposta) bu da yine tenant yöneticisi için opsiyonel seçenek.\"",
+   "sorun": "Cevaplar ikinci adımın yöntemini (telefona kod, e-postaya kod, passkey) ve ne zaman istendiğini (her girişte, belirli aralıkla, yalnız hassas işlemde) seçmiyor.",
+   "oneri": "Belge yazarının önerisi: ikinci adım passkey veya hesabın doğrulanmış telefonuna kod (telefon kodu OTP gateway ile Dilim 3'te); her yeni girişte istenir, aynı tarayıcı oturumundaki hostlar arası geçişte tekrar istenmez.",
+   "yururluk": "Karar verilene kadar geliştirme yalnızca passkey ile ikinci adımı kurar; telefon ve e-posta kodu ikinci adım olarak devreye alınmaz. Sıklık için geliştirmede \"her yeni giriş\" kullanılır ama canlıya çıkış bu kararı bekler.",
+   "kapsam_farki": "Yöntem ve sıklık seçilmedi.",
+   "onay": {
+    "durum": "onay bekliyor",
+    "sahip": "Proje sahibi",
+    "son": "Dilim 3 kapısı (telefon kodu gelmeden önce)"
+   },
+   "etkiledigi": [
+    "M8",
+    "M10"
    ]
   }
  ]
