@@ -62,8 +62,11 @@ def main(path):
     results.append(("no duplicate ids", not dups, " ".join(dups)))
     missing = sorted({h for h in p.hrefs if h not in p.ids})
     results.append(("local links resolve", not missing, " ".join(missing)))
-    rows = re.findall(r'<tr id="([A-M]\d{1,2})" data-phase="(\d\d)">', src)
-    results.append(("requirement rows carry a phase", len(rows) > 0, f"{len(rows)} rows"))
+    # every requirement row is found independently of its phase attribute, then each must carry a valid phase
+    req_rows = re.findall(r'<tr id="([A-M]\d{1,2})"([^>]*)>', src)
+    bad = [rid for rid, attrs in req_rows if not re.search(r'\bdata-phase="0[1-4]"', attrs)]
+    results.append(("every requirement row carries a valid phase", len(req_rows) > 0 and not bad,
+                    f"{len(req_rows)} rows; missing or invalid: {' '.join(bad)}" if bad else f"{len(req_rows)} rows"))
     scripts = re.findall(r"<script>(.*?)</script>", src, re.S)
     with tempfile.NamedTemporaryFile("w", suffix=".js", delete=False, encoding="utf-8") as f:
         f.write(scripts[-1] if scripts else "")

@@ -141,13 +141,20 @@ const rec = (check, ok, detail) => results.push({ check, status: ok === null ? '
     const page = await browser.newPage({ viewport: { width: 1280, height: 900 } });
     await page.goto(url);
     const info = await page.evaluate(() => {
-      const rows = [].slice.call(document.querySelectorAll('tr[data-phase]'));
+      // the universe is every requirement row, not only rows that already carry a phase attribute
+      const rows = [].slice.call(document.querySelectorAll('.req-table tbody tr'));
+      const missing = rows.filter(r => !/^0[1-4]$/.test(r.getAttribute('data-phase') || '')).map(r => r.id);
+      if (missing.length) return { total: rows.length, phases: ['missing:' + missing.join(',')], btns: [] };
       const phases = Array.from(new Set(rows.map(r => r.getAttribute('data-phase')))).sort();
       const btns = [].slice.call(document.querySelectorAll('#flt-phase button')).map(b => b.getAttribute('data-phase')).filter(p => p !== 'ALL').sort();
       return { total: rows.length, phases, btns };
     });
     rec('phase filter: a button for every phase present', JSON.stringify(info.phases) === JSON.stringify(info.btns), 'rows=' + info.phases.join(',') + ' buttons=' + info.btns.join(','));
-    const visible = () => page.evaluate(() => [].slice.call(document.querySelectorAll('tr[data-phase]')).filter(r => !r.hidden && r.getBoundingClientRect().height > 0).map(r => r.id));
+    if (info.phases.some(p => p.startsWith('missing:'))) {
+      rec('phase filter: each phase shows exactly its rows, "Tümü" restores all', false, 'requirement rows without a valid phase: ' + info.phases.join(','));
+      await page.close();
+    } else {
+    const visible = () => page.evaluate(() => [].slice.call(document.querySelectorAll('.req-table tbody tr')).filter(r => !r.hidden && r.getBoundingClientRect().height > 0).map(r => r.id));
     let ok = true; const detail = [];
     for (const ph of info.phases) {
       await page.locator('#flt-phase button[data-phase="' + ph + '"]').click();
@@ -161,6 +168,7 @@ const rec = (check, ok, detail) => results.push({ check, status: ok === null ? '
     ok = ok && all === info.total;
     rec('phase filter: each phase shows exactly its rows, "Tümü" restores all', ok, detail.join(' ') + ' all=' + all + '/' + info.total);
     await page.close();
+    }
   }
 
   // 9. traceability: superseded and reopened record decisions are visible on their own row

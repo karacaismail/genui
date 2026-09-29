@@ -5,7 +5,8 @@ Ant Design + Frappe Framework merkezli, Keycloak kimlikli, yapay zekâ öncelikl
 ## Belgeler
 
 - [GenUI Frontend Gereksinimleri](docs/genui-frontend-gereksinimleri.html): karar, açık kararlar, varsayılan yolculuk, katman mimarisi, mekanizma diyagramları, kimlik ve white-label, 132 MUST/SHOULD gereksinimi (13 grup), teknoloji seçimi, kabul deneyleri (AT-01–AT-26), aşamalı plan, karar izlenebilirliği ve kaynaklar. Tek dosya HTML; tarayıcıda doğrudan açılır.
-- [docs/src](docs/src): belgeyi üreten kaynaklar, temizlenmiş karar verisi ve kontrol betikleri.
+- [Karar Kitabı](docs/karar-kitabi.html): belgedeki belirsizlik, eksik ve çelişkileri kapatan 104 soru. Her seçenekte gerçek dünya örneği ve belgeye etkisi yazılıdır; cevaplar JSON olarak dışa aktarılır. Yayın adresi: https://karacaismail.github.io/genui/karar-kitabi.html
+- [docs/src](docs/src): belgeyi ve karar kitabını üreten kaynaklar, temizlenmiş karar verisi ve kontrol betikleri.
 - Yayın adresi: https://karacaismail.github.io/genui/
 
 ## Temel karar
@@ -37,10 +38,13 @@ Komutlar repo kökünden çalıştırılır:
 ```sh
 python3 docs/src/build.py docs/genui-frontend-gereksinimleri.html
 python3 docs/src/qa/validate.py docs/genui-frontend-gereksinimleri.html
-cd docs/src/qa && npm ci && CHROME_PATH=/yol/chromium node check.js ../../genui-frontend-gereksinimleri.html
+python3 docs/src/karar/build_karar.py docs/karar-kitabi.html
+cd docs/src/qa && npm ci && CHROME_PATH=/yol/chromium node check.js ../../genui-frontend-gereksinimleri.html && CHROME_PATH=/yol/chromium node check_karar.js ../../karar-kitabi.html
 ```
 
 `check.js` göreli veya mutlak dosya yolunu (boşluk içeren dahil) dosya URL'sine çevirir; `http(s)://` ve `file://` adreslerini olduğu gibi kullanır; argüman yoksa veya dosya bulunamazsa 2 koduyla çıkar, bir kontrol başarısız olursa 1 koduyla. `CHROME_PATH` verilmezse kurulu Chrome'u kullanır. `docs/src/qa` içinde `npm run check` aynı kontrolü çalıştırır. `validate.py` etiket dengesini, yinelenen kimlikleri, kırık yerel bağlantıları ve satır içi betiğin sözdizimini; `check.js` filtreleri, faz düğmelerini, dar ekran taşmasını, odak halkasını, azaltılmış hareketi ve izlenebilirlikteki etkin karar durumunu tarayıcıda denetler.
+
+`validate.py` gereksinim satırlarını faz özniteliğinden bağımsız bulur ve her birinin geçerli bir faz taşıdığını denetler; fazı silinmiş bir kopyada kırmızı döner. `build_karar.py` soru bankasını (`docs/src/karar/sorular_*.py`) derlerken her sorunun kaynağı, her seçeneğin gerçek dünya örneği ve etkisi, önerilerin ve koşulların geçerliliğini denetler. `check_karar.js` seçim, erteleme, toplu doldurma, JSON indirme ve geri yükleme, koşullu sorular, dar ekran ve koyu temayı tarayıcıda sınar.
 
 Karar kaydının kendisi repoda değildir. `docs/src/data/karar-kaydi.fixture.json` yalnızca izlenebilirlik tablosunda zaten yayımlanan alanları (kimlik, soru, seçim, farklıysa önerinin başlığı, durum) taşır. Sonraki bir kaynakla değişen veya yeniden açılan kararlar `docs/src/data/etkin-kararlar.json` dosyasındadır; kaynak seçim tarihçe olarak korunur.
 

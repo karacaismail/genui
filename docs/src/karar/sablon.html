@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="GenUI Frontend Gereksinimleri için karar kitabı: belirsizlik, eksik ve çelişkileri kapatan sorular, seçenekler, gerçek dünya örnekleri ve JSON çıktısı.">
+<title>GenUI Karar Kitabı</title>
+{{FONTS}}
+<style>
+{{STYLE}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">İçeriğe atla</a>
+
+<header class="hero">
+  <div>
+    <div class="eyebrow"><span>GENUI · KARAR KİTABI</span><span>v{{KITAP_SURUM}}</span><span>{{TARIH}}</span><span>Temel: gereksinim belgesi {{BELGE_SURUM}}</span></div>
+    <h1>Karar Kitabı</h1>
+    <p class="lede">Ana projenin frontend belgesindeki <strong>belirsizlikleri, eksikleri ve çelişkileri</strong> kapatmak için {{SORU_SAYISI}} soru. Her soruda seçeneklerin ne anlama geldiğini, gerçek dünyadan bir benzerini ve seçersen belgede neyin değişeceğini görürsün. Mimar veya mühendis olman gerekmez; emin olmadığın yerde önerileni seç ya da kararı ertele.</p>
+  </div>
+  <ol class="steps" aria-label="Nasıl kullanılır">
+    <li><div><b>Oku ve seç</b><span>Önce "Ürün ve kapsam" bölümünü doldur; bazı sorular o cevaplara göre açılır.</span></div></li>
+    <li><div><b>Emin değilsen</b><span>"Önerileni seç" veya "Sonra karar vereceğim" de. Cevapların bu tarayıcıda saklanır.</span></div></li>
+    <li><div><b>JSON indir, Claude'a ver</b><span>Bitince dosyayı indir ve sohbete yükle; kararlar belgenin yeni sürümüne işlenir.</span></div></li>
+  </ol>
+</header>
+
+<div class="bar">
+  <div class="bar-in">
+    <div class="progress" id="progress" role="progressbar" aria-label="Karar ilerlemesi" aria-valuemin="0" aria-valuenow="0" aria-valuemax="0">
+      <div class="nums"><span><b id="p-answered">0</b> / <span id="p-total">0</span> cevaplandı</span><span><b id="p-deferred">0</b> ertelendi</span><span><b id="p-p1">0</b> öncelikli (P1) soru bekliyor</span></div>
+      <div class="track" aria-hidden="true"><i class="a" id="t-a"></i><i class="d" id="t-d"></i></div>
+    </div>
+    <div class="seg" id="filtre" role="group" aria-label="Soru filtresi">
+      <button type="button" data-f="all" aria-pressed="true">Tümü</button>
+      <button type="button" data-f="p1" aria-pressed="false">P1</button>
+      <button type="button" data-f="empty" aria-pressed="false">Cevapsız</button>
+      <button type="button" data-f="deferred" aria-pressed="false">Ertelenen</button>
+      <button type="button" data-f="differs" aria-pressed="false">Öneriden farklı</button>
+    </div>
+    <div class="actions">
+      <button type="button" class="btn" data-act="import">{{icon:upload-simple}}JSON yükle</button>
+      <button type="button" class="btn primary" data-act="export">{{icon:download-simple}}JSON indir</button>
+    </div>
+    <span class="saved" id="saved" aria-live="polite">Cevaplar bu tarayıcıda otomatik saklanır</span>
+  </div>
+</div>
+
+<div class="layout">
+  <aside class="rail" aria-label="Bölümler">
+    <span class="lab">Bölümler</span>
+    <ul class="chapters" id="chapters"></ul>
+    <div class="rail-tools">
+      <button type="button" class="btn ghost" data-act="gloss">{{icon:book-open}}Sözlük</button>
+      <button type="button" class="btn ghost" id="bulk">{{icon:sparkle}}Boşları önerilenle doldur</button>
+      <button type="button" class="btn ghost" id="tema" data-mode="system">{{icon:monitor}}<span class="tt">Tema: sistem</span></button>
+    </div>
+  </aside>
+
+  <main id="main" tabindex="-1">
+    <section class="finish" id="bitir" aria-labelledby="bitir-h">
+      <h2 id="bitir-h">Bitir ve Claude'a ver</h2>
+      <div class="stats">
+        <div class="stat ok"><b id="s-answered">0</b><span>cevaplandı</span></div>
+        <div class="stat warn"><b id="s-deferred">0</b><span>ertelendi</span></div>
+        <div class="stat"><b id="s-empty">0</b><span>cevapsız</span></div>
+        <div class="stat p1"><b id="s-p1">0</b><span>P1 cevapsız</span></div>
+        <div class="stat"><b id="s-bulk">0</b><span>toplu önerilenle</span></div>
+        <div class="stat"><b id="s-differs">0</b><span>öneriden farklı</span></div>
+      </div>
+      <div id="todo-wrap">
+        <p>Önce karar verilmesi gereken (P1) ama cevap bekleyen sorular:</p>
+        <div class="todo" id="todo"></div>
+      </div>
+      <ol>
+        <li>"JSON indir" düğmesine bas; dosya <code>genui-karar-kitabi-TARİH.json</code> adıyla iner.</li>
+        <li>Dosyayı Claude sohbetine yükle ve "karar kitabını işle" de.</li>
+        <li>Claude seçimlerini belgenin yeni sürümüne işler; ertelenen ve cevapsız sorular açık karar olarak kalır.</li>
+      </ol>
+      <div class="row">
+        <button type="button" class="btn primary" data-act="export">{{icon:download-simple}}JSON indir</button>
+        <button type="button" class="btn" id="copy">{{icon:check}}JSON'u kopyala</button>
+        <button type="button" class="btn" data-act="import">{{icon:upload-simple}}JSON yükle</button>
+        <button type="button" class="btn danger" id="reset">{{icon:arrow-counter-clockwise}}Tüm cevapları sil</button>
+      </div>
+      <label for="json-out" class="sr">JSON çıktısı</label>
+      <textarea class="json-out" id="json-out" readonly placeholder="İndirme engellenirse JSON burada görünür; kopyalayıp sohbete yapıştırabilirsin."></textarea>
+    </section>
+  </main>
+</div>
+
+<footer class="foot">
+  <span>GenUI Karar Kitabı v{{KITAP_SURUM}} · gereksinim belgesi {{BELGE_SURUM}} ({{KAYNAK_COMMIT}}) temel alındı</span>
+  <span>Kaynaklar: Claude v2.5 zayıflık raporu, Codex v2.5 yeterlilik raporu (D01–D15), Keycloak v2.3 raporu (R1–R10)</span>
+  <span><a href="https://karacaismail.github.io/genui/">Gereksinim belgesi</a></span>
+</footer>
+
+<dialog id="sozluk" aria-labelledby="sozluk-h">
+  <div class="dlg-head"><h2 id="sozluk-h">Sözlük</h2><button type="button" class="btn ghost" id="sozluk-kapat">{{icon:x-circle}}Kapat</button></div>
+  <dl class="gloss">
+{{SOZLUK}}
+  </dl>
+</dialog>
+
+<input type="file" id="import-file" accept="application/json,.json" hidden>
+<div class="sr" id="duyuru" aria-live="polite"></div>
+<script type="application/json" id="kitap-veri">{{VERI}}</script>
+<script>
+{{SCRIPT}}
+</script>
+</body>
+</html>
