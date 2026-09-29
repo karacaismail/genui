@@ -313,7 +313,7 @@
     "K6",
     "ak-kota"
    ],
-   "ozet": "Şirket başı aylık YZ bütçesi; aşım varsayılanı klasik görünüm."
+   "ozet": "Şirket başı aylık YZ bütçesi; aşımda %80 uyarı, %100'de ay sonuna kadar klasik görünüm, ek paket (proje sahibi, 29 Eylül 2026)."
   },
   "Y11": {
    "durum": "uygulandı",
@@ -407,9 +407,10 @@
     "M10",
     "M11",
     "ck-iki-asamali",
-    "ck-iki-asamali-yontem"
+    "ck-iki-asamali-yontem",
+    "ck-iki-asamali-siklik"
    ],
-   "ozet": "E-posta birincil; kullanıcı adı telefon olamaz; iki aşamalı doğrulama şirket yöneticisi için isteğe bağlı, isteğe bağlı olup olmamasını platform sahibi ayarlar; yöntem ve sıklık öneri, onay bekliyor."
+   "ozet": "E-posta birincil; kullanıcı adı telefon olamaz; iki aşamalı doğrulama şirket yöneticisi için isteğe bağlı, isteğe bağlı olup olmamasını platform sahibi ayarlar; ikinci adım passkey veya telefon kodu (proje sahibi seçti); ne zaman istendiği onay bekliyor."
   },
   "K08": {
    "durum": "uygulandı",
@@ -707,7 +708,7 @@
     "K16",
     "ak-takip"
    ],
-   "ozet": "Araç açık (aday Plane); gereksinimler.json üretilir."
+   "ozet": "Kitapta ertelendi; proje sahibi sonradan Plane'i seçti, kendi sunucumuzda (29 Eylül 2026); gereksinimler.json'dan aktarılır."
   },
   "E06": {
    "durum": "uygulandı",

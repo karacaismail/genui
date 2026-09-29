@@ -380,7 +380,7 @@
    "ham_cevap": "K07 notu: e-posta ya da telefon tenant yöneticisinin opsiyonu; \"2 aşamalı (hem telefon hem eposta) bu da yine tenant yöneticisi için opsiyonel seçenek\".",
    "sorun": "\"2 aşamalı\" iki şey olabilir: hesapta iki kanalın da doğrulanmış olması (bir kez) ya da her girişte ikinci adım.",
    "oneri": "Platform sahibi, platform politikasıyla iki aşamalı doğrulamanın şirketler için isteğe bağlı mı zorunlu mu olduğunu belirler. \"Şirket seçer\" durumunda şirket yöneticisi şirketi için açar veya kapatır. \"Zorunlu\" durumunda bütün şirketlerde açıktır, şirket yöneticisi kapatamaz; sunucu kapatma isteğini reddeder (platform_policy_locked). Zorunluluk arayüzde gizlemeyle değil sunucuda uygulanır.",
-   "yururluk": "Proje sahibinin kararı: şirket yöneticisi için isteğe bağlı; isteğe bağlı olup olmamasını platform sahibi ayarlar. Doğrulamanın yöntemi ve ne zaman istendiği bu kararın parçası değildir (ck-iki-asamali-yontem).",
+   "yururluk": "Proje sahibinin kararı: şirket yöneticisi için isteğe bağlı; isteğe bağlı olup olmamasını platform sahibi ayarlar. Doğrulamanın yöntemi ve ne zaman istendiği bu kararın parçası değildir (ck-iki-asamali-yontem, ck-iki-asamali-siklik).",
    "kapsam_farki": "Platform politikası (şirket seçer, zorunlu) ve şirket tercihi ayrı alanlardır; zorunlu politika şirket tercihinin üstündedir.",
    "onay": {
     "durum": "onaylandı",
@@ -396,15 +396,38 @@
   },
   {
    "id": "ck-iki-asamali-yontem",
-   "baslik": "\"2 aşamalı\" doğrulamanın yöntemi ve sıklığı",
+   "baslik": "\"2 aşamalı\" doğrulamada ikinci adımın yöntemi",
    "cevaplar": [
     "K07"
    ],
    "ham_cevap": "K07 notu: \"2 aşamalı (hem telefon hem eposta) bu da yine tenant yöneticisi için opsiyonel seçenek.\"",
-   "sorun": "Cevaplar ikinci adımın yöntemini (telefona kod, e-postaya kod, passkey) ve ne zaman istendiğini (her girişte, belirli aralıkla, yalnız hassas işlemde) seçmiyor.",
-   "oneri": "Belge yazarının önerisi: ikinci adım passkey veya hesabın doğrulanmış telefonuna kod (telefon kodu OTP gateway ile Dilim 3'te); her yeni girişte istenir, aynı tarayıcı oturumundaki hostlar arası geçişte tekrar istenmez.",
-   "yururluk": "Karar verilene kadar geliştirme yalnızca passkey ile ikinci adımı kurar; telefon ve e-posta kodu ikinci adım olarak devreye alınmaz. Sıklık için geliştirmede \"her yeni giriş\" kullanılır ama canlıya çıkış bu kararı bekler.",
-   "kapsam_farki": "Yöntem ve sıklık seçilmedi.",
+   "sorun": "Cevaplar ikinci adımın yöntemini (telefona kod, e-postaya kod, passkey) seçmiyordu; K07 notu \"hem telefon hem eposta\" diyordu.",
+   "oneri": "Passkey veya hesabın doğrulanmış telefonuna kod; kullanıcı ikisinden birini seçer. E-posta kodu ikinci adım olmaz: parola da e-postayla sıfırlandığı için e-postayı ele geçiren iki adımı birden geçer. Telefon kodu OTP gateway ile Dilim 3'te gelir; o zamana kadar ikinci adım yalnız passkey.",
+   "yururluk": "Proje sahibinin kararı: ikinci adım passkey veya hesabın doğrulanmış telefonuna kod; kullanıcı ikisinden birini seçer; e-posta kodu ikinci adım değildir. Telefon kodu Dilim 3'te gelir, o zamana kadar yalnız passkey. İkinci adımın ne zaman istendiği bu kararın parçası değildir (ck-iki-asamali-siklik).",
+   "kapsam_farki": "K07 notundaki e-posta, ikinci adım yöntemi olarak değil, doğrulanmış kanal ve birincil kimlik olarak kalır.",
+   "onay": {
+    "durum": "onaylandı",
+    "onaylayan": "Proje sahibi (karacaismail)",
+    "tarih": "29 Eylül 2026",
+    "not": "\"Passkey veya telefon kodu\" seçildi."
+   },
+   "etkiledigi": [
+    "M8",
+    "M10"
+   ],
+   "onceki_yururluk": "Karar verilene kadar geliştirme yalnızca passkey ile ikinci adımı kurar; telefon ve e-posta kodu ikinci adım olarak devreye alınmaz. Sıklık için geliştirmede \"her yeni giriş\" kullanılır ama canlıya çıkış bu kararı bekler."
+  },
+  {
+   "id": "ck-iki-asamali-siklik",
+   "baslik": "\"2 aşamalı\" doğrulamada ikinci adımın ne zaman istendiği",
+   "cevaplar": [
+    "K07"
+   ],
+   "ham_cevap": "K07 notu: \"2 aşamalı (hem telefon hem eposta) bu da yine tenant yöneticisi için opsiyonel seçenek.\" Yöntem 29 Eylül 2026'da seçildi (ck-iki-asamali-yontem); sıklık sorulmadı.",
+   "sorun": "Cevaplar ikinci adımın ne zaman istendiğini (her girişte, belirli aralıkla, yalnız yeni cihazda, yalnız hassas işlemde) seçmiyor.",
+   "oneri": "Belge yazarının önerisi: her yeni girişte istenir; aynı tarayıcı oturumundaki hostlar arası geçişte tekrar istenmez.",
+   "yururluk": "Karar verilene kadar geliştirmede \"her yeni giriş\" kullanılır; bu bir karar değildir ve telefon kodu gelmeden (Dilim 3 kapısı) proje sahibinin onayını bekler.",
+   "kapsam_farki": "Sıklık seçilmedi.",
    "onay": {
     "durum": "onay bekliyor",
     "sahip": "Proje sahibi",

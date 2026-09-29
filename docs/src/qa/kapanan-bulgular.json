@@ -468,6 +468,56 @@
     "844×390"
    ],
    "yasak": []
+  },
+  {
+   "id": "R10-kota",
+   "kaynak": "Proje sahibinin cevabı, v2.10",
+   "konu": "YZ bütçesi aşımı proje sahibinin kararıdır",
+   "zorunlu": [
+    "Aylık bütçe dolunca davranış proje sahibinin kararıdır"
+   ],
+   "yasak": [
+    "Yavaşlatma veya aşım ücretlendirmesi ürün kararıdır"
+   ]
+  },
+  {
+   "id": "R10-slo",
+   "kaynak": "Proje sahibinin cevabı, v2.10",
+   "konu": "Canlı hizmet sözü: %99,5, RPO 1 saat, RTO 4 saat",
+   "zorunlu": [
+    "aylık %99,5 erişilebilirlik",
+    "RPO 1 saat",
+    "RTO 4 saat"
+   ],
+   "yasak": [
+    "belirlenmeden üretim taahhüdü verilmez",
+    "Sayı yokken canlı taahhüdü verilmez"
+   ]
+  },
+  {
+   "id": "R10-takip",
+   "kaynak": "Proje sahibinin cevabı, v2.10",
+   "konu": "İş takibi aracı Plane, kendi sunucumuzda; iç araç",
+   "zorunlu": [
+    "İş takibi aracı Plane'dir",
+    "Plane \\(topluluk sürümü AGPL-3.0\\) yalnızca iç araçtır"
+   ],
+   "yasak": [
+    "İş takibi aracı kararı ertelendi"
+   ]
+  },
+  {
+   "id": "R10-iki-asamali-yontem",
+   "kaynak": "Proje sahibinin cevabı, v2.10",
+   "konu": "İkinci adım passkey veya telefon kodu; e-posta kodu değil; sıklık ayrı",
+   "zorunlu": [
+    "passkey veya hesabın doğrulanmış telefonuna kod",
+    "E-posta kodu ikinci adım olarak kabul edilmez",
+    "ck-iki-asamali-siklik"
+   ],
+   "yasak": [
+    "İkinci adımın yöntemi \\(passkey, telefona kod, e-postaya kod\\) ve ne zaman istendiği henüz karar değildir"
+   ]
   }
  ]
 }

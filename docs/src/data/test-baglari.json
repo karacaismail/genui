@@ -1162,7 +1162,7 @@
      "dilim": 3,
      "onkosul": "OTP gateway (M15) test modunda; WhatsApp authentication şablonu ve Telegram Gateway test hesabı",
      "degisen": "SMS, WhatsApp ve Telegram kodu için aynı senaryolar; kanal değiştirme ve yedek kanala (SMS) düşme; şirketin doğrulama politikası \"telefon\" ve \"2 aşamalı\" yapılır; yalnız e-posta politikalı A şirketinden \"2 aşamalı\" B şirketine geçilir.",
-     "gecer": "Her kanal adıyla yeşil; yedek kanala düşme kullanıcıya bildirilir; telefonu doğrulanmamış üye B'ye girerken telefon doğrulamasına yönlenir ve taslağı korunur; \"2 aşamalı\" şirkette ikinci adım, ck-iki-asamali-yontem ile onaylanan yöntem ve sıklıkla istenir (telefon kodu ancak o karar telefonu yöntem olarak seçerse bu parçaya girer); politika sıkılaşınca açık oturumlar bir sonraki istekte yükseltme ister (M10)."
+     "gecer": "Her kanal adıyla yeşil; yedek kanala düşme kullanıcıya bildirilir; telefonu doğrulanmamış üye B'ye girerken telefon doğrulamasına yönlenir ve taslağı korunur; \"2 aşamalı\" şirkette ikinci adım passkey veya telefon kodudur ve kullanıcı ikisinden birini seçer, e-posta kodu ikinci adım olarak reddedilir (ck-iki-asamali-yontem); ikinci adımın ne zaman istendiği ck-iki-asamali-siklik kararına göre sınanır; politika sıkılaşınca açık oturumlar bir sonraki istekte yükseltme ister (M10)."
     }
    ]
   },
