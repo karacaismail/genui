@@ -3,9 +3,26 @@
 // Browser: CHROME_PATH=/path/to/chromium, otherwise the locally installed Chrome channel is used.
 // Prints one JSON line per check: {check, status: pass|fail|not_run, detail}; exits 1 if any check fails.
 const { chromium } = require('playwright-core');
+const fs = require('fs');
+const path = require('path');
+const { pathToFileURL } = require('url');
 
-const target = process.argv[2];
-const url = /^https?:/.test(target) ? target : 'file://' + target;
+// http(s) and file URLs are used as given; any other argument is a file path, resolved against the
+// current directory and converted with pathToFileURL (handles relative paths, spaces and non-ASCII).
+function toUrl(arg) {
+  if (!arg) {
+    console.error('usage: node check.js <html-file-or-url>');
+    process.exit(2);
+  }
+  if (/^(https?|file):\/\//i.test(arg)) return arg;
+  const abs = path.resolve(arg);
+  if (!fs.existsSync(abs)) {
+    console.error('file not found: ' + abs);
+    process.exit(2);
+  }
+  return pathToFileURL(abs).href;
+}
+const url = toUrl(process.argv[2]);
 const results = [];
 const rec = (check, ok, detail) => results.push({ check, status: ok === null ? 'not_run' : ok ? 'pass' : 'fail', detail });
 

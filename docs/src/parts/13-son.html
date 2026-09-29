@@ -45,7 +45,7 @@
         <li>Metadata codegen ve şema fingerprint'ini ilk sprint'te kur; katalog snapshot'ını CI'a bağla.</li>
         <li>Capability manifest'ini metadata'dan üret, açık allowlist ile daralt; her capability'ye risk sınıfı ve terslenebilirlik yaz; onay matrisini sunucu politikası olarak uygula.</li>
         <li>Kill switch, kota, klasik görünüm ve bağlamlı devri YZ'den önce kur.</li>
-        <li>AT-01, AT-05, AT-09, AT-10, AT-11, AT-13, AT-14, AT-15, AT-16, AT-18, AT-20, AT-21 ve AT-22'yi yayın kapısı yap; sonuçları K9 kanıt kaydına yaz.</li>
+        <li>AT-01, AT-05, AT-09, AT-10, AT-11, AT-13, AT-14, AT-15, AT-16, AT-18, AT-20, AT-21, AT-22 ve AT-26'yı yayın kapısı yap; sonuçları K9 kanıt kaydına yaz.</li>
         <li>Karar kaydındaki "henüz yazılmadı" gerekçeleri ADR olarak tamamla; iddialı seçimleri tabloda görünür tut.</li>
       </ul>
     </div>
@@ -78,7 +78,7 @@
     <li><a href="https://www.keycloak.org/docs/latest/server_admin/index.html#_identity_broker_first_login">Keycloak: ilk sosyal giriş akışı</a> <span class="v">mevcut hesabı doğrulama; otomatik bağlama riski</span></li>
     <li><a href="https://openid.net/specs/openid-connect-backchannel-1_0.html">OpenID Connect Back-Channel Logout 1.0</a> <span class="v">§2.4–2.8 logout token içeriği, doğrulama ve yanıt</span></li>
     <li><a href="https://developers.google.com/identity/branding-guidelines">Google ile giriş marka kuralları</a> <span class="v">düğmede Google kimliği korunur</span></li>
-    <li><a href="https://github.com/frappe/frappe/blob/v16.35.0/frappe/utils/oauth.py">Frappe v16.35.0 frappe/utils/oauth.py</a> <span class="v">incelenen sürüm</span></li>
+    <li><a href="https://github.com/frappe/frappe/blob/v16.35.0/frappe/utils/oauth.py">Frappe v16.35.0 frappe/utils/oauth.py</a> <span class="v">incelenen sürüm</span> ve <a href="https://github.com/frappe/frappe/blob/v16.35.0/frappe/sessions.py#L358">frappe/sessions.py</a> <span class="v">boşta kalma süresi etkinlikle uzar; session_end yalnızca önbellek yolunda kontrol edilir</span></li>
     <li><a href="https://www.rfc-editor.org/rfc/rfc9700.html">RFC 9700, OAuth 2.0 Güvenlik BCP</a> <span class="v">§2.4 parolayla token alma MUST NOT</span> ve <a href="https://www.rfc-editor.org/info/rfc10017">RFC 10017, tarayıcı tabanlı uygulamalar</a> <span class="v">BCP 212, Ağustos 2026</span></li>
     <li><a href="https://www.w3.org/WAI/WCAG22/Understanding/accessible-authentication-minimum.html">WCAG 2.2 3.3.8 Accessible Authentication (Minimum)</a> ve <a href="https://html.spec.whatwg.org/multipage/form-control-infrastructure.html">HTML autofill: one-time-code, webauthn</a></li>
     <li><a href="https://github.com/p2-inc/keycloak-magic-link/blob/main/COPYING">Phase Two keycloak-magic-link lisansı</a> <span class="v">Elastic License 2.0</span> ve <a href="https://github.com/grafana/k6">k6</a> <span class="v">AGPL-3.0, yalnızca CI aracı</span></li>
@@ -105,7 +105,7 @@
 </div>
 
 <footer>
-  <span>GenUI Frontend Gereksinimleri, sürüm 2.4 (Ant Design + Frappe + Keycloak)</span>
+  <span>GenUI Frontend Gereksinimleri, sürüm 2.5 (Ant Design + Frappe + Keycloak)</span>
   <span>Bu belge bir sözleşmedir: değişiklik ADR ve PR ile yapılır</span>
   <span class="links"><a href="https://github.com/karacaismail/genui">Kaynak kodu</a><a href="https://karacaismail.github.io/genui/">Yayın adresi</a></span>
 </footer>

@@ -4,7 +4,7 @@ Ant Design + Frappe Framework merkezli, Keycloak kimlikli, yapay zekâ öncelikl
 
 ## Belgeler
 
-- [GenUI Frontend Gereksinimleri](docs/genui-frontend-gereksinimleri.html): karar, açık kararlar, varsayılan yolculuk, katman mimarisi, mekanizma diyagramları, kimlik ve white-label, 131 MUST/SHOULD gereksinimi (13 grup), teknoloji seçimi, kabul deneyleri (AT-01–AT-25), aşamalı plan, karar izlenebilirliği ve kaynaklar. Tek dosya HTML; tarayıcıda doğrudan açılır.
+- [GenUI Frontend Gereksinimleri](docs/genui-frontend-gereksinimleri.html): karar, açık kararlar, varsayılan yolculuk, katman mimarisi, mekanizma diyagramları, kimlik ve white-label, 132 MUST/SHOULD gereksinimi (13 grup), teknoloji seçimi, kabul deneyleri (AT-01–AT-26), aşamalı plan, karar izlenebilirliği ve kaynaklar. Tek dosya HTML; tarayıcıda doğrudan açılır.
 - [docs/src](docs/src): belgeyi üreten kaynaklar, temizlenmiş karar verisi ve kontrol betikleri.
 - Yayın adresi: https://karacaismail.github.io/genui/
 
@@ -18,7 +18,7 @@ Her yazma Frappe'de yetkili bir capability çağrısıdır ve üç biçimden bir
 
 Kimlik Keycloak'ta, oturum ve yetki Frappe'de durur. Giriş her zaman Keycloak sayfasında, yetkilendirme kodu akışı + PKCE ile yapılır; Frappe'ye giriş platformun kendi kimlik köprüsüyle (Frappe custom app) açılır. SPA sunan her hostta SPA'lar, Frappe API'si ve köprü aynı origin'dedir; app ve www ayrı origin'lerdir ve çerez paylaşmaz. Tarayıcı token taşımaz, oturum Frappe'nin host-only HttpOnly çerezindedir. Şirket üyeliği, uygulama yetkisi ve KYC/KYB Frappe'de her istekte canlı kontrol edilir.
 
-Sosyal hesap, e-posta eşitliğiyle mevcut hesaba kendiliğinden bağlanmaz; mevcut hesabın kontrolü yeniden doğrulanır, ayrıcalıklı Frappe kullanıcıları yalnızca kontrollü göçle bağlanır. Tek çıkışta logout token'ı ID token'dan ayrı kurallarla doğrulanır. Çıkış, devre dışı bırakma ve üyelik iptali sunucuda yürürlüğe girer; açık realtime bağlantıları için mekanizma ve azami gecikme üretim kapısıdır.
+Sosyal hesap, e-posta eşitliğiyle mevcut hesaba kendiliğinden bağlanmaz; mevcut hesabın kontrolü yeniden doğrulanır, ayrıcalıklı Frappe kullanıcıları yalnızca kontrollü göçle bağlanır. Göç dışındaki ilk bağ, bağlama anında alınan taze ve tek kullanımlık bir kanıt ister; Keycloak'taki eski e-posta doğrulaması yetmez. Tek çıkışta logout token'ı ID token'dan ayrı kurallarla doğrulanır. Frappe oturumunun iki sınırı vardır: etkinlikle uzayan boşta kalma süresi ve yalnızca Keycloak yeniden doğrulamasıyla yenilenen mutlak bitiş; kaçan çıkış bildiriminin azami etkisi mutlak bitiştir. Çıkış, devre dışı bırakma ve üyelik iptali sunucuda yürürlüğe girer; devre dışı bırakma dağıtık atomik bir işlem değil, önce erişimi kesen, yeniden denenen ve uzlaştırılan bir orkestrasyondur. Açık realtime bağlantıları için mekanizma ve azami gecikme üretim kapısıdır.
 
 Giriş ve kayıt ekranları Keycloakify ile aynı tasarım token'larından üretilir; tek token kaynağı panel, giriş, e-posta ve herkese açık içeriği besler. White-label üç seviyede tanımlıdır (ürün markası, müşteri markası, müşteri alan adı); seviye 1 bağlayıcıdır ve yalnızca ürün markasını teslim eder, üst seviyeler tenant modeli kararına bağlıdır. Altyapı markaları ekrandan kaldırılır; Google ve Apple giriş düğmeleri ile lisans bildirimleri korunur. Model kimlik ekranı üretmez, kimlik doğrulama sırlarına ve oturuma erişmez; KYC/KYB belgeleri veri sınıfı tablosundaki kurala göre işlenir (gerçek kişi KYC belgesi varsayılan olarak hiçbir modele gitmez).
 
@@ -32,14 +32,16 @@ Dayanak: Frappe Headless Platform karar kaydı (139 karar, katalog 2026-09-19.2,
 
 Belge `docs/src` altındaki kaynaklardan üretilir; `docs/genui-frontend-gereksinimleri.html` elle düzenlenmez.
 
+Komutlar repo kökünden çalıştırılır:
+
 ```sh
 python3 docs/src/build.py docs/genui-frontend-gereksinimleri.html
 python3 docs/src/qa/validate.py docs/genui-frontend-gereksinimleri.html
 cd docs/src/qa && npm ci && CHROME_PATH=/yol/chromium node check.js ../../genui-frontend-gereksinimleri.html
 ```
 
-`CHROME_PATH` verilmezse `check.js` kurulu Chrome'u kullanır. `validate.py` etiket dengesini, yinelenen kimlikleri, kırık yerel bağlantıları ve satır içi betiğin sözdizimini; `check.js` filtreleri, faz düğmelerini, dar ekran taşmasını, odak halkasını, azaltılmış hareketi ve izlenebilirlikteki etkin karar durumunu tarayıcıda denetler.
+`check.js` göreli veya mutlak dosya yolunu (boşluk içeren dahil) dosya URL'sine çevirir; `http(s)://` ve `file://` adreslerini olduğu gibi kullanır; argüman yoksa veya dosya bulunamazsa 2 koduyla çıkar, bir kontrol başarısız olursa 1 koduyla. `CHROME_PATH` verilmezse kurulu Chrome'u kullanır. `docs/src/qa` içinde `npm run check` aynı kontrolü çalıştırır. `validate.py` etiket dengesini, yinelenen kimlikleri, kırık yerel bağlantıları ve satır içi betiğin sözdizimini; `check.js` filtreleri, faz düğmelerini, dar ekran taşmasını, odak halkasını, azaltılmış hareketi ve izlenebilirlikteki etkin karar durumunu tarayıcıda denetler.
 
 Karar kaydının kendisi repoda değildir. `docs/src/data/karar-kaydi.fixture.json` yalnızca izlenebilirlik tablosunda zaten yayımlanan alanları (kimlik, soru, seçim, farklıysa önerinin başlığı, durum) taşır. Sonraki bir kaynakla değişen veya yeniden açılan kararlar `docs/src/data/etkin-kararlar.json` dosyasındadır; kaynak seçim tarihçe olarak korunur.
 
-Bu kontrollerin geçmesi yalnızca belgenin doğru üretildiğini gösterir. Belgede yazılı kabul deneyleri (AT-01–AT-25), özellikle kimlik entegrasyonu (AT-18–AT-25), çalışan bir Keycloak, Frappe ve OTP ortamı gerektirir ve bu repoda koşulmamıştır.
+Bu kontrollerin geçmesi yalnızca belgenin doğru üretildiğini gösterir. Belgede yazılı kabul deneyleri (AT-01–AT-26), özellikle kimlik entegrasyonu (AT-18–AT-26), çalışan bir Keycloak, Frappe ve OTP ortamı gerektirir ve bu repoda koşulmamıştır.
