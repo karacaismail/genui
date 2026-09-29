@@ -106,7 +106,7 @@
    "actor": "CI",
    "title": "Lisans politikası: açık kaynak öncelikli",
    "requirement": "Allowlist: MIT, Apache-2.0, BSD, ISC; MPL-2.0 yalnızca değiştirilmemiş test bağımlılığı; ikon ve font gibi içerik varlıkları için SIL OFL 1.1 ve CC BY 4.0, atıf NOTICE dosyasında olmak şartıyla (C8). Yasak: AGPL, SSPL, BUSL, Elastic License ve lisanssız kod; ticari grid, scheduler veya \"yalnızca dahili kullanım\" lisanslı SDK'lar (AG Grid Enterprise, @thesysai/genui-sdk). Yasak lisanslı kaynaklardan kod kopyalanmaz, yalnızca davranış tarif edilir (Frappe CRM, Helpdesk, Insights, LMS, Drive ve Telephony AGPL'dir).",
-   "note": "Apache-2.0 bağımlılıklar (ECharts, A2UI, TypeScript) için NOTICE dosyası dağıtıma eklenir. Ticari bileşen ancak PoC ile kanıtlanmış ihtiyaç ve TCO karşılaştırmasından sonra ADR ile açılır. Ürüne girmeyen, ayrı süreçte çalışan araçlar ayrı listelenir: yük testi aracı k6 AGPL-3.0'dır, ürün bağımlılığı olamaz, yalnızca CI aracıdır; n8n (Sustainable Use License) ve OpenClaw yalnızca iç izleme ve raporlama aracıdır (A7), ürüne ve müşteri kurulumuna girmez. Yeni bağımlılığın lisansı PR açıklamasına yazılır. Dağıtım iki biçimdedir (karar kitabı U10): varsayılan SaaS, büyük müşteriye kendi sunucusunda kurulum. Kurulumda müşteriye verilen her bileşenin lisansı ve NOTICE dosyası kurulum paketine girer; kurulum paketine GPL veya AGPL lisanslı bir Frappe uygulaması (ör. ERPNext GPL-3.0) eklenirse o bileşenin kaynak kodunu sunma yükümlülüğü doğar. Ürünün kendi uygulamaları bu bileşenlerden kod kopyalamadığı için yükümlülük o bileşenlerle sınırlı kalır; kurulum sözleşmesi hukukçuya teyit ettirilir (K15).",
+   "note": "Apache-2.0 bağımlılıklar (ECharts, A2UI, TypeScript) için NOTICE dosyası dağıtıma eklenir. Ticari bileşen ancak PoC ile kanıtlanmış ihtiyaç ve TCO karşılaştırmasından sonra ADR ile açılır. Ürüne girmeyen, ayrı süreçte çalışan araçlar ayrı listelenir: yük testi aracı k6 AGPL-3.0'dır, ürün bağımlılığı olamaz, yalnızca CI aracıdır; n8n (Sustainable Use License) ve OpenClaw yalnızca iç izleme ve raporlama aracıdır (A7), ürüne ve müşteri kurulumuna girmez; iş takibi aracı Plane (topluluk sürümü AGPL-3.0) yalnızca iç araçtır, değiştirilmeden kendi sunucumuzda çalışır, ürüne ve müşteri kurulumuna girmez, kodu kopyalanmaz (K16). Yeni bağımlılığın lisansı PR açıklamasına yazılır. Dağıtım iki biçimdedir (karar kitabı U10): varsayılan SaaS, büyük müşteriye kendi sunucusunda kurulum. Kurulumda müşteriye verilen her bileşenin lisansı ve NOTICE dosyası kurulum paketine girer; kurulum paketine GPL veya AGPL lisanslı bir Frappe uygulaması (ör. ERPNext GPL-3.0) eklenirse o bileşenin kaynak kodunu sunma yükümlülüğü doğar. Ürünün kendi uygulamaları bu bileşenlerden kod kopyalamadığı için yükümlülük o bileşenlerle sınırlı kalır; kurulum sözleşmesi hukukçuya teyit ettirilir (K15).",
    "tests": [
     "TP-03"
    ],
@@ -1145,7 +1145,7 @@
    "actor": "BFF",
    "title": "Kill switch, bayraklar ve kotalar",
    "requirement": "GenUI ve her capability, sunucu bayrağıyla global veya tenant başına en geç 30 s içinde kapatılabilir: açık Run'lar iptal, bekleyen öneriler expired, ekranlar klasik görünüm. Hatalı bir renderer tek başına kapatılabilir. Kotalar kullanıcı, tenant ve Run başına: token, adım, yeniden deneme, tutar; eşzamanlı Run sınırı varsayılan 2. YZ maliyet tavanı şirket başına aylık bütçedir ve abonelik paketinden gelir (karar kitabı Y10); proaktif öneriler (I11) dahil her model çağrısı bu bütçeden düşer. Kill switch'in 30 saniye sınırı yayın kapısı deneyiyle ölçülür (AT-27).",
-   "note": "Limit dolunca yeni yan etki başlamaz, kısmi sonuç korunur, kullanıcıya açıklama ve manuel devam yolu sunulur. Aylık bütçede varsayılan davranış: %80'de şirket yöneticisine uyarı; %100'de YZ yüzeyleri o şirket için ay sonuna kadar klasik görünüme düşer, çalışan Run'lar bir sonraki adımdan önce durur ve kısmi sonucu korur; yönetici ek paket alabilir. Yavaşlatma veya aşım ücretlendirmesi ürün kararıdır ve bu varsayılanı ancak ADR ile değiştirir (Açık kararlar). Bayrak durumu telemetriye kimlik olarak eklenir; kanarya kullanıcı grubu bayrakla hedeflenir.",
+   "note": "Limit dolunca yeni yan etki başlamaz, kısmi sonuç korunur, kullanıcıya açıklama ve manuel devam yolu sunulur. Aylık bütçe dolunca davranış proje sahibinin kararıdır (29 Eylül 2026, ak-kota): %80'de şirket yöneticisine uyarı; %100'de YZ önerileri o şirket için ay sonuna kadar durur ve YZ yüzeyleri klasik görünüme düşer, klasik ekranlar çalışmaya devam eder; yönetici isterse ek paket alır. Çalışan Run'lar bir sonraki adımdan önce durur ve kısmi sonucu korur (teknik uygulama). Aşımı faturalamak ve daha ucuz modele geçmek seçilmedi. Bayrak durumu telemetriye kimlik olarak eklenir; kanarya kullanıcı grubu bayrakla hedeflenir.",
    "tests": [
     "TP-04",
     "AT-27"
@@ -2696,7 +2696,7 @@
    ],
    "actor": "Frappe",
    "title": "Kurtarma: SLO, RPO/RTO ve restore provası",
-   "requirement": "SLO, RPO ve RTO değerlerini iş sahibi belirler ve belgeye yazılır; belirlenmeden üretim taahhüdü verilmez. Restore provası ayrı ortamda yapılır ve belgeler, dosyalar, rapor/workspace tanımları, Run ve ChangeSet kayıtları ile aralarındaki ilişkiler birlikte geri gelir; kaybolan veya kopan ilişki provayı başarısız sayar.",
+   "requirement": "Canlı hizmet sözü proje sahibinin kararıdır (29 Eylül 2026, ak-slo): aylık %99,5 erişilebilirlik (ayda en fazla yaklaşık 3,6 saat kesinti), RPO 1 saat (arızada en fazla son 1 saatin verisi kaybolur), RTO 4 saat (sistem 4 saatte geri gelir). Bu sayılar mesai dışında da 4 saat içinde müdahale gerektirir; yedekleme sıklığı ve nöbet düzeni buna göre kurulur. Provada geri dönüş 4 saati veya kaybolan veri penceresi 1 saati aşarsa prova başarısız sayılır. Restore provası ayrı ortamda yapılır ve belgeler, dosyalar, rapor/workspace tanımları, Run ve ChangeSet kayıtları ile aralarındaki ilişkiler birlikte geri gelir; kaybolan veya kopan ilişki provayı başarısız sayar.",
    "note": "Prova her major sürümden önce ve her dilim kapısında en az bir kez koşar; süre ve sonuç K9 kanıt kaydına yazılır. Frontend, restore sonrası eski önbelleği ve açık Run aboneliklerini geçersiz kılar (şema fingerprint ve izin sürümü değişir).",
    "tests": [
     "TP-14"
@@ -2835,7 +2835,7 @@
    "actor": "CI",
    "title": "Belge ve karar yönetimi",
    "requirement": "Bu belge tek belge olarak kalır (karar kitabı E04) ve üç gezinme yardımı taşır: başta sözlük ve okuma yolu, sonda değişiklik günlüğü. Her terim sözlükte ve ilk geçtiği yerde kısa açıklamayla bulunur; çok anlamlı kelimeler (ör. \"yüzey\", \"sid\") sözlükte ayrılır (E08). Her açık kararın sahibi ve son dilimi yazılıdır (E03): ürün kararları proje sahibindedir; teknik kararlar önerilen varsayılanla ilerler ve teknik inceleyici onayıyla kapanır; son dilimine kadar kapanmayan karar o dilimin kapısını kapalı tutar. Belgenin kendi kontrol betikleri (T08, K20): her gereksinim geçerli bir dilim taşır; birden çok dilimde teslim edilen gereksinim alt kapsamlarla yazılır ve her alt kapsamın kendi diliminde çalışan testi vardır; bir kabul deneyi kendi diliminden sonraki işi kanıtlıyorsa o dilim için ayrı parçası vardır ve deney metni sonraki dilimin özellik adlarını taşımaz; sözleşme ekindeki parmak izleri derlemede yeniden hesaplanır ve Run durum tablosu E5 ile karşılaştırılır; çelişki kayıtlarının onay durumu ve bağları denetlenir; her MUST bir teste bağlıdır; sözlükte olmayan kısaltma derlemeyi kırar; kapanan bulguların yasak ifadeleri ve zorunlu ifadeleri regresyon listesinde denetlenir; \"kabul deneyi\" diye anılan her kimlik bir AT'ye, her gönderme hedefine gider.",
-   "note": "İş takibi aracı kararı ertelendi (karar kitabı E05; aday: Plane). Araç seçilene kadar derleme gereksinimleri araçtan bağımsız bir JSON dosyası olarak üretir (docs/gereksinimler.json); seçilen araca aktarım bu dosyadan yapılır.",
+   "note": "İş takibi aracı Plane'dir ve kendi sunucumuzda (Hetzner) çalışır (proje sahibinin kararı, 29 Eylül 2026, ak-takip; karar kitabında ertelenmişti, E05). Derleme gereksinimleri araçtan bağımsız bir JSON dosyası olarak üretir (docs/gereksinimler.json); Plane'e aktarım bu dosyadan yapılır. Plane iç araçtır, ürüne ve müşteri kurulumuna girmez (A5).",
    "tests": [
     "TP-16"
    ],
@@ -3266,7 +3266,7 @@
    ],
    "actor": "Kimlik",
    "title": "Giriş yöntemleri yöntem bazında kabul edilir",
-   "requirement": "Sürüm 1.0'da yedi yöntem vardır (karar kitabı K05) ve her biri kendi kabul testi (AT-19) yeşil olmadan arayüzde görünmez. Dilim 1: parola + e-posta doğrulaması, Google, passkey (Keycloak'ın kendi özellikleri). Dilim 2: Apple (Keycloak'ta yerleşik değildir; aday eklenti Apache-2.0 lisanslı ve 26.x destekli) ve e-posta ile gelen kod (eklenti). Dilim 3: SMS kodu, WhatsApp ve Telegram kodu (OTP gateway, M15). Passkey yöneticiler ve KYC inceleyicileri için zorunludur; SMS, WhatsApp ve Telegram kodu yalnızca müşteri girişinde kullanılır. E-posta birincil kimliktir; telefon ikinci kanaldır (karar kitabı K07). Kullanıcı adı telefon numarası olamaz; kayıt ve profil doğrulaması bunu reddeder. Şirket doğrulama politikası tenant yöneticisinin seçimidir, şirket ayarında durur ve iki ayrı alandır (M10): doğrulanmış kanal şartı (yalnız e-posta, yalnız telefon, ikisi; hesapta kayıtta ve kanal değişiminde bir kez doğrulanır) ve iki aşamalı doğrulamanın şirkette açık olup olmadığı (aşağıdaki platform politikasının izin verdiği ölçüde). \"2 aşamalı\" doğrulamanın yönetimi (proje sahibinin kararı, ck-iki-asamali): platform sahibi platform politikasıyla doğrulamanın şirketler için isteğe bağlı mı zorunlu mu olduğunu belirler. \"Şirket seçer\" durumunda şirket yöneticisi şirketi için açar veya kapatır. \"Zorunlu\" durumunda bütün şirketlerde açıktır; şirket yöneticisi kapatamaz ve kapatma isteği arayüzden de API'den de sunucuda reddedilir (platform_policy_locked); şirketin kayıtlı tercihi silinmez, politika \"şirket seçer\"e dönünce yeniden geçerli olur. Politika değişince bütün şirketlerin politika sürümü artar ve açık oturumlar bir sonraki istekte yeniden değerlendirilir (M10). İkinci adımın yöntemi (passkey, telefona kod, e-postaya kod) ve ne zaman istendiği henüz karar değildir (ck-iki-asamali-yontem, onay bekliyor). Telefon kanalı ve telefona kod OTP gateway ile Dilim 3'te açılır; o zamana kadar ikinci adım olarak yalnızca passkey vardır.",
+   "requirement": "Sürüm 1.0'da yedi yöntem vardır (karar kitabı K05) ve her biri kendi kabul testi (AT-19) yeşil olmadan arayüzde görünmez. Dilim 1: parola + e-posta doğrulaması, Google, passkey (Keycloak'ın kendi özellikleri). Dilim 2: Apple (Keycloak'ta yerleşik değildir; aday eklenti Apache-2.0 lisanslı ve 26.x destekli) ve e-posta ile gelen kod (eklenti). Dilim 3: SMS kodu, WhatsApp ve Telegram kodu (OTP gateway, M15). Passkey yöneticiler ve KYC inceleyicileri için zorunludur; SMS, WhatsApp ve Telegram kodu yalnızca müşteri girişinde kullanılır. E-posta birincil kimliktir; telefon ikinci kanaldır (karar kitabı K07). Kullanıcı adı telefon numarası olamaz; kayıt ve profil doğrulaması bunu reddeder. Şirket doğrulama politikası tenant yöneticisinin seçimidir, şirket ayarında durur ve iki ayrı alandır (M10): doğrulanmış kanal şartı (yalnız e-posta, yalnız telefon, ikisi; hesapta kayıtta ve kanal değişiminde bir kez doğrulanır) ve iki aşamalı doğrulamanın şirkette açık olup olmadığı (aşağıdaki platform politikasının izin verdiği ölçüde). \"2 aşamalı\" doğrulamanın yönetimi (proje sahibinin kararı, ck-iki-asamali): platform sahibi platform politikasıyla doğrulamanın şirketler için isteğe bağlı mı zorunlu mu olduğunu belirler. \"Şirket seçer\" durumunda şirket yöneticisi şirketi için açar veya kapatır. \"Zorunlu\" durumunda bütün şirketlerde açıktır; şirket yöneticisi kapatamaz ve kapatma isteği arayüzden de API'den de sunucuda reddedilir (platform_policy_locked); şirketin kayıtlı tercihi silinmez, politika \"şirket seçer\"e dönünce yeniden geçerli olur. Politika değişince bütün şirketlerin politika sürümü artar ve açık oturumlar bir sonraki istekte yeniden değerlendirilir (M10). İkinci adımın yöntemi proje sahibinin kararıdır (ck-iki-asamali-yontem): passkey veya hesabın doğrulanmış telefonuna kod; kullanıcı ikisinden birini seçer. E-posta kodu ikinci adım olarak kabul edilmez, çünkü parola da e-postayla sıfırlanır ve e-postayı ele geçiren iki adımı birden geçer. İkinci adımın ne zaman istendiği henüz karar değildir (ck-iki-asamali-siklik, onay bekliyor). Telefon kanalı ve telefona kod OTP gateway ile Dilim 3'te açılır; o zamana kadar ikinci adım olarak yalnızca passkey vardır.",
    "note": "Magic link ertelendi (karar kitabı K06) ve açık gereksinim olarak görünür kalır: gelecekse Keycloak üzerinden gelir, ayrı bir servisle gelmez. Keycloak'ın kendisinde magic link yoktur; bilinen olgun eklenti Elastic License 2.0'dır ve yasaktır (A5); Apache-2.0 lisanslı tek aday Eylül 2026'da yayımlanmış ve olgunlaşmamıştır, K12'deki altı koşulu geçmeden seçilmez. Arayüz kimliği önce soran akışı kullanır: önce e-posta, sonra o hesap için etkin yöntemler; passkey tarayıcının otomatik önerisiyle (conditional mediation) gelir. Yalnızca ikinci faktör olarak tasarlanmış eklentilerde tek faktör kullanımı ayrıca test edilir. Numara devri ve SIM değiştirme riski nedeniyle yönetici erişimi ve KYC belgeleri SMS ile açılmaz; iki aşamalı doğrulamada bile ayrıcalıklı rol için passkey şarttır.",
    "tests": [
     "TP-12",
@@ -3313,7 +3313,7 @@
     }
    ],
    "pendingApprovals": [
-    "ck-iki-asamali-yontem"
+    "ck-iki-asamali-siklik"
    ]
   },
   {
@@ -3388,7 +3388,7 @@
    ],
    "scopes": [],
    "pendingApprovals": [
-    "ck-iki-asamali-yontem"
+    "ck-iki-asamali-siklik"
    ]
   },
   {
@@ -4149,7 +4149,7 @@
      "dilim": 3,
      "onkosul": "OTP gateway (M15) test modunda; WhatsApp authentication şablonu ve Telegram Gateway test hesabı",
      "degisen": "SMS, WhatsApp ve Telegram kodu için aynı senaryolar; kanal değiştirme ve yedek kanala (SMS) düşme; şirketin doğrulama politikası \"telefon\" ve \"2 aşamalı\" yapılır; yalnız e-posta politikalı A şirketinden \"2 aşamalı\" B şirketine geçilir.",
-     "gecer": "Her kanal adıyla yeşil; yedek kanala düşme kullanıcıya bildirilir; telefonu doğrulanmamış üye B'ye girerken telefon doğrulamasına yönlenir ve taslağı korunur; \"2 aşamalı\" şirkette ikinci adım, ck-iki-asamali-yontem ile onaylanan yöntem ve sıklıkla istenir (telefon kodu ancak o karar telefonu yöntem olarak seçerse bu parçaya girer); politika sıkılaşınca açık oturumlar bir sonraki istekte yükseltme ister (M10)."
+     "gecer": "Her kanal adıyla yeşil; yedek kanala düşme kullanıcıya bildirilir; telefonu doğrulanmamış üye B'ye girerken telefon doğrulamasına yönlenir ve taslağı korunur; \"2 aşamalı\" şirkette ikinci adım passkey veya telefon kodudur ve kullanıcı ikisinden birini seçer, e-posta kodu ikinci adım olarak reddedilir (ck-iki-asamali-yontem); ikinci adımın ne zaman istendiği ck-iki-asamali-siklik kararına göre sınanır; politika sıkılaşınca açık oturumlar bir sonraki istekte yükseltme ister (M10)."
     }
    ],
    "gate": false,
@@ -4894,7 +4894,7 @@
    "ham_cevap": "K07 notu: e-posta ya da telefon tenant yöneticisinin opsiyonu; \"2 aşamalı (hem telefon hem eposta) bu da yine tenant yöneticisi için opsiyonel seçenek\".",
    "sorun": "\"2 aşamalı\" iki şey olabilir: hesapta iki kanalın da doğrulanmış olması (bir kez) ya da her girişte ikinci adım.",
    "oneri": "Platform sahibi, platform politikasıyla iki aşamalı doğrulamanın şirketler için isteğe bağlı mı zorunlu mu olduğunu belirler. \"Şirket seçer\" durumunda şirket yöneticisi şirketi için açar veya kapatır. \"Zorunlu\" durumunda bütün şirketlerde açıktır, şirket yöneticisi kapatamaz; sunucu kapatma isteğini reddeder (platform_policy_locked). Zorunluluk arayüzde gizlemeyle değil sunucuda uygulanır.",
-   "yururluk": "Proje sahibinin kararı: şirket yöneticisi için isteğe bağlı; isteğe bağlı olup olmamasını platform sahibi ayarlar. Doğrulamanın yöntemi ve ne zaman istendiği bu kararın parçası değildir (ck-iki-asamali-yontem).",
+   "yururluk": "Proje sahibinin kararı: şirket yöneticisi için isteğe bağlı; isteğe bağlı olup olmamasını platform sahibi ayarlar. Doğrulamanın yöntemi ve ne zaman istendiği bu kararın parçası değildir (ck-iki-asamali-yontem, ck-iki-asamali-siklik).",
    "kapsam_farki": "Platform politikası (şirket seçer, zorunlu) ve şirket tercihi ayrı alanlardır; zorunlu politika şirket tercihinin üstündedir.",
    "onay": {
     "durum": "onaylandı",
@@ -4910,15 +4910,38 @@
   },
   {
    "id": "ck-iki-asamali-yontem",
-   "baslik": "\"2 aşamalı\" doğrulamanın yöntemi ve sıklığı",
+   "baslik": "\"2 aşamalı\" doğrulamada ikinci adımın yöntemi",
    "cevaplar": [
     "K07"
    ],
    "ham_cevap": "K07 notu: \"2 aşamalı (hem telefon hem eposta) bu da yine tenant yöneticisi için opsiyonel seçenek.\"",
-   "sorun": "Cevaplar ikinci adımın yöntemini (telefona kod, e-postaya kod, passkey) ve ne zaman istendiğini (her girişte, belirli aralıkla, yalnız hassas işlemde) seçmiyor.",
-   "oneri": "Belge yazarının önerisi: ikinci adım passkey veya hesabın doğrulanmış telefonuna kod (telefon kodu OTP gateway ile Dilim 3'te); her yeni girişte istenir, aynı tarayıcı oturumundaki hostlar arası geçişte tekrar istenmez.",
-   "yururluk": "Karar verilene kadar geliştirme yalnızca passkey ile ikinci adımı kurar; telefon ve e-posta kodu ikinci adım olarak devreye alınmaz. Sıklık için geliştirmede \"her yeni giriş\" kullanılır ama canlıya çıkış bu kararı bekler.",
-   "kapsam_farki": "Yöntem ve sıklık seçilmedi.",
+   "sorun": "Cevaplar ikinci adımın yöntemini (telefona kod, e-postaya kod, passkey) seçmiyordu; K07 notu \"hem telefon hem eposta\" diyordu.",
+   "oneri": "Passkey veya hesabın doğrulanmış telefonuna kod; kullanıcı ikisinden birini seçer. E-posta kodu ikinci adım olmaz: parola da e-postayla sıfırlandığı için e-postayı ele geçiren iki adımı birden geçer. Telefon kodu OTP gateway ile Dilim 3'te gelir; o zamana kadar ikinci adım yalnız passkey.",
+   "yururluk": "Proje sahibinin kararı: ikinci adım passkey veya hesabın doğrulanmış telefonuna kod; kullanıcı ikisinden birini seçer; e-posta kodu ikinci adım değildir. Telefon kodu Dilim 3'te gelir, o zamana kadar yalnız passkey. İkinci adımın ne zaman istendiği bu kararın parçası değildir (ck-iki-asamali-siklik).",
+   "kapsam_farki": "K07 notundaki e-posta, ikinci adım yöntemi olarak değil, doğrulanmış kanal ve birincil kimlik olarak kalır.",
+   "onay": {
+    "durum": "onaylandı",
+    "onaylayan": "Proje sahibi (karacaismail)",
+    "tarih": "29 Eylül 2026",
+    "not": "\"Passkey veya telefon kodu\" seçildi."
+   },
+   "etkiledigi": [
+    "M8",
+    "M10"
+   ],
+   "onceki_yururluk": "Karar verilene kadar geliştirme yalnızca passkey ile ikinci adımı kurar; telefon ve e-posta kodu ikinci adım olarak devreye alınmaz. Sıklık için geliştirmede \"her yeni giriş\" kullanılır ama canlıya çıkış bu kararı bekler."
+  },
+  {
+   "id": "ck-iki-asamali-siklik",
+   "baslik": "\"2 aşamalı\" doğrulamada ikinci adımın ne zaman istendiği",
+   "cevaplar": [
+    "K07"
+   ],
+   "ham_cevap": "K07 notu: \"2 aşamalı (hem telefon hem eposta) bu da yine tenant yöneticisi için opsiyonel seçenek.\" Yöntem 29 Eylül 2026'da seçildi (ck-iki-asamali-yontem); sıklık sorulmadı.",
+   "sorun": "Cevaplar ikinci adımın ne zaman istendiğini (her girişte, belirli aralıkla, yalnız yeni cihazda, yalnız hassas işlemde) seçmiyor.",
+   "oneri": "Belge yazarının önerisi: her yeni girişte istenir; aynı tarayıcı oturumundaki hostlar arası geçişte tekrar istenmez.",
+   "yururluk": "Karar verilene kadar geliştirmede \"her yeni giriş\" kullanılır; bu bir karar değildir ve telefon kodu gelmeden (Dilim 3 kapısı) proje sahibinin onayını bekler.",
+   "kapsam_farki": "Sıklık seçilmedi.",
    "onay": {
     "durum": "onay bekliyor",
     "sahip": "Proje sahibi",
