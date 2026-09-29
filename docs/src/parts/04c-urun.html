@@ -1,0 +1,53 @@
+<section id="urun-ailesi">
+  <div class="sec-head">
+    <div class="title"><h2>Ürün ailesi, kullanıcılar ve cihazlar</h2></div>
+    <p>Ana proje Zoho benzeri, hepsi bir arada bir uygulama ailesidir (karar kitabı U03). Kimlik, oturum, kabuk, tasarım sistemi ve YZ çekirdeği bütün uygulamalarda ortaktır; her uygulama kendi veri sınıfını, risk kurallarını ve dilimini aşağıdaki katalogdan alır (A8). Sürüm 1.0, Dilim 1–4 dilimlerinin tamamıdır. Sonraki ürün dilimleri bu belgeyi temel alan ayrı gereksinim belgeleriyle açılır. "Davranış kaynağı" sütunundaki uygulamalardan kod kopyalanmaz; yalnızca davranışları tarif edilir (A5).</p>
+  </div>
+
+  <h3 style="font-size:var(--fs-l)">Uygulama kataloğu</h3>
+  <div class="tbl-wrap" style="margin-top:.6rem"><table class="matrix prose">
+    <thead><tr><th scope="col">Uygulama</th><th scope="col">Adres</th><th scope="col">En yüksek veri sınıfı</th><th scope="col">Özel kural</th><th scope="col">Davranış kaynağı (lisans)</th><th scope="col">Dilim</th></tr></thead>
+    <tbody>
+      <tr><td>Yönetim paneli ve sistem ayarları</td><td>app: <code>/</code>, <code>/ayarlar</code></td><td>Kişisel (kullanıcı kayıtları)</td><td>Rol ve izin değişikliği sensitive; şirket ayarında doğrulama kanalı (M8) ve KYC çıkarım yolu (M23)</td><td>Kendi kodu</td><td>Dilim 1</td></tr>
+      <tr><td>Ürün bilgisi ve katalog (PIM)</td><td>app: <code>/pim</code></td><td>İç</td><td>Varsayılan YZ yolculuğu; toplu güncellemede kayıt başına risk (F2); tedarikçi belgesi güvenilmeyen içeriktir (K5)</td><td>Kendi kodu</td><td>Dilim 1</td></tr>
+      <tr><td>Müşteri ilişkileri (CRM)</td><td>app: <code>/crm</code></td><td>Kişisel</td><td>YZ yazması her seferinde onay; ticari ileti için İYS onayı (M12); yanıt taslağı ve kayıt özeti (I13)</td><td>Frappe CRM (AGPL-3.0)</td><td>Dilim 3</td></tr>
+      <tr><td>Destek ve talep yönetimi</td><td>app: <code>/destek</code></td><td>Kişisel</td><td>Talep sınıflandırma ve yönlendirme (I13); vekil oturum (G6)</td><td>Frappe Helpdesk (AGPL-3.0)</td><td>Dilim 3</td></tr>
+      <tr><td>E-ticaret</td><td>www: <code>/hesap</code>, <code>/sepet</code>, <code>/odeme</code></td><td>Kişisel + ödeme</td><td>Ödeme yan etkisi sensitive ve geri alınamaz; sepet birleştirme (M21); ödeme sağlayıcısı entegrasyonu ayrı sözleşme</td><td>ERPNext (GPL-3.0)</td><td>Dilim 3</td></tr>
+      <tr><td>Muhasebe ve finans</td><td>app: <code>/muhasebe</code></td><td>Finansal</td><td>Yasal belge gönderimi (F10): belge başına onay, adım yükseltme, grant yok</td><td>ERPNext (GPL-3.0)</td><td>Dilim 4</td></tr>
+      <tr><td>İnsan kaynakları</td><td>app: <code>/ik</code></td><td>Özel nitelikli kişisel (ör. sağlık raporu)</td><td>En sıkı veri kuralı; yalnızca kendi sunucumuzdaki model (G4); her erişim kayıtlı</td><td>Frappe HRMS (GPL-3.0)</td><td>Dilim 4</td></tr>
+      <tr><td colspan="6"><b>Sonraki ürün dilimleri</b> (sürüm 1.0 sonrası; her biri ayrı gereksinim belgesiyle)</td></tr>
+      <tr><td>TeamsLike: canlı sohbet ve video toplantı</td><td>app: <code>/iletisim</code></td><td>Kişisel + iletişim içeriği</td><td>Video için ayrı WebRTC medya altyapısı; kayıt ve transkript için ayrı rıza; Microsoft Teams, Google Meet, Zoom, Slack ve Mattermost özelliklerinin birleşimi hedeflenir</td><td>Frappe Suite Meet ve Raven (AGPL-3.0)</td><td>1.0 sonrası</td></tr>
+      <tr><td>İşbirliği paketi: dosya, belge, tablo, sunum, posta, takvim</td><td>app: <code>/suite</code></td><td>Kişisel</td><td>Kullanıcının verdiği <code>github.com/frappe/suite</code> referansı; dosya kütüphanesi L5 ile ortak</td><td>Frappe Suite (AGPL-3.0)</td><td>1.0 sonrası</td></tr>
+      <tr><td>Eğitim platformu (Udemy benzeri)</td><td>app: <code>/egitim</code>, www</td><td>Kişisel + ödeme</td><td>İçerik lisansı, ödeme, sertifika</td><td>Frappe LMS (AGPL-3.0)</td><td>1.0 sonrası</td></tr>
+      <tr><td>Sağlık, hastane ve klinik yönetimi</td><td>app: <code>/saglik</code></td><td>Özel nitelikli (sağlık)</td><td>KVKK md. 6 ve Kişisel Sağlık Verileri Hakkında Yönetmelik; kamu hastanesi veya kritik altyapı müşterisinde yurt içi saklama (2019/12 Genelgesi) ve ayrı site</td><td>Marley Health (GPL-3.0)</td><td>1.0 sonrası</td></tr>
+      <tr><td>MarketerLike: SEO, pazarlama otomasyonu, e-posta kampanyası</td><td>app: <code>/pazarlama</code></td><td>Kişisel</td><td>İYS onayı olmadan ticari ileti yok; e-posta teslim edilebilirliği (SPF, DKIM, DMARC); SEO taraması ayrı altyapı ister (Ahrefs, Semrush, HubSpot, Mailchimp özelliklerinin birleşimi hedeflenir)</td><td>Kendi kodu</td><td>1.0 sonrası</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3 style="margin-top:1.75rem;font-size:var(--fs-l)">Kullanıcılar (personalar)</h3>
+  <p style="margin-top:.4rem;color:var(--ink-2)">Birincil kullanıcı operasyon ekibidir (karar kitabı U05); diğer üç kullanıcı kitlesi de sürüm 1.0'dadır (U06). Kullanıcı araştırmasına pilot müşterilerden 5–8 gerçek kullanıcı katılır (T07; AT-13).</p>
+  <div class="tbl-wrap" style="margin-top:.6rem"><table class="matrix prose">
+    <thead><tr><th scope="col">Persona</th><th scope="col">Kim</th><th scope="col">İlk üç görev</th><th scope="col">Başlıca cihaz</th><th scope="col">Dilim</th></tr></thead>
+    <tbody>
+      <tr><td>Operasyon uzmanı (birincil)</td><td>Gün boyu kayıt giren, güncelleyen, onaylayan kişi</td><td>Seçili ürünlerin eksik alanlarını belgelerden tamamlamak; toplu alan güncellemek; yarım kalan Run'a dönmek</td><td>Masaüstü; yolda telefon</td><td>Dilim 1</td></tr>
+      <tr><td>Sistem yöneticisi</td><td>Kullanıcı, rol ve şirket ayarlarını yöneten kişi</td><td>Kullanıcı davet etmek; rol atamak; şirketin doğrulama kanalını ve YZ ayarlarını seçmek</td><td>Masaüstü</td><td>Dilim 1</td></tr>
+      <tr><td>Analist ve yönetici</td><td>Rapor ve karar kullanıcısı</td><td>Doğal dille rapor kurmak; panoyu düzenlemek; raporu paylaşmak ve dışa aktarmak</td><td>Masaüstü, tablet</td><td>Dilim 2</td></tr>
+      <tr><td>Müşteri veya iş ortağı</td><td>Portal kullanıcısı</td><td>Kendi siparişini ve belgesini görmek; talep açmak; www'de alışveriş yapmak</td><td>Telefon</td><td>Dilim 3</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3 id="cihaz-matrisi" style="margin-top:1.75rem;font-size:var(--fs-l)">Cihaz sınıfı ve yön matrisi</h3>
+  <p style="margin-top:.4rem;color:var(--ink-2)">Tasarım 320 CSS px telefondan başlar ve cihaz sınıfına göre ayrı yüzey paketiyle teslim edilir (karar kitabı U12, R08; J9). Genişlik aralıkları sınıf tespitinde tek ölçü değildir: giriş biçimi (dokunma, işaretçi, uzaktan kumanda) ve kullanıcının seçimi de sayılır. Her sınıf dikey ve yatay tutuşta ayrı kabul edilir; bir yön o sınıfta anlamsızsa (ör. televizyonda dikey) kabul kaydında gerekçeli "uygulanmaz" olur (K9).</p>
+  <div class="tbl-wrap" style="margin-top:.6rem"><table class="matrix prose">
+    <thead><tr><th scope="col">Sınıf</th><th scope="col">Yaklaşık genişlik (CSS px)</th><th scope="col">Giriş biçimi</th><th scope="col">Yön</th><th scope="col">Yüzey paketi</th><th scope="col">Test</th><th scope="col">Dilim</th></tr></thead>
+    <tbody>
+      <tr><td>Telefon</td><td>320–599</td><td>Dokunma, sanal klavye</td><td>Dikey ve yatay</td><td><code>surfaces/telefon</code></td><td>Her PR'da gerçek iPhone (Safari) ve Android (Chrome)</td><td>Dilim 1</td></tr>
+      <tr><td>Dizüstü ve masaüstü</td><td>1024–2559</td><td>İşaretçi ve klavye; dokunmatik dizüstü</td><td>Yatay (dikey monitör ayrı kabul)</td><td><code>surfaces/masaustu</code></td><td>Her PR'da CI tarayıcıları; dokunmatik dizüstü sürümde</td><td>Dilim 1</td></tr>
+      <tr><td>Tablet</td><td>600–1023</td><td>Dokunma, kalem, harici klavye; bölünmüş ekran</td><td>Dikey ve yatay</td><td><code>surfaces/tablet</code></td><td>Her PR'da gerçek tablet</td><td>Dilim 2</td></tr>
+      <tr><td>Kiosk</td><td>Cihaza göre; çoğu 1080×1920 dikey</td><td>Dokunma</td><td>Çoğunlukla dikey</td><td><code>surfaces/kiosk</code></td><td>Sürümde gerçek cihaz; oturum kuralları M27</td><td>Dilim 3</td></tr>
+      <tr><td>4K ve 5K ekran</td><td>2560 ve üstü, yüksek piksel yoğunluğu</td><td>İşaretçi ve klavye</td><td>Yatay; dikey monitör ayrı</td><td><code>surfaces/genis</code></td><td>Sürümde elle, kanıt kaydıyla</td><td>Dilim 4</td></tr>
+      <tr><td>8K televizyon</td><td>Ölçekli; 3 metreden okunur yazı</td><td>Uzaktan kumanda (yön tuşları ve seçim)</td><td>Yatay</td><td><code>surfaces/tv</code></td><td>Sürümde elle, kanıt kaydıyla</td><td>Dilim 4</td></tr>
+      <tr><td>Akıllı tahta</td><td>Büyük fiziksel ekran; 1920–3840</td><td>Çoklu dokunma, kalem, ayakta kullanım</td><td>Yatay</td><td><code>surfaces/tahta</code></td><td>Sürümde elle, kanıt kaydıyla</td><td>Dilim 4</td></tr>
+    </tbody>
+  </table></div>
+</section>

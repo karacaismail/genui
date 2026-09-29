@@ -1,0 +1,3592 @@
+{
+  "kind": "genui-karar-kitabi-yanitlari",
+  "schemaVersion": 1,
+  "book": {
+    "title": "GenUI Karar Kitabı",
+    "bookVersion": "1.0",
+    "date": "29 Eylül 2026",
+    "basedOn": {
+      "document": "GENUI-FE-REQ v2.5",
+      "sourceCommit": "c19bfca",
+      "reports": [
+        "Claude v2.5 zayıflık raporu",
+        "Codex v2.5 yeterlilik raporu (D01–D15)",
+        "Keycloak v2.3 inceleme raporu (R1–R10)"
+      ]
+    },
+    "questionCount": 104
+  },
+  "exportedAt": "2026-09-29T08:00:16.589Z",
+  "summary": {
+    "total": 101,
+    "answered": 98,
+    "deferred": 3,
+    "unanswered": 0,
+    "notApplicable": 3,
+    "bulkRecommended": 0,
+    "differsFromRecommendation": 42,
+    "p1Unanswered": []
+  },
+  "answers": [
+    {
+      "id": "U01",
+      "chapter": "urun",
+      "chapterTitle": "Ürün ve kapsam",
+      "priority": "P1",
+      "decisionOwner": "product-owner",
+      "question": "Ana proje bugün hangi durumda?",
+      "status": "answered",
+      "selected": [
+        "sifir"
+      ],
+      "selectedLabels": [
+        "Sıfırdan: ürün henüz yok"
+      ],
+      "recommended": [],
+      "recommendedLabels": [],
+      "matchesRecommendation": null,
+      "source": "user",
+      "customText": "",
+      "note": "",
+      "affects": [
+        "B4",
+        "B8",
+        "K7",
+        "AT-10"
+      ],
+      "sources": [
+        "Claude raporu D1",
+        "Karar kaydı: migration, parity, scripts"
+      ],
+      "answeredAt": "2026-09-29T05:08:43.794Z"
+    },
+    {
+      "id": "U02",
+      "chapter": "urun",
+      "chapterTitle": "Ürün ve kapsam",
+      "priority": "P1",
+      "decisionOwner": "product-owner",
+      "question": "\"AEP\" nedir?",
+      "status": "answered",
+      "selected": [
+        "baska"
+      ],
+      "selectedLabels": [
+        "Başka bir ad kullan (not alanına yaz)"
+      ],
+      "recommended": [
+        "kod"
+      ],
+      "recommendedLabels": [
+        "AEP geçici bir kod adı; gerçek marka sonra belirlenecek"
+      ],
+      "matchesRecommendation": false,
+      "source": "user",
+      "customText": "ai vibing yaşamışsın, başka bir projenin 'design system'i. ",
+      "note": "",
+      "affects": [
+        "C1",
+        "M7",
+        "M13"
+      ],
+      "sources": [
+        "Claude raporu G2"
+      ],
+      "answeredAt": "2026-09-29T05:17:55.529Z"
+    },
+    {
+      "id": "U03",
+      "chapter": "urun",
+      "chapterTitle": "Ürün ve kapsam",
+      "priority": "P1",
+      "decisionOwner": "product-owner",
+      "question": "Ürün ailesinde hangi uygulamalar olacak?",
+      "status": "answered",
+      "selected": [
+        "panel",
+        "pim",
+        "crm",
+        "muhasebe",
+        "ik",
+        "eticaret",
+        "destek"
+      ],
+      "selectedLabels": [
+        "Yönetim paneli ve sistem ayarları",
+        "Ürün bilgisi ve katalog (PIM)",
+        "Müşteri ilişkileri (CRM)",
+        "Muhasebe ve finans",
+        "İnsan kaynakları",
+        "E-ticaret (www: hesap, sepet, ödeme)",
+        "Destek ve talep yönetimi"
+      ],
+      "recommended": [],
+      "recommendedLabels": [],
+      "matchesRecommendation": null,
+      "source": "user",
+      "customText": "'https://github.com/frappe/suite', + TeamsLike{(microsoft temas + google meets + zoom + (slack + mattermost) özelliklerinin hepsi = teamsLike adlı proje (canlı chat ve video conferance odaklı bir multi platform (custom frappe) app.)}, +  'udemy benzeri platform' + 'sağlık hastane klinik yönetim sistemleri suite' + 'marketerLike(ahrefs + semrush + hubspot + mailchimp)' gibi uygualamalar custom app olarak de geliştirmelerle suite'ler yaratılacak (zoho gibi all in one)  ",
+      "note": "",
+      "affects": [
+        "F2",
+        "M23",
+        "M21"
+      ],
+      "sources": [
+        "Claude raporu D1",
+        "AI-first incelemesi 3"
+      ],
+      "answeredAt": "2026-09-29T05:26:23.069Z"
+    },
+    {
+      "id": "U04",
+      "chapter": "urun",
+      "chapterTitle": "Ürün ve kapsam",
+      "priority": "P1",
+      "decisionOwner": "product-owner",
+      "question": "İlk canlıya çıkacak iş (ilk dikey dilim) hangi alanda olsun?",
+      "status": "answered",
+      "selected": [
+        "katalog"
+      ],
+      "selectedLabels": [
+        "Ürün bilgisi: eksik alanları belgelerden tamamlama"
+      ],
+      "recommended": [
+        "katalog"
+      ],
+      "recommendedLabels": [
+        "Ürün bilgisi: eksik alanları belgelerden tamamlama"
+      ],
+      "matchesRecommendation": true,
+      "source": "user",
+      "customText": "",
+      "note": "",
+      "affects": [
+        "Varsayılan yolculuk",
+        "AT-13",
+        "AT-14"
+      ],
+      "sources": [
+        "AI-first incelemesi 3",
+        "Codex D13"
+      ],
+      "answeredAt": "2026-09-29T05:26:59.846Z"
+    },
+    {
+      "id": "U05",
+      "chapter": "urun",
+      "chapterTitle": "Ürün ve kapsam",
+      "priority": "P1",
+      "decisionOwner": "product-owner",
+      "question": "İlk teslimin birincil kullanıcısı kim?",
+      "status": "answered",
+      "selected": [
+        "operasyon"
+      ],
+      "selectedLabels": [
+        "Operasyon ekibi"
+      ],
+      "recommended": [
+        "operasyon"
+      ],
+      "recommendedLabels": [
+        "Operasyon ekibi"
+      ],
+      "matchesRecommendation": true,
+      "source": "user",
+      "customText": "",
+      "note": "",
+      "affects": [
+        "AT-13",
+        "J1",
+        "J6"
+      ],
+      "sources": [
+        "Claude raporu D1",
+        "Codex D10",
+        "Karar kaydı: audience"
+      ],
+      "answeredAt": "2026-09-29T05:27:50.995Z"
+    },
+    {
+      "id": "U06",
+      "chapter": "urun",
+      "chapterTitle": "Ürün ve kapsam",
+      "priority": "P2",
+      "decisionOwner": "product-owner",
+      "question": "İlk teslimde desteklenecek ikincil kullanıcılar kimler?",
+      "status": "answered",
+      "selected": [
+        "operasyon",
+        "analist",
+        "musteri",
+        "yonetici"
+      ],
+      "selectedLabels": [
+        "Operasyon ekibi",
+        "Analist ve yönetici",
+        "Müşteri veya iş ortağı",
+        "Sistem yöneticisi"
+      ],
+      "recommended": [
+        "analist",
+        "yonetici"
+      ],
+      "recommendedLabels": [
+        "Analist ve yönetici",
+        "Sistem yöneticisi"
+      ],
+      "matchesRecommendation": false,
+      "source": "user",
+      "customText": "",
+      "note": "",
+      "affects": [
+        "L8",
+        "M11"
+      ],
+      "sources": [
+        "Karar kaydı: audience, surface"
+      ],
+      "answeredAt": "2026-09-29T05:28:02.472Z"
+    },
+    {
+      "id": "U07",
+      "chapter": "urun",
+      "chapterTitle": "Ürün ve kapsam",
+      "priority": "P1",
+      "decisionOwner": "product-owner",
+      "question": "Muhasebe ve finans alanında YZ ne yapabilsin?",
+      "status": "answered",
+      "selected": [
+        "tam"
+      ],
+      "selectedLabels": [
+        "Onaylı kayıt ve yasal belge gönderimi dahil"
+      ],
+      "recommended": [
+        "taslak"
+      ],
+      "recommendedLabels": [
+        "Taslak üretir, insan kontrol edip kaydeder"
+      ],
+      "matchesRecommendation": false,
+      "source": "user",
+      "customText": "",
+      "note": "",
+      "affects": [
+        "F2",
+        "M23"
+      ],
+      "sources": [
+        "AI-first incelemesi 3"
+      ],
+      "answeredAt": "2026-09-29T05:28:13.209Z"
+    },
+    {
+      "id": "U08",
+      "chapter": "urun",
+      "chapterTitle": "Ürün ve kapsam",
+      "priority": "P2",
+      "decisionOwner": "product-owner",
+      "question": "Frappe v15 desteklenecek mi?",
+      "status": "answered",
+      "selected": [
+        "v16"
+      ],
+      "selectedLabels": [
+        "Yalnız v16"
+      ],
+      "recommended": [
+        "v16"
+      ],
+      "recommendedLabels": [
+        "Yalnız v16"
+      ],
+      "matchesRecommendation": true,
+      "source": "user",
+      "customText": "",
+      "note": "",
+      "affects": [
+        "A3",
+        "F8",
+        "M25",
+        "B6"
+      ],
+      "sources": [
+        "Uygulanabilirlik incelemesi 15"
+      ],
+      "answeredAt": "2026-09-29T05:28:19.901Z"
+    },
+    {
+      "id": "U09",
+      "chapter": "urun",
+      "chapterTitle": "Ürün ve kapsam",
+      "priority": "P1",
+      "decisionOwner": "product-owner",
+      "question": "İlk teslimde müşteriler hangi markayı görsün (white-label seviyesi)?",
+      "status": "answered",
+      "selected": [
+        "s2"
+      ],
+      "selectedLabels": [
+        "Seviye 2: müşteri markası, platform alan adında"
+      ],
+      "recommended": [
+        "s1"
+      ],
+      "recommendedLabels": [
+        "Seviye 1: yalnız ürün markası"
+      ],
+      "matchesRecommendation": false,
+      "source": "user",
+      "customText": "",
+      "note": "",
+      "affects": [
+        "M13",
+        "K11"
+      ],
+      "sources": [
+        "Codex D13",
+        "Keycloak raporu R5"
+      ],
+      "answeredAt": "2026-09-29T05:28:57.851Z"
+    },
+    {
+      "id": "U10",
+      "chapter": "urun",
+      "chapterTitle": "Ürün ve kapsam",
+      "priority": "P2",
+      "decisionOwner": "product-owner",
+      "question": "Ürün nasıl dağıtılacak?",
+      "status": "answered",
+      "selected": [
+        "ikisi"
+      ],
+      "selectedLabels": [
+        "İkisi birden"
+      ],
+      "recommended": [
+        "saas"
+      ],
+      "recommendedLabels": [
+        "Yalnız SaaS (biz barındırırız)"
+      ],
+      "matchesRecommendation": false,
+      "source": "user",
+      "customText": "",
+      "note": "",
+      "affects": [
+        "A5"
+      ],
+      "sources": [
+        "Kimlik rehberi açık kararı: ticari dağıtım"
+      ],
+      "answeredAt": "2026-09-29T05:29:06.445Z"
+    },
+    {
+      "id": "U11",
+      "chapter": "urun",
+      "chapterTitle": "Ürün ve kapsam",
+      "priority": "P2",
+      "decisionOwner": "product-owner",
+      "question": "İlk yıl beklenen ölçek nedir?",
+      "status": "answered",
+      "selected": [
+        "buyuk"
+      ],
+      "selectedLabels": [
+        "Büyük: 500'den fazla eşzamanlı kullanıcı, milyonlarca kayıt"
+      ],
+      "recommended": [
+        "olc"
+      ],
+      "recommendedLabels": [
+        "Bilmiyorum; önce ölçelim"
+      ],
+      "matchesRecommendation": false,
+      "source": "user",
+      "customText": "",
+      "note": "",
+      "affects": [
+        "K3",
+        "L7",
+        "D5"
+      ],
+      "sources": [
+        "Karar kaydı: scale, user-scale"
+      ],
+      "answeredAt": "2026-09-29T05:29:29.263Z"
+    },
+    {
+      "id": "U12",
+      "chapter": "urun",
+      "chapterTitle": "Ürün ve kapsam",
+      "priority": "P2",
+      "decisionOwner": "product-owner",
+      "question": "Hangi cihazlarda iş yapılacak?",
+      "status": "answered",
+      "selected": [
+        "telefon",
+        "kiosk",
+        "tablet",
+        "masaustu"
+      ],
+      "selectedLabels": [
+        "Telefon",
+        "Kiosk veya ortak terminal",
+        "Tablet ve saha",
+        "Masaüstü ve dizüstü"
+      ],
+      "recommended": [
+        "masaustu",
+        "telefon"
+      ],
+      "recommendedLabels": [
+        "Masaüstü ve dizüstü",
+        "Telefon"
+      ],
+      "matchesRecommendation": false,
+      "source": "user",
+      "customText": "",
+      "note": "mobile 320 px iphone 4 first. adaptive delivery. yatay ve dikey ekran tutuş matrisi çarpanı ayrı. telefon, tablet, laptop, desktop, 8k tv, akıllı tahta, 4k ekran, 5k ekran, cihaza göre ayrı kodlama. ",
+      "affects": [
+        "J1",
+        "J6",
+        "D10"
+      ],
+      "sources": [
+        "Karar kaydı: devices",
+        "Claude raporu E"
+      ],
+      "answeredAt": "2026-09-29T05:31:29.895Z"
+    },
+    {
+      "id": "C01",
+      "chapter": "celiski",
+      "chapterTitle": "Belgedeki çelişkiler",
+      "priority": "P1",
+      "decisionOwner": "product-owner",
+      "question": "Toplu güncellemenin risk sınıfı ne olsun?",
+      "status": "answered",
+      "selected": [
+        "kayit"
+      ],
+      "selectedLabels": [
+        "Risk kayıt başına hesaplanır; eşik ve içerik yükseltir"
+      ],
+      "recommended": [
+        "kayit"
+      ],
+      "recommendedLabels": [
+        "Risk kayıt başına hesaplanır; eşik ve içerik yükseltir"
+      ],
+      "matchesRecommendation": true,
+      "source": "user",
+      "customText": "",
+      "note": "",
+      "affects": [
+        "F2",
+        "F3",
+        "BulkEdit",
+        "AT-14"
+      ],
+      "sources": [
+        "Claude raporu A1",
+        "Codex D02",
+        "AI-first incelemesi 1"
+      ],
+      "answeredAt": "2026-09-29T05:31:48.970Z"
+    },
+    {
+      "id": "C02",
+      "chapter": "celiski",
+      "chapterTitle": "Belgedeki çelişkiler",
+      "priority": "P1",
+      "decisionOwner": "product-owner",
+      "question": "Grant (önceden verilmiş sınırlı yetki) canlıya çıkışta olsun mu?",
+      "status": "answered",
+      "selected": [
+        "sinirli"
+      ],
+      "selectedLabels": [
+        "Canlıda sınırlı grant: yalnız geri alınabilir, küçük ve kısa süreli"
+      ],
+      "recommended": [
+        "sonra"
+      ],
+      "recommendedLabels": [
+        "Canlıda grant yok; her YZ değişikliği onaylanır, grant üç ay sonra"
+      ],
+      "matchesRecommendation": false,
+      "source": "user",
+      "customText": "",
+      "note": "",
+      "affects": [
+        "AT-14",
+        "F1",
+        "F3",
+        "K7"
+      ],
+      "sources": [
+        "Claude raporu A2",
+        "AI-first incelemesi 2",
+        "Tutarlılık incelemesi 3"
+      ],
+      "answeredAt": "2026-09-29T05:34:24.738Z"
+    },
+    {
+      "id": "C03",
+      "chapter": "celiski",
+      "chapterTitle": "Belgedeki çelişkiler",
+      "priority": "P1",
+      "decisionOwner": "technical-default",
+      "question": "Canlı güncelleme olayları ne taşısın?",
+      "status": "answered",
+      "selected": [
+        "sinyal"
+      ],
+      "selectedLabels": [
+        "Yalnız \"değişti\" sinyali; içerik ve ilerleme sunucudan ayrıca çekilir"
+      ],
+      "recommended": [
+        "sinyal"
+      ],
+      "recommendedLabels": [
+        "Yalnız \"değişti\" sinyali; içerik ve ilerleme sunucudan ayrıca çekilir"
+      ],
+      "matchesRecommendation": true,
+      "source": "user",
+      "customText": "",
+      "note": "",
+      "affects": [
+        "B6",
+        "E4",
+        "M19"
+      ],
+      "sources": [
+        "Claude raporu A3",
+        "Tutarlılık incelemesi 1"
+      ],
+      "answeredAt": "2026-09-29T05:35:03.736Z"
+    },
+    {
+      "id": "C04",
+      "chapter": "celiski",
+      "chapterTitle": "Belgedeki çelişkiler",
+      "priority": "P1",
+      "decisionOwner": "technical-default",
+      "question": "Ant Design bileşenleri nerede doğrudan kullanılabilir?",
+      "status": "answered",
+      "selected": [
+        "hepsi"
+      ],
+      "selectedLabels": [
+        "Her şey sarmalanır; uygulama antd görmez"
+      ],
+      "recommended": [
+        "c1"
+      ],
+      "recommendedLabels": [
+        "Uygulama temel bileşenleri doğrudan kullanır; iş bileşenleri @aep/ui'de; sözleşmelere antd girmez"
+      ],
+      "matchesRecommendation": false,
+      "source": "user",
+      "customText": "",
+      "note": "",
+      "affects": [
+        "C1",
+        "Karar",
+        "Teknoloji tablosu"
+      ],
+      "sources": [
+        "Claude raporu A4",
+        "Codex D14",
+        "Tutarlılık incelemesi 2"
+      ],
+      "answeredAt": "2026-09-29T05:35:28.757Z"
+    },
+    {
+      "id": "C05",
+      "chapter": "celiski",
+      "chapterTitle": "Belgedeki çelişkiler",
+      "priority": "P1",
+      "decisionOwner": "technical-default",
+      "question": "Faz sırası ve kabul bağımlılıkları nasıl düzeltilsin?",
+      "status": "answered",
+      "selected": [
+        "dilim"
+      ],
+      "selectedLabels": [
+        "Fazları kaldır; yalnız uçtan uca dikey dilimler"
+      ],
+      "recommended": [
+        "onkosul"
+      ],
+      "recommendedLabels": [
+        "Her gereksinim ve deneye önkoşul; erken fazda sahte (stub) sözleşme testi, tam entegrasyon sonra"
+      ],
+      "matchesRecommendation": false,
+      "source": "user",
+      "customText": "",
+      "note": "",
+      "affects": [
+        "Plan",
+        "AT-20",
+        "AT-21",
+        "AT-26",
+        "E3"
+      ],
+      "sources": [
+        "Claude raporu A5",
+        "Codex D03",
+        "Uygulanabilirlik incelemesi 7"
+      ],
+      "answeredAt": "2026-09-29T05:50:33.472Z"
+    },
+    {
+      "id": "C06",
+      "chapter": "celiski",
+      "chapterTitle": "Belgedeki çelişkiler",
+      "priority": "P1",
+      "decisionOwner": "product-owner",
+      "question": "Yayın kapısında \"çalıştırılmadı\" sonucu ne anlama gelsin?",
+      "status": "answered",
+      "selected": [
+        "siki"
+      ],
+      "selectedLabels": [
+        "Yalnız \"geçti\" kapıyı açar; \"uygulanmaz\" gerekçeli ve onaylı istisnadır"
+      ],
+      "recommended": [
+        "siki"
+      ],
+      "recommendedLabels": [
+        "Yalnız \"geçti\" kapıyı açar; \"uygulanmaz\" gerekçeli ve onaylı istisnadır"
+      ],
+      "matchesRecommendation": true,
+      "source": "user",
+      "customText": "",
+      "note": "",
+      "affects": [
+        "K7",
+        "K9"
+      ],
+      "sources": [
+        "Codex D01"
+      ],
+      "answeredAt": "2026-09-29T05:50:58.327Z"
+    },
+    {
+      "id": "C07",
+      "chapter": "celiski",
+      "chapterTitle": "Belgedeki çelişkiler",
+      "priority": "P1",
+      "decisionOwner": "product-owner",
+      "question": "İlk sürümde çevrimdışı çalışma olsun mu?",
+      "status": "answered",
+      "selected": [
+        "kuyruk"
+      ],
+      "selectedLabels": [
+        "Tam çevrimdışı yazma kuyruğu (faz 04)"
+      ],
+      "recommended": [
+        "yok"
+      ],
+      "recommendedLabels": [
+        "Yok; bağlantı koparsa açık formdaki taslak korunur"
+      ],
+      "matchesRecommendation": false,
+      "source": "user",
+      "customText": "",
+      "note": "",
+      "affects": [
+        "E3",
+        "E2",
+        "Plan"
+      ],
+      "sources": [
+        "Claude raporu A5",
+        "Codex D03",
+        "Karar kaydı: offline"
+      ],
+      "answeredAt": "2026-09-29T05:51:24.772Z"
+    },
+    {
+      "id": "C08",
+      "chapter": "celiski",
+      "chapterTitle": "Belgedeki çelişkiler",
+      "priority": "P1",
+      "decisionOwner": "product-owner",
+      "question": "Hassas veri içeren taslak cihazda tutulsun mu?",
+      "status": "answered",
+      "selected": [
+        "sifreli"
+      ],
+      "selectedLabels": [
+        "Şifreli ve süreli tutulur"
+      ],
+      "recommended": [
+        "hayir"
+      ],
+      "recommendedLabels": [
+        "Hayır; hassas veri cihazda hiç tutulmaz"
+      ],
+      "matchesRecommendation": false,
+      "source": "user",
+      "customText": "",
+      "note": "",
+      "affects": [
+        "E2",
+        "E3",
+        "G7"
+      ],
+      "sources": [
+        "Claude raporu A6",
+        "Tutarlılık incelemesi 8"
+      ],
+      "answeredAt": "2026-09-29T05:51:56.496Z"
+    },
+    {
+      "id": "C09",
+      "chapter": "celiski",
+      "chapterTitle": "Belgedeki çelişkiler",
+      "priority": "P1",
+      "decisionOwner": "product-owner",
+      "question": "Çevrimdışı kuyruk oturum bittiğinde ne yapsın?",
+      "status": "answered",
+      "selected": [
+        "bagli"
+      ],
+      "selectedLabels": [
+        "Kuyruk onu oluşturan kullanıcıya ve oturuma bağlı"
+      ],
+      "recommended": [
+        "bagli"
+      ],
+      "recommendedLabels": [
+        "Kuyruk onu oluşturan kullanıcıya ve oturuma bağlı"
+      ],
+      "matchesRecommendation": true,
+      "source": "user",
+      "customText": "",
+      "note": "",
+      "affects": [
+        "E3",
+        "M19",
+        "M25"
+      ],
+      "sources": [
+        "Claude raporu E"
+      ],
+      "answeredAt": "2026-09-29T05:52:37.387Z"
+    },
+    {
+      "id": "C10",
+      "chapter": "celiski",
+      "chapterTitle": "Belgedeki çelişkiler",
+      "priority": "P1",
+      "decisionOwner": "product-owner",
+      "question": "Canlıya geçiş nasıl olsun?",
+      "status": "not_applicable",
+      "selected": [],
+      "selectedLabels": [],
+      "recommended": [
+        "kademeli"
+      ],
+      "recommendedLabels": [
+        "Kademeli: modül modül geçiş"
+      ],
+      "matchesRecommendation": null,
+      "source": null,
+      "customText": "",
+      "note": "",
+      "affects": [
+        "K7",
+        "Plan"
+      ],
+      "sources": [
+        "Açık kararlar: canlıya geçiş"
+      ],
+      "answeredAt": null
+    },
+    {
+      "id": "C11",
+      "chapter": "celiski",
+      "chapterTitle": "Belgedeki çelişkiler",
+      "priority": "P2",
+      "decisionOwner": "product-owner",
+      "question": "Takvim mi, Gantt ve kaynak planlayıcı mı?",
+      "status": "answered",
+      "selected": [
+        "gantt"
+      ],
+      "selectedLabels": [
+        "Gantt ve kaynak planlayıcı da ilk sürümde"
+      ],
+      "recommended": [
+        "sonra"
+      ],
+      "recommendedLabels": [
+        "Gantt sonra, gerçek ihtiyaç ve deneme ile"
+      ],
+      "matchesRecommendation": false,
+      "source": "user",
+      "customText": "",
+      "note": "",
+      "affects": [
+        "L4"
+      ],
+      "sources": [
+        "Açık kararlar: takvim ve Gantt"
+      ],
+      "answeredAt": "2026-09-29T05:52:59.151Z"
+    },
+    {
+      "id": "C12",
+      "chapter": "celiski",
+      "chapterTitle": "Belgedeki çelişkiler",
+      "priority": "P2",
+      "decisionOwner": "product-owner",
+      "question": "Yorum, atama ve bildirim akışları ne zaman yeni arayüze gelsin?",
+      "status": "answered",
+      "selected": [
+        "hepsi"
+      ],
+      "selectedLabels": [
+        "İlk sürümde hepsi yeni arayüzde"
+      ],
+      "recommended": [
+        "yorum"
+      ],
+      "recommendedLabels": [
+        "İlk sürümde yorum ve bildirim; atama sonra"
+      ],
+      "matchesRecommendation": false,
+      "source": "user",
+      "customText": "",
+      "note": "",
+      "affects": [
+        "B8"
+      ],
+      "sources": [
+        "Açık kararlar: işbirliği"
+      ],
+      "answeredAt": "2026-09-29T05:53:16.253Z"
+    },
+    {
+      "id": "C13",
+      "chapter": "celiski",
+      "chapterTitle": "Belgedeki çelişkiler",
+      "priority": "P2",
+      "decisionOwner": "technical-default",
+      "question": "YZ önerisi kabul edilene kadar nerede dursun?",
+      "status": "answered",
+      "selected": [
+        "oneri"
+      ],
+      "selectedLabels": [
+        "Ayrı öneri katmanı; kullanıcı kabul edince taslağa geçer"
+      ],
+      "recommended": [
+        "oneri"
+      ],
+      "recommendedLabels": [
+        "Ayrı öneri katmanı; kullanıcı kabul edince taslağa geçer"
+      ],
+      "matchesRecommendation": true,
+      "source": "user",
+      "customText": "",
+      "note": "",
+      "affects": [
+        "E9",
+        "Varsayılan yolculuk"
+      ],
+      "sources": [
+        "Tutarlılık incelemesi 17"
+      ],
+      "answeredAt": "2026-09-29T05:53:33.653Z"
+    },
+    {
+      "id": "Y01",
+      "chapter": "yz",
+      "chapterTitle": "YZ öncelikli deneyim",
+      "priority": "P1",
+      "decisionOwner": "product-owner",
+      "question": "YZ modelleri nerede çalışsın?",
+      "status": "answered",
+      "selected": [
+        "karma"
+      ],
+      "selectedLabels": [
+        "Göreve göre yönlendirme: hassas veri kendi sunucumuzda, diğerleri API'de"
+      ],
+      "recommended": [
+        "api"
+      ],
+      "recommendedLabels": [
+        "Yönetilen model API'si; kişisel veri modele maskelenerek gider"
+      ],
+      "matchesRecommendation": false,
+      "source": "user",
+      "customText": "",
+      "note": "",
+      "affects": [
+        "G4",
+        "Teknoloji tablosu",
+        "M23"
+      ],
+      "sources": [
+        "Uygulanabilirlik incelemesi 6",
+        "AI-first incelemesi 7",
+        "Karar kaydı: model-host"
+      ],
+      "answeredAt": "2026-09-29T05:53:57.009Z"
+    },
+    {
+      "id": "Y02",
+      "chapter": "yz",
+      "chapterTitle": "YZ öncelikli deneyim",
+      "priority": "P1",
+      "decisionOwner": "product-owner",
+      "question": "Kişisel veri YZ modeline yurt dışında işlenebilir mi (KVKK)?",
+      "status": "answered",
+      "selected": [
+        "riza"
+      ],
+      "selectedLabels": [
+        "Açık rıza ve veri işleme sözleşmesiyle yurt dışı işleme"
+      ],
+      "recommended": [
+        "hukuk"
+      ],
+      "recommendedLabels": [
+        "Hukukçu görüşüne kadar kişisel veri içeren hiçbir istem dışarı gitmez"
+      ],
+      "matchesRecommendation": false,
+      "source": "user",
+      "customText": "",
+      "note": "",
+      "affects": [
+        "G4",
+        "M23",
+        "Dilim kabulü"
+      ],
+      "sources": [
+        "Açık kararlar: veri yerleşimi",
+        "Uygulanabilirlik incelemesi 6"
+      ],
+      "answeredAt": "2026-09-29T05:54:09.938Z"
+    },
+    {
+      "id": "Y03",
+      "chapter": "yz",
+      "chapterTitle": "YZ öncelikli deneyim",
+      "priority": "P1",
+      "decisionOwner": "product-owner",
+      "question": "İlk sürümde hangi YZ yüzeyleri olsun?",
+      "status": "answered",
+      "selected": [
+        "komut",
+        "form",
+        "rapor",
+        "toplu",
+        "akis"
+      ],
+      "selectedLabels": [
+        "Komut paleti ve asistan",
+        "Alan ve form yardımı",
+        "Rapor ve pano üretimi (doğal dilden rapor)",
+        "Satır ve toplu seçim eylemleri",
+        "Workflow, hata ve denetim yardımı"
+      ],
+      "recommended": [
+        "komut",
+        "form",
+        "toplu"
+      ],
+      "recommendedLabels": [
+        "Komut paleti ve asistan",
+        "Alan ve form yardımı",
+        "Satır ve toplu seçim eylemleri"
+      ],
+      "matchesRecommendation": false,
+      "source": "user",
+      "customText": "",
+      "note": "...ve daha fazlasını bul ve ekle.",
+      "affects": [
+        "I1",
+        "Plan",
+        "Kabul deneyleri"
+      ],
+      "sources": [
+        "AI-first incelemesi 4",
+        "Karar kaydı: ai-surfaces"
+      ],
+      "answeredAt": "2026-09-29T05:54:45.823Z"
+    },
+    {
+      "id": "Y04",
+      "chapter": "yz",
+      "chapterTitle": "YZ öncelikli deneyim",
+      "priority": "P1",
+      "decisionOwner": "product-owner",
+      "question": "Doğal dilden rapor çalışmadan önce kullanıcıya gösterilsin mi?",
+      "status": "answered",
+      "selected": [
+        "onay"
+      ],
+      "selectedLabels": [
+        "Evet; \"şöyle anladım\" filtre çipleri gösterilir, kullanıcı onaylar"
+      ],
+      "recommended": [
+        "onay"
+      ],
+      "recommendedLabels": [
+        "Evet; \"şöyle anladım\" filtre çipleri gösterilir, kullanıcı onaylar"
+      ],
+      "matchesRecommendation": true,
+      "source": "user",
+      "customText": "",
+      "note": "",
+      "affects": [
+        "D1",
+        "I2",
+        "K2"
+      ],
+      "sources": [
+        "AI-first incelemesi 4"
+      ],
+      "answeredAt": "2026-09-29T05:55:05.890Z"
+    },
+    {
+      "id": "Y05",
+      "chapter": "yz",
+      "chapterTitle": "YZ öncelikli deneyim",
+      "priority": "P1",
+      "decisionOwner": "technical-default",
+      "question": "YZ'nin \"güven\" etiketi neye dayansın?",
+      "status": "answered",
+      "selected": [
+        "olcum"
+      ],
+      "selectedLabels": [
+        "Yalnız ölçülmüş sinyalden; kalibrasyon bitene kadar etiket yok"
+      ],
+      "recommended": [
+        "olcum"
+      ],
+      "recommendedLabels": [
+        "Yalnız ölçülmüş sinyalden; kalibrasyon bitene kadar etiket yok"
+      ],
+      "matchesRecommendation": true,
+      "source": "user",
+      "customText": "",
+      "note": "",
+      "affects": [
+        "I4",
+        "K2",
+        "F3"
+      ],
+      "sources": [
+        "AI-first incelemesi 9",
+        "Codex D09"
+      ],
+      "answeredAt": "2026-09-29T05:55:40.182Z"
+    },
+    {
+      "id": "Y06",
+      "chapter": "yz",
+      "chapterTitle": "YZ öncelikli deneyim",
+      "priority": "P2",
+      "decisionOwner": "product-owner",
+      "question": "İki netleştirme sorusundan sonra belirsizlik sürerse ne olsun?",
+      "status": "answered",
+      "selected": [
+        "ayir"
+      ],
+      "selectedLabels": [
+        "Belirsiz kayıtlar ayrılır ve manuel kuyruğa gider; kalanlarla devam edilir"
+      ],
+      "recommended": [
+        "ayir"
+      ],
+      "recommendedLabels": [
+        "Belirsiz kayıtlar ayrılır ve manuel kuyruğa gider; kalanlarla devam edilir"
+      ],
+      "matchesRecommendation": true,
+      "source": "user",
+      "customText": "",
+      "note": "ama kullanıcıya güçlü geribildirim vermeli. ",
+      "affects": [
+        "Varsayılan yolculuk",
+        "I4"
+      ],
+      "sources": [
+        "AI-first incelemesi 9",
+        "Codex D09"
+      ],
+      "answeredAt": "2026-09-29T05:56:27.810Z"
+    },
+    {
+      "id": "Y07",
+      "chapter": "yz",
+      "chapterTitle": "YZ öncelikli deneyim",
+      "priority": "P2",
+      "decisionOwner": "product-owner",
+      "question": "YZ kullanıcı istemeden öneri gösterebilsin mi?",
+      "status": "answered",
+      "selected": [
+        "serbest"
+      ],
+      "selectedLabels": [
+        "Serbest: her ekranda öneri"
+      ],
+      "recommended": [
+        "sinirli"
+      ],
+      "recommendedLabels": [
+        "Sınırlı: başlangıç ekranında en fazla 3 öneri, modal değil, yazma başlatmaz"
+      ],
+      "matchesRecommendation": false,
+      "source": "user",
+      "customText": "",
+      "note": "",
+      "affects": [
+        "I10",
+        "I6",
+        "E7"
+      ],
+      "sources": [
+        "AI-first incelemesi 11"
+      ],
+      "answeredAt": "2026-09-29T05:56:37.555Z"
+    },
+    {
+      "id": "Y08",
+      "chapter": "yz",
+      "chapterTitle": "YZ öncelikli deneyim",
+      "priority": "P2",
+      "decisionOwner": "product-owner",
+      "question": "YZ kullanıcı düzeltmelerinden öğrensin mi?",
+      "status": "answered",
+      "selected": [
+        "hafiza"
+      ],
+      "selectedLabels": [
+        "Şirket bazlı düzeltme hafızası; bir sonraki öneride kullanılır"
+      ],
+      "recommended": [
+        "set"
+      ],
+      "recommendedLabels": [
+        "Düzeltmeler maskelenip insan onayıyla değerlendirme setine aday olur"
+      ],
+      "matchesRecommendation": false,
+      "source": "user",
+      "customText": "",
+      "note": "",
+      "affects": [
+        "I7",
+        "K2",
+        "G7"
+      ],
+      "sources": [
+        "AI-first incelemesi 8"
+      ],
+      "answeredAt": "2026-09-29T06:13:29.492Z"
+    },
+    {
+      "id": "Y09",
+      "chapter": "yz",
+      "chapterTitle": "YZ öncelikli deneyim",
+      "priority": "P2",
+      "decisionOwner": "product-owner",
+      "question": "YZ konuşma geçmişi ne kadar saklansın?",
+      "status": "answered",
+      "selected": [
+        "90"
+      ],
+      "selectedLabels": [
+        "90 gün"
+      ],
+      "recommended": [
+        "30"
+      ],
+      "recommendedLabels": [
+        "30 gün, sonra otomatik silinir"
+      ],
+      "matchesRecommendation": false,
+      "source": "user",
+      "customText": "",
+      "note": "",
+      "affects": [
+        "I8",
+        "I9",
+        "G7"
+      ],
+      "sources": [
+        "AI-first incelemesi 10",
+        "Codex D07"
+      ],
+      "answeredAt": "2026-09-29T06:13:50.598Z"
+    },
+    {
+      "id": "Y10",
+      "chapter": "yz",
+      "chapterTitle": "YZ öncelikli deneyim",
+      "priority": "P1",
+      "decisionOwner": "product-owner",
+      "question": "YZ maliyet tavanı nasıl belirlensin?",
+      "status": "answered",
+      "selected": [
+        "aylik"
+      ],
+      "selectedLabels": [
+        "Şirket başı aylık bütçe (abonelik paketine göre)"
+      ],
+      "recommended": [
+        "olc"
+      ],
+      "recommendedLabels": [
+        "Önce iki hafta ölç, sonra tavan koy"
+      ],
+      "matchesRecommendation": false,
+      "source": "user",
+      "customText": "",
+      "note": "",
+      "affects": [
+        "E7",
+        "K6",
+        "AT-13"
+      ],
+      "sources": [
+        "Claude raporu C3",
+        "AI-first incelemesi 7"
+      ],
+      "answeredAt": "2026-09-29T06:14:24.963Z"
+    },
+    {
+      "id": "Y11",
+      "chapter": "yz",
+      "chapterTitle": "YZ öncelikli deneyim",
+      "priority": "P1",
+      "decisionOwner": "product-owner",
+      "question": "YZ'nin başarısı nasıl ölçülsün?",
+      "status": "answered",
+      "selected": [
+        "baseline"
+      ],
+      "selectedLabels": [
+        "Önce klasik yolun ölçümü; eşikler oradan türetilir"
+      ],
+      "recommended": [
+        "baseline"
+      ],
+      "recommendedLabels": [
+        "Önce klasik yolun ölçümü; eşikler oradan türetilir"
+      ],
+      "matchesRecommendation": true,
+      "source": "user",
+      "customText": "",
+      "note": "",
+      "affects": [
+        "AT-13",
+        "Plan"
+      ],
+      "sources": [
+        "Codex D10",
+        "AI-first incelemesi 6",
+        "Claude raporu C3"
+      ],
+      "answeredAt": "2026-09-29T06:15:01.580Z"
+    },
+    {
+      "id": "Y12",
+      "chapter": "yz",
+      "chapterTitle": "YZ öncelikli deneyim",
+      "priority": "P2",
+      "decisionOwner": "technical-default",
+      "question": "YZ değerlendirme seti ne kadar büyük olsun?",
+      "status": "answered",
+      "selected": [
+        "50"
+      ],
+      "selectedLabels": [
+        "En az 50 örnek, her örnek birkaç kez çalıştırılır"
+      ],
+      "recommended": [
+        "50"
+      ],
+      "recommendedLabels": [
+        "En az 50 örnek, her örnek birkaç kez çalıştırılır"
+      ],
+      "matchesRecommendation": true,
+      "source": "user",
+      "customText": "",
+      "note": "",
+      "affects": [
+        "K2",
+        "K6"
+      ],
+      "sources": [
+        "AI-first incelemesi 8",
+        "Codex D10"
+      ],
+      "answeredAt": "2026-09-29T06:22:33.477Z"
+    },
+    {
+      "id": "Y13",
+      "chapter": "yz",
+      "chapterTitle": "YZ öncelikli deneyim",
+      "priority": "P2",
+      "decisionOwner": "technical-default",
+      "question": "Canlı YZ metrikleri tanımlansın mı?",
+      "status": "answered",
+      "selected": [
+        "evet"
+      ],
+      "selectedLabels": [
+        "Evet; kabul, düzenleme, geri alma, klasiğe dönüş ve bırakma oranları eşik alarmlarıyla"
+      ],
+      "recommended": [
+        "evet"
+      ],
+      "recommendedLabels": [
+        "Evet; kabul, düzenleme, geri alma, klasiğe dönüş ve bırakma oranları eşik alarmlarıyla"
+      ],
+      "matchesRecommendation": true,
+      "source": "user",
+      "customText": "",
+      "note": "",
+      "affects": [
+        "K3",
+        "G5"
+      ],
+      "sources": [
+        "Claude raporu C4",
+        "AI-first incelemesi 8"
+      ],
+      "answeredAt": "2026-09-29T06:22:45.117Z"
+    },
+    {
+      "id": "Y14",
+      "chapter": "yz",
+      "chapterTitle": "YZ öncelikli deneyim",
+      "priority": "P2",
+      "decisionOwner": "technical-default",
+      "question": "YZ'nin ürettiği ekranların erişilebilirliği nasıl güvenceye alınsın?",
+      "status": "answered",
+      "selected": [
+        "tam"
+      ],
+      "selectedLabels": [
+        "YZ etiketi erişilebilir adda; üretilen her örnek ekranda tarama; başlık seviyelerini sistem atar"
+      ],
+      "recommended": [
+        "tam"
+      ],
+      "recommendedLabels": [
+        "YZ etiketi erişilebilir adda; üretilen her örnek ekranda tarama; başlık seviyelerini sistem atar"
+      ],
+      "matchesRecommendation": true,
+      "source": "user",
+      "customText": "",
+      "note": "",
+      "affects": [
+        "I3",
+        "K2",
+        "K4",
+        "J3"
+      ],
+      "sources": [
+        "AI-first incelemesi 12",
+        "Claude raporu D6"
+      ],
+      "answeredAt": "2026-09-29T06:23:06.386Z"
+    },
+    {
+      "id": "K01",
+      "chapter": "kimlik",
+      "chapterTitle": "Kimlik ve Keycloak",
+      "priority": "P1",
+      "decisionOwner": "product-owner",
+      "question": "Müşteriler nasıl ayrılsın (tenant modeli)?",
+      "status": "answered",
+      "selected": [
+        "hibrit"
+      ],
+      "selectedLabels": [
+        "Varsayılan tek site; büyük veya regüle müşteri ayrı site"
+      ],
+      "recommended": [
+        "tek"
+      ],
+      "recommendedLabels": [
+        "Tek Frappe sitesi, müşteriler organizasyon kaydıyla ayrılır"
+      ],
+      "matchesRecommendation": false,
+      "source": "user",
+      "customText": "",
+      "note": "",
+      "affects": [
+        "B9",
+        "M10",
+        "M13",
+        "G6"
+      ],
+      "sources": [
+        "Keycloak raporu (tenant kararı)",
+        "Açık kararlar: kiracı modeli",
+        "Uygulanabilirlik incelemesi 7"
+      ],
+      "answeredAt": "2026-09-29T06:23:50.155Z"
+    },
+    {
+      "id": "K02",
+      "chapter": "kimlik",
+      "chapterTitle": "Kimlik ve Keycloak",
+      "priority": "P1",
+      "decisionOwner": "product-owner",
+      "question": "Oturum süreleri ne olsun?",
+      "status": "answered",
+      "selected": [
+        "rol"
+      ],
+      "selectedLabels": [
+        "Rol bazlı: yönetici ve KYC inceleyici 30 dk / 8 saat; operasyon 2 saat / 12 saat; portal 1 saat / 24 saat"
+      ],
+      "recommended": [
+        "rol"
+      ],
+      "recommendedLabels": [
+        "Rol bazlı: yönetici ve KYC inceleyici 30 dk / 8 saat; operasyon 2 saat / 12 saat; portal 1 saat / 24 saat"
+      ],
+      "matchesRecommendation": true,
+      "source": "user",
+      "customText": "",
+      "note": "",
+      "affects": [
+        "M25",
+        "M18",
+        "M6",
+        "AT-20"
+      ],
+      "sources": [
+        "Keycloak raporu R2",
+        "Doğrulama eki V24-2"
+      ],
+      "answeredAt": "2026-09-29T06:49:15.921Z"
+    },
+    {
+      "id": "K03",
+      "chapter": "kimlik",
+      "chapterTitle": "Kimlik ve Keycloak",
+      "priority": "P1",
+      "decisionOwner": "technical-default",
+      "question": "Yetkisi iptal edilen kullanıcının açık bağlantısı nasıl kesilsin?",
+      "status": "answered",
+      "selected": [
+        "periyodik"
+      ],
+      "selectedLabels": [
+        "Soket servisi oturumu periyodik olarak yeniden doğrular"
+      ],
+      "recommended": [
+        "periyodik"
+      ],
+      "recommendedLabels": [
+        "Soket servisi oturumu periyodik olarak yeniden doğrular"
+      ],
+      "matchesRecommendation": true,
+      "source": "user",
+      "customText": "",
+      "note": "",
+      "affects": [
+        "M19",
+        "B10",
+        "AT-15",
+        "AT-21",
+        "AT-26"
+      ],
+      "sources": [
+        "Keycloak raporu R3",
+        "Açık kararlar: realtime iptal"
+      ],
+      "answeredAt": "2026-09-29T06:49:36.307Z"
+    },
+    {
+      "id": "K04",
+      "chapter": "kimlik",
+      "chapterTitle": "Kimlik ve Keycloak",
+      "priority": "P1",
+      "decisionOwner": "product-owner",
+      "question": "İptalden sonra açık bağlantıya en fazla ne kadar süre bilgi gidebilir?",
+      "status": "answered",
+      "selected": [
+        "60"
+      ],
+      "selectedLabels": [
+        "60 saniye"
+      ],
+      "recommended": [
+        "60"
+      ],
+      "recommendedLabels": [
+        "60 saniye"
+      ],
+      "matchesRecommendation": true,
+      "source": "user",
+      "customText": "",
+      "note": "",
+      "affects": [
+        "M19",
+        "AT-15",
+        "AT-21",
+        "AT-26"
+      ],
+      "sources": [
+        "Keycloak raporu R3",
+        "Uygulanabilirlik incelemesi 12"
+      ],
+      "answeredAt": "2026-09-29T06:49:55.313Z"
+    },
+    {
+      "id": "K05",
+      "chapter": "kimlik",
+      "chapterTitle": "Kimlik ve Keycloak",
+      "priority": "P1",
+      "decisionOwner": "product-owner",
+      "question": "İlk sürümde hangi giriş yöntemleri olsun?",
+      "status": "answered",
+      "selected": [
+        "google",
+        "apple",
+        "eposta",
+        "mesaj",
+        "sms",
+        "passkey",
+        "parola"
+      ],
+      "selectedLabels": [
+        "Google ile giriş",
+        "Apple ile giriş",
+        "E-posta ile gelen kod",
+        "WhatsApp veya Telegram kodu",
+        "SMS kodu",
+        "Passkey (parolasız, parmak izi veya yüz)",
+        "Parola ve e-posta doğrulaması"
+      ],
+      "recommended": [
+        "parola",
+        "google",
+        "passkey"
+      ],
+      "recommendedLabels": [
+        "Parola ve e-posta doğrulaması",
+        "Google ile giriş",
+        "Passkey (parolasız, parmak izi veya yüz)"
+      ],
+      "matchesRecommendation": false,
+      "source": "user",
+      "customText": "",
+      "note": "",
+      "affects": [
+        "M8",
+        "AT-19"
+      ],
+      "sources": [
+        "Keycloak raporu (giriş yöntemleri)",
+        "Kimlik rehberi"
+      ],
+      "answeredAt": "2026-09-29T06:50:16.865Z"
+    },
+    {
+      "id": "K06",
+      "chapter": "kimlik",
+      "chapterTitle": "Kimlik ve Keycloak",
+      "priority": "P2",
+      "decisionOwner": "product-owner",
+      "question": "E-postaya giriş bağlantısı (magic link) olsun mu?",
+      "status": "deferred",
+      "selected": [],
+      "selectedLabels": [],
+      "recommended": [
+        "ertele"
+      ],
+      "recommendedLabels": [
+        "Ertele; açık gereksinim olarak kalsın"
+      ],
+      "matchesRecommendation": null,
+      "source": null,
+      "customText": "",
+      "note": "E-postaya giriş bağlantısı (magic link) keycloak ile olsun.",
+      "affects": [
+        "M8"
+      ],
+      "sources": [
+        "Kimlik rehberi açık kararı"
+      ],
+      "answeredAt": "2026-09-29T07:13:20.981Z"
+    },
+    {
+      "id": "K07",
+      "chapter": "kimlik",
+      "chapterTitle": "Kimlik ve Keycloak",
+      "priority": "P2",
+      "decisionOwner": "product-owner",
+      "question": "Telefon numarası kimliğin neresinde olsun?",
+      "status": "answered",
+      "selected": [
+        "ikinci"
+      ],
+      "selectedLabels": [
+        "E-posta birincil kimlik, telefon ikinci kanal"
+      ],
+      "recommended": [
+        "ikinci"
+      ],
+      "recommendedLabels": [
+        "E-posta birincil kimlik, telefon ikinci kanal"
+      ],
+      "matchesRecommendation": true,
+      "source": "user",
+      "customText": "",
+      "note": "burası sığ olmuş, kullanıcı arayan özel yöntem nedir bilmiyorum ama, şöyle olsun, zaten 'keycloak first' ilerleyeceğiz. {\"telefon numarası\" ≠ \"kullanıcı adı\" (yani kullanıcı adı  telefon numrası olamaz )}. eposta yada telefon aslında tenant yöneticisinin opsiyonu. 2 aşamalı (hem telefon hem eposta) bu da yine tenant yöneticisi için  opsiyonel seçenek. ",
+      "affects": [
+        "M8",
+        "M15"
+      ],
+      "sources": [
+        "Kimlik rehberi açık kararı"
+      ],
+      "answeredAt": "2026-09-29T06:57:53.355Z"
+    },
+    {
+      "id": "K08",
+      "chapter": "kimlik",
+      "chapterTitle": "Kimlik ve Keycloak",
+      "priority": "P2",
+      "decisionOwner": "product-owner",
+      "question": "E-postası olmayan kullanıcı hesap açabilsin mi?",
+      "status": "answered",
+      "selected": [
+        "zorunlu"
+      ],
+      "selectedLabels": [
+        "Hayır; e-posta zorunlu"
+      ],
+      "recommended": [
+        "zorunlu"
+      ],
+      "recommendedLabels": [
+        "Hayır; e-posta zorunlu"
+      ],
+      "matchesRecommendation": true,
+      "source": "user",
+      "customText": "",
+      "note": "",
+      "affects": [
+        "M11"
+      ],
+      "sources": [
+        "Kimlik rehberi açık kararı"
+      ],
+      "answeredAt": "2026-09-29T06:58:02.343Z"
+    },
+    {
+      "id": "K09",
+      "chapter": "kimlik",
+      "chapterTitle": "Kimlik ve Keycloak",
+      "priority": "P2",
+      "decisionOwner": "product-owner",
+      "question": "Yoğun anda giriş en fazla ne kadar sürsün?",
+      "status": "answered",
+      "selected": [
+        "5"
+      ],
+      "selectedLabels": [
+        "Yüzde 95'inde 5 saniye"
+      ],
+      "recommended": [
+        "3"
+      ],
+      "recommendedLabels": [
+        "Yüzde 95'inde 3 saniye"
+      ],
+      "matchesRecommendation": false,
+      "source": "user",
+      "customText": "",
+      "note": "",
+      "affects": [
+        "M7",
+        "K3"
+      ],
+      "sources": [
+        "Kimlik rehberi açık kararı"
+      ],
+      "answeredAt": "2026-09-29T06:58:16.187Z"
+    },
+    {
+      "id": "K10",
+      "chapter": "kimlik",
+      "chapterTitle": "Kimlik ve Keycloak",
+      "priority": "P1",
+      "decisionOwner": "product-owner",
+      "question": "Kimlik kodunu kim güvenlik açısından inceleyecek?",
+      "status": "answered",
+      "selected": [
+        "ikisi"
+      ],
+      "selectedLabels": [
+        "Günlük değişiklikleri ekipten biri, faz kapılarında dış güvenlik danışmanı"
+      ],
+      "recommended": [
+        "ikisi"
+      ],
+      "recommendedLabels": [
+        "Günlük değişiklikleri ekipten biri, faz kapılarında dış güvenlik danışmanı"
+      ],
+      "matchesRecommendation": true,
+      "source": "user",
+      "customText": "",
+      "note": "",
+      "affects": [
+        "K12",
+        "M4"
+      ],
+      "sources": [
+        "Keycloak raporu (süreç)",
+        "Kimlik rehberi açık kararı"
+      ],
+      "answeredAt": "2026-09-29T07:02:56.645Z"
+    },
+    {
+      "id": "K11",
+      "chapter": "kimlik",
+      "chapterTitle": "Kimlik ve Keycloak",
+      "priority": "P2",
+      "decisionOwner": "product-owner",
+      "question": "Keycloak'a alternatif kimlik sunucuları izlensin mi?",
+      "status": "answered",
+      "selected": [
+        "yillik"
+      ],
+      "selectedLabels": [
+        "Yılda bir alternatifleri yeniden değerlendir"
+      ],
+      "recommended": [
+        "keycloak"
+      ],
+      "recommendedLabels": [
+        "Keycloak kalır; alternatifler izlenmez"
+      ],
+      "matchesRecommendation": false,
+      "source": "user",
+      "customText": "",
+      "note": "",
+      "affects": [
+        "M1"
+      ],
+      "sources": [
+        "Kimlik rehberi açık kararı"
+      ],
+      "answeredAt": "2026-09-29T07:03:10.687Z"
+    },
+    {
+      "id": "K12",
+      "chapter": "kimlik",
+      "chapterTitle": "Kimlik ve Keycloak",
+      "priority": "P2",
+      "decisionOwner": "product-owner",
+      "question": "Kimlik belgesi (KYC) YZ ile işlensin mi?",
+      "status": "answered",
+      "selected": [
+        "yerel"
+      ],
+      "selectedLabels": [
+        "Kendi sunucumuzdaki modelle yalnız alan çıkarımı"
+      ],
+      "recommended": [
+        "yok"
+      ],
+      "recommendedLabels": [
+        "Hayır; kimlik belgesi hiçbir modele gitmez, alanlar elle girilir"
+      ],
+      "matchesRecommendation": false,
+      "source": "user",
+      "customText": "",
+      "note": "\"alanlar elle girilir\" ve \"Kendi sunucumuzdaki modelle yalnız alan çıkarımı\" ikisi de opsiyonel, seçenek olarak panelde GUI üzerinden ayarlanır. ",
+      "affects": [
+        "M23",
+        "M11"
+      ],
+      "sources": [
+        "Keycloak raporu R6"
+      ],
+      "answeredAt": "2026-09-29T07:08:24.481Z"
+    },
+    {
+      "id": "K13",
+      "chapter": "kimlik",
+      "chapterTitle": "Kimlik ve Keycloak",
+      "priority": "P2",
+      "decisionOwner": "product-owner",
+      "question": "Misafir sepeti girişten sonra kullanıcının mevcut sepetiyle nasıl birleşsin?",
+      "status": "answered",
+      "selected": [
+        "topla"
+      ],
+      "selectedLabels": [
+        "Miktarlar toplanır"
+      ],
+      "recommended": [
+        "sor"
+      ],
+      "recommendedLabels": [
+        "Kullanıcıya sorulur"
+      ],
+      "matchesRecommendation": false,
+      "source": "user",
+      "customText": "",
+      "note": "",
+      "affects": [
+        "M21",
+        "AT-24"
+      ],
+      "sources": [
+        "Keycloak raporu R4"
+      ],
+      "answeredAt": "2026-09-29T07:08:54.237Z"
+    },
+    {
+      "id": "K14",
+      "chapter": "kimlik",
+      "chapterTitle": "Kimlik ve Keycloak",
+      "priority": "P1",
+      "decisionOwner": "product-owner",
+      "question": "Kullanıcı hesabını silmek isterse ne olsun?",
+      "status": "answered",
+      "selected": [
+        "destek"
+      ],
+      "selectedLabels": [
+        "Yalnız devre dışı bırakma; silme destek talebiyle"
+      ],
+      "recommended": [
+        "anonim"
+      ],
+      "recommendedLabels": [
+        "Kimlik silinir, Frappe kullanıcısı anonimleştirilir, yasal kayıtlar anonim kalır"
+      ],
+      "matchesRecommendation": false,
+      "source": "user",
+      "customText": "",
+      "note": "",
+      "affects": [
+        "M6",
+        "M19",
+        "G7"
+      ],
+      "sources": [
+        "Codex D08"
+      ],
+      "answeredAt": "2026-09-29T07:09:16.153Z"
+    },
+    {
+      "id": "K15",
+      "chapter": "kimlik",
+      "chapterTitle": "Kimlik ve Keycloak",
+      "priority": "P1",
+      "decisionOwner": "product-owner",
+      "question": "Bir şirketin son yöneticisi ayrılmak veya silinmek isterse ne olsun?",
+      "status": "answered",
+      "selected": [
+        "devret"
+      ],
+      "selectedLabels": [
+        "Son yönetici önce sahipliği devretmeden ayrılamaz"
+      ],
+      "recommended": [
+        "devret"
+      ],
+      "recommendedLabels": [
+        "Son yönetici önce sahipliği devretmeden ayrılamaz"
+      ],
+      "matchesRecommendation": true,
+      "source": "user",
+      "customText": "",
+      "note": "",
+      "affects": [
+        "M10",
+        "M11"
+      ],
+      "sources": [
+        "Codex D08"
+      ],
+      "answeredAt": "2026-09-29T07:09:29.279Z"
+    },
+    {
+      "id": "K16",
+      "chapter": "kimlik",
+      "chapterTitle": "Kimlik ve Keycloak",
+      "priority": "P2",
+      "decisionOwner": "product-owner",
+      "question": "Müşteri şirket aboneliğini kapatırsa veri ne olsun?",
+      "status": "answered",
+      "selected": [
+        "30"
+      ],
+      "selectedLabels": [
+        "30 gün salt okunur ve dışa aktarım, sonra arşiv veya silme"
+      ],
+      "recommended": [
+        "30"
+      ],
+      "recommendedLabels": [
+        "30 gün salt okunur ve dışa aktarım, sonra arşiv veya silme"
+      ],
+      "matchesRecommendation": true,
+      "source": "user",
+      "customText": "",
+      "note": "\n\n185 gün salt okunur ve dışa aktarım, sonra arşiv veya silme",
+      "affects": [
+        "M10",
+        "G7"
+      ],
+      "sources": [
+        "Codex D08"
+      ],
+      "answeredAt": "2026-09-29T07:13:39.033Z"
+    },
+    {
+      "id": "K17",
+      "chapter": "kimlik",
+      "chapterTitle": "Kimlik ve Keycloak",
+      "priority": "P2",
+      "decisionOwner": "product-owner",
+      "question": "Ortak cihazda (kiosk) giriş nasıl olsun?",
+      "status": "answered",
+      "selected": [
+        "kural"
+      ],
+      "selectedLabels": [
+        "Kısa boşta kalma, her değişimde tam temizlik, kişisel cihazla giriş"
+      ],
+      "recommended": [
+        "kural"
+      ],
+      "recommendedLabels": [
+        "Kısa boşta kalma, her değişimde tam temizlik, kişisel cihazla giriş"
+      ],
+      "matchesRecommendation": true,
+      "source": "user",
+      "customText": "",
+      "note": "",
+      "affects": [
+        "M6",
+        "M25",
+        "J6"
+      ],
+      "sources": [
+        "Claude raporu E"
+      ],
+      "answeredAt": "2026-09-29T07:11:22.980Z"
+    },
+    {
+      "id": "K18",
+      "chapter": "kimlik",
+      "chapterTitle": "Kimlik ve Keycloak",
+      "priority": "P1",
+      "decisionOwner": "technical-default",
+      "question": "Keycloak sürümü ile yapılandırma aracının uyumsuzluğu nasıl çözülsün?",
+      "status": "answered",
+      "selected": [
+        "bekle"
+      ],
+      "selectedLabels": [
+        "26.7'de kal; uyum CI'da kanıtlanana kadar üretime çıkma"
+      ],
+      "recommended": [
+        "bekle"
+      ],
+      "recommendedLabels": [
+        "26.7'de kal; uyum CI'da kanıtlanana kadar üretime çıkma"
+      ],
+      "matchesRecommendation": true,
+      "source": "user",
+      "customText": "",
+      "note": "",
+      "affects": [
+        "M14",
+        "M1"
+      ],
+      "sources": [
+        "Keycloak raporu (config-cli)",
+        "Doğrulama"
+      ],
+      "answeredAt": "2026-09-29T07:11:37.815Z"
+    },
+    {
+      "id": "K19",
+      "chapter": "kimlik",
+      "chapterTitle": "Kimlik ve Keycloak",
+      "priority": "P1",
+      "decisionOwner": "product-owner",
+      "question": "Frappe sosyal giriş kodundaki güvenlik bulgusu nasıl bildirilsin?",
+      "status": "answered",
+      "selected": [
+        "taslak"
+      ],
+      "selectedLabels": [
+        "Claude bildirim taslağı hazırlar, sen gönderirsin"
+      ],
+      "recommended": [
+        "taslak"
+      ],
+      "recommendedLabels": [
+        "Claude bildirim taslağı hazırlar, sen gönderirsin"
+      ],
+      "matchesRecommendation": true,
+      "source": "user",
+      "customText": "",
+      "note": "",
+      "affects": [
+        "M4",
+        "Yapılacaklar"
+      ],
+      "sources": [
+        "Keycloak raporu R10",
+        "Kimlik rehberi"
+      ],
+      "answeredAt": "2026-09-29T07:11:49.905Z"
+    },
+    {
+      "id": "K20",
+      "chapter": "kimlik",
+      "chapterTitle": "Kimlik ve Keycloak",
+      "priority": "P1",
+      "decisionOwner": "technical-default",
+      "question": "Kapanan Keycloak bulgularının geri gelmesi nasıl önlensin?",
+      "status": "answered",
+      "selected": [
+        "regresyon"
+      ],
+      "selectedLabels": [
+        "Her kapanan bulgu için otomatik regresyon kontrolü ve kimlik değişikliklerinde K12 incelemesi"
+      ],
+      "recommended": [
+        "regresyon"
+      ],
+      "recommendedLabels": [
+        "Her kapanan bulgu için otomatik regresyon kontrolü ve kimlik değişikliklerinde K12 incelemesi"
+      ],
+      "matchesRecommendation": true,
+      "source": "user",
+      "customText": "",
+      "note": "",
+      "affects": [
+        "K12",
+        "validate.py"
+      ],
+      "sources": [
+        "Keycloak raporu R1–R10",
+        "Codex D15"
+      ],
+      "answeredAt": "2026-09-29T07:12:02.580Z"
+    },
+    {
+      "id": "K21",
+      "chapter": "kimlik",
+      "chapterTitle": "Kimlik ve Keycloak",
+      "priority": "P2",
+      "decisionOwner": "product-owner",
+      "question": "Destek ekibi müşteri adına oturum açabilsin mi (vekil oturum)?",
+      "status": "answered",
+      "selected": [
+        "sinirli"
+      ],
+      "selectedLabels": [
+        "Evet; ayrı onaylı, süreli ve işaretli vekil oturum"
+      ],
+      "recommended": [
+        "yok"
+      ],
+      "recommendedLabels": [
+        "Hayır; destek ekran paylaşımıyla yardım eder"
+      ],
+      "matchesRecommendation": false,
+      "source": "user",
+      "customText": "",
+      "note": "",
+      "affects": [
+        "G6"
+      ],
+      "sources": [
+        "Karar kaydı: impersonation"
+      ],
+      "answeredAt": "2026-09-29T07:12:22.951Z"
+    },
+    {
+      "id": "V01",
+      "chapter": "veri",
+      "chapterTitle": "Veri ve sözleşmeler",
+      "priority": "P1",
+      "decisionOwner": "technical-default",
+      "question": "Veriyi değiştiren her işlem aynı kapıdan mı geçsin?",
+      "status": "answered",
+      "selected": [
+        "iki"
+      ],
+      "selectedLabels": [
+        "Hayır; klasik kaydet doğrudan Frappe'ye, yalnız YZ ve onaylı değişiklik yürütücüden"
+      ],
+      "recommended": [
+        "tek"
+      ],
+      "recommendedLabels": [
+        "Evet; klasik kaydet dahil her yazma platformun yürütücüsünden geçer"
+      ],
+      "matchesRecommendation": false,
+      "source": "user",
+      "customText": "",
+      "note": "",
+      "affects": [
+        "B1",
+        "D4",
+        "F6",
+        "F8",
+        "G5"
+      ],
+      "sources": [
+        "Uygulanabilirlik incelemesi 3"
+      ],
+      "answeredAt": "2026-09-29T07:14:11.519Z"
+    },
+    {
+      "id": "V02",
+      "chapter": "veri",
+      "chapterTitle": "Veri ve sözleşmeler",
+      "priority": "P1",
+      "decisionOwner": "product-owner",
+      "question": "Aktif şirket bilgisi nasıl taşınsın?",
+      "status": "answered",
+      "selected": [
+        "oturum"
+      ],
+      "selectedLabels": [
+        "Oturumda tek aktif şirket; değişince tüm sekmeler uyarılır"
+      ],
+      "recommended": [
+        "istek"
+      ],
+      "recommendedLabels": [
+        "Her istekte açıkça taşınır; her sekme kendi şirketinde çalışabilir"
+      ],
+      "matchesRecommendation": false,
+      "source": "user",
+      "customText": "",
+      "note": "",
+      "affects": [
+        "B9",
+        "M10",
+        "M22"
+      ],
+      "sources": [
+        "Uygulanabilirlik incelemesi 2"
+      ],
+      "answeredAt": "2026-09-29T07:14:38.328Z"
+    },
+    {
+      "id": "V03",
+      "chapter": "veri",
+      "chapterTitle": "Veri ve sözleşmeler",
+      "priority": "P1",
+      "decisionOwner": "product-owner",
+      "question": "Paylaşılan rapor ve görünümlerdeki gizli filtre değerleri nasıl korunsun?",
+      "status": "answered",
+      "selected": [
+        "maske"
+      ],
+      "selectedLabels": [
+        "Paylaşımda filtre değerleri maskelenir"
+      ],
+      "recommended": [
+        "referans"
+      ],
+      "recommendedLabels": [
+        "Filtre değerleri sunucuda yetkili bir \"kayıtlı sorgu\"da durur"
+      ],
+      "matchesRecommendation": false,
+      "source": "user",
+      "customText": "",
+      "note": "",
+      "affects": [
+        "D6",
+        "D7",
+        "G7"
+      ],
+      "sources": [
+        "Codex D07"
+      ],
+      "answeredAt": "2026-09-29T07:15:29.637Z"
+    },
+    {
+      "id": "V04",
+      "chapter": "veri",
+      "chapterTitle": "Veri ve sözleşmeler",
+      "priority": "P1",
+      "decisionOwner": "product-owner",
+      "question": "Kullanıcı \"bu konuşmayı unut\" veya \"sil\" deyince ne silinsin?",
+      "status": "answered",
+      "selected": [
+        "sohbet"
+      ],
+      "selectedLabels": [
+        "Yalnız sohbet metni silinir"
+      ],
+      "recommended": [
+        "tam"
+      ],
+      "recommendedLabels": [
+        "Sohbet, önbellek, öneri ve indeks hemen; yedekler en geç 35 günde; denetimde yalnız olay kalır"
+      ],
+      "matchesRecommendation": false,
+      "source": "user",
+      "customText": "",
+      "note": "",
+      "affects": [
+        "I8",
+        "I9",
+        "G7"
+      ],
+      "sources": [
+        "Codex D07"
+      ],
+      "answeredAt": "2026-09-29T07:15:52.130Z"
+    },
+    {
+      "id": "V05",
+      "chapter": "veri",
+      "chapterTitle": "Veri ve sözleşmeler",
+      "priority": "P1",
+      "decisionOwner": "technical-default",
+      "question": "İki iş aynı anda aynı yetki bütçesini kullanırsa ne olsun?",
+      "status": "answered",
+      "selected": [
+        "rezerv"
+      ],
+      "selectedLabels": [
+        "Bütçe her adımdan önce atomik olarak ayrılır (rezervasyon)"
+      ],
+      "recommended": [
+        "rezerv"
+      ],
+      "recommendedLabels": [
+        "Bütçe her adımdan önce atomik olarak ayrılır (rezervasyon)"
+      ],
+      "matchesRecommendation": true,
+      "source": "user",
+      "customText": "",
+      "note": "",
+      "affects": [
+        "F3",
+        "E7"
+      ],
+      "sources": [
+        "Codex D05"
+      ],
+      "answeredAt": "2026-09-29T07:16:33.082Z"
+    },
+    {
+      "id": "V06",
+      "chapter": "veri",
+      "chapterTitle": "Veri ve sözleşmeler",
+      "priority": "P1",
+      "decisionOwner": "technical-default",
+      "question": "Uzun iş çalışırken sunucu çökerse ne olsun?",
+      "status": "answered",
+      "selected": [
+        "tekrar"
+      ],
+      "selectedLabels": [
+        "Son tamamlanan adımdan otomatik tekrar"
+      ],
+      "recommended": [
+        "gunluk"
+      ],
+      "recommendedLabels": [
+        "Adım günlüğü niyet → gönderildi → sonuç; belirsiz sonuç tekrarlanmaz, uzlaştırmaya gider"
+      ],
+      "matchesRecommendation": false,
+      "source": "user",
+      "customText": "",
+      "note": "",
+      "affects": [
+        "E10",
+        "F6",
+        "AT-17"
+      ],
+      "sources": [
+        "Codex D06"
+      ],
+      "answeredAt": "2026-09-29T07:16:49.731Z"
+    },
+    {
+      "id": "V07",
+      "chapter": "veri",
+      "chapterTitle": "Veri ve sözleşmeler",
+      "priority": "P1",
+      "decisionOwner": "technical-default",
+      "question": "Sözleşmelerin (veri yapılarının) tek kaynağı ne olsun?",
+      "status": "answered",
+      "selected": [
+        "zod"
+      ],
+      "selectedLabels": [
+        "zod (TypeScript) asıl kaynak; JSON Schema sürümlü paket olarak üretilir, Python onu kullanır"
+      ],
+      "recommended": [
+        "zod"
+      ],
+      "recommendedLabels": [
+        "zod (TypeScript) asıl kaynak; JSON Schema sürümlü paket olarak üretilir, Python onu kullanır"
+      ],
+      "matchesRecommendation": true,
+      "source": "user",
+      "customText": "",
+      "note": "",
+      "affects": [
+        "D1",
+        "D8",
+        "K1",
+        "B2"
+      ],
+      "sources": [
+        "Uygulanabilirlik incelemesi 8",
+        "Claude raporu B8"
+      ],
+      "answeredAt": "2026-09-29T07:17:49.927Z"
+    },
+    {
+      "id": "V08",
+      "chapter": "veri",
+      "chapterTitle": "Veri ve sözleşmeler",
+      "priority": "P1",
+      "decisionOwner": "product-owner",
+      "question": "Geliştirmeden önce ilk akışın örnekli sözleşme paketi yazılsın mı?",
+      "status": "answered",
+      "selected": [
+        "once"
+      ],
+      "selectedLabels": [
+        "Evet; ilk akış için örnekli sözleşme paketi ve Run durum tablosu önce yazılır"
+      ],
+      "recommended": [
+        "once"
+      ],
+      "recommendedLabels": [
+        "Evet; ilk akış için örnekli sözleşme paketi ve Run durum tablosu önce yazılır"
+      ],
+      "matchesRecommendation": true,
+      "source": "user",
+      "customText": "",
+      "note": "",
+      "affects": [
+        "H1",
+        "D1",
+        "F3",
+        "E5"
+      ],
+      "sources": [
+        "Codex D04",
+        "Uygulanabilirlik incelemesi 1",
+        "Claude raporu B1"
+      ],
+      "answeredAt": "2026-09-29T07:18:17.722Z"
+    },
+    {
+      "id": "V09",
+      "chapter": "veri",
+      "chapterTitle": "Veri ve sözleşmeler",
+      "priority": "P1",
+      "decisionOwner": "product-owner",
+      "question": "Platformun kendi Frappe tabloları (DocType) geliştirmeden önce modellensin mi?",
+      "status": "answered",
+      "selected": [
+        "once"
+      ],
+      "selectedLabels": [
+        "Evet; Platform DocType kataloğu geliştirmeden önce"
+      ],
+      "recommended": [
+        "once"
+      ],
+      "recommendedLabels": [
+        "Evet; Platform DocType kataloğu geliştirmeden önce"
+      ],
+      "matchesRecommendation": true,
+      "source": "user",
+      "customText": "",
+      "note": "herşey waterfall plan, her hedef maturity level plan. ",
+      "affects": [
+        "E2",
+        "E5",
+        "E10",
+        "F1",
+        "F3",
+        "F6",
+        "G5",
+        "M5"
+      ],
+      "sources": [
+        "Uygulanabilirlik incelemesi 5",
+        "Claude raporu B5"
+      ],
+      "answeredAt": "2026-09-29T07:19:24.597Z"
+    },
+    {
+      "id": "T01",
+      "chapter": "kalite",
+      "chapterTitle": "Test, ölçüm ve yayın",
+      "priority": "P1",
+      "decisionOwner": "product-owner",
+      "question": "Her zorunlu (MUST) gereksinim en az bir teste bağlansın mı?",
+      "status": "answered",
+      "selected": [
+        "hepsi"
+      ],
+      "selectedLabels": [
+        "Evet; bağlantısız MUST varsa derleme kırılır, gereksinim × test tablosu üretilir"
+      ],
+      "recommended": [
+        "hepsi"
+      ],
+      "recommendedLabels": [
+        "Evet; bağlantısız MUST varsa derleme kırılır, gereksinim × test tablosu üretilir"
+      ],
+      "matchesRecommendation": true,
+      "source": "user",
+      "customText": "",
+      "note": "",
+      "affects": [
+        "Gereksinim tablosu",
+        "build.py",
+        "E7"
+      ],
+      "sources": [
+        "Claude raporu C1",
+        "Uygulanabilirlik incelemesi 11",
+        "Tutarlılık incelemesi 14"
+      ],
+      "answeredAt": "2026-09-29T07:19:42.413Z"
+    },
+    {
+      "id": "T02",
+      "chapter": "kalite",
+      "chapterTitle": "Test, ölçüm ve yayın",
+      "priority": "P1",
+      "decisionOwner": "product-owner",
+      "question": "Test stratejisi geliştirmeden önce yazılsın mı?",
+      "status": "answered",
+      "selected": [
+        "once"
+      ],
+      "selectedLabels": [
+        "Evet; test stratejisi bölümü ilk iş olarak yazılır"
+      ],
+      "recommended": [
+        "once"
+      ],
+      "recommendedLabels": [
+        "Evet; test stratejisi bölümü ilk iş olarak yazılır"
+      ],
+      "matchesRecommendation": true,
+      "source": "user",
+      "customText": "",
+      "note": "TDD first",
+      "affects": [
+        "Kabul deneyleri",
+        "K1",
+        "K9"
+      ],
+      "sources": [
+        "Claude raporu C2",
+        "Uygulanabilirlik incelemesi 10"
+      ],
+      "answeredAt": "2026-09-29T07:19:53.640Z"
+    },
+    {
+      "id": "T03",
+      "chapter": "kalite",
+      "chapterTitle": "Test, ölçüm ve yayın",
+      "priority": "P1",
+      "decisionOwner": "product-owner",
+      "question": "Gereksinimler nasıl önceliklendirilsin?",
+      "status": "answered",
+      "selected": [
+        "mvp"
+      ],
+      "selectedLabels": [
+        "MUST kalıcı kalite kuralı kalır; ayrıca \"ilk sürüm\" etiketi eklenir"
+      ],
+      "recommended": [
+        "mvp"
+      ],
+      "recommendedLabels": [
+        "MUST kalıcı kalite kuralı kalır; ayrıca \"ilk sürüm\" etiketi eklenir"
+      ],
+      "matchesRecommendation": true,
+      "source": "user",
+      "customText": "",
+      "note": "",
+      "affects": [
+        "Gereksinim tablosu",
+        "Plan"
+      ],
+      "sources": [
+        "Claude raporu (MUST enflasyonu)",
+        "Codex D13",
+        "Tutarlılık incelemesi 11"
+      ],
+      "answeredAt": "2026-09-29T07:20:17.215Z"
+    },
+    {
+      "id": "T04",
+      "chapter": "kalite",
+      "chapterTitle": "Test, ölçüm ve yayın",
+      "priority": "P2",
+      "decisionOwner": "technical-default",
+      "question": "Performans hedefleri hangi koşulda ölçülsün?",
+      "status": "deferred",
+      "selected": [],
+      "selectedLabels": [],
+      "recommended": [
+        "profil"
+      ],
+      "recommendedLabels": [
+        "Orta segment Android ve 4G profili; önbellek boş ve dolu ayrı; görev sınıfına göre ayrı hedef"
+      ],
+      "matchesRecommendation": null,
+      "source": null,
+      "customText": "",
+      "note": "performans çok önemli.",
+      "affects": [
+        "K3",
+        "I5"
+      ],
+      "sources": [
+        "Codex D11"
+      ],
+      "answeredAt": "2026-09-29T07:21:05.583Z"
+    },
+    {
+      "id": "T05",
+      "chapter": "kalite",
+      "chapterTitle": "Test, ölçüm ve yayın",
+      "priority": "P2",
+      "decisionOwner": "technical-default",
+      "question": "Cihaz testleri nasıl ve ne sıklıkta yapılsın?",
+      "status": "answered",
+      "selected": [
+        "her"
+      ],
+      "selectedLabels": [
+        "Her PR'da gerçek cihaz"
+      ],
+      "recommended": [
+        "katman"
+      ],
+      "recommendedLabels": [
+        "Her PR'da emülasyonla üç genişlik; her sürümde gerçek iPhone (Safari) ve Android (Chrome); kanıt kaydı"
+      ],
+      "matchesRecommendation": false,
+      "source": "user",
+      "customText": "",
+      "note": "",
+      "affects": [
+        "K4",
+        "D10",
+        "K9"
+      ],
+      "sources": [
+        "Codex D12"
+      ],
+      "answeredAt": "2026-09-29T07:21:26.546Z"
+    },
+    {
+      "id": "T06",
+      "chapter": "kalite",
+      "chapterTitle": "Test, ölçüm ve yayın",
+      "priority": "P1",
+      "decisionOwner": "product-owner",
+      "question": "\"YZ'yi 30 saniyede kapat\" (kill switch) için kabul deneyi eklensin mi?",
+      "status": "answered",
+      "selected": [
+        "evet"
+      ],
+      "selectedLabels": [
+        "Evet; yayın kapısı olarak"
+      ],
+      "recommended": [
+        "evet"
+      ],
+      "recommendedLabels": [
+        "Evet; yayın kapısı olarak"
+      ],
+      "matchesRecommendation": true,
+      "source": "user",
+      "customText": "",
+      "note": "",
+      "affects": [
+        "E7",
+        "Kabul deneyleri"
+      ],
+      "sources": [
+        "Claude raporu C1",
+        "Uygulanabilirlik incelemesi 11"
+      ],
+      "answeredAt": "2026-09-29T07:21:40.676Z"
+    },
+    {
+      "id": "T07",
+      "chapter": "kalite",
+      "chapterTitle": "Test, ölçüm ve yayın",
+      "priority": "P2",
+      "decisionOwner": "product-owner",
+      "question": "Kullanıcı araştırmasına kimler katılsın?",
+      "status": "answered",
+      "selected": [
+        "musteri"
+      ],
+      "selectedLabels": [
+        "Pilot müşterilerden 5–8 gerçek kullanıcı"
+      ],
+      "recommended": [
+        "musteri"
+      ],
+      "recommendedLabels": [
+        "Pilot müşterilerden 5–8 gerçek kullanıcı"
+      ],
+      "matchesRecommendation": true,
+      "source": "user",
+      "customText": "",
+      "note": "",
+      "affects": [
+        "AT-13"
+      ],
+      "sources": [
+        "Uygulanabilirlik incelemesi 10",
+        "Codex D10"
+      ],
+      "answeredAt": "2026-09-29T07:21:49.676Z"
+    },
+    {
+      "id": "T08",
+      "chapter": "kalite",
+      "chapterTitle": "Test, ölçüm ve yayın",
+      "priority": "P1",
+      "decisionOwner": "technical-default",
+      "question": "Belgenin kendi kontrol betikleri güçlendirilsin mi?",
+      "status": "answered",
+      "selected": [
+        "guclu"
+      ],
+      "selectedLabels": [
+        "Evet; her gereksinim geçerli faz taşısın, çelişki cümleleri yasak listede olsun, göndermeler hedefine göre denetlensin"
+      ],
+      "recommended": [
+        "guclu"
+      ],
+      "recommendedLabels": [
+        "Evet; her gereksinim geçerli faz taşısın, çelişki cümleleri yasak listede olsun, göndermeler hedefine göre denetlensin"
+      ],
+      "matchesRecommendation": true,
+      "source": "user",
+      "customText": "",
+      "note": "",
+      "affects": [
+        "validate.py",
+        "check.js"
+      ],
+      "sources": [
+        "Codex D15",
+        "Tutarlılık incelemesi 9"
+      ],
+      "answeredAt": "2026-09-29T07:22:09.957Z"
+    },
+    {
+      "id": "E01",
+      "chapter": "ekip",
+      "chapterTitle": "Ekip ve belge düzeni",
+      "priority": "P1",
+      "decisionOwner": "product-owner",
+      "question": "Projeyi kim geliştirecek?",
+      "status": "answered",
+      "selected": [
+        "solo"
+      ],
+      "selectedLabels": [
+        "Ben ve YZ kodlama ajanları; faz kapılarında dış uzman"
+      ],
+      "recommended": [],
+      "recommendedLabels": [],
+      "matchesRecommendation": null,
+      "source": "user",
+      "customText": "",
+      "note": "",
+      "affects": [
+        "Plan",
+        "RACI",
+        "K12"
+      ],
+      "sources": [
+        "Claude raporu B9",
+        "Uygulanabilirlik incelemesi 9",
+        "Karar kaydı: team"
+      ],
+      "answeredAt": "2026-09-29T07:22:25.976Z"
+    },
+    {
+      "id": "E02",
+      "chapter": "ekip",
+      "chapterTitle": "Ekip ve belge düzeni",
+      "priority": "P1",
+      "decisionOwner": "product-owner",
+      "question": "Frappe tarafındaki (custom app) işi kim yapacak?",
+      "status": "answered",
+      "selected": [
+        "yalniz"
+      ],
+      "selectedLabels": [
+        "Ben ve YZ ajanları, dış inceleme yok"
+      ],
+      "recommended": [
+        "yzuzman"
+      ],
+      "recommendedLabels": [
+        "YZ ajanları yazar, Frappe deneyimli serbest geliştirici inceler"
+      ],
+      "matchesRecommendation": false,
+      "source": "user",
+      "customText": "",
+      "note": "",
+      "affects": [
+        "K12",
+        "Plan"
+      ],
+      "sources": [
+        "Uygulanabilirlik incelemesi 9"
+      ],
+      "answeredAt": "2026-09-29T07:22:39.012Z"
+    },
+    {
+      "id": "E03",
+      "chapter": "ekip",
+      "chapterTitle": "Ekip ve belge düzeni",
+      "priority": "P1",
+      "decisionOwner": "product-owner",
+      "question": "Açık kararların sahibi ve son tarihi nasıl belirlensin?",
+      "status": "answered",
+      "selected": [
+        "kural"
+      ],
+      "selectedLabels": [
+        "Ürün kararları sende; teknik kararlar önerilen varsayılan ve teknik inceleyici onayıyla; her karar bir faz sonuna bağlanır"
+      ],
+      "recommended": [
+        "kural"
+      ],
+      "recommendedLabels": [
+        "Ürün kararları sende; teknik kararlar önerilen varsayılan ve teknik inceleyici onayıyla; her karar bir faz sonuna bağlanır"
+      ],
+      "matchesRecommendation": true,
+      "source": "user",
+      "customText": "",
+      "note": "",
+      "affects": [
+        "Açık kararlar",
+        "ADR"
+      ],
+      "sources": [
+        "Codex D13",
+        "Claude raporu B9"
+      ],
+      "answeredAt": "2026-09-29T07:22:51.928Z"
+    },
+    {
+      "id": "E04",
+      "chapter": "ekip",
+      "chapterTitle": "Ekip ve belge düzeni",
+      "priority": "P1",
+      "decisionOwner": "product-owner",
+      "question": "Ana projenin belgeleri nasıl düzenlensin?",
+      "status": "answered",
+      "selected": [
+        "tek"
+      ],
+      "selectedLabels": [
+        "Tek belge kalır; sözlük, değişiklik günlüğü ve okuma yolu eklenir"
+      ],
+      "recommended": [
+        "dort"
+      ],
+      "recommendedLabels": [
+        "Dört parça, tek kaynaktan üretilir"
+      ],
+      "matchesRecommendation": false,
+      "source": "user",
+      "customText": "",
+      "note": "",
+      "affects": [
+        "Belgenin tamamı"
+      ],
+      "sources": [
+        "Claude raporu G1",
+        "Codex (belge nasıl güçlendirilmeli)",
+        "Tutarlılık incelemesi 15"
+      ],
+      "answeredAt": "2026-09-29T07:24:11.038Z"
+    },
+    {
+      "id": "E05",
+      "chapter": "ekip",
+      "chapterTitle": "Ekip ve belge düzeni",
+      "priority": "P2",
+      "decisionOwner": "product-owner",
+      "question": "İş takibi hangi araçta yapılsın?",
+      "status": "deferred",
+      "selected": [],
+      "selectedLabels": [],
+      "recommended": [
+        "github"
+      ],
+      "recommendedLabels": [
+        "GitHub Issues (repo zaten GitHub'da)"
+      ],
+      "matchesRecommendation": null,
+      "source": null,
+      "customText": "",
+      "note": "https://plane.so/",
+      "affects": [
+        "build.py"
+      ],
+      "sources": [
+        "Claude raporu G1"
+      ],
+      "answeredAt": "2026-09-29T07:24:42.430Z"
+    },
+    {
+      "id": "E06",
+      "chapter": "ekip",
+      "chapterTitle": "Ekip ve belge düzeni",
+      "priority": "P2",
+      "decisionOwner": "product-owner",
+      "question": "Sürüm ve güvenlik duyuruları nasıl izlensin?",
+      "status": "answered",
+      "selected": [
+        "otomasyon"
+      ],
+      "selectedLabels": [
+        "Dependabot ve haftalık n8n + OpenClaw raporu; yalnız rapor ve PR üretir"
+      ],
+      "recommended": [
+        "otomasyon"
+      ],
+      "recommendedLabels": [
+        "Dependabot ve haftalık n8n + OpenClaw raporu; yalnız rapor ve PR üretir"
+      ],
+      "matchesRecommendation": true,
+      "source": "user",
+      "customText": "",
+      "note": "",
+      "affects": [
+        "K12",
+        "A7"
+      ],
+      "sources": [
+        "Kimlik rehberi: otomatik izleme"
+      ],
+      "answeredAt": "2026-09-29T07:25:10.337Z"
+    },
+    {
+      "id": "E07",
+      "chapter": "ekip",
+      "chapterTitle": "Ekip ve belge düzeni",
+      "priority": "P2",
+      "decisionOwner": "product-owner",
+      "question": "İlk teslim için hedef zaman ne?",
+      "status": "answered",
+      "selected": [
+        "3"
+      ],
+      "selectedLabels": [
+        "3 ay"
+      ],
+      "recommended": [],
+      "recommendedLabels": [],
+      "matchesRecommendation": null,
+      "source": "user",
+      "customText": "",
+      "note": "",
+      "affects": [
+        "Plan"
+      ],
+      "sources": [
+        "Karar kaydı: timeline"
+      ],
+      "answeredAt": "2026-09-29T07:25:14.026Z"
+    },
+    {
+      "id": "E08",
+      "chapter": "ekip",
+      "chapterTitle": "Ekip ve belge düzeni",
+      "priority": "P2",
+      "decisionOwner": "product-owner",
+      "question": "Belgede terimler nasıl açıklansın?",
+      "status": "answered",
+      "selected": [
+        "sozluk"
+      ],
+      "selectedLabels": [
+        "Başa sözlük; her terim ilk geçtiği yerde kısa açıklama; çok anlamlı kelimeler ayrılır"
+      ],
+      "recommended": [
+        "sozluk"
+      ],
+      "recommendedLabels": [
+        "Başa sözlük; her terim ilk geçtiği yerde kısa açıklama; çok anlamlı kelimeler ayrılır"
+      ],
+      "matchesRecommendation": true,
+      "source": "user",
+      "customText": "",
+      "note": "",
+      "affects": [
+        "Belgenin tamamı"
+      ],
+      "sources": [
+        "Tutarlılık incelemesi 12",
+        "Claude raporu G2"
+      ],
+      "answeredAt": "2026-09-29T07:25:34.052Z"
+    },
+    {
+      "id": "R01",
+      "chapter": "kayit",
+      "chapterTitle": "Karar kaydındaki iddialı seçimler",
+      "priority": "P2",
+      "decisionOwner": "product-owner",
+      "question": "Kullanıcı çalışma alanı (workspace) ne kadar kişisel olsun?",
+      "status": "answered",
+      "selected": [
+        "secim"
+      ],
+      "selectedLabels": [
+        "Tam kişisel (seçimi koru)"
+      ],
+      "recommended": [
+        "oneri"
+      ],
+      "recommendedLabels": [
+        "Şablon + kullanıcı özelleştirmesi (öneriye dön)"
+      ],
+      "matchesRecommendation": false,
+      "source": "user",
+      "customText": "her ikisi. ",
+      "note": "{Tam kişisel (seçimi koru)\nHer kullanıcı kendi panosunu sıfırdan kurar.\n\nGerçek dünyada: Kişisel not uygulamasında her sayfayı kendin düzenlemek.\nSeçersen: Kurumsal tutarlılık düşer; destek zorlaşır.} ama + ayrıca {\n\nŞablon + kullanıcı özelleştirmesi (öneriye dön)\nÖnerilen\nŞirket şablon verir, kullanıcı üstüne ekler, \"şablona dön\" diyebilir.\n\nGerçek dünyada: Şirketin hazır pano şablonunu verip kişisel eklemeye izin vermesi.\nSeçersen: Yeni kullanıcı boş sayfa görmez.} ",
+      "affects": [
+        "D6"
+      ],
+      "sources": [
+        "Karar kaydı: workspace"
+      ],
+      "answeredAt": "2026-09-29T07:30:03.267Z"
+    },
+    {
+      "id": "R02",
+      "chapter": "kayit",
+      "chapterTitle": "Karar kaydındaki iddialı seçimler",
+      "priority": "P2",
+      "decisionOwner": "product-owner",
+      "question": "Tarih, seçim ve dosya alanları tarayıcının kendi kontrolünü mü kullansın?",
+      "status": "answered",
+      "selected": [
+        "secim"
+      ],
+      "selectedLabels": [
+        "Her yerde tutarlı özel kontroller (seçimi koru)"
+      ],
+      "recommended": [
+        "oneri"
+      ],
+      "recommendedLabels": [
+        "Yerel kontrol, gerektiğinde özel (öneriye dön)"
+      ],
+      "matchesRecommendation": false,
+      "source": "user",
+      "customText": "",
+      "note": "",
+      "affects": [
+        "J2",
+        "C5"
+      ],
+      "sources": [
+        "Karar kaydı: native"
+      ],
+      "answeredAt": "2026-09-29T07:49:02.970Z"
+    },
+    {
+      "id": "R03",
+      "chapter": "kayit",
+      "chapterTitle": "Karar kaydındaki iddialı seçimler",
+      "priority": "P2",
+      "decisionOwner": "product-owner",
+      "question": "Desk'teki Client Script davranışları nasıl taşınsın?",
+      "status": "not_applicable",
+      "selected": [],
+      "selectedLabels": [],
+      "recommended": [
+        "oneri"
+      ],
+      "recommendedLabels": [
+        "Yalnız iş kuralları sunucuya taşınır (öneriye dön)"
+      ],
+      "matchesRecommendation": null,
+      "source": null,
+      "customText": "",
+      "note": "",
+      "affects": [
+        "B4"
+      ],
+      "sources": [
+        "Karar kaydı: scripts"
+      ],
+      "answeredAt": null
+    },
+    {
+      "id": "R04",
+      "chapter": "kayit",
+      "chapterTitle": "Karar kaydındaki iddialı seçimler",
+      "priority": "P2",
+      "decisionOwner": "technical-default",
+      "question": "Uygulama stilleri nasıl yazılsın?",
+      "status": "answered",
+      "selected": [
+        "oneri"
+      ],
+      "selectedLabels": [
+        "SCSS Modules ve katmanlar (öneriye dön)"
+      ],
+      "recommended": [
+        "oneri"
+      ],
+      "recommendedLabels": [
+        "SCSS Modules ve katmanlar (öneriye dön)"
+      ],
+      "matchesRecommendation": true,
+      "source": "user",
+      "customText": "",
+      "note": "",
+      "affects": [
+        "C4"
+      ],
+      "sources": [
+        "Karar kaydı: css"
+      ],
+      "answeredAt": "2026-09-29T07:49:30.989Z"
+    },
+    {
+      "id": "R05",
+      "chapter": "kayit",
+      "chapterTitle": "Karar kaydındaki iddialı seçimler",
+      "priority": "P2",
+      "decisionOwner": "product-owner",
+      "question": "İkon seti ne olsun?",
+      "status": "answered",
+      "selected": [
+        "ozel"
+      ],
+      "selectedLabels": [
+        "Özel çizim ikonlar (kaydın seçimi)"
+      ],
+      "recommended": [
+        "phosphor"
+      ],
+      "recommendedLabels": [
+        "Phosphor + anlamsal takma ad (senin kuralın)"
+      ],
+      "matchesRecommendation": false,
+      "source": "user",
+      "customText": "birçok icon library import eden özel js typescript mekanizma feature olacak. ",
+      "note": "",
+      "affects": [
+        "C8"
+      ],
+      "sources": [
+        "Karar kaydı: icons",
+        "Kullanıcı arayüz kuralı"
+      ],
+      "answeredAt": "2026-09-29T07:50:22.868Z"
+    },
+    {
+      "id": "R06",
+      "chapter": "kayit",
+      "chapterTitle": "Karar kaydındaki iddialı seçimler",
+      "priority": "P2",
+      "decisionOwner": "product-owner",
+      "question": "Erişilebilirlik hedefi ne olsun?",
+      "status": "answered",
+      "selected": [
+        "secim"
+      ],
+      "selectedLabels": [
+        "WCAG 2.2 AA (seçimi koru)"
+      ],
+      "recommended": [
+        "oneri"
+      ],
+      "recommendedLabels": [
+        "AA + seçili AAA (öneriye dön)"
+      ],
+      "matchesRecommendation": false,
+      "source": "user",
+      "customText": "ayrıca accecybility mode olacak",
+      "note": "",
+      "affects": [
+        "J1"
+      ],
+      "sources": [
+        "Karar kaydı: a11y-target"
+      ],
+      "answeredAt": "2026-09-29T07:50:59.588Z"
+    },
+    {
+      "id": "R07",
+      "chapter": "kayit",
+      "chapterTitle": "Karar kaydındaki iddialı seçimler",
+      "priority": "P2",
+      "decisionOwner": "technical-default",
+      "question": "Canlı bağlantı koparsa yedek olarak periyodik sorgu (polling) olsun mu?",
+      "status": "answered",
+      "selected": [
+        "oneri"
+      ],
+      "selectedLabels": [
+        "Socket.IO + polling yedeği (öneriye dön)"
+      ],
+      "recommended": [
+        "oneri"
+      ],
+      "recommendedLabels": [
+        "Socket.IO + polling yedeği (öneriye dön)"
+      ],
+      "matchesRecommendation": true,
+      "source": "user",
+      "customText": "",
+      "note": "",
+      "affects": [
+        "B6",
+        "B10"
+      ],
+      "sources": [
+        "Karar kaydı: realtime"
+      ],
+      "answeredAt": "2026-09-29T07:51:31.667Z"
+    },
+    {
+      "id": "R08",
+      "chapter": "kayit",
+      "chapterTitle": "Karar kaydındaki iddialı seçimler",
+      "priority": "P2",
+      "decisionOwner": "technical-default",
+      "question": "Ekran düzeni cihaza göre nasıl uyarlansın?",
+      "status": "answered",
+      "selected": [
+        "secim"
+      ],
+      "selectedLabels": [
+        "Göreve göre ayrı yüzeyler (seçimi koru)"
+      ],
+      "recommended": [
+        "oneri"
+      ],
+      "recommendedLabels": [
+        "Tek düzen, kutuya göre esneyen parçalar (öneriye dön)"
+      ],
+      "matchesRecommendation": false,
+      "source": "user",
+      "customText": "backend aynı, frontend ayrı",
+      "note": "",
+      "affects": [
+        "J6"
+      ],
+      "sources": [
+        "Karar kaydı: layout"
+      ],
+      "answeredAt": "2026-09-29T07:51:52.331Z"
+    },
+    {
+      "id": "R09",
+      "chapter": "kayit",
+      "chapterTitle": "Karar kaydındaki iddialı seçimler",
+      "priority": "P2",
+      "decisionOwner": "technical-default",
+      "question": "Veri sözleşmesi Frappe'ye ne kadar yakın olsun?",
+      "status": "answered",
+      "selected": [
+        "secim"
+      ],
+      "selectedLabels": [
+        "Frappe tiplerine yakın (seçimi koru)"
+      ],
+      "recommended": [
+        "secim"
+      ],
+      "recommendedLabels": [
+        "Frappe tiplerine yakın (seçimi koru)"
+      ],
+      "matchesRecommendation": true,
+      "source": "user",
+      "customText": "",
+      "note": "",
+      "affects": [
+        "B2"
+      ],
+      "sources": [
+        "Karar kaydı: contract"
+      ],
+      "answeredAt": "2026-09-29T07:52:17.043Z"
+    },
+    {
+      "id": "R10",
+      "chapter": "kayit",
+      "chapterTitle": "Karar kaydındaki iddialı seçimler",
+      "priority": "P2",
+      "decisionOwner": "product-owner",
+      "question": "Formlar nasıl kaydedilsin?",
+      "status": "answered",
+      "selected": [
+        "oneri"
+      ],
+      "selectedLabels": [
+        "Taslak otomatik kaydedilir, gerçek belge \"Kaydet\" ile (öneriye dön)"
+      ],
+      "recommended": [
+        "oneri"
+      ],
+      "recommendedLabels": [
+        "Taslak otomatik kaydedilir, gerçek belge \"Kaydet\" ile (öneriye dön)"
+      ],
+      "matchesRecommendation": true,
+      "source": "user",
+      "customText": "elektrik kesintisi yada veri kesintisi durumunda, form alanlarında ki verilerin, bilginin saklanması, kaldığı yerden devam etmesi gerekir. ",
+      "note": "",
+      "affects": [
+        "E2"
+      ],
+      "sources": [
+        "Karar kaydı: drafts",
+        "Açık kararlar: autosave"
+      ],
+      "answeredAt": "2026-09-29T07:53:18.102Z"
+    },
+    {
+      "id": "R11",
+      "chapter": "kayit",
+      "chapterTitle": "Karar kaydındaki iddialı seçimler",
+      "priority": "P2",
+      "decisionOwner": "product-owner",
+      "question": "İlk sürümde hangi yüzeyler olsun: panel, portal, herkese açık site?",
+      "status": "answered",
+      "selected": [
+        "oneri"
+      ],
+      "selectedLabels": [
+        "Önce panel; portal ve site sonraki fazlarda (öneriye dön)"
+      ],
+      "recommended": [
+        "oneri"
+      ],
+      "recommendedLabels": [
+        "Önce panel; portal ve site sonraki fazlarda (öneriye dön)"
+      ],
+      "matchesRecommendation": true,
+      "source": "user",
+      "customText": "",
+      "note": "",
+      "affects": [
+        "L8",
+        "L9",
+        "M21"
+      ],
+      "sources": [
+        "Karar kaydı: surface"
+      ],
+      "answeredAt": "2026-09-29T07:53:37.205Z"
+    },
+    {
+      "id": "R12",
+      "chapter": "kayit",
+      "chapterTitle": "Karar kaydındaki iddialı seçimler",
+      "priority": "P2",
+      "decisionOwner": "product-owner",
+      "question": "Desk ile ne kadar eşitlik hedeflensin?",
+      "status": "not_applicable",
+      "selected": [],
+      "selectedLabels": [],
+      "recommended": [
+        "oneri"
+      ],
+      "recommendedLabels": [
+        "Aşamalı eşitlik (öneriye dön)"
+      ],
+      "matchesRecommendation": null,
+      "source": null,
+      "customText": "",
+      "note": "",
+      "affects": [
+        "B8",
+        "K7"
+      ],
+      "sources": [
+        "Karar kaydı: parity"
+      ],
+      "answeredAt": null
+    },
+    {
+      "id": "X01",
+      "chapter": "teknik",
+      "chapterTitle": "Teknik varsayılanlar",
+      "priority": "P2",
+      "decisionOwner": "technical-default",
+      "question": "Hata kataloğu ve tek hata biçimi tanımlansın mı?",
+      "status": "answered",
+      "selected": [
+        "onay"
+      ],
+      "selectedLabels": [
+        "Önerilen varsayılanı onayla"
+      ],
+      "recommended": [
+        "onay"
+      ],
+      "recommendedLabels": [
+        "Önerilen varsayılanı onayla"
+      ],
+      "matchesRecommendation": true,
+      "source": "user",
+      "customText": "",
+      "note": "",
+      "affects": [
+        "E3",
+        "M9",
+        "F3",
+        "E7"
+      ],
+      "sources": [
+        "Uygulanabilirlik incelemesi 4",
+        "Claude raporu B4"
+      ],
+      "answeredAt": "2026-09-29T07:53:59.765Z"
+    },
+    {
+      "id": "X02",
+      "chapter": "teknik",
+      "chapterTitle": "Teknik varsayılanlar",
+      "priority": "P2",
+      "decisionOwner": "technical-default",
+      "question": "API adları ve sürümleri nasıl olsun?",
+      "status": "answered",
+      "selected": [
+        "onay"
+      ],
+      "selectedLabels": [
+        "Önerilen varsayılanı onayla: sürümlü ad alanı, API tablosu, iki sürümlük geçiş penceresi"
+      ],
+      "recommended": [
+        "onay"
+      ],
+      "recommendedLabels": [
+        "Önerilen varsayılanı onayla: sürümlü ad alanı, API tablosu, iki sürümlük geçiş penceresi"
+      ],
+      "matchesRecommendation": true,
+      "source": "user",
+      "customText": "",
+      "note": "stripe api'leri gibi, 20 yıl geriye dönük uyumlu olmalı",
+      "affects": [
+        "B1",
+        "H3",
+        "K8"
+      ],
+      "sources": [
+        "Uygulanabilirlik incelemesi 2"
+      ],
+      "answeredAt": "2026-09-29T07:54:47.428Z"
+    },
+    {
+      "id": "X03",
+      "chapter": "teknik",
+      "chapterTitle": "Teknik varsayılanlar",
+      "priority": "P2",
+      "decisionOwner": "technical-default",
+      "question": "Onay ve denetimdeki \"parmak izi\" (hash) nasıl hesaplansın?",
+      "status": "answered",
+      "selected": [
+        "onay"
+      ],
+      "selectedLabels": [
+        "Önerilen varsayılanı onayla: kanonik JSON (RFC 8785) + SHA-256"
+      ],
+      "recommended": [
+        "onay"
+      ],
+      "recommendedLabels": [
+        "Önerilen varsayılanı onayla: kanonik JSON (RFC 8785) + SHA-256"
+      ],
+      "matchesRecommendation": true,
+      "source": "user",
+      "customText": "",
+      "note": "",
+      "affects": [
+        "F3",
+        "F8",
+        "I9"
+      ],
+      "sources": [
+        "Uygulanabilirlik incelemesi 1"
+      ],
+      "answeredAt": "2026-09-29T07:54:53.916Z"
+    },
+    {
+      "id": "X04",
+      "chapter": "teknik",
+      "chapterTitle": "Teknik varsayılanlar",
+      "priority": "P2",
+      "decisionOwner": "technical-default",
+      "question": "Hetzner'da ters vekil (reverse proxy) olarak ne kullanılsın?",
+      "status": "answered",
+      "selected": [
+        "nginx"
+      ],
+      "selectedLabels": [
+        "nginx (Frappe'nin kendi kurulumunun varsayılanı)"
+      ],
+      "recommended": [
+        "nginx"
+      ],
+      "recommendedLabels": [
+        "nginx (Frappe'nin kendi kurulumunun varsayılanı)"
+      ],
+      "matchesRecommendation": true,
+      "source": "user",
+      "customText": "",
+      "note": "",
+      "affects": [
+        "M20",
+        "G3"
+      ],
+      "sources": [
+        "Uygulanabilirlik incelemesi 14"
+      ],
+      "answeredAt": "2026-09-29T07:55:18.682Z"
+    },
+    {
+      "id": "X05",
+      "chapter": "teknik",
+      "chapterTitle": "Teknik varsayılanlar",
+      "priority": "P2",
+      "decisionOwner": "technical-default",
+      "question": "İçerik güvenlik politikası (CSP) için tek kullanımlık anahtar (nonce) nasıl verilsin?",
+      "status": "answered",
+      "selected": [
+        "vekil"
+      ],
+      "selectedLabels": [
+        "Ters vekil her yanıtta nonce üretir ve HTML'e yerleştirir"
+      ],
+      "recommended": [
+        "vekil"
+      ],
+      "recommendedLabels": [
+        "Ters vekil her yanıtta nonce üretir ve HTML'e yerleştirir"
+      ],
+      "matchesRecommendation": true,
+      "source": "user",
+      "customText": "",
+      "note": "",
+      "affects": [
+        "G3"
+      ],
+      "sources": [
+        "Uygulanabilirlik incelemesi 14"
+      ],
+      "answeredAt": "2026-09-29T07:55:25.973Z"
+    },
+    {
+      "id": "X06",
+      "chapter": "teknik",
+      "chapterTitle": "Teknik varsayılanlar",
+      "priority": "P2",
+      "decisionOwner": "technical-default",
+      "question": "Ortamlar ve dağıtım hattı nasıl olsun?",
+      "status": "answered",
+      "selected": [
+        "onay"
+      ],
+      "selectedLabels": [
+        "Önerilen varsayılanı onayla: yerel (Colima), CI (GitHub Actions), staging ve canlı (Hetzner, Docker Engine)"
+      ],
+      "recommended": [
+        "onay"
+      ],
+      "recommendedLabels": [
+        "Önerilen varsayılanı onayla: yerel (Colima), CI (GitHub Actions), staging ve canlı (Hetzner, Docker Engine)"
+      ],
+      "matchesRecommendation": true,
+      "source": "user",
+      "customText": "",
+      "note": "devops friendly",
+      "affects": [
+        "K8",
+        "K10"
+      ],
+      "sources": [
+        "Uygulanabilirlik incelemesi 14"
+      ],
+      "answeredAt": "2026-09-29T07:56:36.392Z"
+    },
+    {
+      "id": "X07",
+      "chapter": "teknik",
+      "chapterTitle": "Teknik varsayılanlar",
+      "priority": "P2",
+      "decisionOwner": "technical-default",
+      "question": "Eski sürüm dosyaları ne kadar saklansın?",
+      "status": "answered",
+      "selected": [
+        "onay"
+      ],
+      "selectedLabels": [
+        "Önerilen varsayılanı onayla: en az iki sürüm veya 30 gün; HTML önbelleğe alınmaz, varlık dosyaları uzun süre önbellekte"
+      ],
+      "recommended": [
+        "onay"
+      ],
+      "recommendedLabels": [
+        "Önerilen varsayılanı onayla: en az iki sürüm veya 30 gün; HTML önbelleğe alınmaz, varlık dosyaları uzun süre önbellekte"
+      ],
+      "matchesRecommendation": true,
+      "source": "user",
+      "customText": "",
+      "note": "",
+      "affects": [
+        "K8",
+        "H3"
+      ],
+      "sources": [
+        "Uygulanabilirlik incelemesi 14"
+      ],
+      "answeredAt": "2026-09-29T07:58:36.313Z"
+    }
+  ]
+}

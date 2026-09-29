@@ -7,8 +7,8 @@
     <div class="layer l-kalici">
       <div class="name"><span class="ord">01</span>Frappe sözleşmesi<span class="chip kalici">kalıcı</span></div>
       <dl>
-        <dt>Nedir</dt><dd>Aynı origin'deki kenar katmanı (ters vekil, sürümlü API sözleşmesi ve oturumu açan kimlik köprüsü) ve DocType metadata'sından üretilen tipli şemalar: Entity, Field, Report, Workspace, Run. Frappe REST v2 ve RPC bu sözleşmenin arkasındadır; sürüm uyumluluk matrisi burada yaşar. Kimlik ve oturum Kimlik bölümündedir.</dd>
-        <dt>Ne yapmaz</dt><dd>Desk'in iç endpoint'lerine bağlanmaz. İş kuralı, izin veya doğrulama tekrarlamaz. Metadata'dan çıkmayan domain kuralını uydurmaz; o kural Frappe tarafında Server Script veya hook olarak yazılır.</dd>
+        <dt>Nedir</dt><dd>Aynı origin'deki kenar katmanı (ters vekil, sürümlü API sözleşmesi ve oturumu açan kimlik köprüsü) ve DocType metadata'sından üretilen tipli şemalar: Entity, Field, Report, Workspace, Run. Frappe REST v2 ve RPC bu sözleşmenin arkasındadır; hedef yalnız Frappe v16'dır (A3). Kullanıcının klasik kaydı doğrudan REST'e, YZ ve onaylı değişiklik yürütücüye gider (B1). Kimlik ve oturum Kimlik bölümündedir.</dd>
+        <dt>Ne yapmaz</dt><dd>Desk'in iç endpoint'lerine bağlanmaz. İş kuralı, izin veya doğrulama tekrarlamaz. Metadata'dan çıkmayan domain kuralını uydurmaz; o kural Frappe custom app'te controller veya hook olarak yazılır (B4).</dd>
       </dl>
     </div>
     <div class="layer l-kalici">
@@ -21,8 +21,8 @@
     <div class="layer l-kalici">
       <div class="name"><span class="ord">03</span>Görev durumu<span class="chip kalici">kalıcı</span></div>
       <dl>
-        <dt>Nedir</dt><dd>Üç ayrı depo: sunucu gerçeği (Query önbelleği, tenant + kullanıcı + izin sürümü ile anahtarlı), çalışma taslağı (alan bazlı autosave, revizyon numarası, çevrimdışı kuyruk) ve görünüm durumu (şema doğrulanan URL). Uzun işler Run DocType'ında yaşar; tarayıcı kapansa da sürer.</dd>
-        <dt>Ne yapmaz</dt><dd>Taslağı localStorage'da kayıt sistemi olarak tutmaz. İki form store'unu eşzamanlamaz (tek state sahibi). Eski revizyonla kaydetmeye çalışmaz; çakışmayı sunucu reddeder, kullanıcı inceler.</dd>
+        <dt>Nedir</dt><dd>Üç ayrı depo: sunucu gerçeği (Query önbelleği, tenant + kullanıcı + izin sürümü ile anahtarlı), çalışma taslağı (otomatik saklanan taslak, revizyon numarası; Dilim 4'ten itibaren çevrimdışı kuyruk) ve görünüm durumu (şema doğrulanan URL). Uzun işler Run DocType'ında yaşar; tarayıcı kapansa da sürer.</dd>
+        <dt>Ne yapmaz</dt><dd>Taslağı kayıt sistemi saymaz: cihazdaki taslak (IndexedDB) yalnızca kesintiye karşı yedektir, gerçek belge Kaydet ile yazılır (E2). İki form store'unu eşzamanlamaz (tek state sahibi). Eski revizyonla kaydetmeye çalışmaz; çakışmayı sunucu reddeder, kullanıcı inceler.</dd>
       </dl>
     </div>
     <div class="layer l-kalici">
@@ -35,7 +35,7 @@
     <div class="layer l-degisebilir">
       <div class="name"><span class="ord">05</span>Tasarım tokenları<span class="chip degisebilir">değişebilir</span></div>
       <dl>
-        <dt>Nedir</dt><dd>Primitive → semantic → component token zinciri; Radix palet ölçekleri semantik rollere eşlenir, semantik roller yalnızca domain bileşen katmanında antd Seed/Alias/Component tokenlarına bağlanır. Tema (aydınlık, koyu, yüksek kontrast, çok marka) ile yoğunluk (comfortable, compact, touch) ayrı eksenlerdir.</dd>
+        <dt>Nedir</dt><dd>Primitive → semantic → component token zinciri; Radix palet ölçekleri semantik rollere eşlenir, semantik roller yalnızca <code>@genui/ui</code> içinde antd Seed/Alias/Component tokenlarına bağlanır. Tema (aydınlık, koyu, yüksek kontrast, çok marka), yoğunluk (comfortable, compact, touch) ve erişilebilirlik modu ayrı eksenlerdir.</dd>
         <dt>Ne yapmaz</dt><dd>antd token adlarını uygulama koduna sızdırmaz. Modelden ham renk veya piksel almaz. Koyu temayı renk ters çevirerek üretmez; ayrı roller tanımlar.</dd>
       </dl>
     </div>
@@ -49,7 +49,7 @@
     <div class="layer l-ucucu">
       <div class="name"><span class="ord">07</span>Adaptörler<span class="chip ucucu">uçucu</span></div>
       <dl>
-        <dt>Nedir</dt><dd>Dört port. TransportAdapter: Frappe Socket.IO, aynı origin'de HttpOnly oturum çereziyle. SpecAdapter: iç UI Spec ile A2UI veya json-render arasında dönüşüm. RendererAdapter ve ComponentLibraryAdapter: iç spec'i domain katmanı (bugün antd) ile çizer. ToolAdapter: capability'leri iç tool çağrısına ve dış MCP sunucusuna açar. Sürümler <code>protocol-matrix</code> dosyasında sabittir.</dd>
+        <dt>Nedir</dt><dd>Dört port. TransportAdapter: Frappe Socket.IO, aynı origin'de HttpOnly oturum çereziyle. SpecAdapter: iç UI Spec ile A2UI veya json-render arasında dönüşüm. RendererAdapter ve ComponentLibraryAdapter: iç spec'i <code>@genui/ui</code> (içinde bugün antd) ile çizer. ToolAdapter: capability'leri iç tool çağrısına ve dış MCP sunucusuna açar. Sürümler <code>protocol-matrix</code> dosyasında sabittir.</dd>
         <dt>Ne yapmaz</dt><dd>Dış kütüphane tiplerini domain katmanına sızdırmaz. Tarayıcıdan LLM sağlayıcısını çağırmaz. Token passthrough yapmaz. Tescilli SDK'yı çekirdek yapmaz.</dd>
       </dl>
     </div>

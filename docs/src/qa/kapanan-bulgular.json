@@ -1,0 +1,215 @@
+{
+ "about": "Kapanan bulguların regresyon listesi (karar kitabı K20, T08). validate.py üretilen belgenin düz metninde 'yasak' ifadelerin hiçbirinin, 'zorunlu' ifadelerin hepsinin geçtiğini denetler. İfadeler Python düzenli ifadesidir; yalnızca olumlu yanlış cümleyi yakalayacak kadar dar yazılır ki tarihçe anlatımı (değişiklik günlüğü, kapanan kararlar) yanlış alarm vermesin.",
+ "bulgular": [
+  {
+   "id": "KR-bag",
+   "kaynak": "Keycloak raporu (hesap bağlama), v2.4",
+   "konu": "Sosyal hesap e-posta eşitliğiyle kendiliğinden bağlanmaz",
+   "zorunlu": [
+    "Otomatik bağlama \\(\"Automatically set existing user\"\\) kapalıdır"
+   ],
+   "yasak": [
+    "e-posta eşitliğiyle (?:mevcut hesaba )?(?:otomatik|kendiliğinden) bağlanır"
+   ]
+  },
+  {
+   "id": "KR-kanit",
+   "kaynak": "Doğrulama eki V24, v2.5",
+   "konu": "İlk bağ taze kanıt ister",
+   "zorunlu": [
+    "Keycloak'taki geçmiş e-posta doğrulaması \\(email_verified\\) tek başına kanıt sayılmaz"
+   ],
+   "yasak": []
+  },
+  {
+   "id": "KR-logout",
+   "kaynak": "Keycloak raporu (logout token), v2.4",
+   "konu": "Logout token ID token'dan ayrı kurallarla doğrulanır",
+   "zorunlu": [
+    "nonce bulunmamalı",
+    "typ başlığı varsa"
+   ],
+   "yasak": [
+    "logout token'ı yalnızca imzasıyla (?:kabul edilir|doğrulanır)"
+   ]
+  },
+  {
+   "id": "KR-iptal",
+   "kaynak": "Keycloak raporu (sunucu tarafı iptal), v2.4",
+   "konu": "İptal sunucuda yürürlüğe girer",
+   "zorunlu": [
+    "İptalin yürürlüğe girdiği yer sunucudur",
+    "azami yürürlük gecikmesi 60 saniyedir"
+   ],
+   "yasak": [
+    "iptal(?:i)? istemcinin soketi kapatmasına (?:bırakılır|dayanır)"
+   ]
+  },
+  {
+   "id": "KR-devre",
+   "kaynak": "Doğrulama eki V24, v2.5",
+   "konu": "Devre dışı bırakma orkestrasyondur",
+   "zorunlu": [
+    "dağıtık atomik bir işlem değil"
+   ],
+   "yasak": []
+  },
+  {
+   "id": "KR-mutlak",
+   "kaynak": "Doğrulama eki V24, v2.5",
+   "konu": "Mutlak oturum bitişi etkinlikle uzamaz",
+   "zorunlu": [
+    "mutlak bitişi ileri taşımaz"
+   ],
+   "yasak": [
+    "boşta kalma süresi (?:üst sınırdır|mutlak sınırdır)"
+   ]
+  },
+  {
+   "id": "KR-cerez",
+   "kaynak": "Keycloak raporu (host ve çerez), v2.4",
+   "konu": "Çerez host-only, üst alan adına yazılmaz",
+   "zorunlu": [
+    "host-only",
+    "hiçbir çerez üst alan adına yazılmaz"
+   ],
+   "yasak": [
+    "(?:çerez|cookie)[^.]{0,40}üst alan adına yazılır"
+   ]
+  },
+  {
+   "id": "KR-token",
+   "kaynak": "Kimlik rehberi, v2.3",
+   "konu": "Tarayıcı token taşımaz",
+   "zorunlu": [
+    "Tarayıcı erişim, yenileme veya ID token'ı"
+   ],
+   "yasak": [
+    "(?:localStorage|sessionStorage)'da (?:token|erişim token'ı) (?:tutulur|saklanır)"
+   ]
+  },
+  {
+   "id": "KR-ropc",
+   "kaynak": "Kimlik rehberi, v2.3",
+   "konu": "Parolayla token alma kapalı",
+   "zorunlu": [
+    "Parolayla token alma \\(Direct Access Grants\\), implicit akış ve token exchange kapalıdır"
+   ],
+   "yasak": []
+  },
+  {
+   "id": "KR-olay",
+   "kaynak": "Karar kitabı C03, v2.6",
+   "konu": "Realtime olayı yalnızca sinyal taşır",
+   "zorunlu": [
+    "yalnızca \"değişti\" sinyali"
+   ],
+   "yasak": [
+    "sinyal ve (?:ilerleme )?yüzde(?:si)? taşır",
+    "Run ilerlemesi \\(Socket\\.IO publish_progress\\)"
+   ]
+  },
+  {
+   "id": "KR-marka",
+   "kaynak": "Keycloak raporu (marka), v2.4",
+   "konu": "Marka URL'den okunmaz",
+   "zorunlu": [
+    "Marka URL parametresinden okunmaz"
+   ],
+   "yasak": []
+  },
+  {
+   "id": "KR-kyc",
+   "kaynak": "Keycloak raporu R6, karar kitabı K12",
+   "konu": "KYC belgesi dış modele gitmez",
+   "zorunlu": [
+    "dış model sağlayıcısına hiçbir zaman gitmez"
+   ],
+   "yasak": [
+    "KYC belgesi (?:dış|yönetilen) model(?:e| sağlayıcısına) gönderilir"
+   ]
+  },
+  {
+   "id": "KR-bildirim",
+   "kaynak": "Keycloak raporu R10, karar kitabı K19",
+   "konu": "Frappe sosyal giriş bulgusunun ayrıntısı bildirimden önce yazılmaz",
+   "zorunlu": [
+    "ayrıntısı bildirim kanalına iletilene kadar bu herkese açık belgede yazılmaz"
+   ],
+   "yasak": [
+    "state[^.]{0,80}(?:tarayıcıya|oturuma) bağlı değil"
+   ]
+  },
+  {
+   "id": "ST-aep",
+   "kaynak": "Karar kitabı U02",
+   "konu": "AEP adı kaldırıldı",
+   "zorunlu": [],
+   "yasak": [
+    "@aep/",
+    "AEP token",
+    "AEP markası"
+   ]
+  },
+  {
+   "id": "ST-faz",
+   "kaynak": "Karar kitabı C05",
+   "konu": "Faz yok, dilim var",
+   "zorunlu": [],
+   "yasak": [
+    "\\b[Ff]az 0[0-4]\\b"
+   ]
+  },
+  {
+   "id": "ST-v15",
+   "kaynak": "Karar kitabı U08",
+   "konu": "Yalnız Frappe v16",
+   "zorunlu": [],
+   "yasak": [
+    "v15 paralel bakımda"
+   ]
+  },
+  {
+   "id": "ST-gonderme",
+   "kaynak": "Karar kitabı T08",
+   "konu": "Kabul deneyi yalnızca AT kimliğiyle anılır",
+   "zorunlu": [],
+   "yasak": [
+    "kabul deneyi [A-M]\\d"
+   ]
+  },
+  {
+   "id": "ST-sarmal",
+   "kaynak": "Karar kitabı C04",
+   "konu": "Her şey sarmalanır",
+   "zorunlu": [
+    "uygulama kodu antd'yi doğrudan görmez"
+   ],
+   "yasak": [
+    "sarmalanmaz, doğrudan antd'den kullanılır",
+    "Uygulama kodu \\(apps/\\*\\) antd'yi doğrudan kullanır"
+   ]
+  },
+  {
+   "id": "ST-desk",
+   "kaynak": "Karar kitabı U01, C12",
+   "konu": "Desk geçişi yok",
+   "zorunlu": [],
+   "yasak": [
+    "İlk fazda Desk'te kalırlar",
+    "Canlıya geçiş tek kesimdir"
+   ]
+  },
+  {
+   "id": "ST-autosave",
+   "kaynak": "Karar kitabı R10",
+   "konu": "Gerçek belge otomatik kaydedilmez",
+   "zorunlu": [
+    "Save, submit ve workflow geçişi hiçbir durumda otomatik tetiklenmez"
+   ],
+   "yasak": [
+    "Autosave alan bazındadır"
+   ]
+  }
+ ]
+}

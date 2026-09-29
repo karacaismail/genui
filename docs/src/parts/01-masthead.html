@@ -3,21 +3,21 @@
 
 <header class="masthead">
   <div class="intro">
-    <div class="docid"><span>GENUI-FE-REQ</span><span>v2.5</span><span>29 Eylül 2026</span><span>Ant Design + Frappe + Keycloak</span></div>
+    <div class="docid"><span>GENUI-FE-REQ</span><span>v2.6</span><span>29 Eylül 2026</span><span>Ant Design + Frappe + Keycloak</span></div>
     <h1>GenUI Frontend Gereksinimleri</h1>
     <p class="lede"><strong>Backend Frappe Framework, bileşen kütüphanesi Ant Design; ama merkez ikisi de değil, ürüne ait etkileşim çekirdeğidir:</strong> Frappe metadata'sından türeyen sözleşme, iş yetenekleri, görev durumu, onaylı renderer kataloğu ve tasarım kararları. GenUI bu çekirdeği kullanan bir katmandır; model kod, HTML veya URL üretmez, katalogdan seçer. Yapay zekâ öncelikli (AI-first) etkileşim bu belgede zorunlu gereksinimdir. Kimlik Keycloak'ta, oturum ve yetki Frappe'de durur; tarayıcı token taşımaz, marka tek token kaynağından giriş ekranına kadar dağılır.</p>
     <dl class="meta">
-      <div><dt>Kapsam</dt><dd>Frappe v16 üzerinde headless yönetim paneli, uygulama SPA'ları, yetkili portal ve herkese açık içerik; Keycloak merkezli giriş ve kayıt, white-label deneyim, çok rollü operasyon</dd></div>
-      <div><dt>Dayanak</dt><dd>Frappe Headless Platform karar kaydı (139 karar, katalog 2026-09-19.2), Keycloak + Headless Frappe kimlik rehberi ve 28 Eylül 2026'da doğrulanan sürümler</dd></div>
+      <div><dt>Kapsam</dt><dd>Frappe v16 üzerinde, sıfırdan kurulan, Zoho benzeri bir uygulama ailesinin headless paneli, uygulama SPA'ları, yetkili portal ve herkese açık içerik; Keycloak merkezli giriş ve kayıt, müşteri markalı (white-label) deneyim, dokuz cihaz sınıfı; dört dikey dilim, ilk dilim 3 ayda</dd></div>
+      <div><dt>Dayanak</dt><dd>Frappe Headless Platform karar kaydı (139 karar, katalog 2026-09-19.2), Keycloak + Headless Frappe kimlik rehberi, proje sahibinin 29 Eylül 2026 tarihli karar kitabı cevapları (104 soru) ve 28–29 Eylül 2026'da doğrulanan sürümler</dd></div>
     </dl>
   </div>
   <aside class="rules" aria-labelledby="rules-h">
     <div class="eyebrow" id="rules-h">Yedi değişmez kural</div>
     <ol>
       <li><span><strong>Model kod, HTML, ham SQL veya serbest URL üretmez;</strong> capability manifest'inden eylem, renderer kataloğundan bileşen, tipli AST olarak filtre seçer. <a href="#D1">D1</a>, <a href="#G1">G1</a></span></li>
-      <li><span><strong>Yetki, iş kuralı, doğrulama ve belge yaşam döngüsü Frappe sunucusundadır;</strong> Client Script davranışı sunucuya taşınır, frontend gösterir ama uygulamaz. <a href="#B4">B4</a>, <a href="#F2">F2</a></span></li>
+      <li><span><strong>Yetki, iş kuralı, doğrulama ve belge yaşam döngüsü Frappe sunucusundadır;</strong> Client Script yazılmaz, frontend gösterir ama uygulamaz. <a href="#B4">B4</a>, <a href="#F2">F2</a></span></li>
       <li><span><strong>Frontend Frappe ile yalnızca aynı origin'deki sürümlü sözleşme üzerinden</strong> ve DocType metadata'sından üretilen tipli şemalarla konuşur. <a href="#B1">B1</a>, <a href="#B2">B2</a></span></li>
-      <li><span><strong>Ant Design standart sunum aracıdır;</strong> antd prop'u ve tipi katalog, capability ve görev durumu sözleşmelerine girmez, iş anlamı taşıyan bileşenler domain katmanında sarmalanır. <a href="#C1">C1</a></span></li>
+      <li><span><strong>Ant Design yalnızca <code>@genui/ui</code> içinde yaşar;</strong> uygulama kodu antd'yi doğrudan görmez, antd prop'u ve tipi katalog, capability ve görev durumu sözleşmelerine girmez. <a href="#C1">C1</a></span></li>
       <li><span><strong>Görev durumu ekrandan ayrıdır:</strong> taslak revizyonlu (gerçek belge veya ayrı çalışma kopyası), uzun iş Run kaydında; görünüm değişince hiçbir şey kaybolmaz. <a href="#E2">E2</a>, <a href="#E5">E5</a></span></li>
       <li><span><strong>Her YZ yüzeyinin manuel eşdeğeri vardır;</strong> kill switch GenUI'ı 30 saniyede kapatır, klasik görünüm her zaman açıktır. <a href="#I1">I1</a>, <a href="#E7">E7</a></span></li>
       <li><span><strong>Giriş, kayıt ve kimlik bilgisi yalnızca Keycloak sayfasında işlenir;</strong> token tarayıcıya inmez, oturum Frappe'nin HttpOnly çerezindedir, model kimlik ekranı üretmez. <a href="#M3">M3</a>, <a href="#M7">M7</a></span></li>
@@ -30,15 +30,18 @@
   <div class="eyebrow">İçindekiler</div>
   <nav>
     <ul class="toc">
-      <li><a href="#karar"><span class="n">01</span>Karar</a></li>
-      <li><a href="#acik"><span class="n">02</span>Açık kararlar</a></li>
-      <li><a href="#nedir"><span class="n">03</span>GenUI nedir</a></li>
-      <li><a href="#yolculuk"><span class="n">04</span>Varsayılan yolculuk</a></li>
-      <li><a href="#katmanlar"><span class="n">05</span>Katman mimarisi</a></li>
-      <li><a href="#mekanizma"><span class="n">06</span>Mekanizma</a></li>
-      <li><a href="#kimlik"><span class="n">07</span>Kimlik ve white-label</a></li>
+      <li><a href="#okuma"><span class="n">01</span>Okuma yolu ve sözlük</a></li>
+      <li><a href="#karar"><span class="n">02</span>Karar</a></li>
+      <li><a href="#acik"><span class="n">03</span>Açık kararlar ve çelişkiler</a></li>
+      <li><a href="#kitap-sonuc"><span class="n">04</span>Karar kitabı sonuçları</a></li>
+      <li><a href="#nedir"><span class="n">05</span>GenUI nedir</a></li>
+      <li><a href="#yolculuk"><span class="n">06</span>Varsayılan yolculuk</a></li>
+      <li><a href="#katmanlar"><span class="n">07</span>Katman mimarisi</a></li>
+      <li><a href="#mekanizma"><span class="n">08</span>Mekanizma</a></li>
+      <li><a href="#kimlik"><span class="n">09</span>Kimlik ve white-label</a></li>
+      <li><a href="#urun-ailesi"><span class="n">10</span>Ürün ailesi ve cihazlar</a></li>
       <li class="sep">Teknik ek</li>
-      <li><a href="#gereksinimler"><span class="n">08</span>Gereksinimler</a>
+      <li><a href="#gereksinimler"><span class="n">11</span>Gereksinimler</a>
         <div class="sub">
           <a href="#g-a">A. Yığın ve lisans</a>
           <a href="#g-b">B. Frappe sözleşmesi</a>
@@ -55,12 +58,17 @@
           <a href="#g-m">M. Kimlik, oturum ve white-label</a>
         </div>
       </li>
-      <li><a href="#yigin"><span class="n">09</span>Teknoloji seçimi</a></li>
-      <li><a href="#deneyler"><span class="n">10</span>Kabul deneyleri</a></li>
-      <li><a href="#plan"><span class="n">11</span>Aşamalı plan</a></li>
-      <li><a href="#yapma"><span class="n">12</span>Yapılmayacaklar</a></li>
-      <li><a href="#izlenebilirlik"><span class="n">13</span>Karar izlenebilirliği</a></li>
-      <li><a href="#kaynaklar"><span class="n">14</span>Kaynaklar</a></li>
+      <li><a href="#yigin"><span class="n">12</span>Teknoloji seçimi</a></li>
+      <li><a href="#test-stratejisi"><span class="n">13</span>Test stratejisi</a></li>
+      <li><a href="#sozlesme-eki"><span class="n">14</span>Sözleşme eki</a></li>
+      <li><a href="#doctype-katalogu"><span class="n">15</span>DocType kataloğu</a></li>
+      <li><a href="#api-hata"><span class="n">16</span>API, hata ve dağıtım</a></li>
+      <li><a href="#deneyler"><span class="n">17</span>Kabul deneyleri</a></li>
+      <li><a href="#plan"><span class="n">18</span>Dilim planı</a></li>
+      <li><a href="#yapma"><span class="n">19</span>Yapılmayacaklar</a></li>
+      <li><a href="#izlenebilirlik"><span class="n">20</span>Karar izlenebilirliği</a></li>
+      <li><a href="#gunluk"><span class="n">21</span>Değişiklik günlüğü</a></li>
+      <li><a href="#kaynaklar"><span class="n">22</span>Kaynaklar</a></li>
     </ul>
   </nav>
   <button type="button" class="tbtn" id="theme-toggle" data-theme-mode="system" aria-label="Tema: sistem. Değiştirmek için tıklayın">

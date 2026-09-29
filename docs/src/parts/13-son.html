@@ -6,47 +6,51 @@
     <div class="no">
       <h3>{{icon:prohibit}}Yapılmayacaklar</h3>
       <ul>
-        <li>Desk'in iç endpoint'lerine, <code>frm</code> API'sine veya Client Script davranışına bağımlı kalma; iş kuralını sunucuya taşı.</li>
+        <li>Desk'in iç endpoint'lerine veya <code>frm</code> API'sine bağımlı kalma; Client Script yazma; iş kuralı sunucuda.</li>
         <li>Tarayıcıya erişim token'ı, yenileme token'ı, API anahtarı veya JavaScript'in okuyabildiği oturum bilgisi indirme; oturum yalnızca Frappe'nin HttpOnly çerezinde ve aynı origin'de durur.</li>
         <li>SPA'da parola veya kod formu yapma; parolayla token almayı (ROPC), implicit akışı veya kodu token uç noktasına gönderen özel grant'leri açma.</li>
-        <li>Müşteri girişi için Frappe'nin genel Social Login akışını veya hazır OIDC köprülerini olduğu gibi kullanma; kimliği e-postayla eşleme.</li>
+        <li>Müşteri girişi için Frappe'nin genel Social Login akışını veya hazır OIDC köprülerini olduğu gibi kullanma; kimliği e-postayla eşleme; kullanıcı adını telefon numarası yapma.</li>
         <li>Giriş sayfası markasını URL parametresinden okuma; sessiz girişi iframe ile yapma; realm'i yönetim panelinden elle değiştirme.</li>
         <li>Sosyal hesabı e-posta eşitliğiyle mevcut hesaba kendiliğinden bağlama; ayrıcalıklı Frappe kullanıcısını kontrollü göç dışında bağlama.</li>
         <li>Logout token'ını yalnızca imzasıyla kabul etme; Frappe çerezini üst alan adına yazma; iptali istemcinin soketi kapatmasına bırakma.</li>
         <li>Giriş sağlayıcısı düğmelerindeki Google ve Apple markasını white-label taramasıyla silme; altyapı markasını ("Powered by") ekranda bırakma.</li>
-        <li>Modele kimlik ekranı ürettirme; kimlik doğrulama sırlarını ve oturumu YZ bağlamına koyma; KYC belgesini veri sınıfı tablosu dışında işletme; adım yükseltmeyi modelin kararına bırakma.</li>
-        <li>antd prop, enum veya tip adını katalog, capability ve görev durumu sözleşmelerine sızdırma; sözleşme paketlerine antd import etme.</li>
+        <li>Modele kimlik ekranı ürettirme; kimlik doğrulama sırlarını ve oturumu YZ bağlamına koyma; KYC belgesini dış model sağlayıcısına gönderme; adım yükseltmeyi modelin kararına bırakma.</li>
+        <li>Uygulama kodunda veya sözleşme paketlerinde antd import etme; antd prop, enum veya tip adını katalog, capability ve görev durumu sözleşmelerine sızdırma.</li>
         <li>Modelin ürettiği hiçbir şeyi kod olarak çalıştırma; ham SQL, serbest URL, metin filtre veya kayıt kimliği ürettirme. Tipli filtre AST'si serbest, denetlenmeyen ifade yasak.</li>
         <li>Yetkiyi, risk sınıfını veya docstatus geçişini istemcide ya da sistem promptunda uygulama.</li>
-        <li>İki form store'unu eşzamanlama; öneriyi doğrudan taslağa yazma; kullanıcının düzenlediği alanı model ile ezme.</li>
-        <li>Token akışını sayfaya yazma; iş durumu ve tamamlanmış sonuç modelinden sapma.</li>
-        <li>Barındırılan GenUI servisini, A2UI v1.0 adayını, x-card'ı veya ticari grid'i çekirdek yapma.</li>
-        <li>Tek kesimle canlıya geçişi parity matrisi, geçiş provası ve Desk'e dönüş provası olmadan yapma; envanter olmadan "tam eşitlik" ilan etme; AT-13 geçmeden GenUI kapsamını genişletme.</li>
-        <li>Ürün olaylarını task veya progress odalarına yayımlama; realtime olaylarına veri koyma.</li>
+        <li>İki form store'unu eşzamanlama; öneriyi doğrudan taslağa yazma; kullanıcının düzenlediği alanı model ile ezme; gerçek belgeyi otomatik kaydetme.</li>
+        <li>Sonucu bilinmeyen dış işlemi (ödeme, yasal belge, e-posta) tekrar koruması olmadan otomatik tekrarlama.</li>
+        <li>Yasal belgeyi grant ile veya belge başına insan onayı olmadan gönderme; yasal belgeyi çevrimdışı kuyruğa alma.</li>
+        <li>"Sohbeti sil" eylemini "unut" diye adlandırma; türetilmiş kopyaların kaldığını kullanıcıdan gizleme.</li>
+        <li>Proaktif öneriyle yazma veya Run başlatma; öneriyi modal olarak açma.</li>
+        <li>Barındırılan GenUI servisini, A2UI v1.0 adayını, x-card'ı, ticari grid'i veya ticari Gantt'ı çekirdek yapma.</li>
+        <li>Dilim kapısını takvim için kısaltma; "çalıştırılmadı" sonucunu "geçti" sayma; AT-13 geçmeden GenUI kapsamını genişletme.</li>
+        <li>Kimlik çekirdeğini veya güvenlik açısından kritik custom app kodunu dış güvenlik incelemesi olmadan canlıya çıkarma.</li>
+        <li>Ürün olaylarını task veya progress odalarına yayımlama; realtime olaylarına veri veya ilerleme yüzdesi koyma.</li>
         <li>Onaylı değişiklik için <code>apply_workflow</code>'u veya REST v2 method yolunu doğrudan çağırma; BFF'de ön kontrol yapıp ayrı RPC ile uygulama.</li>
-        <li>Gerçek belgeye autosave'i hook envanteri olmadan açma; 417'yi tek başına çakışma sayma.</li>
-        <li>Kararın seçimini sessizce öneriyle değiştirme; öneriyi yalnızca Açık kararlar'da göster.</li>
-        <li>Prompt, model çıktısı, spec içeriği veya kayıt verisini frontend telemetrisine yazma.</li>
-        <li>YZ ajanının PR onaylamasına, birleştirmesine veya korumalı dala push etmesine izin verme.</li>
+        <li>Kararın seçimini sessizce değiştirme; karar kaydıyla, kimlik rehberiyle veya karar kitabıyla değişen her karar izlenebilirlikte ve çelişki tablosunda görünür.</li>
+        <li>Prompt, model çıktısı, spec içeriği veya kayıt verisini frontend telemetrisine yazma; test ortamına gerçek kişisel veri koyma.</li>
+        <li>YZ ajanının PR onaylamasına, birleştirmesine veya korumalı dala push etmesine izin verme; otomasyonun canlı sisteme kendiliğinden dokunmasına izin verme.</li>
+        <li>Yerel geliştirmede Docker Desktop kullanma; yerel container çalışma ortamı Colima'dır.</li>
       </ul>
     </div>
     <div class="yes">
       <h3>{{icon:check-circle}}Yapılacaklar</h3>
       <ul>
-        <li>Faz 00'ı gerçekten yap: Frappe sürüm ve özelleştirme envanteri, Client Script sınıflandırması, veri hacmi ölçümü.</li>
-        <li>Varsayılan yolculuğu tek DocType üzerinde uçtan uca kur: niyet girişi → kapsam → netleştirme → çalışma alanı → düzeltme → onay → sonuç; AT-14 ile kabul et.</li>
-        <li>Frappe custom app'te capability yürütücüsünü, Run adım günlüğünü, kilidi ve uzlaştırmayı platform ekibinin teslimi olarak planla.</li>
-        <li>Aynı origin ters vekili, Keycloak realm'ini (kodla) ve kimlik köprüsünü ilk sprint'te kur; AT-15, AT-18 ve AT-20'yi tarayıcıda okunabilir token olmadan kanıtla.</li>
-        <li>Tenant modelini ve white-label seviyesini faz 01 bitmeden ADR ile kapat; o zamana kadar sözleşmeyi iki modele dayanıklı yaz.</li>
-        <li>Giriş yöntemlerini hazır olanlarla (parola, Google, passkey) aç; her yeni yöntemi AT-19 ve eklenti kabul listesiyle (K12) ekle.</li>
-        <li>Frappe sosyal giriş bulgusunu, ayrıntısını herkese açık yazmadan önce Frappe'nin güvenlik bildirim kanalına ilet.</li>
-        <li>Açık kararlar tablosundaki her satırı bir ADR ile kapat; seçimlerin gerekçelerini yaz.</li>
-        <li>İlk on iş bileşenini veri sözleşmesi, risk ve kabul koşuluyla kataloğa yaz; genel bileşenleri sarmalama.</li>
-        <li>Metadata codegen ve şema fingerprint'ini ilk sprint'te kur; katalog snapshot'ını CI'a bağla.</li>
-        <li>Capability manifest'ini metadata'dan üret, açık allowlist ile daralt; her capability'ye risk sınıfı ve terslenebilirlik yaz; onay matrisini sunucu politikası olarak uygula.</li>
-        <li>Kill switch, kota, klasik görünüm ve bağlamlı devri YZ'den önce kur.</li>
-        <li>AT-01, AT-05, AT-09, AT-10, AT-11, AT-13, AT-14, AT-15, AT-16, AT-18, AT-20, AT-21, AT-22 ve AT-26'yı yayın kapısı yap; sonuçları K9 kanıt kaydına yaz.</li>
-        <li>Karar kaydındaki "henüz yazılmadı" gerekçeleri ADR olarak tamamla; iddialı seçimleri tabloda görünür tut.</li>
+        <li>Frappe sosyal giriş kodundaki bulgunun bildirim taslağını (29 Eylül 2026'da proje sahibine ayrıca verildi) Frappe'nin güvenlik adresine gönder; ayrıntıyı bildirimden önce herkese açık yazma (karar kitabı K19).</li>
+        <li>Dilim 1'e başlamadan önce test stratejisini, Dilim 1'in DocType satırlarını ve sözleşme ekini kırmızıdan yeşile dönen sözleşme testleriyle hazırla (T02, V08, V09).</li>
+        <li>Dilim 1'e bağlı açık kararları sahibine göre kapat: KVKK aktarım dayanağı ve rıza metinleri (hukukçu), model sağlayıcısı ve yerel model, performans ölçüm koşulu, YZ bütçesi aşım davranışı, Keycloak e-posta markası, SLO ve RPO/RTO, kod adı, iş takibi aracı.</li>
+        <li>Varsayılan yolculuğu PIM'de uçtan uca kur: niyet girişi → kapsam → netleştirme → çalışma alanı → düzeltme → onay → sonuç; AT-13 ve AT-14 ile kabul et; önce klasik yolun ölçümünü yap (Y11).</li>
+        <li>Capability yürütücüsünü, Run adım günlüğünü, lease ve sahiplik numarasını, grant rezervasyonunu ve uzlaştırmayı Frappe custom app'te kur; güvenlik açısından kritik bu parçaları dilim kapısında dış danışmana incelet.</li>
+        <li>Aynı origin ters vekili (nginx, nonce), Keycloak realm'ini (kodla), kimlik köprüsünü, müşteri başına host ve istemciyi ilk sprint'te kur; AT-15, AT-18 ve AT-20'yi tarayıcıda okunabilir token olmadan kanıtla.</li>
+        <li>Giriş yöntemlerini dilimlere göre aç: parola, Google, passkey Dilim 1'de; Apple ve e-posta kodu Dilim 2'de; SMS, WhatsApp ve Telegram Dilim 3'te; her yöntemi AT-19 ve eklenti kabul listesiyle (K12) ekle.</li>
+        <li><code>@genui/ui</code>'yi, token zincirini ve ikon kayıt mekanizmasını ilk sprint'te kur; ilk on iş bileşenini ve genel sarmalayıcıları Storybook örnekleriyle yaz.</li>
+        <li>Metadata codegen'i, zod'dan JSON Schema paketini ve şema parmak izini ilk sprint'te kur; katalog snapshot'ını ve sözleşme örneklerini CI'a bağla.</li>
+        <li>Kill switch, aylık YZ bütçesi, klasik görünüm ve bağlamlı devri YZ'den önce kur; AT-27 ile 30 saniyeyi ölç.</li>
+        <li>Her PR'da gerçek cihaz testinin süresini ve maliyetini ilk ay ölç; sonucu K4'teki kurala göre değerlendir.</li>
+        <li>Yayın kapısı deneylerini dilimlerine göre K9'daki dört sonuçlu kanıt kaydına bağla: Dilim 1'de AT-01, AT-05, AT-09–AT-18, AT-20–AT-23, AT-25–AT-28, AT-30, AT-35, AT-36, AT-38.</li>
+        <li>KVKK standart sözleşmesini, rıza metinlerini, saklama sürelerini ve müşteri kurulum sözleşmesini hukukçuya teyit ettir (G8, A5, DocType kataloğu).</li>
+        <li>Karar kaydındaki "henüz yazılmadı" gerekçeleri ve karar kitabıyla değişen kararları ADR olarak yaz; karar kaydını güncelle.</li>
       </ul>
     </div>
   </div>
@@ -54,10 +58,29 @@
 
 {{TRACE}}
 
+<section id="gunluk">
+  <div class="sec-head">
+    <div class="title"><h2>Değişiklik günlüğü</h2></div>
+    <p>Belgenin her sürümünde neyin değiştiği (karar kitabı E04). Kaynak commit'leri repo geçmişindedir.</p>
+  </div>
+  <div class="tbl-wrap"><table class="matrix prose">
+    <thead><tr><th scope="col">Sürüm</th><th scope="col">Tarih</th><th scope="col">Değişiklik</th></tr></thead>
+    <tbody>
+      <tr><td>2.6</td><td>29 Eylül 2026</td><td>Karar kitabının 104 sorusuna verilen cevaplar işlendi (98 cevap, 3 erteleme, 3 uygulanmaz): fazlar kaldırıldı, Dilim 1–4 dikey dilimler ve O1–O4 olgunluk seviyeleri; ürün sıfırdan (Desk geçişi yok); hibrit tenant; yalnız Frappe v16; her şey <code>@genui/ui</code> ile sarmalanır; "AEP" kaldırıldı; SCSS Modules; ikon kayıt mekanizması; canlıda sınırlı grant ve bütçe rezervasyonu; iki yazma yolu; yasal belge sınıfı; çevrimdışı kuyruk ve şifreli taslak; güç kesintisinde taslak koruması; göreve göre model yönlendirmesi ve yurt dışı işleme; rol bazlı oturum süreleri; 60 saniyelik realtime iptali; yedi giriş yöntemi; seviye 2 müşteri markası; dokuz cihaz sınıfı ve erişilebilirlik modu. Yeni gereksinimler: A8, B11, B12, E11, F9, F10, G8, I11–I13, J9, J10, K13–K16, L10, M26, M27. Yeni bölümler: okuma yolu ve sözlük, karar kitabı sonuçları, karar çelişkileri, ürün ailesi ve cihazlar, test stratejisi, sözleşme eki, DocType kataloğu, API ve hata kataloğu, dilim planı, değişiklik günlüğü. Yeni kabul deneyleri: AT-27–AT-39. Belge kontrolleri: dilim, test bağı, sözlük, kapanan bulgu regresyonu ve gönderme denetimleri.</td></tr>
+      <tr><td>2.5</td><td>29 Eylül 2026</td><td>Doğrulama eki (V24-1–V24-5): ilk bağ için taze bağlama kanıtı, mutlak oturum bitişi, devre dışı bırakma orkestrasyonu; faz doğrulamasının düzeltilmesi.</td></tr>
+      <tr><td>2.4</td><td>28 Eylül 2026</td><td>Keycloak inceleme raporu (R1–R10): hesap bağlama, logout token doğrulaması, sunucu tarafı iptal, host ve çerez kapsamı, oturum uç noktası, veri sınıfları, kurtarma matrisi.</td></tr>
+      <tr><td>2.3</td><td>28 Eylül 2026</td><td>Keycloak + Headless Frappe kimlik rehberi: aynı origin oturum, kimlik köprüsü, white-label, giriş ekosistemi.</td></tr>
+      <tr><td>2.2</td><td>28 Eylül 2026</td><td>İkinci inceleme: karar kaydı seçimleri korundu, Frappe davranışları düzeltildi.</td></tr>
+      <tr><td>2.1</td><td>28 Eylül 2026</td><td>Dış inceleme: varsayılan yolculuk, bileşen kataloğu, onay matrisi.</td></tr>
+      <tr><td>2.0</td><td>28 Eylül 2026</td><td>Ant Design + Frappe için yeniden yazım ve tasarım eleştirisinin uygulanması.</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
 <section id="kaynaklar" class="sources">
   <div class="sec-head">
     <div class="title"><h2>Kaynaklar</h2></div>
-    <p>Sürüm, API ve lisans bilgileri 28 Eylül 2026 tarihinde bu kaynaklardan doğrulanmıştır. Karar kaydı: Frappe Headless Platform, şema 1, katalog 2026-09-19.2. Kimlik: Keycloak + Headless Frappe kimlik rehberi.</p>
+    <p>Sürüm, API ve lisans bilgileri 28–29 Eylül 2026 tarihinde bu kaynaklardan doğrulanmıştır. Karar kaydı: Frappe Headless Platform, şema 1, katalog 2026-09-19.2. Kimlik: Keycloak + Headless Frappe kimlik rehberi. Karar kitabı: proje sahibinin 29 Eylül 2026 tarihli cevapları.</p>
   </div>
   <ol>
     <li><a href="https://github.com/frappe/frappe/releases">Frappe Framework sürümleri</a> <span class="v">v16.35.0, MIT, Python 3.14, Node 24</span></li>
@@ -99,13 +122,25 @@
     <li><a href="https://www.promptfoo.dev/docs/integrations/ci-cd/">Promptfoo CI/CD</a> ve <a href="https://developers.openai.com/api/docs/deprecations">OpenAI deprecations</a></li>
     <li><a href="https://react.dev/blog/2026/09/09/react-19-3">React 19.3</a>, <a href="https://vite.dev/blog/announcing-vite8">Vite 8</a>, <a href="https://devblogs.microsoft.com/typescript/announcing-typescript-7-0/">TypeScript 7.0</a>, <a href="https://docs.astro.build/en/install-and-setup/">Astro</a></li>
     <li><a href="https://docs.github.com/en/copilot/concepts/agents/cloud-agent/risks-and-mitigations">GitHub Copilot cloud agent riskleri</a> ve <a href="https://platform.claude.com/docs/en/about-claude/model-deprecations">Anthropic model emeklilik politikası</a></li>
+    <li><a href="https://www.resmigazete.gov.tr/eskiler/2024/03/20240312-1.htm">7499 sayılı Kanun (KVKK 9. madde değişikliği)</a> <span class="v">1 Haziran 2024; standart sözleşme 5 iş günü içinde bildirilir; açık rıza yalnız arızi aktarımda</span> ve <a href="https://www.kvkk.gov.tr/Icerik/2053/Yurtdisina-Aktarim">KVKK yurt dışına aktarım</a></li>
+    <li><a href="https://www.kvkk.gov.tr/Icerik/2051/Ozel-Nitelikli-Kisisel-Veriler">KVKK özel nitelikli kişisel veriler</a>, <a href="https://www.resmigazete.gov.tr/eskiler/2019/06/20190621-3.htm">Kişisel Sağlık Verileri Hakkında Yönetmelik</a> ve <a href="https://www.lexpera.com.tr/resmi-gazete/metin/bilgi-ve-iletisim-guvenligi-tedbirleri-ile-ilgili-2019-12-sayili-cumhurbaskanligi-genelgesi-30823-1">2019/12 sayılı Cumhurbaşkanlığı Genelgesi</a> <span class="v">kamu ve kritik altyapıda yurt içi saklama</span></li>
+    <li><a href="https://www.lexpera.com.tr/mevzuat/yonetmelikler/ticari-iletisim-ve-ticari-elektronik-iletiler-hakkinda-yonetmelik">Ticari İletişim ve Ticari Elektronik İletiler Hakkında Yönetmelik</a> <span class="v">İYS'de kayıtlı onay</span></li>
+    <li><a href="https://stripe.com/blog/api-versioning">Stripe: APIs as infrastructure, future-proofing Stripe with versioning</a> <span class="v">2017; tarihli sürümler ve sürüm değişim modülleri</span></li>
+    <li><a href="https://www.rfc-editor.org/rfc/rfc8785.html">RFC 8785, JSON Canonicalization Scheme (JCS)</a> <span class="v">Haziran 2020</span></li>
+    <li><a href="https://nginx.org/en/docs/http/ngx_http_sub_module.html">nginx sub_filter</a> ve <a href="https://nginx.org/en/docs/http/ngx_http_core_module.html#var_request_id">$request_id</a> <span class="v">yanıt başına nonce</span></li>
+    <li><a href="https://github.com/frappe/suite">Frappe Suite</a> <span class="v">Drive, Writer, Sheets, Slides, Meet, Mail, Calendar; AGPL-3.0</span>, <a href="https://github.com/frappe/crm">Frappe CRM</a>, <a href="https://github.com/frappe/helpdesk">Helpdesk</a>, <a href="https://github.com/frappe/lms">LMS</a> <span class="v">AGPL-3.0</span>, <a href="https://github.com/frappe/erpnext">ERPNext</a>, <a href="https://github.com/frappe/hrms">HRMS</a>, <a href="https://github.com/earthians/marley">Marley Health</a> <span class="v">GPL-3.0</span>, <a href="https://github.com/The-Commit-Company/raven">Raven</a> <span class="v">AGPL-3.0</span></li>
+    <li><a href="https://github.com/klausbetz/apple-identity-provider-keycloak">Apple kimlik sağlayıcısı eklentisi (Keycloak)</a> <span class="v">Apache-2.0, 26.x destekli; Apple Keycloak'ta yerleşik değil</span> ve <a href="https://github.com/sky-cloak/keycloak-magic-link">sky-cloak magic link</a> <span class="v">Apache-2.0, Eylül 2026, olgunlaşmamış</span></li>
+    <li><a href="https://developers.facebook.com/docs/whatsapp/business-management-api/authentication-templates">WhatsApp authentication şablonları</a> ve <a href="https://core.telegram.org/gateway">Telegram Gateway API</a> <span class="v">tek kullanımlık kod teslimi</span></li>
+    <li><a href="https://www.keycloak.org/ui-customization/themes">Keycloak tema seçimi</a> <span class="v">istemci başına yalnız giriş teması; e-posta teması realm düzeyinde; şablonlar kullanıcı özniteliklerini okuyabilir</span></li>
+    <li><a href="https://www.hetzner.com/dedicated-rootserver/matrix-gpu/">Hetzner GPU sunucuları</a> <span class="v">GEX45 (Helsinki), GEX131 (Falkenstein); 29 Eylül 2026</span></li>
+    <li><a href="https://www.w3.org/TR/WCAG22/">WCAG 2.2</a> <span class="v">1.4.6 Contrast (Enhanced) 7:1, 2.4.13 Focus Appearance, 2.5.5 Target Size (Enhanced) 44×44, 2.5.8 Target Size (Minimum) 24×24</span></li>
   </ol>
 </section>
 </main>
 </div>
 
 <footer>
-  <span>GenUI Frontend Gereksinimleri, sürüm 2.5 (Ant Design + Frappe + Keycloak)</span>
+  <span>GenUI Frontend Gereksinimleri, sürüm 2.6 (Ant Design + Frappe + Keycloak)</span>
   <span>Bu belge bir sözleşmedir: değişiklik ADR ve PR ile yapılır</span>
   <span class="links"><a href="https://github.com/karacaismail/genui">Kaynak kodu</a><a href="https://karacaismail.github.io/genui/">Yayın adresi</a></span>
 </footer>
@@ -178,7 +213,7 @@
     targets.forEach(function (t) { io.observe(t); });
   }
 
-  /* requirement rows: level and actor data; filters for level, phase, actor, reading mode */
+  /* requirement rows: level and actor data; filters for level, slice (dilim), actor, reading mode */
   var rows = [].slice.call(d.querySelectorAll('.req-table tbody tr'));
   rows.forEach(function (tr) {
     var lvl = tr.querySelector('.chip'), act = tr.querySelector('td.actor');
@@ -193,7 +228,7 @@
   var count = d.getElementById('flt-count'), notice = d.getElementById('flt-notice');
   function rowVisible(tr) {
     return (level === 'ALL' || tr.getAttribute('data-level') === level)
-      && (phase === 'ALL' || tr.getAttribute('data-phase') === phase)
+      && (phase === 'ALL' || tr.getAttribute('data-dilim') === phase)
       && actors[tr.getAttribute('data-actor')] !== false;
   }
   function applyFilter() {
@@ -209,7 +244,7 @@
     list.forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute(attr) === active ? 'true' : 'false'); });
   }
   levelBtns.forEach(function (b) { b.addEventListener('click', function () { level = b.getAttribute('data-level'); press(levelBtns, level, 'data-level'); applyFilter(); }); });
-  phaseBtns.forEach(function (b) { b.addEventListener('click', function () { phase = b.getAttribute('data-phase'); press(phaseBtns, phase, 'data-phase'); applyFilter(); }); });
+  phaseBtns.forEach(function (b) { b.addEventListener('click', function () { phase = b.getAttribute('data-dilim'); press(phaseBtns, phase, 'data-dilim'); applyFilter(); }); });
   actorBtns.forEach(function (b) {
     b.addEventListener('click', function () {
       var a = b.getAttribute('data-actor'); actors[a] = actors[a] === false;
@@ -225,7 +260,7 @@
   function resetFilters() {
     level = 'ALL'; phase = 'ALL';
     Object.keys(actors).forEach(function (k) { actors[k] = true; });
-    press(levelBtns, 'ALL', 'data-level'); press(phaseBtns, 'ALL', 'data-phase');
+    press(levelBtns, 'ALL', 'data-level'); press(phaseBtns, 'ALL', 'data-dilim');
     actorBtns.forEach(function (b) { b.setAttribute('aria-pressed', 'true'); });
     applyFilter();
   }
@@ -237,6 +272,9 @@
     if (!id) { return; }
     var el = d.getElementById(id);
     if (!el) { return; }
+    /* a target inside a closed appendix (glossary, decision book, trace) opens it and scrolls to the target */
+    var det = el.closest ? el.closest('details') : null;
+    if (det && !det.open) { det.open = true; el.scrollIntoView({ behavior: scrollBehavior, block: 'start' }); }
     var tr = el.closest ? el.closest('tr') : null;
     if (tr && tr.hidden) {
       resetFilters();

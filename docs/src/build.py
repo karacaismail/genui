@@ -5,17 +5,27 @@ Usage:
   python3 docs/src/build.py docs/genui-frontend-gereksinimleri.html [--artifact PATH]
 
 Inputs (next to this script):
-  style.css                        page styles
-  parts/*.html                     page body in file-name order; {{icon:name}}, {{THEAD}},
-                                   {{PHASE_BUTTONS}} and {{TRACE}} are filled in here
-  icons/*.svg                      Phosphor regular icons (MIT)
-  data/karar-kaydi.fixture.json    sanitized decision record (only fields the trace table shows)
-  data/kimlik-rehberi.json         decisions of the Keycloak + Headless Frappe identity guide
-  data/etkin-kararlar.json         record decisions superseded or reopened by a later source
+  style.css                          page styles
+  parts/*.html                       page body in file-name order; placeholders filled here:
+                                     {{icon:name}}, {{THEAD}}, {{PHASE_BUTTONS}}, {{TRACE}}, {{KITAP}},
+                                     {{SOZLUK}}, {{TEST_PAKETLERI}}, {{TEST_MATRIS}}, {{DILIM_OZET}}
+  icons/*.svg                        Phosphor regular icons (MIT)
+  data/karar-kaydi.fixture.json      sanitized decision record (only fields the trace table shows)
+  data/kimlik-rehberi.json           decisions of the Keycloak + Headless Frappe identity guide
+  data/etkin-kararlar.json           record decisions superseded, closed or extended by a later source
+  data/karar-kitabi-yanitlari.json   the owner's decision book answers (export, schemaVersion 1)
+  data/karar-kitabi-uygulama.json    how each answer was applied, with target ids in this document
+  data/test-baglari.json             test suites (TP), requirement -> test links, AT metadata
+  data/sozluk.json                   glossary; first use of each term links to it
 
 Outputs:
   the standalone page given as the first argument
+  gereksinimler.json next to it (tool-neutral export of the requirement rows)
   optionally a fragment for the Artifact tool (no doctype/html/head/body)
+
+The build fails when: a requirement has no slice; a MUST has no test link; a test link names an
+unknown suite or experiment; an experiment has no metadata; a decision-book answer has no
+application record or points to an id that does not exist; a placeholder is left unfilled.
 """
 import html as _html
 import json
@@ -37,6 +47,13 @@ FONTS = (
     '&family=Roboto:wght@300;400;500&family=Roboto+Mono:wght@400&display=swap">'
 )
 TITLE = "GenUI Frontend Gereksinimleri"
+esc = _html.escape
+errors = []
+
+
+def load(name):
+    return json.loads((HERE / "data" / name).read_text(encoding="utf-8"))
+
 
 style = (HERE / "style.css").read_text(encoding="utf-8")
 body = "\n".join(f.read_text(encoding="utf-8") for f in sorted((HERE / "parts").glob("*.html")))
@@ -57,45 +74,101 @@ def icon(m):
             f"{icons[name]}</svg>")
 
 
-# phase in which each requirement becomes binding (00 Keşif … 04 Ölçek), per the decision record
-PHASE = {}
+# ---- slices (dilim): the vertical slice at whose gate each requirement must be at least O2 ----
+DILIM = {}
 
 
-def _ph(ids, ph):
+def _dl(ids, n):
     for i in ids.split():
-        PHASE[i] = ph
+        DILIM[i] = n
 
 
-_ph("A1 A2 A3 A4 A5 A6 A7 B1 B2 B3 B4 B5 B6 B7 B8 B9 B10 C1 C2 C3 C4 C5 D1 D2 D3 D4 E1 E2 E3 E6 G1 G2 G3 G5 G6 G7 H2 J1 J2 K1 K3 K5 K7 K8 K9 K10", "01")
-_ph("C6 C7 C8 C9 D5 D6 D7 D8 D9 D10 D11 E8 J3 J4 J5 J6 J7 J8 K4 L1 L3 L4 L5", "02")
-_ph("E4 E5 E7 E9 E10 F1 F2 F3 F4 F5 F6 F7 F8 G4 H1 H3 H4 H5 H6 I1 I2 I3 I4 I5 I6 I7 I8 I9 I10 K2 K6", "03")
-_ph("L2 L6 L7 L8 L9", "04")
-_ph("M1 M2 M3 M4 M5 M6 M7 M8 M10 M12 M13 M14 M16 M17 M18 M19 M20 M22 M24 M25 K11 K12", "01")
-_ph("M9 M11 M15 M23", "02")
-_ph("M21", "04")
+_dl("A1 A2 A3 A4 A5 A6 A7 A8", 1)
+_dl("B1 B2 B3 B4 B5 B6 B7 B9 B10 B11 B12", 1)
+_dl("B8", 2)
+_dl("C1 C2 C3 C4 C5 C6 C7 C8 C9", 1)
+_dl("D1 D2 D3 D4 D5 D7 D8 D10", 1)
+_dl("D6 D9 D11", 2)
+_dl("E1 E2 E3 E4 E5 E6 E7 E8 E9 E10", 1)
+_dl("E11", 4)
+_dl("F1 F2 F3 F4 F5 F6 F7 F8 F9", 1)
+_dl("F10", 4)
+_dl("G1 G2 G3 G4 G5 G6 G7 G8", 1)
+_dl("H1 H2 H3 H4 H6", 1)
+_dl("H5", 4)
+_dl("I1 I2 I3 I4 I5 I6 I7 I8 I9 I10", 1)
+_dl("I11 I12", 2)
+_dl("I13", 3)
+_dl("J1 J2 J3 J4 J5 J6 J7 J9", 1)
+_dl("J8 J10", 2)
+_dl("K1 K2 K3 K4 K5 K6 K7 K8 K9 K10 K11 K12 K13 K14 K15 K16", 1)
+_dl("L1 L3 L4 L5 L7 L10", 2)
+_dl("L8 L9", 3)
+_dl("L2 L6", 4)
+_dl("M1 M2 M3 M4 M5 M6 M7 M8 M9 M10 M11 M12 M13 M14 M16 M17 M18 M19 M20 M22 M23 M24 M25", 1)
+_dl("M26", 2)
+_dl("M15 M21 M27", 3)
 
 ROW_ID = r"[A-M]\d{1,2}"
-missing_phase = []
+TESTS = load("test-baglari.json")
+SUITES, LINKS, ATMETA = TESTS["paketler"], TESTS["baglar"], TESTS["at"]
 
 
-# every requirement row becomes an anchor (#A1), its id cell a link to itself, and carries its phase
+def dl_label(n):
+    return f"dilim {n}"
+
+
 def _row(m):
     rid = m.group(1)
-    if rid not in PHASE:
-        missing_phase.append(rid)
-    ph = PHASE.get(rid, "01")
-    return (f'<tr id="{rid}" data-phase="{ph}"><td class="id"><a href="#{rid}">{rid}</a>'
-            f'<span class="ph">faz {ph}</span></td>')
+    if rid not in DILIM:
+        errors.append(f"requirement without a slice: {rid}")
+    n = DILIM.get(rid, 1)
+    return (f'<tr id="{rid}" data-dilim="{n}"><td class="id"><a href="#{rid}">{rid}</a>'
+            f'<span class="ph">{dl_label(n)}</span></td>')
 
 
 body = re.sub(rf'<tr><td class="id">({ROW_ID})</td>', _row, body)
-if missing_phase:
-    raise SystemExit("requirements without a phase: " + " ".join(missing_phase))
 
-# phase filter buttons come from the phases that rows actually carry, so no phase can lose its button
-phases = sorted(set(re.findall(r'<tr id="[A-M]\d{1,2}" data-phase="(\d\d)">', body)))
-PHASE_BUTTONS = '<button type="button" data-phase="ALL" aria-pressed="true">Tümü</button>\n' + "\n".join(
-    f'        <button type="button" data-phase="{p}" aria-pressed="false">{p}</button>' for p in phases)
+
+def test_link(t):
+    if t.startswith("TP-"):
+        if t not in SUITES:
+            errors.append(f"unknown test suite {t}")
+        return f'<a href="#{t.lower()}">{t}</a>'
+    if t not in ATMETA:
+        errors.append(f"unknown experiment {t}")
+    return f'<a href="#{t}">{t}</a>'
+
+
+row_levels = {}
+
+
+def _tests(m):
+    row = m.group(0)
+    rid = m.group(1)
+    lvl = re.search(r'<span class="chip (must|should|may)">', row)
+    level = lvl.group(1).upper() if lvl else ""
+    row_levels[rid] = level
+    tests = LINKS.get(rid, [])
+    if level == "MUST" and not tests:
+        errors.append(f"MUST without a test link: {rid}")
+    if not tests:
+        return row
+    span = '<span class="tst">Test: ' + " · ".join(test_link(t) for t in tests) + "</span>"
+    if '<span class="dec">' in row:
+        return row.replace('<span class="dec">', span + '<span class="dec">', 1)
+    return row.replace('</td><td class="actor">', span + '</td><td class="actor">', 1)
+
+
+body = re.sub(rf'<tr id="({ROW_ID})" data-dilim="\d">.*?</tr>', _tests, body, flags=re.S)
+unknown_links = set(LINKS) - set(DILIM)
+if unknown_links:
+    errors.append("test links for unknown requirements: " + " ".join(sorted(unknown_links)))
+
+# slice filter buttons come from the slices rows actually carry
+slices = sorted(set(re.findall(r'<tr id="[A-M]\d{1,2}" data-dilim="(\d)">', body)))
+PHASE_BUTTONS = '<button type="button" data-dilim="ALL" aria-pressed="true">Tümü</button>\n' + "\n".join(
+    f'        <button type="button" data-dilim="{n}" aria-pressed="false">Dilim {n}</button>' for n in slices)
 body = body.replace("{{PHASE_BUTTONS}}", PHASE_BUTTONS)
 
 # stable ids for requirement groups so the contents rail can deep-link to them
@@ -109,42 +182,82 @@ THEAD = ('<thead><tr><th scope="col">ID</th><th scope="col">Seviye</th>'
          '<th scope="col">Gereksinim</th><th scope="col">Aktör</th></tr></thead>')
 body = body.replace("{{THEAD}}", THEAD)
 
-# ---- decision traceability ----
-DEC = json.loads((HERE / "data" / "karar-kaydi.fixture.json").read_text(encoding="utf-8"))
-GUIDE = json.loads((HERE / "data" / "kimlik-rehberi.json").read_text(encoding="utf-8"))["decisions"]
-OVR = json.loads((HERE / "data" / "etkin-kararlar.json").read_text(encoding="utf-8"))["overrides"]
+# ---- acceptance experiments: anchor ids and a metadata line (slice, kind, owner, precondition, proves) ----
+proves = {}
+for rid, tests in LINKS.items():
+    for t in tests:
+        if t.startswith("AT-"):
+            proves.setdefault(t, []).append(rid)
+seen_at = []
 
+
+def _at(m):
+    at, rest = m.group(1), m.group(2)
+    seen_at.append(at)
+    meta = ATMETA.get(at)
+    if not meta:
+        errors.append(f"experiment without metadata: {at}")
+        return m.group(0)
+    reqs = " ".join(f'<a href="#{r}">{r}</a>' for r in proves.get(at, []))
+    info = (f'Dilim {meta["dilim"]} · {esc(meta["tur"])} · sahip: {esc(meta["sahip"])}. '
+            f'Ön koşul: {esc(meta["onkosul"])}.' + (f" Kanıtladığı: {reqs}." if reqs else ""))
+    return (f'<div id="{at}"><div class="t"><span class="n">{at}</span>{rest}</div>'
+            f'<div class="row"><span class="lab">Künye</span><span>{info}</span></div>')
+
+
+body = re.sub(r'<div><div class="t"><span class="n">(AT-\d\d)</span>(.*?)</div>', _at, body)
+missing_meta = set(ATMETA) - set(seen_at)
+if missing_meta:
+    errors.append("metadata for experiments not in the document: " + " ".join(sorted(missing_meta)))
+gate_at = set(re.findall(r'<div id="(AT-\d\d)"><div class="t">[^\n]*?<span class="chip gate">', body))
+
+# ---- rows: collect for trace, slices summary, test matrix and JSON export ----
 rows = []
-for m in re.finditer(rf'<tr id="({ROW_ID})" data-phase="(\d\d)">(.*?)</tr>', body, re.S):
-    rid, ph, inner = m.group(1), m.group(2), m.group(3)
+for m in re.finditer(rf'<tr id="({ROW_ID})" data-dilim="(\d)">(.*?)</tr>', body, re.S):
+    rid, n, inner = m.group(1), int(m.group(2)), m.group(3)
     dec = re.search(r'<span class="dec">(.*?)</span>', inner)
     actor = re.search(r'<td class="actor">([^<]+)</td>', inner)
+    title = re.search(r'<b class="k">(.*?)</b>', inner, re.S)
+    req = re.search(r'<span class="req">(.*?)</span>(?=<span class="(?:note|tst|dec)">|</td>)', inner, re.S)
+    note = re.search(r'<span class="note">(.*?)</span>(?=<span class="(?:tst|dec)">|</td>)', inner, re.S)
     tags = [t.strip() for t in dec.group(1).split("·")] if dec else []
-    rows.append((rid, ph, actor.group(1) if actor else "", tags))
+    rows.append({"id": rid, "dilim": n, "actor": actor.group(1) if actor else "", "tags": tags,
+                 "level": row_levels.get(rid, ""),
+                 "title": title.group(1) if title else "", "req": req.group(1) if req else "",
+                 "note": note.group(1) if note else ""})
+
+
+def plain(s):
+    return re.sub(r"\s+", " ", _html.unescape(re.sub(r"<[^>]+>", "", s))).strip()
+
+
+# ---- decision traceability ----
+DEC = load("karar-kaydi.fixture.json")
+GUIDE = load("kimlik-rehberi.json")["decisions"]
+OVR = load("etkin-kararlar.json")["overrides"]
 
 dec_ids = {d["id"] for d in DEC["decisions"]}
 guide_ids = {"kimlik:" + g["id"] for g in GUIDE}
 unknown_ovr = set(OVR) - dec_ids
 if unknown_ovr:
-    raise SystemExit("overrides for unknown decisions: " + " ".join(sorted(unknown_ovr)))
+    errors.append("overrides for unknown decisions: " + " ".join(sorted(unknown_ovr)))
 by_dec, by_guide, unknown = {}, {}, set()
-for rid, ph, actor, tags in rows:
-    for t in tags:
+for r in rows:
+    for t in r["tags"]:
         if t in dec_ids:
-            by_dec.setdefault(t, []).append((rid, ph, actor))
+            by_dec.setdefault(t, []).append(r)
         elif t in guide_ids:
-            by_guide.setdefault(t, []).append((rid, ph, actor))
+            by_guide.setdefault(t, []).append(r)
         else:
-            unknown.add((rid, t))
+            unknown.add((r["id"], t))
 
 
 def req_links(mapped):
-    return " ".join(f'<a class="rid" href="#{r}">{r}</a>' for r, _, _ in mapped)
+    return " ".join(f'<a class="rid" href="#{r["id"]}">{r["id"]}</a>' for r in mapped)
 
 
 tr_rows, unmapped = [], []
-counts = {"eşlendi": 0, "eşlenmedi": 0, "keşif açık": 0, "koşul dışı": 0,
-          "yerine geçti": 0, "yeniden açıldı": 0, "koşullu": 0}
+counts = {}
 n_dev = 0
 for d in DEC["decisions"]:
     did = d["id"]
@@ -153,59 +266,68 @@ for d in DEC["decisions"]:
     mapped = by_dec.get(did, [])
     ovr = OVR.get(did)
     if not d["active"]:
-        st, cls = "koşul dışı", ""
+        st, cls = "koşul dışı", "muted"
+    elif ovr:
+        st = ovr["state"]
+        cls = "ok" if st == "kapandı" else "warn" if st in ("yerine geçti", "genişletildi") else "open"
     elif d["status"] == "discovery":
         st, cls = "keşif açık", "open"
-    elif ovr:
-        st, cls = ovr["state"], "open"
     elif mapped:
         st, cls = "eşlendi", "ok"
     else:
         st, cls = "eşlenmedi", "open"
         unmapped.append(did)
-    counts[st] += 1
+    counts[st] = counts.get(st, 0) + 1
     if ovr:
-        eff = (f'{_html.escape(ovr["effective"])} <span class="dev">{_html.escape(ovr["source"])}; '
-               f'<a href="#{ovr["adr"]}">ADR bekliyor</a></span>')
+        eff = (f'{esc(ovr["effective"])} <span class="dev">{esc(ovr["source"])}; '
+               f'<a href="#{ovr["link"]}">{esc(ovr["link_text"])}</a></span>')
     else:
         eff = "seçim"
-    rec_cell = f'<span class="dev">{_html.escape(d["recommended"])}</span>' if d["recommended"] else "aynı"
-    owners = ", ".join(sorted({a for _, _, a in mapped})) or "—"
-    phase = min((p for _, p, a in mapped), default="—")
+    rec_cell = f'<span class="dev">{esc(d["recommended"])}</span>' if d["recommended"] else "aynı"
+    owners = ", ".join(sorted({r["actor"] for r in mapped})) or "—"
+    first = min((r["dilim"] for r in mapped), default=None)
     tr_rows.append(
-        f'<tr><td>{did}</td><td>{_html.escape(d["title"])}</td><td>{_html.escape(sel)}</td><td>{rec_cell}</td>'
-        f'<td>{eff}</td><td>{req_links(mapped) or "—"}</td><td>{owners}</td><td>{phase}</td>'
+        f'<tr><td>{did}</td><td>{esc(d["title"])}</td><td>{esc(sel)}</td><td>{rec_cell}</td>'
+        f'<td>{eff}</td><td>{req_links(mapped) or "—"}</td><td>{owners}</td><td>{first or "—"}</td>'
         f'<td><span class="st {cls}">{st}</span></td></tr>')
 
 g_rows, g_unmapped = [], []
-g_counts = {"eşlendi": 0, "açık karar": 0, "eşlenmedi": 0}
+g_counts = {}
 for g in GUIDE:
     mapped = by_guide.get("kimlik:" + g["id"], [])
-    if mapped:
+    kitap = g.get("kitap")
+    if kitap and g.get("kitap_durum") == "ertelendi":
+        st, cls = "ertelendi", "open"
+    elif kitap:
+        st, cls = "kitapla kapandı", "ok"
+    elif mapped:
         st, cls = "eşlendi", "ok"
     elif g["status"] != "Kararlaştırıldı":
         st, cls = "açık karar", "open"
     else:
         st, cls = "eşlenmedi", "open"
         g_unmapped.append(g["id"])
-    g_counts[st] += 1
+    g_counts[st] = g_counts.get(st, 0) + 1
     reqs = req_links(mapped) or '<a class="rid" href="#acik">Açık kararlar</a>'
-    owners = ", ".join(sorted({a for _, _, a in mapped})) or "—"
-    phase = min((p for _, p, _ in mapped), default="—")
+    kcell = f'<a class="rid" href="#kk-{kitap}">{kitap}</a>' if kitap else "—"
+    owners = ", ".join(sorted({r["actor"] for r in mapped})) or "—"
+    first = min((r["dilim"] for r in mapped), default=None)
     g_rows.append(
-        f'<tr><td>{g["id"]}</td><td>{_html.escape(g["title"])}</td><td>{g["status"]}</td>'
-        f'<td>{reqs}</td><td>{owners}</td><td>{phase}</td><td><span class="st {cls}">{st}</span></td></tr>')
+        f'<tr><td>{g["id"]}</td><td>{esc(g["title"])}</td><td>{g["status"]}</td><td>{kcell}</td>'
+        f'<td>{reqs}</td><td>{owners}</td><td>{first or "—"}</td><td><span class="st {cls}">{st}</span></td></tr>')
 
 n = len(DEC["decisions"])
+dist = ", ".join(f"{v} {k}" for k, v in sorted(counts.items(), key=lambda x: -x[1]))
+g_dist = ", ".join(f"{v} {k}" for k, v in sorted(g_counts.items(), key=lambda x: -x[1]))
 TRACE = f'''<section id="izlenebilirlik">
   <div class="sec-head">
     <div class="title"><h2>Karar izlenebilirliği</h2></div>
-    <p>Karar kaydındaki {n} kararın her biri için seçim, farklıysa kaydın önerisi, etkin karar, kararı karşılayan gereksinim satırları, sorumlu, bağlayıcı olduğu faz ve durum. Tablo her derlemede temizlenmiş karar verisinden ve satırlardaki "karar" etiketlerinden otomatik üretilir. Kaynak seçim tarihçe olarak korunur; sonraki bir kaynakla değişen karar "yerine geçti", yeniden açılan karar "yeniden açıldı" olarak işaretlenir ve ADR satırına bağlanır. Durum dağılımı: {counts["eşlendi"]} eşlendi, {counts["yerine geçti"]} yerine geçti, {counts["yeniden açıldı"]} yeniden açıldı, {counts["koşullu"]} koşullu, {counts["eşlenmedi"]} eşlenmedi, {counts["keşif açık"]} keşif açık, {counts["koşul dışı"]} koşul dışı; {n_dev} kararda seçim öneriden farklı. İkinci tablo kimlik rehberinin {len(GUIDE)} kararını "kimlik:" etiketleriyle eşler: {g_counts["eşlendi"]} eşlendi, {g_counts["açık karar"]} açık karar, {g_counts["eşlenmedi"]} eşlenmedi. Etiket eşleşmesi bir tamlık puanı değildir: bir satırın bir kararı etiketlemesi, kararın o satırda anlamca doğru uygulandığını kanıtlamaz; bunu kabul deneyleri ve inceleme kanıtlar.</p>
+    <p>Karar kaydındaki {n} kararın her biri için seçim, farklıysa kaydın önerisi, etkin karar, kararı karşılayan gereksinim satırları, sorumlu, ilk bağlayıcı olduğu dilim ve durum. Tablo her derlemede temizlenmiş karar verisinden ve satırlardaki "karar" etiketlerinden otomatik üretilir. Kaynak seçim tarihçe olarak korunur; sonraki bir kaynakla (kimlik rehberi veya karar kitabı) değişen karar "yerine geçti", kapanan açık karar "kapandı", kapsamı büyüyen karar "genişletildi" olarak işaretlenir ve kaynağına bağlanır. Durum dağılımı: {dist}; {n_dev} kararda seçim öneriden farklı. İkinci tablo kimlik rehberinin {len(GUIDE)} kararını "kimlik:" etiketleriyle ve karar kitabıyla eşler: {g_dist}. Etiket eşleşmesi bir tamlık puanı değildir: bir satırın bir kararı etiketlemesi, kararın o satırda anlamca doğru uygulandığını kanıtlamaz; bunu kabul deneyleri ve inceleme kanıtlar.</p>
   </div>
   <details class="appendix">
     <summary>{n} kararın tablosunu aç</summary>
     <div class="tbl-wrap"><table class="trace">
-      <thead><tr><th scope="col">Karar</th><th scope="col">Soru</th><th scope="col">Seçim (kaynak)</th><th scope="col">Kaydın önerisi</th><th scope="col">Etkin karar</th><th scope="col">Gereksinim</th><th scope="col">Sorumlu</th><th scope="col">Faz</th><th scope="col">Durum</th></tr></thead>
+      <thead><tr><th scope="col">Karar</th><th scope="col">Soru</th><th scope="col">Seçim (kaynak)</th><th scope="col">Kaydın önerisi</th><th scope="col">Etkin karar</th><th scope="col">Gereksinim</th><th scope="col">Sorumlu</th><th scope="col">Dilim</th><th scope="col">Durum</th></tr></thead>
       <tbody>
         {chr(10).join(tr_rows)}
       </tbody>
@@ -214,7 +336,7 @@ TRACE = f'''<section id="izlenebilirlik">
   <details class="appendix">
     <summary>Kimlik rehberinin {len(GUIDE)} kararını aç</summary>
     <div class="tbl-wrap"><table class="trace">
-      <thead><tr><th scope="col">Karar</th><th scope="col">Rehberdeki karar</th><th scope="col">Rehberdeki durum</th><th scope="col">Gereksinim</th><th scope="col">Sorumlu</th><th scope="col">Faz</th><th scope="col">Durum</th></tr></thead>
+      <thead><tr><th scope="col">Karar</th><th scope="col">Rehberdeki karar</th><th scope="col">Rehberdeki durum</th><th scope="col">Karar kitabı</th><th scope="col">Gereksinim</th><th scope="col">Sorumlu</th><th scope="col">Dilim</th><th scope="col">Durum</th></tr></thead>
       <tbody>
         {chr(10).join(g_rows)}
       </tbody>
@@ -222,20 +344,241 @@ TRACE = f'''<section id="izlenebilirlik">
   </details>
 </section>'''
 body = body.replace("{{TRACE}}", TRACE)
-print("requirements:", len(rows), "phases:", " ".join(phases))
+
+# ---- decision book results ----
+ANS = load("karar-kitabi-yanitlari.json")
+APP = load("karar-kitabi-uygulama.json")["uygulama"]
+if ANS.get("kind") != "genui-karar-kitabi-yanitlari" or ANS.get("schemaVersion") != 1:
+    errors.append("decision book answers: unexpected kind or schemaVersion")
+answers = {a["id"]: a for a in ANS["answers"]}
+if set(answers) != set(APP):
+    errors.append("decision book: answers without application " + " ".join(sorted(set(answers) - set(APP)))
+                  + " / application without answer " + " ".join(sorted(set(APP) - set(answers))))
+STATUS_OK = {"answered": {"uygulandı", "çelişki notuyla", "uygulanmaz"}, "deferred": {"ertelendi"},
+             "not_applicable": {"uygulanmaz"}}
+CHAPTERS = {"urun": "Ürün", "celiski": "Çelişki", "yz": "YZ", "kimlik": "Kimlik", "veri": "Veri",
+            "kalite": "Kalite", "ekip": "Ekip", "kayit": "Karar kaydı", "teknik": "Teknik"}
+k_rows, k_counts, k_targets = [], {}, []
+
+
+def short(s, lim=320):
+    s = re.sub(r"\s+", " ", s or "").strip()
+    return s if len(s) <= lim else s[:lim].rsplit(" ", 1)[0] + " …"
+
+
+for a in ANS["answers"]:
+    ap = APP.get(a["id"])
+    if not ap:
+        continue
+    if ap["durum"] not in STATUS_OK.get(a["status"], set()):
+        errors.append(f'decision book {a["id"]}: answer status {a["status"]} vs application {ap["durum"]}')
+    k_counts[ap["durum"]] = k_counts.get(ap["durum"], 0) + 1
+    labels = "; ".join(a.get("selectedLabels") or []) or {"deferred": "Ertelendi", "not_applicable": "Uygulanmaz"}.get(a["status"], "—")
+    extra = " ".join(x for x in [a.get("customText") or "", a.get("note") or ""] if x.strip())
+    extra_html = f'<br><span class="dev">Not: {esc(short(extra))}</span>' if extra.strip() else ""
+    targets = []
+    for t in ap["hedef"]:
+        k_targets.append((a["id"], t))
+        targets.append(f'<a class="rid" href="#{t}">{t}</a>')
+    cls = {"uygulandı": "ok", "çelişki notuyla": "warn", "ertelendi": "open", "uygulanmaz": "muted"}[ap["durum"]]
+    k_rows.append(
+        f'<tr id="kk-{a["id"]}"><td>{a["id"]}</td><td>{CHAPTERS.get(a["chapter"], a["chapter"])}</td>'
+        f'<td>{esc(a["question"])}</td><td>{esc(labels)}{extra_html}</td><td>{esc(ap["ozet"])}</td>'
+        f'<td>{" ".join(targets)}</td><td><span class="st {cls}">{ap["durum"]}</span></td></tr>')
+s = ANS["summary"]
+KITAP = f'''<div class="kitap-ozet"><span><b>{len(ANS["answers"])}</b> soru</span><span><b>{k_counts.get("uygulandı", 0)}</b> uygulandı</span><span><b>{k_counts.get("çelişki notuyla", 0)}</b> çelişki notuyla uygulandı</span><span><b>{k_counts.get("ertelendi", 0)}</b> ertelendi</span><span><b>{k_counts.get("uygulanmaz", 0)}</b> uygulanmaz</span><span><b>{s["differsFromRecommendation"]}</b> cevap öneriden farklı</span><span>Dışa aktarım: {esc(ANS["exportedAt"])}</span></div>
+  <details class="appendix">
+    <summary>{len(ANS["answers"])} sorunun uygulama tablosunu aç</summary>
+    <div class="tbl-wrap"><table class="trace">
+      <thead><tr><th scope="col">Soru</th><th scope="col">Bölüm</th><th scope="col">Soru metni</th><th scope="col">Cevap</th><th scope="col">Belgeye etkisi</th><th scope="col">Madde</th><th scope="col">Durum</th></tr></thead>
+      <tbody>
+        {chr(10).join(k_rows)}
+      </tbody>
+    </table></div>
+  </details>'''
+body = body.replace("{{KITAP}}", KITAP)
+
+# ---- test strategy tables ----
+suite_use = {}
+for rid, tests in LINKS.items():
+    for t in tests:
+        suite_use.setdefault(t, []).append(rid)
+tp_rows = []
+for tid, sp in SUITES.items():
+    tp_rows.append(
+        f'<tr id="{tid.lower()}"><td>{tid}</td><td>{esc(sp["ad"])}</td><td>{esc(sp["katman"])}</td>'
+        f'<td>{esc(sp["sinar"])}</td><td>{esc(sp["arac"])}</td><td>{esc(sp["siklik"])}</td>'
+        f'<td>{len(suite_use.get(tid, []))}</td></tr>')
+unused = [t for t in SUITES if t not in suite_use]
+if unused:
+    errors.append("test suites linked to no requirement: " + " ".join(unused))
+TEST_PAKETLERI = f'''<div class="tbl-wrap" style="margin-top:.6rem"><table class="matrix prose">
+    <thead><tr><th scope="col">Kimlik</th><th scope="col">Paket</th><th scope="col">Katman</th><th scope="col">Ne sınar</th><th scope="col">Araç</th><th scope="col">Sıklık</th><th scope="col">Bağlı gereksinim</th></tr></thead>
+    <tbody>
+      {chr(10).join(tp_rows)}
+    </tbody>
+  </table></div>'''
+body = body.replace("{{TEST_PAKETLERI}}", TEST_PAKETLERI)
+n_must = sum(1 for r in rows if r["level"] == "MUST")
+m_rows = [f'<tr><td><a class="rid" href="#{r["id"]}">{r["id"]}</a></td><td>{r["level"]}</td><td>{r["dilim"]}</td>'
+          f'<td>{" · ".join(test_link(t) for t in LINKS.get(r["id"], [])) or "—"}</td></tr>' for r in rows]
+TEST_MATRIS = f'''<p style="margin-top:.4rem;color:var(--ink-2)">{len(rows)} gereksinimin {n_must}'i MUST'tır ve her biri en az bir otomatik test paketine veya kabul deneyine bağlıdır; bağsız MUST derlemeyi kırar (K14). Tablo her derlemede <code>docs/src/data/test-baglari.json</code> dosyasından üretilir.</p>
+  <details class="appendix">
+    <summary>{len(rows)} gereksinimin test bağını aç</summary>
+    <div class="tbl-wrap"><table class="trace">
+      <thead><tr><th scope="col">Gereksinim</th><th scope="col">Seviye</th><th scope="col">Dilim</th><th scope="col">Testler</th></tr></thead>
+      <tbody>
+        {chr(10).join(m_rows)}
+      </tbody>
+    </table></div>
+  </details>'''
+body = body.replace("{{TEST_MATRIS}}", TEST_MATRIS)
+
+# ---- slice summary ----
+o_rows, o_details = [], []
+for sl in slices:
+    sl = int(sl)
+    in_sl = [r for r in rows if r["dilim"] == sl]
+    must = sum(1 for r in in_sl if r["level"] == "MUST")
+    should = len(in_sl) - must
+    ats = [a for a, meta in ATMETA.items() if meta["dilim"] == sl]
+    gates = " ".join(f'<a class="rid" href="#{a}">{a}</a>' for a in ats if a in gate_at) or "—"
+    others = " ".join(f'<a class="rid" href="#{a}">{a}</a>' for a in ats if a not in gate_at) or "—"
+    o_rows.append(f'<tr><td>Dilim {sl}</td><td>{must} MUST, {should} SHOULD</td><td>{gates}</td><td>{others}</td></tr>')
+    o_details.append(f'<p style="margin-top:.5rem"><b>Dilim {sl}:</b> ' + " ".join(
+        f'<a class="rid" href="#{r["id"]}">{r["id"]}</a>' for r in in_sl) + "</p>")
+DILIM_OZET = f'''<div class="tbl-wrap" style="margin-top:1rem"><table class="matrix prose">
+    <thead><tr><th scope="col">Dilim</th><th scope="col">Gereksinim</th><th scope="col">Yayın kapısı deneyleri</th><th scope="col">Diğer deneyler</th></tr></thead>
+    <tbody>
+      {chr(10).join(o_rows)}
+    </tbody>
+  </table></div>
+  <details class="appendix">
+    <summary>Dilimlere göre gereksinim listesini aç</summary>
+    <div style="padding:0 1rem 1rem">{"".join(o_details)}</div>
+  </details>'''
+body = body.replace("{{DILIM_OZET}}", DILIM_OZET)
+
+# ---- glossary ----
+SOZ = load("sozluk.json")
+terms = sorted(SOZ["terimler"], key=lambda t: t["terim"].replace("İ", "I").replace("Ş", "S").replace("Ç", "C").replace("Ö", "O").replace("Ü", "U").replace("Ğ", "G").lower())
+
+
+def slug(s):
+    tr = str.maketrans("çğıöşüÇĞİÖŞÜ", "cgiosuCGIOSU")
+    return "t-" + re.sub(r"[^a-z0-9]+", "-", s.translate(tr).lower()).strip("-")
+
+
+seen_slugs = set()
+dl_items = []
+for t in terms:
+    t["slug"] = slug(t["terim"])
+    if t["slug"] in seen_slugs:
+        errors.append(f"duplicate glossary slug {t['slug']}")
+    seen_slugs.add(t["slug"])
+    variants = [t["terim"]] + t.get("esanlam", [])
+    cok = '<span class="cok">çok anlamlı</span>' if t.get("cok_anlamli") else ""
+    dl_items.append(f'<div><dt id="{t["slug"]}" data-esanlam="{esc("|".join(variants))}">{esc(t["terim"])}{cok}</dt>'
+                    f'<dd>{esc(t["tanim"])}</dd></div>')
+SOZLUK = f'''<details class="appendix" id="sozluk-kutu">
+    <summary>Sözlüğü aç ({len(terms)} terim)</summary>
+    <dl class="sozluk" id="sozluk">
+      {chr(10).join(dl_items)}
+    </dl>
+  </details>'''
+body = body.replace("{{SOZLUK}}", SOZLUK)
+
+# first use of each term after the reading section links to its glossary entry
+SKIP_TAGS = {"a", "code", "pre", "script", "style", "svg", "h1", "h2", "h3", "h4", "button", "summary", "label",
+             "th", "abbr", "dt", "textarea", "title", "b"}
+SKIP_CLASSES = {"dec", "ph", "tst", "chip", "n", "lab", "st", "v", "rid", "k", "docid"}
+variant_map = {}
+for t in terms:
+    for v in [t["terim"]] + t.get("esanlam", []):
+        variant_map[v] = t
+pending = dict(variant_map)
+start = body.find('<section id="karar">')
+end = body.find("</main>")
+head_part, mid, tail_part = body[:start], body[start:end], body[end:]
+tokens = re.split(r"(<[^>]+>)", mid)
+stack = []
+linked = 0
+
+
+def boundary_re(vs):
+    alts = "|".join(re.escape(v) for v in sorted(vs, key=len, reverse=True))
+    return re.compile(rf"(?<![\w@/.#-])({alts})(?![\w-])")
+
+
+rx = boundary_re(pending) if pending else None
+out = []
+for tok in tokens:
+    if tok.startswith("<"):
+        mt = re.match(r"<\s*(/)?\s*([a-zA-Z0-9]+)([^>]*)>", tok)
+        if mt:
+            closing, tag, attrs = mt.group(1), mt.group(2).lower(), mt.group(3)
+            void = tag in {"br", "hr", "img", "input", "meta", "link", "path", "line", "rect", "circle",
+                           "polyline", "polygon", "ellipse", "stop", "use", "col", "wbr", "source"} or attrs.rstrip().endswith("/")
+            if closing:
+                while stack:
+                    t_, _ = stack.pop()
+                    if t_ == tag:
+                        break
+            elif not void:
+                cls = re.search(r'class="([^"]*)"', attrs)
+                classes = set(cls.group(1).split()) if cls else set()
+                skip = tag in SKIP_TAGS or bool(classes & SKIP_CLASSES) or (tag == "td" and "id" in classes)
+                stack.append((tag, skip))
+        out.append(tok)
+        continue
+    if not tok.strip() or any(sk for _, sk in stack) or not pending:
+        out.append(tok)
+        continue
+    pos, piece = 0, []
+    while rx is not None:
+        m = rx.search(tok, pos)
+        if not m:
+            break
+        v = m.group(1)
+        t = variant_map[v]
+        piece.append(tok[pos:m.start()])
+        piece.append(f'<a class="terim" href="#{t["slug"]}" title="{esc(t["tanim"])}">{v}</a>')
+        linked += 1
+        pos = m.end()
+        for vv in [t["terim"]] + t.get("esanlam", []):
+            pending.pop(vv, None)
+        rx = boundary_re(pending) if pending else None
+    piece.append(tok[pos:])
+    out.append("".join(piece))
+body = head_part + "".join(out) + tail_part
+
+# ---- icons and placeholders ----
+body = re.sub(r"\{\{icon:([a-z0-9-]+)(?:\|([a-z0-9 -]+))?\}\}", icon, body)
+leftover = re.findall(r"\{\{[A-Z_]+\}\}", body)
+if leftover:
+    errors.append("unfilled placeholders: " + " ".join(leftover))
+
+# every decision-book target must exist in the final page
+ids = set(re.findall(r'\sid="([^"]+)"', body))
+bad_targets = [f"{q}->{t}" for q, t in k_targets if t not in ids]
+if bad_targets:
+    errors.append("decision book targets not found: " + " ".join(bad_targets))
+
+print("requirements:", len(rows), "MUST:", n_must, "slices:", " ".join(slices),
+      "per slice:", {sl: sum(1 for r in rows if r["dilim"] == int(sl)) for sl in slices})
+print("experiments:", len(seen_at), "gates:", len(gate_at))
 print("trace:", counts, "deviations:", n_dev)
 print("guide trace:", g_counts)
+print("decision book:", k_counts)
+print("glossary terms:", len(terms), "first-use links:", linked)
 if unmapped:
     print("UNMAPPED decisions:", " ".join(unmapped))
 if g_unmapped:
     print("UNMAPPED guide decisions:", " ".join(g_unmapped))
 if unknown:
     print("UNKNOWN dec tags:", sorted(unknown))
-
-body = re.sub(r"\{\{icon:([a-z0-9-]+)(?:\|([a-z0-9 -]+))?\}\}", icon, body)
-leftover = re.findall(r"\{\{[A-Z_]+\}\}", body)
-if leftover:
-    raise SystemExit("unfilled placeholders: " + " ".join(leftover))
+if errors:
+    raise SystemExit("build failed:\n  " + "\n  ".join(errors))
 
 head_common = f"<title>{TITLE}</title>\n{FONTS}\n<style>\n{style}\n</style>"
 full = (
@@ -248,6 +591,20 @@ full = (
 REPO_OUT.parent.mkdir(parents=True, exist_ok=True)
 REPO_OUT.write_text(full, encoding="utf-8")
 print(f"wrote {REPO_OUT} ({len(full.encode('utf-8'))} bytes)")
+
+# tool-neutral requirement export (decision book E05: the tracker is still open)
+export = {
+    "kind": "genui-gereksinimler", "schemaVersion": 1, "source": REPO_OUT.name,
+    "requirements": [{
+        "id": r["id"], "group": r["id"][0], "level": r["level"], "slice": r["dilim"], "actor": r["actor"],
+        "title": plain(r["title"]), "requirement": plain(r["req"]), "note": plain(r["note"]),
+        "tests": LINKS.get(r["id"], []), "decisions": r["tags"],
+    } for r in rows],
+    "experiments": [{"id": a, **ATMETA[a], "gate": a in gate_at, "proves": proves.get(a, [])} for a in seen_at],
+}
+json_out = REPO_OUT.parent / "gereksinimler.json"
+json_out.write_text(json.dumps(export, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
+print(f"wrote {json_out}")
 if ART_OUT:
     ART_OUT.write_text(f"{head_common}\n{body}\n", encoding="utf-8")
     print(f"wrote {ART_OUT}")

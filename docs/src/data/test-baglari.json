@@ -1,0 +1,985 @@
+{
+ "about": "Otomatik test paketleri (TP), gereksinim → test bağları ve kabul deneylerinin künyesi. build.py her MUST satırının en az bir bağı olduğunu ve her bağın bilinen bir TP veya AT'ye gittiğini denetler.",
+ "paketler": {
+  "TP-01": {
+   "ad": "Sözleşme örnekleri",
+   "katman": "Sözleşme",
+   "sinar": "zod ve JSON Schema geçerli/geçersiz örnekleri; Python tüketici aynı sonucu verir; hata kataloğu, API tablosu ve parmak izi eşitliği",
+   "arac": "Vitest + pytest",
+   "siklik": "Her PR"
+  },
+  "TP-02": {
+   "ad": "Mimari sınırlar ve lint",
+   "katman": "Statik",
+   "sinar": "antd importu yalnız ui-kit'te; eval, dangerouslySetInnerHTML, sabit renk ve serbest URL yasağı; strict TypeScript; paket bağımlılık yönü",
+   "arac": "ESLint, dependency-cruiser, tsgo",
+   "siklik": "Her PR"
+  },
+  "TP-03": {
+   "ad": "Tedarik zinciri, lisans ve marka",
+   "katman": "Statik",
+   "sinar": "Lisans allowlist, SBOM, bağımlılık zafiyeti, gizli anahtar, lockfile bütünlüğü, altyapı markası taraması",
+   "arac": "CI betikleri, Dependabot",
+   "siklik": "Her PR"
+  },
+  "TP-04": {
+   "ad": "Frappe birim ve entegrasyon",
+   "katman": "Birim",
+   "sinar": "Controller ve hook'lar, capability yürütücüsü, risk ve grant politikası, revizyon kontrolü, idempotency, Run adım günlüğü, bütçe rezervasyonu",
+   "arac": "Frappe test çalıştırıcısı, pytest",
+   "siklik": "Her PR"
+  },
+  "TP-05": {
+   "ad": "İzin ve izolasyon negatif testleri",
+   "katman": "Uçtan uca",
+   "sinar": "Rol kaldırma, permlevel, iki tenant ve ayrı site, şirketler arası erişim, Socket.IO aboneliği, dosya ve YZ bağlamı",
+   "arac": "Playwright, API istemcisi",
+   "siklik": "Her PR"
+  },
+  "TP-06": {
+   "ad": "Bileşen ve durum matrisi",
+   "katman": "Bileşen",
+   "sinar": "@genui/ui bileşenlerinin her durumu, etkileşim testleri, katalog-story eşleşmesi",
+   "arac": "Storybook 10, Vitest",
+   "siklik": "Her PR"
+  },
+  "TP-07": {
+   "ad": "Erişilebilirlik",
+   "katman": "Bileşen, uçtan uca",
+   "sinar": "axe taraması (story'ler ve üretilen ekranlar), klavye ve odak, canlı bölge, erişilebilirlik modu; manuel yardımcı teknoloji testi",
+   "arac": "axe-core, Playwright; elle",
+   "siklik": "Her PR; elle her major"
+  },
+  "TP-08": {
+   "ad": "Uçtan uca yolculuklar",
+   "katman": "Uçtan uca",
+   "sinar": "Kritik kullanıcı işleri ve YZ yolculuğu (sahte modelle), işbirliği, rapor, portal",
+   "arac": "Playwright",
+   "siklik": "Her PR (kritik), gece (tam)"
+  },
+  "TP-09": {
+   "ad": "Görsel regresyon",
+   "katman": "Görsel",
+   "sinar": "Tema × yoğunluk × erişilebilirlik modu × locale × cihaz sınıfı × yön",
+   "arac": "Playwright ekran görüntüsü",
+   "siklik": "Her PR"
+  },
+  "TP-10": {
+   "ad": "Performans ve yük",
+   "katman": "Performans",
+   "sinar": "Paket bütçesi, laboratuvar Web Vitals, 750 eşzamanlı oturum, giriş p95 5 s",
+   "arac": "Vite bütçe, Lighthouse CI, k6",
+   "siklik": "Her PR (bütçe), haftalık (yük)"
+  },
+  "TP-11": {
+   "ad": "YZ değerlendirme",
+   "katman": "Değerlendirme",
+   "sinar": "Altın set (≥ 50 örnek × 3 çalıştırma), adversarial, filtre doğruluğu, kalibrasyon, iki model yolu, hafızalı ve hafızasız",
+   "arac": "Promptfoo",
+   "siklik": "İlgili PR, gece"
+  },
+  "TP-12": {
+   "ad": "Kimlik kabul",
+   "katman": "Uçtan uca",
+   "sinar": "Keycloak + köprü + Mailpit + OTP taklidi; realm snapshot; token ve logout token kurcalama; yöntem kabulleri",
+   "arac": "Playwright, Keycloak test imajı",
+   "siklik": "Her PR (kimlik çekirdeği), gece"
+  },
+  "TP-13": {
+   "ad": "Güvenlik taraması",
+   "katman": "Güvenlik",
+   "sinar": "CSP ve güvenlik başlıkları snapshot'ı, çerez bayrakları, dinamik tarama, prompt injection fikstürleri",
+   "arac": "ZAP baseline, CI betikleri",
+   "siklik": "Her PR, gece"
+  },
+  "TP-14": {
+   "ad": "Kaos ve kurtarma",
+   "katman": "Dayanıklılık",
+   "sinar": "Worker öldürme (üç an), lease ve sahiplik numarası, sonucu bilinmeyen dış işlem, restore provası",
+   "arac": "Hata enjeksiyonu betikleri",
+   "siklik": "Gece, dilim kapısı"
+  },
+  "TP-15": {
+   "ad": "Gerçek cihaz",
+   "katman": "Cihaz",
+   "sinar": "PR cihaz seti (iPhone, Android telefon, tablet) ve sürüm cihaz seti",
+   "arac": "Cihaz çiftliği veya laboratuvarı",
+   "siklik": "Her PR"
+  },
+  "TP-16": {
+   "ad": "Belge QA",
+   "katman": "Belge",
+   "sinar": "Bu belgenin derleme ve kontrol betikleri: dilim, test bağı, sözlük, regresyon listesi, göndermeler, filtreler",
+   "arac": "build.py, validate.py, check.js",
+   "siklik": "Her PR (bu repo)"
+  },
+  "TP-17": {
+   "ad": "Dağıtım, sürüm ve kapı",
+   "katman": "Dağıtım",
+   "sinar": "Göç prova ve geri alma, staging duman testi, eski SPA ve eski API sürümü uyumu, dal koruması yapılandırması, K9 kanıt kaydının eksiksizliği",
+   "arac": "CI betikleri",
+   "siklik": "Her birleşme, dilim kapısı"
+  },
+  "TP-18": {
+   "ad": "Gözlemlenebilirlik, metrik ve veri akışı",
+   "katman": "Operasyon",
+   "sinar": "Telemetri olayları ve correlation kimliği, içerik taşımayan telemetri, K13 metrikleri ve alarmları, veri akışı envanteri ile çağrı günlüğü karşılaştırması",
+   "arac": "CI + staging betikleri",
+   "siklik": "Her PR (şema), günlük (staging)"
+  },
+  "TP-19": {
+   "ad": "Yerelleştirme",
+   "katman": "Birim, görsel",
+   "sinar": "Sözde locale, IME, bidi, eksik anahtar, Türkçe harf dönüşümü, zaman dilimi",
+   "arac": "Vitest, Playwright",
+   "siklik": "Her PR"
+  },
+  "TP-20": {
+   "ad": "Taslak ve çevrimdışı",
+   "katman": "Uçtan uca",
+   "sinar": "Tarayıcı sürecini öldürerek kesinti benzetimi, IndexedDB geri yükleme, şifreli taslak, kuyruk oynatma ve oturum bağı",
+   "arac": "Playwright",
+   "siklik": "Her PR (taslak), gece (kuyruk)"
+  }
+ },
+ "baglar": {
+  "A1": [
+   "TP-02",
+   "TP-01"
+  ],
+  "A2": [
+   "TP-02"
+  ],
+  "A3": [
+   "TP-04",
+   "TP-01"
+  ],
+  "A4": [
+   "TP-03"
+  ],
+  "A5": [
+   "TP-03"
+  ],
+  "A6": [
+   "TP-02"
+  ],
+  "A7": [
+   "TP-03"
+  ],
+  "A8": [
+   "TP-01",
+   "TP-05"
+  ],
+  "B1": [
+   "TP-01",
+   "TP-04",
+   "AT-10"
+  ],
+  "B2": [
+   "TP-01",
+   "AT-07"
+  ],
+  "B3": [
+   "TP-05",
+   "AT-11"
+  ],
+  "B4": [
+   "TP-04",
+   "AT-10"
+  ],
+  "B5": [
+   "TP-12",
+   "TP-13",
+   "AT-15"
+  ],
+  "B6": [
+   "TP-05",
+   "TP-08",
+   "AT-15"
+  ],
+  "B7": [
+   "TP-04"
+  ],
+  "B8": [
+   "TP-08"
+  ],
+  "B9": [
+   "TP-05",
+   "AT-12",
+   "AT-21"
+  ],
+  "B10": [
+   "TP-12",
+   "AT-15"
+  ],
+  "B11": [
+   "TP-01",
+   "AT-36"
+  ],
+  "B12": [
+   "TP-17",
+   "AT-36"
+  ],
+  "C1": [
+   "TP-02",
+   "AT-02"
+  ],
+  "C2": [
+   "TP-02",
+   "TP-07",
+   "TP-09"
+  ],
+  "C3": [
+   "TP-09",
+   "AT-08"
+  ],
+  "C4": [
+   "TP-02",
+   "TP-10"
+  ],
+  "C5": [
+   "TP-06",
+   "TP-07"
+  ],
+  "C6": [
+   "TP-06",
+   "TP-08"
+  ],
+  "C7": [
+   "TP-06"
+  ],
+  "C8": [
+   "TP-02",
+   "TP-03",
+   "TP-06"
+  ],
+  "C9": [
+   "TP-01",
+   "TP-11"
+  ],
+  "D1": [
+   "TP-01",
+   "TP-06",
+   "AT-03",
+   "AT-33"
+  ],
+  "D2": [
+   "TP-06",
+   "TP-01"
+  ],
+  "D3": [
+   "TP-06",
+   "TP-01"
+  ],
+  "D4": [
+   "TP-04",
+   "TP-08",
+   "AT-10",
+   "AT-16"
+  ],
+  "D5": [
+   "TP-05",
+   "TP-10",
+   "TP-08"
+  ],
+  "D6": [
+   "TP-08",
+   "TP-06"
+  ],
+  "D7": [
+   "TP-05",
+   "TP-10"
+  ],
+  "D8": [
+   "TP-01",
+   "AT-07"
+  ],
+  "D9": [
+   "TP-04",
+   "TP-08"
+  ],
+  "D10": [
+   "TP-09",
+   "TP-15",
+   "AT-35"
+  ],
+  "D11": [
+   "TP-06",
+   "TP-08"
+  ],
+  "E1": [
+   "TP-08",
+   "AT-06"
+  ],
+  "E2": [
+   "TP-20",
+   "AT-30"
+  ],
+  "E3": [
+   "TP-04",
+   "TP-08",
+   "AT-16"
+  ],
+  "E4": [
+   "TP-08",
+   "TP-05"
+  ],
+  "E5": [
+   "TP-04",
+   "TP-14",
+   "AT-14"
+  ],
+  "E6": [
+   "TP-06",
+   "AT-05"
+  ],
+  "E7": [
+   "TP-04",
+   "AT-27"
+  ],
+  "E8": [
+   "TP-09",
+   "AT-06"
+  ],
+  "E9": [
+   "TP-08",
+   "AT-06"
+  ],
+  "E10": [
+   "TP-14",
+   "AT-17"
+  ],
+  "E11": [
+   "TP-20",
+   "AT-29"
+  ],
+  "F1": [
+   "TP-04",
+   "AT-14"
+  ],
+  "F2": [
+   "TP-04",
+   "AT-14"
+  ],
+  "F3": [
+   "TP-04",
+   "AT-14",
+   "AT-28"
+  ],
+  "F4": [
+   "TP-06",
+   "TP-08"
+  ],
+  "F5": [
+   "TP-04",
+   "TP-08"
+  ],
+  "F6": [
+   "TP-04",
+   "TP-14"
+  ],
+  "F7": [
+   "TP-04",
+   "TP-08"
+  ],
+  "F8": [
+   "TP-04",
+   "AT-16"
+  ],
+  "F9": [
+   "TP-01"
+  ],
+  "F10": [
+   "TP-04",
+   "TP-12",
+   "AT-34"
+  ],
+  "G1": [
+   "TP-02",
+   "TP-13",
+   "AT-09"
+  ],
+  "G2": [
+   "TP-13",
+   "AT-09"
+  ],
+  "G3": [
+   "TP-13",
+   "AT-09"
+  ],
+  "G4": [
+   "TP-11",
+   "TP-18"
+  ],
+  "G5": [
+   "TP-04",
+   "TP-18"
+  ],
+  "G6": [
+   "TP-05",
+   "AT-12",
+   "AT-37"
+  ],
+  "G7": [
+   "TP-18",
+   "TP-04"
+  ],
+  "G8": [
+   "TP-18"
+  ],
+  "H1": [
+   "TP-01",
+   "AT-03"
+  ],
+  "H2": [
+   "TP-01",
+   "AT-04"
+  ],
+  "H3": [
+   "TP-17",
+   "AT-04"
+  ],
+  "H4": [
+   "TP-11",
+   "TP-01"
+  ],
+  "H5": [
+   "TP-05",
+   "TP-01"
+  ],
+  "H6": [
+   "TP-02"
+  ],
+  "I1": [
+   "TP-08",
+   "AT-38"
+  ],
+  "I2": [
+   "TP-06",
+   "TP-08"
+  ],
+  "I3": [
+   "TP-06",
+   "TP-07"
+  ],
+  "I4": [
+   "TP-11"
+  ],
+  "I5": [
+   "TP-08",
+   "TP-10"
+  ],
+  "I6": [
+   "TP-08",
+   "AT-05"
+  ],
+  "I7": [
+   "TP-08"
+  ],
+  "I8": [
+   "TP-08"
+  ],
+  "I9": [
+   "TP-05",
+   "TP-11"
+  ],
+  "I10": [
+   "TP-08",
+   "AT-13",
+   "AT-14"
+  ],
+  "I11": [
+   "TP-08",
+   "TP-18"
+  ],
+  "I12": [
+   "TP-11",
+   "TP-05",
+   "AT-39"
+  ],
+  "I13": [
+   "TP-11",
+   "AT-38"
+  ],
+  "J1": [
+   "TP-07"
+  ],
+  "J2": [
+   "TP-07",
+   "TP-15"
+  ],
+  "J3": [
+   "TP-07"
+  ],
+  "J4": [
+   "TP-19"
+  ],
+  "J5": [
+   "TP-19"
+  ],
+  "J6": [
+   "TP-09",
+   "TP-15"
+  ],
+  "J7": [
+   "TP-07",
+   "TP-09"
+  ],
+  "J8": [
+   "TP-19"
+  ],
+  "J9": [
+   "TP-09",
+   "TP-15",
+   "AT-35"
+  ],
+  "J10": [
+   "TP-07",
+   "TP-09"
+  ],
+  "K1": [
+   "TP-01",
+   "TP-05"
+  ],
+  "K2": [
+   "TP-11",
+   "AT-01"
+  ],
+  "K3": [
+   "TP-10"
+  ],
+  "K4": [
+   "TP-06",
+   "TP-09",
+   "TP-15"
+  ],
+  "K5": [
+   "TP-13",
+   "AT-09"
+  ],
+  "K6": [
+   "TP-11",
+   "AT-01"
+  ],
+  "K7": [
+   "TP-17"
+  ],
+  "K8": [
+   "TP-17"
+  ],
+  "K9": [
+   "TP-17"
+  ],
+  "K10": [
+   "TP-14"
+  ],
+  "K11": [
+   "TP-03"
+  ],
+  "K12": [
+   "TP-12",
+   "TP-16"
+  ],
+  "K13": [
+   "TP-18"
+  ],
+  "K14": [
+   "TP-16"
+  ],
+  "K15": [
+   "TP-17"
+  ],
+  "K16": [
+   "TP-16"
+  ],
+  "L1": [
+   "TP-05",
+   "TP-08",
+   "AT-11"
+  ],
+  "L2": [
+   "TP-08",
+   "TP-07"
+  ],
+  "L3": [
+   "TP-04",
+   "TP-08"
+  ],
+  "L4": [
+   "TP-08",
+   "TP-19"
+  ],
+  "L5": [
+   "TP-05",
+   "TP-08"
+  ],
+  "L6": [
+   "TP-08",
+   "TP-04"
+  ],
+  "L7": [
+   "TP-10",
+   "TP-08"
+  ],
+  "L8": [
+   "TP-05",
+   "TP-08"
+  ],
+  "L9": [
+   "TP-08",
+   "TP-10"
+  ],
+  "L10": [
+   "TP-08",
+   "TP-07"
+  ],
+  "M1": [
+   "TP-12",
+   "TP-03"
+  ],
+  "M2": [
+   "TP-12",
+   "AT-22"
+  ],
+  "M3": [
+   "TP-12",
+   "TP-13",
+   "AT-15"
+  ],
+  "M4": [
+   "TP-12",
+   "AT-18"
+  ],
+  "M5": [
+   "TP-12",
+   "AT-21"
+  ],
+  "M6": [
+   "TP-12",
+   "TP-08"
+  ],
+  "M7": [
+   "TP-12",
+   "TP-07",
+   "AT-19"
+  ],
+  "M8": [
+   "TP-12",
+   "AT-19"
+  ],
+  "M9": [
+   "TP-12",
+   "AT-22"
+  ],
+  "M10": [
+   "TP-05",
+   "AT-21"
+  ],
+  "M11": [
+   "TP-08",
+   "TP-12"
+  ],
+  "M12": [
+   "TP-08",
+   "TP-04"
+  ],
+  "M13": [
+   "TP-09",
+   "TP-12",
+   "AT-23"
+  ],
+  "M14": [
+   "TP-12",
+   "AT-23"
+  ],
+  "M15": [
+   "TP-12",
+   "AT-22"
+  ],
+  "M16": [
+   "TP-12",
+   "AT-18"
+  ],
+  "M17": [
+   "TP-12",
+   "AT-18"
+  ],
+  "M18": [
+   "TP-12",
+   "AT-20"
+  ],
+  "M19": [
+   "TP-12",
+   "TP-05",
+   "AT-26"
+  ],
+  "M20": [
+   "TP-12",
+   "AT-24"
+  ],
+  "M21": [
+   "TP-08",
+   "AT-24"
+  ],
+  "M22": [
+   "TP-12",
+   "TP-01"
+  ],
+  "M23": [
+   "TP-11",
+   "TP-05"
+  ],
+  "M24": [
+   "TP-12",
+   "AT-25"
+  ],
+  "M25": [
+   "TP-12",
+   "AT-20"
+  ],
+  "M26": [
+   "TP-04",
+   "AT-31"
+  ],
+  "M27": [
+   "TP-12",
+   "AT-32"
+  ]
+ },
+ "at": {
+  "AT-01": {
+   "dilim": 1,
+   "tur": "otomatik",
+   "sahip": "CI",
+   "onkosul": "Altın set, katalog ve prompt sürümü sabit; iki model kimliği tanımlı"
+  },
+  "AT-02": {
+   "dilim": 1,
+   "tur": "otomatik",
+   "sahip": "CI",
+   "onkosul": "EntityPicker'ın iki uygulaması ve katalog şema snapshot'ı"
+  },
+  "AT-03": {
+   "dilim": 2,
+   "tur": "otomatik",
+   "sahip": "CI",
+   "onkosul": "Altın spec seti; ikinci render motoru adaptörü"
+  },
+  "AT-04": {
+   "dilim": 2,
+   "tur": "otomatik",
+   "sahip": "CI",
+   "onkosul": "Test taşıma adaptörü; A2UI dışa aktarım fikstürü"
+  },
+  "AT-05": {
+   "dilim": 1,
+   "tur": "otomatik",
+   "sahip": "CI",
+   "onkosul": "Hata enjeksiyonu açık; sahte model; yarım form ve Run"
+  },
+  "AT-06": {
+   "dilim": 1,
+   "tur": "otomatik",
+   "sahip": "CI",
+   "onkosul": "Yarı dolu form, üç child satır, üç seçili kayıt"
+  },
+  "AT-07": {
+   "dilim": 1,
+   "tur": "otomatik",
+   "sahip": "CI",
+   "onkosul": "N-1 ve N-2 katalog tanımları; Custom Field değişikliği betiği"
+  },
+  "AT-08": {
+   "dilim": 1,
+   "tur": "otomatik",
+   "sahip": "CI",
+   "onkosul": "Üç tema, üç yoğunluk, iki marka paketi"
+  },
+  "AT-09": {
+   "dilim": 1,
+   "tur": "yarı otomatik",
+   "sahip": "CI + dış güvenlik danışmanı",
+   "onkosul": "Zararlı belge, rich text, URL ve RPC fikstürleri"
+  },
+  "AT-10": {
+   "dilim": 1,
+   "tur": "otomatik",
+   "sahip": "CI",
+   "onkosul": "Aynı belge iki yazma yolunda; aynı idempotency anahtarı"
+  },
+  "AT-11": {
+   "dilim": 1,
+   "tur": "otomatik",
+   "sahip": "CI",
+   "onkosul": "Açık oturumda rol ve User Permission değişikliği"
+  },
+  "AT-12": {
+   "dilim": 1,
+   "tur": "otomatik",
+   "sahip": "CI",
+   "onkosul": "İki tenant; yavaş istek; onay sonrası değişiklik"
+  },
+  "AT-13": {
+   "dilim": 1,
+   "tur": "elle",
+   "sahip": "Proje sahibi + 5–8 pilot kullanıcı",
+   "onkosul": "Klasik yolun ölçümü tamam; gerçek cihazlar; sentetik veya maskeli PIM verisi"
+  },
+  "AT-14": {
+   "dilim": 1,
+   "tur": "yarı otomatik",
+   "sahip": "CI + pilot kullanıcı",
+   "onkosul": "Eksik alanlı 12 kayıt; sınırlı grant; sahte model ve gerçek model"
+  },
+  "AT-15": {
+   "dilim": 1,
+   "tur": "otomatik",
+   "sahip": "CI",
+   "onkosul": "Aynı origin ters vekil; işbirliği etmeyen test istemcisi"
+  },
+  "AT-16": {
+   "dilim": 1,
+   "tur": "otomatik",
+   "sahip": "CI",
+   "onkosul": "Onaylı ChangeSet; eşzamanlı ikinci kullanıcı"
+  },
+  "AT-17": {
+   "dilim": 1,
+   "tur": "otomatik",
+   "sahip": "CI",
+   "onkosul": "Kaos betikleri; tekrar korumalı ve korumasız sahte sağlayıcı"
+  },
+  "AT-18": {
+   "dilim": 1,
+   "tur": "yarı otomatik",
+   "sahip": "CI + dış güvenlik danışmanı",
+   "onkosul": "Keycloak test realm'i; kurcalanmış token fikstürleri"
+  },
+  "AT-19": {
+   "dilim": 1,
+   "tur": "yarı otomatik",
+   "sahip": "CI + proje sahibi (ekran okuyucu)",
+   "onkosul": "Yöntemin dilimi açık; Mailpit ve OTP taklidi"
+  },
+  "AT-20": {
+   "dilim": 1,
+   "tur": "otomatik",
+   "sahip": "CI",
+   "onkosul": "İki host; rol bazlı süreler; düşürülmüş logout bildirimi"
+  },
+  "AT-21": {
+   "dilim": 1,
+   "tur": "otomatik",
+   "sahip": "CI",
+   "onkosul": "İki şirket, çok şirketli kullanıcı, davetler"
+  },
+  "AT-22": {
+   "dilim": 1,
+   "tur": "otomatik",
+   "sahip": "CI",
+   "onkosul": "Adım yükseltme gerektiren capability; kod deneme fırtınası betiği"
+  },
+  "AT-23": {
+   "dilim": 1,
+   "tur": "otomatik",
+   "sahip": "CI",
+   "onkosul": "Boş ortam; marka paketleri; realm dosyaları"
+  },
+  "AT-24": {
+   "dilim": 3,
+   "tur": "otomatik",
+   "sahip": "CI",
+   "onkosul": "app ve www hostları; misafir ve kullanıcı sepetleri"
+  },
+  "AT-25": {
+   "dilim": 1,
+   "tur": "yarı otomatik",
+   "sahip": "CI + proje sahibi",
+   "onkosul": "Hata ve kurtarma matrisinin her satırı için fikstür"
+  },
+  "AT-26": {
+   "dilim": 1,
+   "tur": "otomatik",
+   "sahip": "CI",
+   "onkosul": "Açık oturumlar, soket, grant ve Run; Keycloak adımı hata benzetimi"
+  },
+  "AT-27": {
+   "dilim": 1,
+   "tur": "otomatik",
+   "sahip": "CI",
+   "onkosul": "Üç eşzamanlı kullanıcı; tenant ve global bayrak"
+  },
+  "AT-28": {
+   "dilim": 1,
+   "tur": "otomatik",
+   "sahip": "CI",
+   "onkosul": "Kalan bütçesi 30 kayıt olan grant; iki eşzamanlı Run"
+  },
+  "AT-29": {
+   "dilim": 4,
+   "tur": "otomatik",
+   "sahip": "CI",
+   "onkosul": "Çevrimdışı benzetim; dört oturum senaryosu"
+  },
+  "AT-30": {
+   "dilim": 1,
+   "tur": "otomatik",
+   "sahip": "CI",
+   "onkosul": "Uzun form; tarayıcı sürecini öldüren betik; hassas alan"
+  },
+  "AT-31": {
+   "dilim": 2,
+   "tur": "otomatik",
+   "sahip": "CI",
+   "onkosul": "Hesap, son yönetici ve kapanan şirket fikstürleri; zaman benzetimi"
+  },
+  "AT-32": {
+   "dilim": 3,
+   "tur": "yarı otomatik",
+   "sahip": "CI + gerçek kiosk cihazı",
+   "onkosul": "Kayıtlı kiosk cihazı; iki kullanıcı telefonu"
+  },
+  "AT-33": {
+   "dilim": 2,
+   "tur": "otomatik",
+   "sahip": "CI",
+   "onkosul": "50 örnek soru; filtre doğruluğu seti"
+  },
+  "AT-34": {
+   "dilim": 4,
+   "tur": "yarı otomatik",
+   "sahip": "CI + muhasebe kullanıcısı",
+   "onkosul": "e-Fatura sağlayıcı test ortamı; muhasebe rolü; adım yükseltme"
+  },
+  "AT-35": {
+   "dilim": 1,
+   "tur": "yarı otomatik",
+   "sahip": "CI + cihaz çiftliği",
+   "onkosul": "Dilimde açık cihaz sınıfları; iki yön"
+  },
+  "AT-36": {
+   "dilim": 1,
+   "tur": "otomatik",
+   "sahip": "CI",
+   "onkosul": "İki API sürümü; bir önceki SPA sürümü"
+  },
+  "AT-37": {
+   "dilim": 3,
+   "tur": "otomatik",
+   "sahip": "CI",
+   "onkosul": "Destek ve müşteri kullanıcıları; onay akışı"
+  },
+  "AT-38": {
+   "dilim": 1,
+   "tur": "yarı otomatik",
+   "sahip": "CI + proje sahibi",
+   "onkosul": "Her yüzeyin görev seti ve klasik yol ölçümü"
+  },
+  "AT-39": {
+   "dilim": 2,
+   "tur": "otomatik",
+   "sahip": "CI",
+   "onkosul": "İki şirket; hafıza kayıtları; kötü niyetli düzeltme fikstürü"
+  }
+ }
+}

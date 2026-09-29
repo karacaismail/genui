@@ -1,0 +1,125 @@
+<section id="sozlesme-eki">
+  <div class="sec-head">
+    <div class="title"><h2>Sözleşme eki: ilk akışın örnekli paketi</h2></div>
+    <p>Bu ek, geliştirmeden önce yazılması kararlaştırılan örnekli sözleşme paketidir (karar kitabı V08). Ne işe yarar: frontend, Frappe custom app ve model tarafı aynı örneği okuyarak başlar; hiçbiri kendi şemasını uydurmaz. Ne yapar: ilk dilimin tek akışını ("seçili ürünlerin eksik özniteliklerini tamamla") altı yapıda örnekler: capability manifesti → Run başlatma isteği → öneri (ChangeSet) → onay → sonuç → görünüm (UI Spec). Ne yapmaz: bütün capability'leri tanımlamaz; her yeni akış bu kalıpla kendi ekini yazar. Asıl kaynak zod şemalarıdır; buradaki JSON örnekleri o şemalardan geçen geçerli örneklerdir ve aynı örnekler CI'da hem TypeScript hem Python tarafında sınanır (B2, TP-01). Parmak izleri F9'daki kuralla hesaplanır. Alanların kimden geldiği her örneğin altında yazılıdır: <b>Z</b> zorunlu, <b>İ</b> istemci gönderir, <b>S</b> sunucu türetir (istemci gönderse bile sunucu yok sayar ve kendisi yazar).</p>
+  </div>
+
+  <h3 style="font-size:var(--fs-l)">1 · Capability manifesti girdisi</h3>
+<pre><code>{
+  "capability": "pim.fill_missing_attributes",
+  "version": "1.0.0",
+  "doctype": "Item",
+  "modes": ["assisted", "delegated"],
+  "risk": { "base": "reversible", "escalate_when": { "records_over": 50, "sensitive_fields": true, "submit_or_delete": true } },
+  "reversibility": { "kind": "previous_value", "undo_window_s": 30 },
+  "grant_eligible": true,
+  "step_up": null,
+  "offline_allowed": false,
+  "retry": "retryable",
+  "params_schema": "genui.contracts/pim.fill_missing_attributes.params@1",
+  "limits": { "max_records": 200, "max_steps": 20, "timeout_s": 600 }
+}</code></pre>
+  <p style="margin-top:.5rem">Manifest tamamen sunucu verisidir (S); metadata'dan üretilir ve açık allowlist ile daraltılır. <code>risk.escalate_when</code>, C01 kararının makine okunur hâlidir: 50'yi aşan küme ve hassas alan içeren küme sınıf yükseltir.</p>
+
+  <h3 style="margin-top:1.5rem;font-size:var(--fs-l)">2 · Run başlatma isteği</h3>
+<pre><code>POST /api/v2/method/genui.api.v1.runs.start
+{
+  "capability": "pim.fill_missing_attributes",
+  "capability_version": "1.0.0",
+  "mode": "assisted",
+  "selection": {
+    "doctype": "Item",
+    "filter": { "op": "and", "args": [
+      { "field": "item_group", "op": "=", "value": "Küçük Ev Aletleri" },
+      { "field": "description", "op": "is_empty" }
+    ] },
+    "exclude": ["ITEM-00017"]
+  },
+  "context_manifest_fingerprint": "5d1c…e07a",
+  "idempotency_key": "01J9ZK3T6Q8M4R2W7Y5N0B1C3D"
+}</code></pre>
+  <p style="margin-top:.5rem">Z ve İ: capability, capability_version, mode, selection, context_manifest_fingerprint, idempotency_key. İ: exclude. Yanıtta S: <code>run_id</code>, tenant ve kullanıcı, <code>risk_class</code> (sunucu hesaplar), <code>estimate</code> (kayıt sayısı, süre, maliyet), <code>created_at</code>. Geçersiz örnek: isteğe <code>"sql"</code> veya <code>"url"</code> alanı eklemek; şema <code>z.strictObject</code> olduğu için istek reddedilir ve güvenlik olayı yazılır (G1, G5).</p>
+
+  <h3 style="margin-top:1.5rem;font-size:var(--fs-l)">3 · Öneri (ChangeSet)</h3>
+<pre><code>{
+  "changeset_id": "CS-2026-00418",
+  "run_id": "RUN-2026-00418",
+  "base": { "catalog_version": "3.2.0", "schema_fingerprint": "9f3c…a41b" },
+  "items": [
+    {
+      "doctype": "Item", "name": "ITEM-00012", "revision": "2026-09-29 10:14:02.118",
+      "risk": "reversible", "status": "proposed",
+      "changes": [{
+        "field": "description", "old": null,
+        "new": "Paslanmaz çelik gövdeli, 1,7 litre kapasiteli su ısıtıcısı.",
+        "evidence": [{ "source": "SUP-2291", "version": 3, "page": 3, "quote_fingerprint": "b7e2…19c0" }],
+        "confidence": null
+      }]
+    },
+    { "doctype": "Item", "name": "ITEM-00031", "status": "ambiguous", "reason": "İki tedarikçi belgesinde farklı güç değeri" }
+  ],
+  "fingerprint": "c41a…77d2"
+}</code></pre>
+  <p style="margin-top:.5rem">Tamamı S. <code>confidence</code> kalibrasyon bitene kadar <code>null</code>'dır (I4, Y05). <code>ambiguous</code> kayıt değişiklik taşımaz ve uygulanmaz (Y06). Geçersiz örnek: izin projeksiyonunda olmayan bir alanı değiştiren öğe; sunucu ChangeSet'i üretmeden reddeder.</p>
+
+  <h3 style="margin-top:1.5rem;font-size:var(--fs-l)">4 · Onay</h3>
+<pre><code>POST /api/v2/method/genui.api.v1.changesets.approve
+{
+  "changeset_id": "CS-2026-00418",
+  "changeset_fingerprint": "c41a…77d2",
+  "approved_items": ["ITEM-00012"],
+  "excluded_items": ["ITEM-00020"],
+  "idempotency_key": "01J9ZK4B2C…"
+}</code></pre>
+  <p style="margin-top:.5rem">Z ve İ: changeset_id, changeset_fingerprint, approved_items, idempotency_key. İ: excluded_items. Yanıtta S: <code>approval_id</code>, <code>decision</code> (approved veya partially_approved), onaylayan, <code>via</code> (user veya grant ve <code>grant_id</code>), <code>approved_at</code>, <code>expires_at</code> (öneride 10 dakika). Geçersiz örnek: parmak izi sunucudakiyle eşleşmiyorsa onay reddedilir ve hata kodu <code>approval_stale</code> döner (B11); ChangeSet yeniden incelenir.</p>
+
+  <h3 style="margin-top:1.5rem;font-size:var(--fs-l)">5 · Sonuç</h3>
+<pre><code>{
+  "run_id": "RUN-2026-00418",
+  "status": "partially_done",
+  "results": [
+    { "name": "ITEM-00012", "outcome": "applied", "revision": "2026-09-29 10:21:40.552" },
+    { "name": "ITEM-00020", "outcome": "excluded" },
+    { "name": "ITEM-00024", "outcome": "conflict", "error": { "code": "revision_conflict", "retryable": false } },
+    { "name": "ITEM-00031", "outcome": "ambiguous" }
+  ],
+  "undo_until": "2026-09-29 10:22:10.552",
+  "audit_ref": "AUD-2026-118204"
+}</code></pre>
+  <p style="margin-top:.5rem">Tamamı S ve izinli REST ile okunur; Socket.IO yalnızca "Run değişti" sinyali taşır (B6, C03). Kayıt başına sonuç F6'ya uyar; seçmeli yeniden deneme yalnızca <code>conflict</code> ve <code>failed</code> kayıtları hedefler.</p>
+
+  <h3 style="margin-top:1.5rem;font-size:var(--fs-l)">6 · Görünüm (UI Spec)</h3>
+<pre><code>{
+  "specVersion": "1",
+  "catalogId": "genui.core",
+  "catalogVersion": "3.2.0",
+  "schemaFingerprint": "9f3c…a41b",
+  "surfaceId": "run-result-RUN-2026-00418",
+  "elements": {
+    "root": { "type": "Stack", "children": ["summary", "remaining"] },
+    "summary": { "type": "BatchResult", "props": { "run": "RUN-2026-00418" } },
+    "remaining": { "type": "EntityTable", "props": { "doctype": "Item", "columns": ["item_name", "description"] } }
+  },
+  "dataBindings": { "remaining": { "capability": "pim.list", "filter": { "op": "in", "field": "name", "valueRef": "run:RUN-2026-00418:unresolved" } } },
+  "actions": [{ "id": "retry", "capability": "runs.retry_failed", "risk": "reversible" }]
+}</code></pre>
+  <p style="margin-top:.5rem">Spec veri taşımaz, yalnızca veri bağlama referansı taşır (D7); renderer kataloğu dışında tip veya prop reddedilir (D1). Model bu spec'i önerir; sunucu doğrular, istemci çizmeden önce yeniden doğrular.</p>
+
+  <h3 style="margin-top:1.75rem;font-size:var(--fs-l)">Run durum tablosu</h3>
+  <div class="tbl-wrap" style="margin-top:.6rem"><table class="matrix prose">
+    <thead><tr><th scope="col">Durum</th><th scope="col">Anlamı</th><th scope="col">Kim geçirir</th><th scope="col">Sonraki durumlar</th><th scope="col">Arayüz</th></tr></thead>
+    <tbody>
+      <tr><td>queued</td><td>İstek kabul edildi, iş kuyrukta</td><td>Sunucu</td><td>running, cancelled</td><td>RunPanel "sırada"; iptal edilebilir</td></tr>
+      <tr><td>running</td><td>Worker adımları işliyor; her adım günlüğe yazılıyor</td><td>Worker</td><td>awaiting_approval, applying, cancel_requested, partially_done, failed, outcome_unknown</td><td>İlerleme REST ile; Durdur hep aynı yerde</td></tr>
+      <tr><td>awaiting_approval</td><td>Onay veya adım yükseltme bekleniyor; worker serbest</td><td>Worker</td><td>applying (onayla), cancelled (red veya onay süresi doldu)</td><td>ApprovalBar, ChangeReview</td></tr>
+      <tr><td>applying</td><td>Onay ve revizyon Frappe içinde doğrulanıp uygulanıyor (F8)</td><td>Yürütücü</td><td>done, partially_done, failed, outcome_unknown</td><td>"Uygulanıyor"; iptal bir sonraki kayıttan önce</td></tr>
+      <tr><td>cancel_requested</td><td>Kullanıcı durdurdu; çalışan adım bitince durur</td><td>Kullanıcı</td><td>cancelled</td><td>"Durduruluyor"</td></tr>
+      <tr><td>cancelled</td><td>Durdu; kısmi sonuç korunur</td><td>Worker</td><td>—</td><td>Özet ve manuel devam yolu</td></tr>
+      <tr><td>done</td><td>Bütün onaylı kayıtlar uygulandı</td><td>Yürütücü</td><td>— (geri alma penceresi açık)</td><td>BatchResult, geri al</td></tr>
+      <tr><td>partially_done</td><td>Bir kısmı uygulandı; çakışan, başarısız veya belirsiz kayıt var</td><td>Yürütücü</td><td>running (seçmeli yeniden deneme)</td><td>Kayıt başına sonuç; manuel kuyruk</td></tr>
+      <tr><td>failed</td><td>Hiçbir kayıt uygulanmadı</td><td>Worker</td><td>running (yeniden dene)</td><td>Neden ve sonraki adım</td></tr>
+      <tr><td>outcome_unknown</td><td>Dış işlemin sonucu bilinmiyor; tekrar korumasız adım tekrarlanmaz (E10)</td><td>Worker</td><td>needs_reconciliation, done</td><td>"İşlem olmuş olabilir" uyarısı</td></tr>
+      <tr><td>needs_reconciliation</td><td>Kullanıcı veya operatör kararı gerekiyor</td><td>Sistem</td><td>done, failed</td><td>Uzlaştırma ekranı</td></tr>
+    </tbody>
+  </table></div>
+</section>

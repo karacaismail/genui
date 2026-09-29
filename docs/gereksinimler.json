@@ -1,0 +1,3280 @@
+{
+ "kind": "genui-gereksinimler",
+ "schemaVersion": 1,
+ "source": "genui-frontend-gereksinimleri.html",
+ "requirements": [
+  {
+   "id": "A1",
+   "group": "A",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "Frontend",
+   "title": "Kalıcı gereksinim: tipli sözleşmeli React SPA",
+   "requirement": "Panel bir tek sayfa React uygulamasıdır; sunucu tarafı render ve sunucu bileşeni yoktur; her dış veri runtime'da şema ile doğrulanır; tip kontrolü strict'tir. Herkese açık içerik ayrı statik yüzeydir.",
+   "note": "Bu madde araç adı içermez; araçlar A2'de başlangıç yığını olarak listelenir ve değişmeleri bu gereksinimi bozmaz.",
+   "tests": [
+    "TP-02",
+    "TP-01"
+   ],
+   "decisions": [
+    "app-runtime",
+    "type-discipline"
+   ]
+  },
+  {
+   "id": "A2",
+   "group": "A",
+   "level": "SHOULD",
+   "slice": 1,
+   "actor": "Frontend",
+   "title": "Başlangıç yığını (karar kaydı ve kullanıcı kuralları)",
+   "requirement": "React 19.3, Vite 8, TypeScript 7 (noUncheckedIndexedAccess, exactOptionalPropertyTypes), antd 6.6, zod 4, TanStack Router 1.x, Query 5.x, Form 1.x, Table 9.x, socket.io-client 4.8, ECharts 6, Sass (SCSS Modules, C4), Astro 7 (public). Node 24, Frappe v16 ile aynı.",
+   "note": "Next.js, React Server Components, TanStack Start ve Supabase kullanılmaz; bu yasak ürün gereksinimi değil, proje sahibinin geliştirme kuralıdır ve ADR olarak kayıtlıdır. Tarayıcı hedefi Vite \"baseline-widely-available\"; 320 CSS px genişlik tasarım tabanıdır, eski tarayıcı desteği değildir (J9). Yığındaki bir parçayı değiştirmek AT-02, AT-03 ve AT-04 deneylerini geçmek demektir.",
+   "tests": [
+    "TP-02"
+   ],
+   "decisions": [
+    "router",
+    "server-state",
+    "form-library",
+    "table",
+    "charts"
+   ]
+  },
+  {
+   "id": "A3",
+   "group": "A",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "BFF",
+   "title": "Frappe hedefi: yalnız v16",
+   "requirement": "Tek hedef Frappe v16'dır (doğrulanan 16.35.0; karar kitabı U08). v15 desteklenmez; kurulumlar v16 ve üstüdür. Gateway tek contract fixture seti taşır; yeni Frappe minor'ı yalnızca bu fixture'lar ve güvenlik mekanizmalarının kaynak kodu karşılaştırması (F8, M25, B6) geçince desteklenir.",
+   "note": "Frappe MIT lisanslıdır. Ürün sıfırdan kurulduğu için (U01) taşınacak bir v15 kurulumu yoktur. Frappe v17 yayımlanınca geçiş ayrı ADR ile ve aynı fixture ve güvenlik karşılaştırmasıyla yapılır; iki major'ı aynı anda desteklemek test yükünü ikiye katladığı için geçiş penceresi kısa tutulur.",
+   "tests": [
+    "TP-04",
+    "TP-01"
+   ],
+   "decisions": [
+    "version",
+    "installation"
+   ]
+  },
+  {
+   "id": "A4",
+   "group": "A",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "Frontend",
+   "title": "Sürüm sabitleme",
+   "requirement": "antd, tüm @ant-design/* paketleri ve 0.x GenUI paketleri tam sürümle sabitlenir; 1.x paketler tilde ile minor'a; lockfile commit edilir. Yükseltme ayrı PR'da ve uyumluluk paketi (K1, K2, K4, K5) geçince.",
+   "note": "",
+   "tests": [
+    "TP-03"
+   ],
+   "decisions": [
+    "governance"
+   ]
+  },
+  {
+   "id": "A5",
+   "group": "A",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "CI",
+   "title": "Lisans politikası: açık kaynak öncelikli",
+   "requirement": "Allowlist: MIT, Apache-2.0, BSD, ISC; MPL-2.0 yalnızca değiştirilmemiş test bağımlılığı; ikon ve font gibi içerik varlıkları için SIL OFL 1.1 ve CC BY 4.0, atıf NOTICE dosyasında olmak şartıyla (C8). Yasak: AGPL, SSPL, BUSL, Elastic License ve lisanssız kod; ticari grid, scheduler veya \"yalnızca dahili kullanım\" lisanslı SDK'lar (AG Grid Enterprise, @thesysai/genui-sdk). Yasak lisanslı kaynaklardan kod kopyalanmaz, yalnızca davranış tarif edilir (Frappe CRM, Helpdesk, Insights, LMS, Drive ve Telephony AGPL'dir).",
+   "note": "Apache-2.0 bağımlılıklar (ECharts, A2UI, TypeScript) için NOTICE dosyası dağıtıma eklenir. Ticari bileşen ancak PoC ile kanıtlanmış ihtiyaç ve TCO karşılaştırmasından sonra ADR ile açılır. Ürüne girmeyen, ayrı süreçte çalışan araçlar ayrı listelenir: yük testi aracı k6 AGPL-3.0'dır, ürün bağımlılığı olamaz, yalnızca CI aracıdır; n8n (Sustainable Use License) ve OpenClaw yalnızca iç izleme ve raporlama aracıdır (A7), ürüne ve müşteri kurulumuna girmez. Yeni bağımlılığın lisansı PR açıklamasına yazılır. Dağıtım iki biçimdedir (karar kitabı U10): varsayılan SaaS, büyük müşteriye kendi sunucusunda kurulum. Kurulumda müşteriye verilen her bileşenin lisansı ve NOTICE dosyası kurulum paketine girer; kurulum paketine GPL veya AGPL lisanslı bir Frappe uygulaması (ör. ERPNext GPL-3.0) eklenirse o bileşenin kaynak kodunu sunma yükümlülüğü doğar. Ürünün kendi uygulamaları bu bileşenlerden kod kopyalamadığı için yükümlülük o bileşenlerle sınırlı kalır; kurulum sözleşmesi hukukçuya teyit ettirilir (K15).",
+   "tests": [
+    "TP-03"
+   ],
+   "decisions": [
+    "licensing",
+    "advanced-grid"
+   ]
+  },
+  {
+   "id": "A6",
+   "group": "A",
+   "level": "SHOULD",
+   "slice": 1,
+   "actor": "Frontend",
+   "title": "Önerilen paket düzeni",
+   "requirement": "Kalıcı olan sınırlardır, klasör adları değil: sözleşme paketleri React'a bağımlı olmaz, renderer yalnızca kataloğu tüketir, adaptörler dış tipleri sızdırmaz. Önerilen düzen pnpm workspace: apps/panel, apps/portal, apps/public (Astro) ve packages/ altında frappe-contract (codegen çıktısı), contracts (zod asıl kaynak ve üretilen JSON Schema paketi, B2), capabilities-client, task-state, catalog, registry, renderer, tokens, icons (ikon kayıt mekanizması, C8), orchestration, adapters/*, ui-kit (@genui/ui), surfaces/* (cihaz sınıfı başına yerleşim ve gezinti, J9), i18n, testing.",
+   "note": "Kod adı \"genui\"dir: paket kapsamı @genui/*, CSS değişken öneki genui. Önceki sürümlerdeki \"AEP\" adı başka bir projenin tasarım sisteminden yanlışlıkla taşınmıştı ve kaldırıldı (karar kitabı U02); kullanıcının gördüğü marka kod adından değil marka paketinden gelir (M13). Bağımlılık yönü: surfaces → renderer → registry → ui-kit → tokens ve icons; orchestration → task-state → capabilities-client → frappe-contract ve contracts. catalog ve frappe-contract React'a bağımlı değildir. Kırıcı şema değişikliği migration notu ve tüketici testi ister. Kimlik rehberinin depo ayrımı korunur: identity-infra (Keycloak imajı ve eklentileri, config-cli dosyaları, Keycloakify teması, yerel compose, Playwright kabul testleri), frappe-apps (kimlik köprüsü, organizasyon ve KYC/KYB, iş uygulamaları), frontends (bu belgedeki paketler), otp-gateway. Keycloakify teması tokens paketini sürümlü paket olarak tüketir.",
+   "tests": [
+    "TP-02"
+   ],
+   "decisions": [
+    "governance",
+    "team"
+   ]
+  },
+  {
+   "id": "A7",
+   "group": "A",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "CI",
+   "title": "Tedarik zinciri",
+   "requirement": "Lockfile bütünlüğü ve provenance doğrulaması, bağımlılık zafiyet taraması (SCA), SBOM üretimi, postinstall betikleri kapalı, gizli anahtar taraması; kaynak haritaları herkese açık dağıtılmaz.",
+   "note": "Sürüm ve güvenlik duyuruları iki yoldan izlenir (karar kitabı E06): bağımlılık yamaları için Dependabot PR açar; Keycloak, Keycloak eklentileri, Frappe ve model sağlayıcılarının duyuruları için haftalık n8n iş akışı duyuruları toplar, OpenClaw özet adımı etkilenen gereksinimleri ve önerilen işi yazar. İki yol da yalnızca rapor ve PR üretir; canlı sisteme, ana dala veya yapılandırmaya kendiliğinden dokunmaz (K8).",
+   "tests": [
+    "TP-03"
+   ],
+   "decisions": [
+    "app-security"
+   ]
+  },
+  {
+   "id": "A8",
+   "group": "A",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "Frappe",
+   "title": "Ürün ailesi ve uygulama kataloğu",
+   "requirement": "Ürün, Zoho benzeri hepsi bir arada bir uygulama ailesidir (karar kitabı U03). Her uygulama tek bir katalog satırıyla tanımlanır: kimlik ve adres yolu (ör. /crm), sahibi, en yüksek veri sınıfı (M23, G7), risk kuralları (F2), lisans durumu (A5), hedef dilim ve kabul deneyi. Kataloğa girmeyen uygulama kabukta (M10) görünmez ve Uygulama Yetkisi alamaz. Sürüm 1.0 ailesi: yönetim paneli ve sistem ayarları, ürün bilgisi ve katalog (PIM), müşteri ilişkileri (CRM), muhasebe ve finans, insan kaynakları, e-ticaret, destek ve talep yönetimi. Sonraki ürün dilimleri: canlı sohbet ve video toplantı uygulaması (TeamsLike), çevrim içi eğitim platformu (Udemy benzeri), sağlık ve klinik yönetimi, pazarlama ve SEO paketi (MarketerLike). Uygulama kataloğu ve dilim ataması Ürün ailesi bölümündedir.",
+   "note": "Aynı kimlik, oturum, kabuk, tasarım sistemi ve YZ çekirdeği her uygulamada ortaktır; bir uygulama yeni bir risk sınıfı veya veri sınıfı getiriyorsa önce bu belge güncellenir. Frappe'nin AGPL lisanslı uygulamaları (CRM, Helpdesk, LMS, Insights, Gameplan ve Drive, Meet, Mail, Calendar içeren Frappe Suite) ve The Commit Company'nin Raven sohbet uygulaması davranış kaynağıdır, kod kaynağı değildir (A5); kullanıcının verdiği github.com/frappe/suite referansı bu anlamda kullanılır. Sağlık uygulaması özel nitelikli kişisel veri (KVKK md. 6) işler ve sonraki ürün dilimlerinde ayrı gereksinim belgesiyle açılır; kamu hastanesi veya kritik altyapı sayılan müşteri için verinin yurt içinde saklanması gerekebilir (2019/12 sayılı Cumhurbaşkanlığı Genelgesi), bu durumda o müşteri ayrı sitede ve yurt içi barındırmada çalışır (B9). Pazarlama paketi ticari ileti gönderir; alıcı onayı İleti Yönetim Sistemi'nde (İYS) kayıtlı olmadan ileti gitmez (M12). Video toplantı ayrı medya altyapısı (WebRTC) ister, Frappe Socket.IO bu iş için kullanılmaz.",
+   "tests": [
+    "TP-01",
+    "TP-05"
+   ],
+   "decisions": [
+    "surface",
+    "audience",
+    "licensing"
+   ]
+  },
+  {
+   "id": "B1",
+   "group": "B",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "BFF",
+   "title": "Sürümlü API sözleşmesi, tek giriş, aynı origin",
+   "requirement": "Frontend Frappe ile yalnızca sürümlü sözleşmedeki uç noktalar üzerinden konuşur: Frappe REST v2 (/api/v2/document, /api/v2/doctype/<dt>/meta, /api/v2/method) ve platformun Frappe custom app'indeki whitelisted metotlar. Ters vekil bu yolları, dosyaları, /socket.io'yu ve kimlik köprüsünü SPA'larla aynı origin'de sunar; izin listesi dışındaki yollar ürün origin'inde kapalıdır. Yazma iki yoldan yapılır (karar kitabı V01): (1) kullanıcının kendi klasik Kaydet, Submit, Cancel ve workflow eylemi doğrudan Frappe REST v2'ye gider; (2) YZ önerisinden, onaydan veya grant'ten gelen her yazma platformun capability yürütücüsünden geçer (F8). İki yolda da aynı sunucu doğrulaması, idempotency anahtarı (F6), denetim olayı (G5) ve hata biçimi (B11) zorunludur; biri eksikse o yol \"hazır\" sayılmaz.",
+   "note": "İki yolun bedeli üstlenilir: tekrar koruması ve denetim iki yerde ayrı ayrı kurulur ve AT-10 iki yolun aynı sonucu verdiğini ölçer. Desk'in iç endpoint'leri (form.load, listview ayarları) sözleşme dışıdır. Frappe 429 ve X-RateLimit başlıkları istemcide geri çekilmeye çevrilir. Bir liste, form ve submit işlemi tek sözleşme üzerinden koşmadan gateway \"hazır\" sayılmaz. Karar kaydı ayrı bir BFF servisi seçmişti; kimlik rehberiyle BFF görevi aynı origin kenar katmanına geçti, ayrı servis yalnızca birden fazla backend aynı oturumla çağrılırsa gelir (M3, Açık kararlar).",
+   "tests": [
+    "TP-01",
+    "TP-04",
+    "AT-10"
+   ],
+   "decisions": [
+    "gateway",
+    "installation",
+    "hosting"
+   ]
+  },
+  {
+   "id": "B2",
+   "group": "B",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "BFF",
+   "title": "Metadata'dan codegen, şema parmak izi",
+   "requirement": "DocType metadata'sı (meta endpoint'i) sürümlü Entity, Field, Report, Workspace ve Run şemalarına derlenir: zod + TypeScript. Her şema fingerprint taşır; Custom Field veya Property Setter değişince fingerprint değişir ve önbellek düşer. Sözleşmelerin tek asıl kaynağı zod'dur (karar kitabı V07): JSON Schema bundan sürümlü bir paket olarak üretilir, Frappe tarafındaki Python doğrulaması bu paketi kullanır; her yapının geçerli ve geçersiz örneği CI'da iki dilde de sınanır (Sözleşme eki).",
+   "note": "Sözleşme Frappe tiplerine yakın bir haritadır (seçim, karar kitabı R09): fieldtype adları, docstatus, name ve modified korunur; bağımsız bir semantik şema kurulmaz. Frappe bağımlılığı bu nedenle görünür kalır ve adaptör sınırında tutulur. Bilinmeyen fieldtype salt okunur yer tutucu olarak çizilir, sessizce gizlenmez. Alan silme veya tip değiştirme senaryosunda eski rapor, taslak ve spec migration ile açılır (D8). Python domain doğrulaması otorite olarak kalır; codegen izin ve expression kurallarını üretmez.",
+   "tests": [
+    "TP-01",
+    "AT-07"
+   ],
+   "decisions": [
+    "contract",
+    "contract-codegen",
+    "schema-evolution"
+   ]
+  },
+  {
+   "id": "B3",
+   "group": "B",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "Frappe",
+   "title": "Capability + alan projeksiyonu ile izin",
+   "requirement": "Sunucu her istekte kullanıcının izinli eylemlerini (read, write, create, delete, submit, cancel, amend, print, email, report, export, share) ve izinli alanlarını (permlevel, User Permission, if_owner) döner; frontend yalnızca gösterir.",
+   "note": "İzin sürümü Query önbellek anahtarındadır. Rol kaldırıldığında UI, API, export, dosya ve YZ bağlamı aynı anda kısıtlanır; bu negatif test yayın kapısıdır (K1).",
+   "tests": [
+    "TP-05",
+    "AT-11"
+   ],
+   "decisions": [
+    "permissions",
+    "cache-isolation"
+   ]
+  },
+  {
+   "id": "B4",
+   "group": "B",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "Frappe",
+   "title": "İş kuralı yalnızca sunucuda; Client Script yazılmaz",
+   "requirement": "Ürün sıfırdan kurulur; taşınacak Desk kullanımı ve Client Script envanteri yoktur (karar kitabı U01). Her yeni iş kuralı baştan sunucuda yazılır: iş kuralı → custom app kodu (controller, hook, validate); sunum kuralı → kısıtlı expression DSL (D3) veya renderer; özel düğme ve diyalog → capability + domain bileşeni. Client Script ve yalnızca Desk formunda çalışan davranış yazılmaz; frontend hiçbir iş kuralını yeniden yazmaz.",
+   "note": "Kanıt: istemci doğrulamasını atlayan bir kaydı API'den gönder; sunucu reddetmelidir. Aynı test klasik kaydet yolunda ve yürütücü yolunda ayrı koşar (AT-10). Karar kaydının \"tüm davranışları yeniden modelle\" ve envanter seçimleri taşınacak bir kurulum varsayıyordu; U01 ile uygulanmaz hâle geldi (izlenebilirlik).",
+   "tests": [
+    "TP-04",
+    "AT-10"
+   ],
+   "decisions": [
+    "inventory",
+    "scripts",
+    "parity"
+   ]
+  },
+  {
+   "id": "B5",
+   "group": "B",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "BFF",
+   "title": "Oturum: aynı origin, Frappe HttpOnly çerezi, CSRF",
+   "requirement": "Oturum kimlik köprüsünün açtığı Frappe oturumudur; sid çerezi Secure, HttpOnly, SameSite=Lax olarak aynı origin'de durur ve JavaScript tarafından okunamaz. SPA her yazma isteğinde köprünün verdiği CSRF belirtecini X-Frappe-CSRF-Token başlığıyla gönderir. Tarayıcıya erişim token'ı, yenileme token'ı veya API anahtarı asla inmez.",
+   "note": "Oturum süresi dolunca taslak korunur ve yeniden girişten sonra kaldığı yerden sürer; başka kullanıcıyla giriş önceki önbelleği ve taslağı temizler. 401 ve 403 ayrımı, çok sekmeli çıkış ve sessiz giriş M6'dadır. Bu madde karar kaydının \"ayrı origin + BFF session\" seçiminin yerini alır (Açık kararlar).",
+   "tests": [
+    "TP-12",
+    "TP-13",
+    "AT-15"
+   ],
+   "decisions": [
+    "auth",
+    "cache-isolation",
+    "kimlik:frontend"
+   ]
+  },
+  {
+   "id": "B6",
+   "group": "B",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "Frontend",
+   "title": "Frappe Socket.IO adaptörü: izinli abonelik, veri taşımayan olay",
+   "requirement": "Canlı güncellemeler Frappe Socket.IO ile gelir (seçim). Frappe v16'da doc_subscribe ve doctype_subscribe izin kontrolü yapar; task_subscribe ve progress_subscribe yapmaz, bilinen görev kimliğiyle odaya doğrudan katılır. Bu yüzden: Run ilerlemesi Run belgesinin doc odasına yayımlanır ve istemci doc_subscribe ile abone olur; ürün kodu task ve progress aboneliği kullanmaz ve bu odalara olay yayımlamaz (kalan risk B10'da).",
+   "note": "Olaylar yalnızca kayıt referansı ve değişiklik sayacı taşır; Run durumu ve ilerleme yüzdesi de iş bilgisidir ve olaya konmaz. İçerik her zaman izin kontrollü REST ile çekilir (sinyaller en fazla saniyede bir birleştirilir); böylece odada kalmış eski bir abonelik yalnızca \"değişti\" bilgisini görür, o da M19'daki yürürlük süresiyle sınırlıdır. Frappe odadan otomatik çıkarmaz: izin sürümü değişince SPA soketi kapatır, yeniden bağlanmada abonelikler yeniden yetkilendirilir ve açık sorgular yeniden doğrulanır. Yoklama (polling) yedeği ürün gereksinimidir (karar kitabı R07): soket bağlantısı kurulamazsa veya 30 saniyeden uzun koparsa SPA açık görünümdeki kayıtlar için \"değişen var mı\" sorusunu izinli REST ile 15 saniyede bir sorar; soket gelince yoklama durur. Olaylar zaten veri taşımadığı için yedek ucuzdur ve yetki kuralı değişmez.",
+   "tests": [
+    "TP-05",
+    "TP-08",
+    "AT-15"
+   ],
+   "decisions": [
+    "realtime",
+    "runs",
+    "permissions"
+   ]
+  },
+  {
+   "id": "B7",
+   "group": "B",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "Frappe",
+   "title": "Kimlik otoritesi sunucudadır",
+   "requirement": "Belge adı (naming series, autoname) yalnızca Frappe'de üretilir. Taslak geçici kimlik taşır ve kalıcı kimlikle uzlaştırılır; rename ve ilişki önbellekleri bu uzlaşmayı izler. Model veya istemci kimlik tahmin etmez.",
+   "note": "",
+   "tests": [
+    "TP-04"
+   ],
+   "decisions": [
+    "naming"
+   ]
+  },
+  {
+   "id": "B8",
+   "group": "B",
+   "level": "MUST",
+   "slice": 2,
+   "actor": "Frontend",
+   "title": "İşbirliği akışları yeni arayüzde",
+   "requirement": "Yorum, mention, timeline, atama, takip, bekleyen işler ve bildirim tercihleri baştan yeni arayüzde yapılır (karar kitabı C12); Desk'e geri bağlantı ve \"ilk fazda Desk'te devam\" yolu yoktur. Frappe'nin Comment, ToDo, Assignment ve Notification Log kayıtları sunucu otoritesidir; arayüz bunları izinli REST ve B6 sinyalleriyle gösterir. Bildirim tercihleri kullanıcı başına ve kanal başına (uygulama içi, e-posta) tutulur.",
+   "note": "Desk yalnızca sistem yönetimi için ayrı yönetim hostunda kalır (M20); son kullanıcı işi Desk'e düşmez. İşbirliği Dilim 2'de gelir; Dilim 1'de yalnızca Run bildirimleri ve atanmış işler listesi vardır (I10). Karar kaydındaki tutarlılık uyarısı (tam eşitlik ile \"Desk'te devam\" birlikte seçili) U01 ve C12 ile kapandı.",
+   "tests": [
+    "TP-08"
+   ],
+   "decisions": [
+    "collaboration-flows",
+    "parity"
+   ]
+  },
+  {
+   "id": "B9",
+   "group": "B",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "BFF",
+   "title": "Kiracılık: hibrit model",
+   "requirement": "Tenant modeli hibrittir (karar kitabı K01): müşterilerin çoğu tek bir paylaşımlı Frappe sitesindedir ve Organizasyon kaydıyla ayrılır; büyük veya regüle müşteri kendi ayrı sitesini alır. Sözleşme iki modelde aynıdır: her istek aktif kiracı ve şirket bağlamını taşır; önbellek, Run, grant ve YZ bağlamı bu anahtarla ayrılır. Paylaşımlı sitede izolasyon Organizasyon Üyeliği ile her istekte Frappe'de uygulanır; ayrı sitede ters vekil host adından siteyi çözer ve Socket.IO site ad alanını kullanır. Oturumda tek aktif şirket vardır (karar kitabı V02): şirket değişince uçuştaki istekler iptal edilir, önbellek temizlenir ve aynı origin'deki diğer sekmeler uyarılıp yeniden yüklenir.",
+   "note": "İki modelin de negatif izolasyon testi her yayında koşar (G6, K5); iş yükü bu yüzden en fazladır. Dilim 1 yalnızca paylaşımlı siteyle açılır; ayrı site modeli Dilim 3'te, ilk regüle müşteriden önce kanıtlanır. Birden çok siteye üye kullanıcı (ör. ayrı sitedeki müşteriye de danışmanlık veren mali müşavir) her site için ayrı giriş görür; ortak dizin ve ayrı BFF servisi ancak bu durum ürün gereksinimi olursa ADR ile gelir. Sekme başına farklı şirket desteklenmez; mali müşavir gibi çok şirketli kullanıcı şirketler arasında seçiciyle geçer.",
+   "tests": [
+    "TP-05",
+    "AT-12",
+    "AT-21"
+   ],
+   "decisions": [
+    "tenancy",
+    "tenant-isolation",
+    "kimlik:tenant"
+   ]
+  },
+  {
+   "id": "B10",
+   "group": "B",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "BFF",
+   "title": "Aynı origin realtime ve kalan risk",
+   "requirement": "Tarayıcı Frappe Socket.IO'ya aynı origin'deki /socket.io yolundan, HttpOnly oturum çereziyle bağlanır; Frappe el sıkışmasının istediği çerez ve Host ile aynı Origin bu düzende kendiliğinden sağlanır. SPA site ad alanını köprünün oturum uç noktasından alır. Ters vekil websocket yükseltmesini ve polling yolunu Frappe'nin socketio servisine iletir, Host başlığını korur. Oturum biterse veya çıkış yapılırsa SPA soketi kapatır (M6).",
+   "note": "Kalan risk: tarayıcı Frappe'ye doğrudan bağlandığı için task_subscribe ve progress_subscribe çağrılarını araya giren bir köprü süzemez; Frappe v16 bu iki aboneliği izin kontrolü yapmadan kabul eder. Önlem: ürün olayları hiçbir zaman task veya progress odalarına yayımlanmaz, Run ilerlemesi doc odasına gider (B6), olaylar veri taşımaz. İptal edilen kullanıcının açık soketi için sunucu tarafı yürürlük M19'dadır: soket servisi oturumu periyodik olarak yeniden doğrular ve azami yürürlük gecikmesi 60 saniyedir (karar kitabı K03, K04). Kabul (AT-15): JavaScript'in okuyabildiği token veya API anahtarı yokken REST ve realtime aynı kullanıcı ve site yetkisiyle çalışır.",
+   "tests": [
+    "TP-12",
+    "AT-15"
+   ],
+   "decisions": [
+    "auth",
+    "realtime",
+    "hosting"
+   ]
+  },
+  {
+   "id": "B11",
+   "group": "B",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "BFF",
+   "title": "Tek hata biçimi ve hata kataloğu",
+   "requirement": "Platformun bütün özel metotları ve kimlik köprüsü tek JSON hata biçimi döner: code (katalogdaki kararlı kod), http_status, Frappe hata türü, retryable, correlation_id, kullanıcıya gösterilecek mesaj anahtarı ve alan yolları. Her kodun HTTP durumu, tekrar denenebilirliği, ekran davranışı ve telemetri olayı hata kataloğunda tek tabloda yazılıdır (karar kitabı X01). Frappe REST v2'nin kendi hataları istemcide aynı biçime çevrilir; hata türü HTTP kodundan değil yanıttaki türden okunur (E3).",
+   "note": "Katalogda en az şu durumlar ayrı koddur: adım yükseltme gerekli (M9), onayın süresi doldu, grant kapsamı aşıldı, grant bütçesi rezerve edilemedi (F3), kota doldu (E7), sözleşme veya katalog sürüm uyuşmazlığı (H3), CSRF belirteci geçersiz (M6), revizyon çakışması (E3), izin yok, oturum bitti. Katalogda olmayan kod yayımlanamaz; sözleşme testi bunu denetler (TP-01).",
+   "tests": [
+    "TP-01",
+    "AT-36"
+   ],
+   "decisions": [
+    "validation",
+    "observability"
+   ]
+  },
+  {
+   "id": "B12",
+   "group": "B",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "BFF",
+   "title": "API sürümleme ve uzun süreli geriye uyumluluk",
+   "requirement": "Her platform uç noktası sürümlü bir ad alanındadır (ör. /api/v2/method/genui.api.v1.<ad>) ve API yüzeyi tablosunda yöntem, yol, yetki, istek ve yanıt şeması, tekrar koruması, hata kodları ve dilimiyle listelenir (karar kitabı X02). Dışa açık API için hedef, Stripe'ın yaklaşımındaki gibi uzun süreli geriye uyumluluktur: yayımlanmış bir sürüm kaldırılmaz; geriye uyumsuz her değişiklik yeni tarihli bir sürüm açar ve eski sürüm bir dönüşüm katmanıyla (sürüm değişim modülü) çalışmaya devam eder. Her istemci anahtarı veya entegrasyon oluşturulduğu tarihteki sürüme sabitlenir ve bilerek yükseltilir. Hedef ufuk 20 yıldır.",
+   "note": "Panel ve uygulama SPA'ları dış istemci değildir; kendi arka ucuyla birlikte dağıtılır ve en az iki sürüm veya 90 gün boyunca eski sunucu sürümüyle uyumlu kalır (H3, K15). 20 yıllık uyumluluk bedeli üstlenilir: her eski sürüm için sözleşme testleri süresiz koşar, dönüşüm modülleri sürüm zinciri olarak test edilir ve Frappe major yükseltmesi bu katmanın arkasında kalır. Bu yükün tek geliştirici ve YZ ajanlarıyla taşınması risklidir (çelişki notu).",
+   "tests": [
+    "TP-17",
+    "AT-36"
+   ],
+   "decisions": [
+    "version",
+    "schema-evolution",
+    "governance"
+   ]
+  },
+  {
+   "id": "C1",
+   "group": "C",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "Frontend",
+   "title": "Ant Design yalnızca @genui/ui içinde; uygulama antd görmez",
+   "requirement": "Her şey sarmalanır (karar kitabı C04): uygulama kodu (apps/*, surfaces/*) ve sözleşme paketleri antd'yi import etmez; düzen, düğme, tipografi, sekme ve tablo iskeleti dahil bütün bileşenler @genui/ui üzerinden gelir. Lint kuralı antd ve @ant-design/* importunu yalnızca packages/ui-kit içinde serbest bırakır, diğer her yerde derlemeyi kırar (TP-02). Katalog, capability ve görev durumu sözleşmelerine antd prop'u, enum'u veya tipi girmez. İş anlamı taşıyan bileşenler (Varsayılan yolculuk bölümündeki on bileşen, EntityPicker, SchemaForm, EntityTable) ile genel bileşenler aynı pakette ama ayrı alt yollarda durur (@genui/ui/domain, @genui/ui/base).",
+   "note": "Bedeli üstlenilir: sarmalayıcı bakımı ağırlaşır ve YZ kod araçlarının antd bilgisi doğrudan işe yaramaz. Hafifletme: iş anlamı taşımayan sarmalayıcılar antd ile aynı prop adlarını ve davranışı korur, yalnızca izinli prop alt kümesini dışa verir; her sarmalayıcının Storybook sayfası YZ kod ajanına örnek olarak verilir (K8). Karar kaydının \"bütün Ant bileşenlerini gereksizce sarmalamak gerekmez\" önerisi bu kararla uygulanmaz. Kanıt: vendor değişince domain API'si değişmeden bir picker yeniden çizilir (AT-02); uygulama paketlerinde antd importu sıfırdır.",
+   "tests": [
+    "TP-02",
+    "AT-02"
+   ],
+   "decisions": [
+    "ui-kit"
+   ]
+  },
+  {
+   "id": "C2",
+   "group": "C",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "Frontend",
+   "title": "Primitive → semantic → component token zinciri",
+   "requirement": "Radix palet ölçekleri semantik rollere (color.surface.default, color.text.strong, space.md) eşlenir; semantik roller yalnızca @genui/ui içinde antd Seed/Alias/Component tokenlarına bağlanır. Token kaynağı sürümlü JSON'dur; CSS değişkenleri ve TS tipleri üretilir.",
+   "note": "Özellik kodunda sabit renk veya aralık yazılmaz; lint tarar. Her ön plan/arka plan çifti (aydınlık, koyu, hover, disabled) kontrast raporuyla ölçülür; pastel yüzey üzerinde metin kontrastı ayrıca doğrulanır. Aynı kaynak Keycloakify giriş ve hesap temasına, e-posta şablonlarına ve Astro'ya da çıktı üretir; tenant marka paketi bu zincirde bir override katmanıdır (M13).",
+   "tests": [
+    "TP-02",
+    "TP-07",
+    "TP-09"
+   ],
+   "decisions": [
+    "tokens",
+    "palette",
+    "token-pipeline"
+   ]
+  },
+  {
+   "id": "C3",
+   "group": "C",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "Frontend",
+   "title": "Tema ile yoğunluk ayrı eksenler",
+   "requirement": "Tema: aydınlık, koyu (ayrı roller, ters çevirme değil), yüksek kontrast ve forced colors, çok marka. Yoğunluk: comfortable, compact, touch. antd 6 CSS Variables modu açık, cssVar.prefix = \"genui\"; tema değişimi bileşenleri yeniden render etmez. Erişilebilirlik modu (J10) tema ve yoğunluktan bağımsız üçüncü bir eksendir.",
+   "note": "Kullanıcı tercihi sunucuda saklanır ve cihazlar arası taşınır. Her bileşen durumu tema × yoğunluk matrisinde Storybook'ta örneklenir (K4). Çok marka, white-label derinliği ve giriş sayfası markası M13'te ve Kimlik bölümünde.",
+   "tests": [
+    "TP-09",
+    "AT-08"
+   ],
+   "decisions": [
+    "themes"
+   ]
+  },
+  {
+   "id": "C4",
+   "group": "C",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "Frontend",
+   "title": "SCSS Modules ve cascade katmanları",
+   "requirement": "Uygulama ve domain stilleri SCSS Modules ile yazılır (karar kitabı R04; karar kaydının önerisine dönüş): her bileşenin stili kendi .module.scss dosyasında, sınıf adları derlemede kapsamlanır. Cascade sırası tek yerde @layer reset, antd, ui, surface, app olarak sabitlenir; antd'nin kendi CSS-in-JS stilleri antd katmanına StyleProvider ile yerleştirilir. Renk, aralık ve yazı değerleri yalnızca token'lardan üretilen CSS değişkenleriyle kullanılır (C2); tema değişimi CSS değişkeniyle olur, stil yeniden üretilmez.",
+   "note": "SCSS yalnızca derleme zamanında çalışır; çalışma anı stil maliyeti antd'nin kendi stilleriyle sınırlıdır ve ölçülür (K3). Stil nonce'u CSP ile uyumludur (G3). Panelde Tailwind ve Flowbite kullanılmaz; Astro public yüzeyi aynı token değişkenleriyle kendi SCSS dosyalarını kullanır. YZ kod ajanları stil dosyasını bileşenle aynı klasörde üretir; sabit renk veya piksel lint'te hatadır.",
+   "tests": [
+    "TP-02",
+    "TP-10"
+   ],
+   "decisions": [
+    "css"
+   ]
+  },
+  {
+   "id": "C5",
+   "group": "C",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "Frontend",
+   "title": "Tek davranış sahibi, tek overlay sözleşmesi",
+   "requirement": "Her kontrolün klavye, odak, dismiss ve ekran okuyucu davranışının tek sahibi vardır: varsayılan antd; antd'de olmayan davranış (komut paleti, sheet, taşınabilir blok) için Radix Primitives. Aynı kontrole ikinci davranış sahibi eklenmez.",
+   "note": "Kontroller tutarlı custom kontrollerdir (seçim korunur, karar kitabı R02; J2): antd'nin Select, DatePicker, TimePicker, Upload ve InputNumber bileşenleri; platformun yerli açılır panelleri kullanılmaz. OverlayManager: Escape en üst katmanı kapatır, odak tetikleyene döner, iç içe modal ve select katmanları tek z-index zinciri kullanır.",
+   "tests": [
+    "TP-06",
+    "TP-07"
+   ],
+   "decisions": [
+    "behavior",
+    "focus"
+   ]
+  },
+  {
+   "id": "C6",
+   "group": "C",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "Frontend",
+   "title": "Ekran arketipleri ve etkileşim kalıpları",
+   "requirement": "İlk paket beş arketip içerir: entity list/detail/edit; search/report/workspace; approval/change review/audit; task/agent run/recovery; settings/empty/error. Her arketip landmark, başlık düzeni, düğme/bağlantı ve form HTML'ini tanımlar; aynı arketip iki DocType'ta kod kopyalamadan uygulanır.",
+   "note": "Standart kalıplar: komut paleti ve yönlendiren boş durum, satır içi açılım ve güvenli geri alma, seçim eylemleri ve filtre çipleri, aranabilir EntityPicker, radio/checkbox kartları, segmented kontrol. Her kalıp için kullanım koşulu, yanlış kullanım örneği ve klavye testi yazılır.",
+   "tests": [
+    "TP-06",
+    "TP-08"
+   ],
+   "decisions": [
+    "patterns",
+    "control-patterns",
+    "primitives"
+   ]
+  },
+  {
+   "id": "C7",
+   "group": "C",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "Frontend",
+   "title": "Bileşen durum matrisi",
+   "requirement": "Her bileşen tipli durum sözleşmesi taşır: rest, hover, focus, pressed, selected, disabled, readonly, busy, invalid, success, indeterminate, drag, denied. Uygulanmayan durum gerekçelendirilir; story'siz durum tanım-of-done'ı geçmez.",
+   "note": "",
+   "tests": [
+    "TP-06"
+   ],
+   "decisions": [
+    "component-states",
+    "component-docs"
+   ]
+  },
+  {
+   "id": "C8",
+   "group": "C",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "Frontend",
+   "title": "İkon kayıt mekanizması ve tipografi sahipliği",
+   "requirement": "İkonların tek sahibi packages/icons içindeki TypeScript ikon kayıt mekanizmasıdır (karar kitabı R05): kod ve model ikonu anlamsal adla ister (ör. onayla, geri-al); kayıt tablosu her anlamsal adı bir sağlayıcıya ve glife bağlar. Birden çok ikon kütüphanesi sağlayıcı olarak eklenebilir; öncelik sırası Phosphor, sonra Font Awesome (ücretsiz, açık lisanslı set); ürüne özel çizim ikonlar yalnızca SVG olarak ve aynı tabloya kayıtlı eklenir. Derleme yalnızca tabloda kullanılan glifleri pakete alır. Her ikon erişilebilir ad ve RTL aynalama kuralı taşır; antd bileşenlerinin iç ikonları ConfigProvider ve bileşen prop'larıyla bu mekanizmadan beslenir. Marka fontu alt kümelenmiş ve sistem yedekli yüklenir; tablolarda tabular rakam; font yükleme düzen kayması ölçülür.",
+   "note": "Karar kaydının \"özel domain ikonları\" seçimi korunur: ürüne özel anlamlar kendi çizimleriyle kalabilir; mekanizma çizim, lisans ve bakım yükünü hazır setlerle hafifletir. Her sağlayıcının lisansı (Phosphor MIT; Font Awesome Free ikonları CC BY 4.0, kodu MIT) tabloda ve NOTICE dosyasında durur; lisans kapısı yeni sağlayıcıyı A5'e göre denetler. Aynı anlam için iki sağlayıcıdan glif kullanılmaz. Model ikon adı uyduramaz; yalnızca kayıt tablosundaki anlamsal adları seçer (C9).",
+   "tests": [
+    "TP-02",
+    "TP-03",
+    "TP-06"
+   ],
+   "decisions": [
+    "icons",
+    "typography"
+   ]
+  },
+  {
+   "id": "C9",
+   "group": "C",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "Model",
+   "title": "Modele açık görsel kararlar",
+   "requirement": "Model yalnızca katalogdaki semantik enum'ları seçer: tone (neutral, info, success, warning, danger), density (comfortable, compact, touch), icon (kayıt tablosu). Ham renk, piksel, className veya stil dizesi kabul edilmez.",
+   "note": "",
+   "tests": [
+    "TP-01",
+    "TP-11"
+   ],
+   "decisions": [
+    "generative",
+    "tokens"
+   ]
+  },
+  {
+   "id": "D1",
+   "group": "D",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "Frontend",
+   "title": "Onaylı renderer kataloğu, fail-closed",
+   "requirement": "Katalog yalnızca veridir: renderer kimliği, semver, zod prop şeması, izinli çocuklar, veri bağlama noktaları, erişilebilirlik rolü ve risk sınıflı eylemler. Renderer z.strictObject ile doğrular; bilinmeyen renderer veya prop reddedilir ve yer tutucu çizilir.",
+   "note": "Çekirdek renderer'lar: SchemaForm, EntityTable, EntityPicker, DiffReview, ComparisonTable, MetricGrid, ReportView, ChartView, RunPanel, FilterChips, EmptyState. Surface başına sınır: 300 düğüm, derinlik 8, dizi 500 öğe, metin 10.000 karakter. Modelin structured-output şeması aynı zod kaynağından üretilir; sunucu gönderim öncesi, istemci render öncesi doğrular. Doğal dilden rapor bileşiminde ReportView'den önce FilterChips onay adımı zorunludur: sistem \"şöyle anladım\" diye filtreleri çip olarak gösterir, kullanıcı düzeltir veya onaylar, rapor ancak ondan sonra çalışır (karar kitabı Y04; AT-33).",
+   "tests": [
+    "TP-01",
+    "TP-06",
+    "AT-03",
+    "AT-33"
+   ],
+   "decisions": [
+    "generative",
+    "capabilities"
+   ]
+  },
+  {
+   "id": "D2",
+   "group": "D",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "Frontend",
+   "title": "Field registry: Frappe fieldtype → domain bileşeni",
+   "requirement": "Data, Small Text, Text, Long Text → metin; Int, Float, Currency, Percent → sayı (ondalık hassasiyeti, Decimal); Date, Datetime, Time, Duration → tarih-yalnız ve an ayrımı; Check, Select, Rating, Color; Link, Dynamic Link, Table MultiSelect → izinli EntityPicker; Table → ChildTable (satır içi + detay paneli); Attach, Attach Image → dosya adaptörü; Text Editor, Markdown Editor → Markdown + önizleme; Geolocation, Signature, Barcode → tembel yüklenen özel giriş; Password, Code, JSON, HTML → kısıtlı veya salt okunur.",
+   "note": "Her tip için null, readonly, permission-denied ve export senaryosu test matrisinde yazılır. Link alanının sorgusu (query override, parent'a bağlı filtre) sunucudan gelir; rol veya parent değişince lookup yeniden doğrulanır.",
+   "tests": [
+    "TP-06",
+    "TP-01"
+   ],
+   "decisions": [
+    "fields",
+    "child-edit",
+    "editor-engine"
+   ]
+  },
+  {
+   "id": "D3",
+   "group": "D",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "Frontend",
+   "title": "SchemaFormEngine: tek state sahibi, sunucu merkezli doğrulama",
+   "requirement": "Form durumu yalnızca TanStack Form'da yaşar; antd girişleri kontrollü köprüyle bağlanır, ikinci form store'u yoktur. depends_on, mandatory_depends_on, read_only_depends_on ifadeleri kısıtlı expression AST ile değerlendirilir; JavaScript eval yoktur, desteklenmeyen ifade listesi tutulur.",
+   "note": "İstemci ipucu verir, sunucu doğrular; sunucu hataları aynı alan yolu modeline (child satırı dahil) eşlenir ve odaklanabilir hata özeti ilk hatalı alana gider. Döngüsel bağımlılık, bilinmeyen alan ve kötü amaçlı ifade reddedilir.",
+   "tests": [
+    "TP-06",
+    "TP-01"
+   ],
+   "decisions": [
+    "form-engine",
+    "form-library",
+    "conditions",
+    "validation"
+   ]
+  },
+  {
+   "id": "D4",
+   "group": "D",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "Frontend",
+   "title": "Belge yaşam döngüsü eylemleri",
+   "requirement": "CRUD; submit, cancel, amend (docstatus 0 → 1 → 2, amended_from); workflow geçişleri. Eylem çubuğu üç ayrı kaynaktan kurulur, istemci eylem uydurmaz: (1) standart eylemler: izin projeksiyonu, docstatus ve DocType meta'sından (is_submittable) gelen Kaydet, Submit, Cancel, Amend, Sil; (2) workflow geçişleri: yalnızca etkin workflow'u olan DocType'ta get_transitions'tan; (3) özel eylemler: Client Script'ten taşınmış düğmeler, capability manifest'inden. Her eylem uygulama anında yeniden yetkilendirilir.",
+   "note": "Normal kayıtta eski modified Frappe'de TimestampMismatchError üretir; istemci bunu sessiz yeniden deneme değil, çakışma inceleme ekranı olarak sunar (E3). Submit, cancel ve workflow yolları istemcinin gördüğü revizyonu kendiliğinden doğrulamaz; onaylı değişiklik bu yüzden capability yürütücüsünden geçer (F8). Kullanıcının kendi eylemi doğrudan Frappe REST yolundan gider (B1, karar kitabı V01); aynı lifecycle işlemi bu yoldan ve yürütücü yolundan yapılıp durum, yan etki, denetim olayı ve hata biçimi karşılaştırılır (AT-10).",
+   "tests": [
+    "TP-04",
+    "TP-08",
+    "AT-10",
+    "AT-16"
+   ],
+   "decisions": [
+    "lifecycle",
+    "concurrency",
+    "workflow-builder"
+   ]
+  },
+  {
+   "id": "D5",
+   "group": "D",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "Frontend",
+   "title": "EntityTable: sunucu sorgusu, tek filtre AST'si",
+   "requirement": "Liste motoru TanStack Table'dır; sıralama, filtre ve sayfalama sunucuda çalışır. Filtre tek FilterExpression AST'sidir: çip görünümü, görsel AND/OR kurucu ve YZ aynı AST'yi üretir. Modelin kullanıcı niyetinden filtre üretmesi beklenen deneyimdir ve serbesttir; yasak olan denetlenmeyen ifadedir: ham SQL, URL veya metin filtre hiçbir yoldan yürütülmez, AST sunucuda alan, operatör ve izin allowlist'ine göre doğrulanır. Kaydedilmiş görünümler sürümlü tanımdır.",
+   "note": "Kolonlar izinli alan projeksiyonuyla gelir. Uzun listeler sunucu pencereleme + sanallaştırma ile; sanallaştırılmış satırlar için sayfalı erişilebilir alternatif vardır. İleri grid (gruplama, pivot, range/clipboard, toplu düzenleme) ayrı tembel yüklenen yüzeydir (L7) ve büyük ölçek kararı nedeniyle Dilim 2'de gelir (karar kitabı U11: 500'den fazla eşzamanlı kullanıcı, milyonlarca kayıt). Liste sorguları milyonlarca kayıtta indeksli alanlarla sınırlanır; indekssiz alanda sıralama ve filtre sunucuda reddedilir veya arka plan işine dönüşür.",
+   "tests": [
+    "TP-05",
+    "TP-10",
+    "TP-08"
+   ],
+   "decisions": [
+    "table",
+    "filter-builder",
+    "collections",
+    "advanced-grid",
+    "scale"
+   ]
+  },
+  {
+   "id": "D6",
+   "group": "D",
+   "level": "MUST",
+   "slice": 2,
+   "actor": "Frontend",
+   "title": "Report, Chart ve Workspace tanımları",
+   "requirement": "ReportDefinition (tek DocType + child), ChartDefinition (ECharts renderer, veri tablosu alternatifi) ve WorkspaceDefinition sürümlü JSON'dur ve Frappe custom DocType'larında saklanır. GUI ve YZ aynı tanımı üretir; yürütücü izinli, satır ve süre kotalıdır.",
+   "note": "Workspace iki yolu birlikte sunar (karar kitabı R01, \"her ikisi\"): yeni kullanıcı şirketin şablonuyla başlar ve üstüne ekler, \"şablona dön\" diyebilir; isteyen kullanıcı panosunu boşaltıp sıfırdan kendisi kurar (tam kişisel). Şablon güncellemesi kişisel düzeni değiştirmez; kullanıcı yalnızca yeni şablon blokları için bildirim görür. Rapor ve görünüm paylaşıldığında filtre değerleri maskelenir (karar kitabı V03, D7). Sürükle/boyutlandır grid'in klavye alternatifi vardır. Boş veri, renk körlüğü ve export eşitliği her grafik için doğrulanır.",
+   "tests": [
+    "TP-08",
+    "TP-06"
+   ],
+   "decisions": [
+    "reports",
+    "report-storage",
+    "charts",
+    "workspace",
+    "dashboard-layout"
+   ]
+  },
+  {
+   "id": "D7",
+   "group": "D",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "Frontend",
+   "title": "Tanım, veri referansı ve veri zarfı ayrıdır",
+   "requirement": "Üç şey ayrı tutulur. UI Spec: sunum tanımıdır, saklanır ve paylaşılır, iş verisi taşımaz; yalnızca veri bağlama referansları taşır (capability kimliği, FilterExpression AST, alan listesi, sayfa). Veri zarfı: çalışma anında izin kontrollü REST ile, o kullanıcının yetkisiyle, dar alan projeksiyonu ve batch lookup ile (N+1 yok) gelir; spec'e yazılmaz, kullanıcılar arası önbelleğe alınmaz, paylaşılan bağlantıda yeniden çekilir. Model bağlamı: ayrı manifesttir (I9). Paylaşılan tanımda filtre değerleri maskelenir (karar kitabı V03): alıcı filtrenin alanını ve operatörünü görür, değeri \"***\" olarak görür; sonuç alıcının kendi yetkisiyle ve sahibinin kaydettiği sunucu tarafı filtre değeriyle çalışır, değer istemciye inmez.",
+   "note": "Hızlı filtre değişiminde dedup, iptal ve zaman aşımı; pageSize üst sınırı sunucudan gelir; model satır verisi uydurmaz. Liste açılışında istek sayısı ve taşınan bayt ölçülür; niyet bazlı prefetch yalnızca ölçülmüş fayda ve ağ kısıtına saygıyla eklenir.",
+   "tests": [
+    "TP-05",
+    "TP-10"
+   ],
+   "decisions": [
+    "data-access",
+    "collections",
+    "generative"
+   ]
+  },
+  {
+   "id": "D8",
+   "group": "D",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "Frontend",
+   "title": "Katalog ve şema sürümleme, migration",
+   "requirement": "Katalog semver; her spec, rapor tanımı ve taslak catalogId@version, specVersion ve şema fingerprint'i taşır. Kaldırma, daraltma veya zorunlu alan = major; ekleme = minor. Renderer N-1 major'ı doğrudan açar; daha eskisi packages/catalog/migrations içindeki testli betiklerle sunucuda göç ettirilir.",
+   "note": "Göç edilemeyen tanım \"metin olarak görüntüle\" kartına düşer, ekran boş kalmaz. Prompt sürümü ile katalog sürümü uyumluluk matrisi tek imzalı yapılandırmada (K6).",
+   "tests": [
+    "TP-01",
+    "AT-07"
+   ],
+   "decisions": [
+    "schema-evolution",
+    "governance"
+   ]
+  },
+  {
+   "id": "D9",
+   "group": "D",
+   "level": "MUST",
+   "slice": 2,
+   "actor": "Frappe",
+   "title": "Dışa ve içe aktarım",
+   "requirement": "Print ve PDF Frappe print format'ı ile eşit (download_pdf, izin ve letterhead korunur). CSV/Excel: formül enjeksiyonu koruması, BOM ve ayırıcı politikası, locale'e uygun sayı ve tarih. Büyük export Frappe job'ı olarak koşar; indirme yetkili ve sürelidir. İçe aktarma Frappe Data Import'a yönlendirilir.",
+   "note": "YZ yalnızca kolon eşlemesi önerebilir; uygulama kullanıcı onayı ve sunucu dry-run raporundan geçer. Yeniden denemede çift yazma testi zorunludur.",
+   "tests": [
+    "TP-04",
+    "TP-08"
+   ],
+   "decisions": [
+    "exports",
+    "data-import"
+   ]
+  },
+  {
+   "id": "D10",
+   "group": "D",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "Frontend",
+   "title": "Duyarlı ve dokunmaya uygun üretilen düzen",
+   "requirement": "Katalog yerleşim ilkelleri (Grid, Stack, Split, AdaptiveRegion) container query ile gerçek alana tepki verir; 640 px altında deterministik yığılır. Dokunma hedefi en az 44×44 CSS px; %400 yakınlaştırmada yatay kaydırma yok.",
+   "note": "Tasarım telefondan başlar (karar kitabı U12: 320 px önce). Kabul sırası dar ekrandan başlar: 320, 360, 375, 390 px dikey ve 567×320 px yatay; sonra 768 tablet (bölünmüş ekran dahil), 1280 ve cihaz sınıfı matrisindeki büyük ekranlar (J9). Her genişlikte giriş biçimi (dokunma, kalem, klavye), hover'sız cihaz, kısa yükseklik (sanal klavye açık) ve yön değişimi ayrı doğrulanır; görsel regresyon bu profillerde ve touch yoğunluğunda koşar.",
+   "tests": [
+    "TP-09",
+    "TP-15",
+    "AT-35"
+   ],
+   "decisions": [
+    "layout",
+    "targets",
+    "mobile",
+    "devices"
+   ]
+  },
+  {
+   "id": "D11",
+   "group": "D",
+   "level": "MUST",
+   "slice": 2,
+   "actor": "Frontend",
+   "title": "Zengin metin: Markdown ve eski HTML'in gidiş-dönüşü",
+   "requirement": "Yeni içerik Markdown + önizlemedir (seçim). Eski Text Editor HTML'i açılınca Markdown'a dönüştürülür ve kayıp raporu üretilir; kayıp yoksa düzenleme Markdown'da sürer. Kayıp varsa kullanıcı iki seçenek görür: dönüştürmeyi kabul et (kaybolan öğeler listelenir) ya da içeriği salt okunur HTML olarak bırak. Desk'te düzenleme yolu yoktur (karar kitabı U01). Yapıştırılan içerik temizlenir.",
+   "note": "Kabul: eski HTML aç → kaydet → yeniden aç gidiş-dönüşü anlamı değiştirmez; klavye akışı ve IME çalışır; dönüşüm sunucu tarafında aynı kurallarla da yapılabilir (toplu migration).",
+   "tests": [
+    "TP-06",
+    "TP-08"
+   ],
+   "decisions": [
+    "editor-engine",
+    "parity"
+   ]
+  },
+  {
+   "id": "E1",
+   "group": "E",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "Frontend",
+   "title": "Üç depo ve tek sahiplik haritası",
+   "requirement": "Sunucu gerçeği TanStack Query önbelleğinde, tenant + kullanıcı + izin sürümü anahtarıyla. Çalışma taslağı TanStack Form'da ve E2'deki iki modelden birinde sunucuda. Görünüm durumu şema doğrulanan URL search param'larında (derin bağlantı, back/forward, paylaşım); hassas değer URL'ye değil yetkili görünüm kimliğine yazılır.",
+   "note": "Form girdileri, seçimler ve sayfalama taslağa aittir, görünüm spec'ine değil; bu yüzden YZ görünümü değiştirince kaybolmaz. Logout ile geçici hassas durum temizlenir. Global store yalnızca ortak ihtiyaçla açılır.",
+   "tests": [
+    "TP-08",
+    "AT-06"
+   ],
+   "decisions": [
+    "ui-state",
+    "url-contract",
+    "server-state"
+   ]
+  },
+  {
+   "id": "E2",
+   "group": "E",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "Frontend",
+   "title": "Taslak otomatik, gerçek belge \"Kaydet\" ile; kesintide veri kaybolmaz",
+   "requirement": "Formda yazılan her şey taslak olarak otomatik saklanır; gerçek belgeye yazmak açık Kaydet eylemidir (karar kitabı R10; karar kaydının önerisine dönüş). Gerekçe: Frappe'de gerçek belgeye her kayıt doc.save() çalıştırır (doğrulama, zorunlu alan kontrolü, before_save, on_update, on_change ve custom hook'lar); docstatus 0 \"yan etkisiz taslak\" demek değildir. Taslak iki katmanda tutulur: (1) cihazda, her değişiklikte en geç 1 saniye içinde tarayıcı veritabanına (IndexedDB); (2) sunucuda, kullanıcıya ait çalışma kopyası DocType'ında (temel revizyon + alan değerleri), bağlantı varken 2 saniye debounce ile. Elektrik veya ağ kesintisinden, tarayıcı çökmesinden ya da cihaz yeniden başlatmasından sonra form açıldığında taslak kaldığı yerden geri gelir ve kullanıcıya \"kaydedilmemiş taslak geri yüklendi\" diye gösterilir (AT-30).",
+   "note": "Hassas veri sınıfındaki taslak cihazda yalnızca şifreli ve süreli tutulur (karar kitabı C08): WebCrypto AES-GCM ile, anahtar dışa aktarılamaz ve oturumla birlikte sunucudan alınır; sayfa yeniden açıldığında anahtar sunucudan yeniden alınana kadar hassas taslak \"kilitli, bağlantı gelince açılır\" olarak görünür, genel taslak hemen geri gelir. Hassas taslağın cihazdaki ömrü 72 saattir; çıkış, kullanıcı değişimi ve hesap devre dışı bırakmada cihazdaki taslak silinir, sunucudaki anahtar iptal edildiği için kaybolan cihazdaki kopya okunamaz hâle gelir. Kaydedilmemiş değişiklikte beforeunload uyarısı ve iki sekme arasında cross-tab sinyali vardır. Save, submit ve workflow geçişi hiçbir durumda otomatik tetiklenmez.",
+   "tests": [
+    "TP-20",
+    "AT-30"
+   ],
+   "decisions": [
+    "drafts",
+    "offline",
+    "inventory"
+   ]
+  },
+  {
+   "id": "E3",
+   "group": "E",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "Frontend",
+   "title": "Revizyon çakışması ve hata türü",
+   "requirement": "Her yazma revizyon ön koşulu taşır (If-Match veya Frappe modified). Hata türü HTTP kodundan değil yanıttaki exc_type (REST v2'de errors[].type) alanından okunur: Frappe'de ValidationError ailesinin tamamı (MandatoryError, LinkValidationError, TimestampMismatchError …) 417 döner, yani 417 tek başına çakışma değildir. Davranışlar: TimestampMismatchError veya 412 → kaynak değişti, çakışma inceleme ekranı (yeniden yükle, üzerine yaz, birleştir), asla sessiz yeniden deneme; 409 iş kuralı çatışması → düzelt ve yeniden gönder; 409 + Retry-After ile aynı idempotency anahtarı hâlâ işleniyor → bekle ve yokla; diğer ValidationError ve 422 → alan hataları forma eşlenir, çakışma ekranı açılmaz. Platform metotlarının hataları B11'deki tek hata biçimiyle gelir; ekran davranışı hata kataloğundan okunur.",
+   "note": "Aynı kural YZ yazmaları için de geçerlidir: onaydan sonra kayıt değiştiyse yeniden inceleme istenir. Çevrimdışı yazma kuyruğu ayrı bir gereksinimdir (E11).",
+   "tests": [
+    "TP-04",
+    "TP-08",
+    "AT-16"
+   ],
+   "decisions": [
+    "concurrency",
+    "offline",
+    "idempotency"
+   ]
+  },
+  {
+   "id": "E4",
+   "group": "E",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "Frontend",
+   "title": "YZ akışı: iş durumu + tamamlanmış sonuç",
+   "requirement": "İstemci token akışı almaz. Model çıktısı sunucuda tamamlanır ve doğrulanır; istemciye Socket.IO ile yalnızca \"Run değişti\" sinyali gelir (B6); Run durumu, adım, ilerleme yüzdesi ve tamamlanmış UI Spec, ReportDefinition veya ChangeSet izinli REST ile okunur (karar kitabı C03). publish_progress ve task ya da progress odaları kullanılmaz. Uzun raporda yerel artımlı güncelleme yalnızca ölçülmüş INP faydasıyla açılır.",
+   "note": "Canlı bölge her adımı değil, durum değişikliklerini duyurur. Yazma veya kaydırma sırasında INP ölçülür. Kısmi çıktı \"kısmi\" etiketiyle korunur; doğrulanmamış çıktıdan eylem gönderilmez.",
+   "tests": [
+    "TP-08",
+    "TP-05"
+   ],
+   "decisions": [
+    "ai-stream"
+   ]
+  },
+  {
+   "id": "E5",
+   "group": "E",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "Frappe",
+   "title": "Run kaydı: iptal, checkpoint, yeniden deneme",
+   "requirement": "Her YZ işi Frappe job'ı olarak koşar ve Run DocType'ında izlenir. İstemcinin ayırt ettiği durumlar: queued, running, cancel_requested, cancelled, awaiting_approval, applying, done, partially_done, failed, outcome_unknown, needs_reconciliation. Sekme kapanır veya worker yeniden başlarsa iş çift işlem yapmadan checkpoint'ten sürer; bu garantinin altyapısı E10'dadır. RunPanel iptal, yeniden deneme ve kayıt başına sonucu gösterir.",
+   "note": "Tamamlanan arka plan işleri bildirim merkezine düşer (kalıcı, okunma durumu, ilgili surface'e derin bağlantı). Kullanıcı Run'ı URL'den yeniden açabilir.",
+   "tests": [
+    "TP-04",
+    "TP-14",
+    "AT-14"
+   ],
+   "decisions": [
+    "runs",
+    "batch",
+    "route-metadata"
+   ]
+  },
+  {
+   "id": "E6",
+   "group": "E",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "Frontend",
+   "title": "AsyncBoundary durum sözleşmesi ve fallback sırası",
+   "requirement": "Her veri yüzeyi tek durum sözleşmesini uygular: idle, loading, empty, refresh, stale, partial, offline, error, denied. Skeleton geometrisi gerçek içerikle eşleşir; refresh mevcut veriyi silmez. Her üretilen surface kendi hata sınırıyla sarılır.",
+   "note": "Geçersiz spec için tek fallback sırası: son doğrulanmış snapshot + hata kartı → geliştirici tanımlı statik bileşen → markdown/metin. Model servisi erişilemez, kota veya zaman aşımı durumunda ekran klasik görünüme düşer (I6). Uygulama geneli tek sınır GenUI hatasını yutmaz.",
+   "tests": [
+    "TP-06",
+    "AT-05"
+   ],
+   "decisions": [
+    "async",
+    "handoff"
+   ]
+  },
+  {
+   "id": "E7",
+   "group": "E",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "BFF",
+   "title": "Kill switch, bayraklar ve kotalar",
+   "requirement": "GenUI ve her capability, sunucu bayrağıyla global veya tenant başına en geç 30 s içinde kapatılabilir: açık Run'lar iptal, bekleyen öneriler expired, ekranlar klasik görünüm. Hatalı bir renderer tek başına kapatılabilir. Kotalar kullanıcı, tenant ve Run başına: token, adım, yeniden deneme, tutar; eşzamanlı Run sınırı varsayılan 2. YZ maliyet tavanı şirket başına aylık bütçedir ve abonelik paketinden gelir (karar kitabı Y10); proaktif öneriler (I11) dahil her model çağrısı bu bütçeden düşer. Kill switch'in 30 saniye sınırı yayın kapısı deneyiyle ölçülür (AT-27).",
+   "note": "Limit dolunca yeni yan etki başlamaz, kısmi sonuç korunur, kullanıcıya açıklama ve manuel devam yolu sunulur. Aylık bütçede varsayılan davranış: %80'de şirket yöneticisine uyarı; %100'de YZ yüzeyleri o şirket için ay sonuna kadar klasik görünüme düşer, çalışan Run'lar bir sonraki adımdan önce durur ve kısmi sonucu korur; yönetici ek paket alabilir. Yavaşlatma veya aşım ücretlendirmesi ürün kararıdır ve bu varsayılanı ancak ADR ile değiştirir (Açık kararlar). Bayrak durumu telemetriye kimlik olarak eklenir; kanarya kullanıcı grubu bayrakla hedeflenir.",
+   "tests": [
+    "TP-04",
+    "AT-27"
+   ],
+   "decisions": [
+    "rollout",
+    "ai-budget",
+    "user-scale"
+   ]
+  },
+  {
+   "id": "E8",
+   "group": "E",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "Frontend",
+   "title": "Uyarlanan kabuk: panel → overlay → sheet",
+   "requirement": "YZ asistan paneli ve gezinti dar alanda ayrı ekrana değil overlay veya sheet'e dönüşür; sunum değişir, iş durumu tek kalır. Panel açılıp kapanırken seçim, taslak ve YZ bağlamı kaybolmaz; odak ve kaydırma konumu geri döner.",
+   "note": "",
+   "tests": [
+    "TP-09",
+    "AT-06"
+   ],
+   "decisions": [
+    "adaptive-shell"
+   ]
+  },
+  {
+   "id": "E9",
+   "group": "E",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "Frontend",
+   "title": "Eşzamanlı düzenleme ve bayat öneri",
+   "requirement": "YZ önerileri doğrudan taslağa değil, öneri katmanına yazılır; kullanıcı kabul edince taslağa geçer. Her öneri temel aldığı kayıt revizyonunu ve bağlam hash'ini taşır. Öneri katmanı kullanıcının kendi yazdığıyla karışmaz (karar kitabı C13); varsayılan yolculuk ve çalışma alanı bu kurala uyar. Kullanıcının öneriden sonra düzenlediği alan kilitlenir; model o alanı bir daha yazamaz, yalnızca yeni öneri olarak yanında gösterir. Bağlam (seçim, filtre, açık kayıt) değiştiğinde önceki Run'ın sonucu uygulanmaz, \"bayat\" olarak işaretlenir ve kullanıcıya yeniden üretme seçeneği sunulur.",
+   "note": "Kullanıcı yazarken gelen öneri imleci, seçimi veya kaydırmayı oynatmaz; polite canlı bölgede tek duyuru yapar. Aynı alanı iki kullanıcı düzenliyorsa Frappe revizyon kuralı (E3) geçerlidir.",
+   "tests": [
+    "TP-08",
+    "AT-06"
+   ],
+   "decisions": [
+    "concurrency",
+    "ai-stream",
+    "context"
+   ]
+  },
+  {
+   "id": "E10",
+   "group": "E",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "Frappe",
+   "title": "Run dayanıklılığı: Frappe'nin verdiği ile ürünün geliştirdiği ayrı",
+   "requirement": "Frappe çekirdeği kuyruk (enqueue), job yürütme ve transaction verir; çok adımlı ajan checkpoint'ini ve dış yan etkinin tek uygulanmasını vermez. Frappe custom app şunları geliştirir: Run adım günlüğü (child tablo: adım, idempotency anahtarı, durum, sonuç); worker sahipliği için kilit ve lease (heartbeat); onay beklerken job'ın bitip worker'ın serbest kalması, onayla yeni job başlaması; zamanlayıcı ile lease'i dolmuş yarım Run'ların bulunup son tamamlanan adımdan otomatik sürdürülmesi (karar kitabı V06); her lease bir sahiplik numarası (fencing token) taşır ve süresi dolmuş eski worker'ın yazması bu numarayla reddedilir; dış çağrı yanıtı kaybolursa outcome_unknown ve uzlaştırma kaydı.",
+   "note": "Otomatik tekrarın tek istisnası: sonucu bilinmeyen dış yan etki (ödeme, e-posta, yasal belge gönderimi, dış sistem çağrısı) ancak sağlayıcı aynı tekrar koruma anahtarıyla güvenli tekrarı destekliyorsa tekrarlanır; desteklemiyorsa adım outcome_unknown olur ve uzlaştırmaya gider. Gerekçe: U07 (yasal belge) ve e-ticaret (ödeme) seçimleriyle birlikte düz tekrar çift e-Fatura veya çift ödeme üretebilir (çelişki notu). Her capability adımı \"tekrarlanabilir\" veya \"tekrarlanamaz\" beyan eder; beyansız adım tekrarlanamaz sayılır. Frontend cancel_requested, outcome_unknown ve needs_reconciliation durumlarını ayrı gösterir ve uzlaştırma ekranı sunar. Teslim sorumlusu proje sahibi ve YZ kodlama ajanlarıdır; dilim kapısında dış inceleme (K12). Kabul: AT-17.",
+   "tests": [
+    "TP-14",
+    "AT-17"
+   ],
+   "decisions": [
+    "runs",
+    "batch",
+    "idempotency",
+    "recovery",
+    "team"
+   ]
+  },
+  {
+   "id": "E11",
+   "group": "E",
+   "level": "MUST",
+   "slice": 4,
+   "actor": "Frontend",
+   "title": "Çevrimdışı yazma kuyruğu ve oturum bağı",
+   "requirement": "İnternet yokken yapılan yazma işlemleri cihazdaki kuyruğa girer ve bağlantı gelince gönderilir (karar kitabı C07). Kuyruk her işlemi idempotency anahtarı, temel revizyon ve oluşturan kullanıcı ile oturum kimliğiyle saklar (karar kitabı C09). Kuyruk onu oluşturan kullanıcıya ve oturuma bağlıdır: çıkış, kullanıcı değişimi, hesap devre dışı bırakma veya kapatmada kuyruk silinir. Oynatmadan önce kullanıcı yeniden doğrulanır ve her işlem güncel yetkiyle yeniden yetkilendirilir; revizyonu değişen kayıt çakışma inceleme ekranına düşer (E3); onaylı YZ değişikliği revizyon değiştiyse yeniden incelemeye düşer ve hiçbir zaman eski onayla uygulanmaz.",
+   "note": "Kuyruk sınırlıdır (varsayılan 200 işlem, 72 saat) ve cihazda şifrelidir (E2'deki anahtar kuralı). Kuyruğa yalnızca capability manifestinde \"çevrimdışı izinli\" işaretli işlemler girebilir; destructive ve sensitive sınıf, adım yükseltme isteyen işlem ve yasal belge gönderimi çevrimdışı kuyruğa giremez. Mutlak oturum bitişi (M25) geçtiyse kuyruk gönderilmez, yeniden girişten sonra aynı kullanıcı için inceleme ekranında sunulur. Kuyruk Dilim 4'te gelir; o zamana kadar bağlantı kopunca yalnızca taslak korunur (E2). Kabul: AT-29.",
+   "tests": [
+    "TP-20",
+    "AT-29"
+   ],
+   "decisions": [
+    "offline",
+    "concurrency",
+    "idempotency"
+   ]
+  },
+  {
+   "id": "F1",
+   "group": "F",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "Frontend",
+   "title": "Üç yetkilendirme biçimi, üç etkileşim modu",
+   "requirement": "Her yazma Frappe'de yetkilendirilir ve üç biçimden biriyle başlar. (1) Kullanıcının kendi eylemi: direct modda kullanıcının tıklaması rızadır ve istek doğrudan Frappe REST yolundan gider (B1, karar kitabı V01); yıkıcı eylemde yine onay diyaloğu vardır. (2) Değişiklik başına onay: assisted modda model ChangeSet önerir; kullanıcı diff'i, etkilenen kayıt sayısını ve hedefi görür, onaylar. (3) Önceden verilmiş sınırlı yetki (grant): delegated modda ajan, kullanıcının önceden verdiği yetkinin kapsamı içinde onay beklemeden yazar; kapsam dışındaki her adım (2)'ye düşer.",
+   "note": "(2) ve (3) yürütücüden geçer (F8). Sunucunun imzaladığı onay kaydı insan onayının kendisi değildir: ya belirli bir onay olayına ya da bir grant'e işaret eder ve Run ile denetim izine yazılır. delegated mod istemci bayrağıyla değil sunucu politikasıyla açılır ve canlıya çıkışta yalnızca sınırlı grant'le vardır (karar kitabı C02; F3). Sınırlı otonom ajan seçimi (ai-level) bu üç biçimle uygulanır.",
+   "tests": [
+    "TP-04",
+    "AT-14"
+   ],
+   "decisions": [
+    "ai-level",
+    "approval"
+   ]
+  },
+  {
+   "id": "F2",
+   "group": "F",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "Frappe",
+   "title": "Beş risk sınıfı, Frappe işlemlerine eşlenmiş",
+   "requirement": "read: liste, belge, rapor çalıştırma. safe write: çalışma kopyasına yazma (E2-B), autosave güvenli sınıflanmış alanlara kayıt (E2-A), kendine atama, yorum. Gerçek belgenin kaydı hook'larına göre sınıflanır; hook envanteri yoksa en az reversible sayılır. reversible: tersi olan workflow geçişi, etiket, revizyonlu alan güncellemesi. destructive: submit, cancel, amend, delete, bağlı belgeleri etkileyen işlem, eşiği aşan toplu işlem. sensitive: permlevel > 0 alanlar, kişisel ve finansal veri, export, rol ve izin değişikliği, e-posta veya ödeme yan etkisi. Toplu işlemin sınıfı kayıt başına hesaplanır (karar kitabı C01): geri alınabilir bir alan değişikliği toplu da olsa reversible'dır; etkilenen kayıt sayısı 50'yi aşarsa işlem en az destructive olur; kümede submit, silme, kişisel veya finansal veri varsa kümenin tamamı en yüksek sınıfı alır. Tek karar tablosu bu belgenin onay matrisidir; varsayılan yolculuk, BulkEdit ve AT-14 aynı sonucu verir.",
+   "note": "Sınıf sunucuda capability ve parametreye göre hesaplanır; etkilenen kayıt sayısı veya hassasiyet değişince yeniden hesaplanır. İstemci sınıfı yalnızca gösterir. Uygulamaya özel kurallar ürün ailesi kataloğundadır (A8): CRM kişi verisi sensitive'dir, YZ yazması her seferinde onay ister; muhasebe ve finans kaydı sensitive'dir, yasal belge gönderimi ayrı sınıf kurallarıyla F10'dadır; insan kaynakları verisi özel nitelikli kişisel veri içerebilir ve en sıkı kurala tabidir; e-ticarette ödeme yan etkisi sensitive'dir ve geri alınamaz.",
+   "tests": [
+    "TP-04",
+    "AT-14"
+   ],
+   "decisions": [
+    "risk-policy",
+    "capabilities"
+   ]
+  },
+  {
+   "id": "F3",
+   "group": "F",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "Kullanıcı",
+   "title": "Risk bazlı onay, ChangeSet ve revizyona bağlı",
+   "requirement": "read onaysız. safe write ve reversible sınıfında kullanıcı önceden sınırlı yetki (grant) verebilir; grant canlıya çıkıştan itibaren vardır ama küçük ve kısa sürelidir (karar kitabı C02): Run başına en fazla 50 kayıt, en fazla 4 saat; tenant yöneticisi bu sınırları yalnızca daraltabilir. Grant'in alanları: capability, DocType, kayıt filtresi (FilterExpression AST), izinli alan listesi, süre, kayıt ve maliyet bütçesi. Bütçe her adımdan önce atomik olarak rezerve edilir (karar kitabı V05): iki Run aynı grant bütçesini aynı anda aşamaz; adım başarıyla bitince rezervasyon tüketime döner, başarısız biterse serbest kalır, sonucu bilinmeyen adım rezervasyonu serbest bırakmaz; grant iptaliyle yarışta iptal kazanır (AT-28). \"Orta\" veya etiketsiz güvenli öneri grant ile otomatik uygulanmaz (I4). Yeniden onay tetikleyicileri: risk sınıfının yükselmesi, etkilenen kayıt sayısının sınırı aşması, listede olmayan bir alan, izin sürümünün değişmesi. Grant sunucuda saklanır, ayarlar sayfasında listelenir, anında iptal edilir; iptal çalışan Run'ı bir sonraki adımdan önce durdurur; tenant yöneticisi üst sınırları belirler. destructive ve sensitive her zaman açık onay ister; tenant ayarıyla ikinci onaylayıcı (maker-checker) zorunlu kılınabilir. Onay, sunucunun ürettiği ChangeSet kimliği + parametre parmak izi (F9) + kayıt revizyonuna bağlı, tek kullanımlık ve kısa ömürlüdür (öneri 10 dk, arka plan Run'ında 24 saat, onay token'ı 60 s).",
+   "note": "Onaydan sonra kayıt değiştiyse işlem yeniden inceleme ister. Uygulayan düğme ile Düzenle / Yeniden üret düğmeleri renk ve konumca ayrılır; yıkıcı eylem varsayılan odakta değildir. Onay yorgunluğu ölçülür: dakikada onay sayısı ve inceleme süresi eşiğin altına düşerse toplu onay kapanır.",
+   "tests": [
+    "TP-04",
+    "AT-14",
+    "AT-28"
+   ],
+   "decisions": [
+    "approval",
+    "risk-policy"
+   ]
+  },
+  {
+   "id": "F4",
+   "group": "F",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "Frontend",
+   "title": "DiffReview: özet, ayrıntı, izinli kısmi onay",
+   "requirement": "Çok kayıtlı ChangeSet özet, kayıt düzeyinde ayrıntı ve bağımsız değişiklikler için kısmi onay sunar. Kullanıcının hariç tuttuğu kayıt uygulanmaz; onaylanan küme ve revizyonlar sabitlenir. Örneklem tam etki listesinin yerine geçmez; geri alınamayan yan etkiler ayrı ve erişilebilir biçimde işaretlenir.",
+   "note": "",
+   "tests": [
+    "TP-06",
+    "TP-08"
+   ],
+   "decisions": [
+    "diff-review"
+   ]
+  },
+  {
+   "id": "F5",
+   "group": "F",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "Frontend",
+   "title": "Geri alma: işlem bazlı telafi",
+   "requirement": "Her capability terslenebilirliğini üç biçimden biriyle beyan eder: önceki değer (alan güncellemesi, revizyon kontrollü geri yazma), ters yama (JSON Patch tersi, child satırı sırası dahil) veya telafi işlemi (ör. submit için cancel + amend, atama için atamayı kaldırma). \"Soft delete\" yalnızca silme için bir telafi biçimidir, genel geri alma değildir. reversible sınıfta sunucu tarafı geri alma penceresi (varsayılan 30 s), sonra telafi komutu; destructive sınıfta yalnızca tanımlı telafi; e-posta, ödeme veya stok etkisi gibi dış yan etkide geri alma yoktur ve önizleme bunu açıkça yazar.",
+   "note": "Commit öncesi geri alma çok adımlı yama günlüğüyle yapılır. Her geri alma denetim izine yazılır.",
+   "tests": [
+    "TP-04",
+    "TP-08"
+   ],
+   "decisions": [
+    "undo"
+   ]
+  },
+  {
+   "id": "F6",
+   "group": "F",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "Frappe",
+   "title": "Kayıt bazlı sonuç ve sunucu idempotency deposu",
+   "requirement": "Toplu işlem kayıt başına sonuç döner; seçmeli yeniden deneme yalnızca başarısız kayıtları hedefler ve başarılı olanı tekrar uygulamaz. Idempotency anahtarı istemcide üretilir ama sunucuda kalıcı kayıtla (anahtar + tenant/kullanıcı + capability + payload hash) yönetilir; aynı anahtar yeni payload reddedilir.",
+   "note": "Zaman aşımı sonrası yeniden deneme tek yan etki oluşturur. Başarısız kayıtlar ayrı export edilir.",
+   "tests": [
+    "TP-04",
+    "TP-14"
+   ],
+   "decisions": [
+    "batch",
+    "idempotency"
+   ]
+  },
+  {
+   "id": "F7",
+   "group": "F",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "Frontend",
+   "title": "Delegated sınırları ve bağlamlı devir",
+   "requirement": "Bir Run en fazla 20 adım ve 10 dk (varsayılan); destructive veya sensitive adım zincir içinde otomatik çalışmaz, durur ve onay ister. Durdur, commit edilmiş adımları geri almaz; kalan adımları iptal eder ve özet gösterir. YZ kapalı, zaman aşımı veya kota aşımında iş manuel yola devredilir: plan, seçim ve tamamlanmış adımlar korunur, kullanıcı veriyi yeniden girmez.",
+   "note": "Kullanıcı YZ'yi tercihlerden tamamen kapatabilir; her yetkili temel iş GUI'den sürer.",
+   "tests": [
+    "TP-04",
+    "TP-08"
+   ],
+   "decisions": [
+    "ai-level",
+    "handoff"
+   ]
+  },
+  {
+   "id": "F8",
+   "group": "F",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "Frappe",
+   "title": "Onaylanan revizyon, uygulama anında Frappe içinde doğrulanır",
+   "requirement": "Onaylı her değişiklik Frappe custom app'teki capability yürütücüsünden geçer: tek transaction içinde belge kilitli okunur (frappe.get_doc(..., for_update=True)), modified ve içerik hash'i onaylanan revizyonla karşılaştırılır, eşleşmezse işlem durur ve yeniden inceleme istenir, eşleşirse save, submit, cancel veya workflow geçişi aynı transaction'da uygulanır. BFF'de ön kontrol yapıp sonra ayrı RPC çağırmak yasaktır; arada yarış aralığı kalır.",
+   "note": "Gerekçe (Frappe v16.35.0): apply_workflow gelen belgeyi veritabanından yeniden yükler; REST v2 /document/<dt>/<name>/method/<m> yolu belgeyi veritabanından alıp metodu çalıştırır. İkisi de istemcinin gördüğü revizyonu doğrulamaz; frontend onaylı değişiklik için bu yolları doğrudan çağırmaz. İçerik parmak izi F9'daki kuralla hesaplanır. Normal save, submit/cancel, workflow, toplu işlem ve özel capability için ayrı test (AT-16).",
+   "tests": [
+    "TP-04",
+    "AT-16"
+   ],
+   "decisions": [
+    "approval",
+    "concurrency",
+    "lifecycle"
+   ]
+  },
+  {
+   "id": "F9",
+   "group": "F",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "BFF",
+   "title": "Parmak izi (hash) kuralı",
+   "requirement": "Onay, revizyon kontrolü, bağlam manifesti ve denetimdeki bütün parmak izleri tek kuralla hesaplanır (karar kitabı X03): veri önce RFC 8785 JSON kanonikleştirme şemasıyla (JCS) standart biçime getirilir, sonra SHA-256 ile özetlenir ve küçük harfli onaltılık metin olarak yazılır. Sayılar ve tarihler kanonikleştirmeden önce sözleşmedeki tipine çevrilir (para Decimal metni, tarih ISO 8601). Hangi alanların parmak izine girdiği her yapı için Sözleşme ekinde yazılıdır; sunucunun türettiği alanlar (zaman damgası, correlation kimliği) girmez.",
+   "note": "İstemci ve sunucu aynı sonucu üretmelidir; bu, zod ve Python tarafında ortak örneklerle sınanır (TP-01). Parmak izi gizli bilgi değildir, bütünlük kanıtıdır; imza gerektiren yerde (onay kaydı) sunucu sırrıyla ayrıca imzalanır.",
+   "tests": [
+    "TP-01"
+   ],
+   "decisions": [
+    "approval",
+    "audit",
+    "idempotency"
+   ]
+  },
+  {
+   "id": "F10",
+   "group": "F",
+   "level": "MUST",
+   "slice": 4,
+   "actor": "Frappe",
+   "title": "Yasal belge gönderimi (e-Fatura, e-Arşiv, e-Defter)",
+   "requirement": "Muhasebe ve finans alanında YZ, onaydan sonra kaydı yapabilir ve yasal belgeyi gönderebilir (karar kitabı U07). Bu yol ayrı ve en sıkı sınıftadır: yasal belge gönderimi geri alınamaz dış yan etkidir; grant ile hiçbir zaman yapılamaz; her belge için ayrı insan onayı gerekir ve onay yalnızca muhasebe yetkisi olan role verilir; onaydan önce belgenin kendisi (ör. e-Fatura XML'i ve görsel önizlemesi) ve sağlayıcının doğrulama sonucu gösterilir; onay adım yükseltme (passkey seviyesi, M9) ister; toplu gönderimde her belge listede ayrı görünür ve onay her belgenin parmak izine bağlanır. Gönderim adımı tekrarlanamaz beyan edilir (E10); sonucu bilinmeyen gönderim otomatik tekrar edilmez, sağlayıcıdan sorgulanarak uzlaştırılır.",
+   "note": "YZ'nin \"tam\" yetkisi yasal ve mali sorumluluğu kaldırmaz; sorumlu, onayı veren kullanıcı ve şirkettir; kullanıcı arayüzü bunu onay anında açıkça yazar (çelişki notu). Maker-checker (ikinci onaylayıcı) bu sınıfta tenant ayarıyla zorunlu kılınabilir. Çevrimdışı kuyruğa giremez (E11). Dilim 4'te gelir; kabul: AT-34.",
+   "tests": [
+    "TP-04",
+    "TP-12",
+    "AT-34"
+   ],
+   "decisions": [
+    "risk-policy",
+    "approval",
+    "undo"
+   ]
+  },
+  {
+   "id": "G1",
+   "group": "G",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "Frontend",
+   "title": "Model çıktısı veridir, kod değildir",
+   "requirement": "eval, new Function, dinamik import, dangerouslySetInnerHTML, ham HTML/JSX, javascript: ve data: URL, serbest className veya style yok; ilgili ESLint kuralları error. Modelin ve tedarikçi belgelerinin metni yalnızca React metin düğümü veya AST'den çevrilen Markdown olarak çizilir.",
+   "note": "Frappe'deki eski Text Editor HTML'i modelden değil sunucudan gelir: Frappe tarafında temizlenir (sanitize_html) ve istemcide allowlist'li sanitizer ile çizilir; script, iframe, form, svg ve event attribute düğümleri atılır. Güvenli gösterim işlevsel eşitlik değildir: eski HTML'in düzenlenmesi ve Markdown'a gidiş-dönüşü D11'dedir.",
+   "tests": [
+    "TP-02",
+    "TP-13",
+    "AT-09"
+   ],
+   "decisions": [
+    "generative",
+    "editor-engine",
+    "app-security"
+   ]
+  },
+  {
+   "id": "G2",
+   "group": "G",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "Frontend",
+   "title": "Dış iletişim kanalı yok, dosyalar yetkili yoldan",
+   "requirement": "GenUI bileşenleri modelin belirlediği hiçbir origin'e istek atmaz (fetch, img, iframe, form action, sendBeacon dahil). URL'ler yalnızca sunucu verisinden gelir; renderer new URL() ile ayrıştırır ve yalnızca https ile allowlist'teki alan adlarını kabul eder. Frappe özel dosyaları (/private/files) yalnızca BFF üzerinden ve izin kontrolüyle sunulur.",
+   "note": "Dış bağlantı rel=\"noopener noreferrer\" ve hedef alan adını gösteren ara sayfayla açılır. Yüklenen dosyanın içerik türü ve boyutu sunucuda doğrulanır; önizleme güvenli yoldan üretilir.",
+   "tests": [
+    "TP-13",
+    "AT-09"
+   ],
+   "decisions": [
+    "file-management",
+    "app-security"
+   ]
+  },
+  {
+   "id": "G3",
+   "group": "G",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "BFF",
+   "title": "CSP: rapor → ölç → uygula",
+   "requirement": "Strict CSP (default-src 'self'; script-src 'self' + nonce; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'; connect-src ve img-src yalnızca BFF, Socket.IO ve onaylı CDN; worker-src 'self'). Önce Report-Only, ihlal sıfıra inince enforce; antd stil nonce'u ConfigProvider csp ile taşınır. Nonce'u ters vekil üretir (karar kitabı X04, X05): Hetzner'da ters vekil nginx'tir; her HTML yanıtında yeni bir tek kullanımlık değer üretir, CSP başlığına ve HTML'deki yer tutucuya (betik etiketleri ve SPA'nın okuyacağı meta etiketi) aynı değeri yazar; SPA bu değeri antd'ye verir.",
+   "note": "Nonce'lu HTML hiçbir önbellekte tutulmaz (K15); yer tutucu değişimi sıkıştırılmamış yanıt üzerinde yapılır; varlık dosyaları (JS, CSS) nonce taşımaz, uzun süre önbellekte kalır. Trusted Types destekleyen tarayıcılarda ek savunmadır; hedef aralıktaki eski Firefox ve Safari'de CSP tek başına geçerlidir. Ek başlıklar: HSTS, COOP, Referrer-Policy, Permissions-Policy. İhlal raporlarının takip sahibi vardır.",
+   "tests": [
+    "TP-13",
+    "AT-09"
+   ],
+   "decisions": [
+    "csp"
+   ]
+  },
+  {
+   "id": "G4",
+   "group": "G",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "Frappe",
+   "title": "Sırlar ve model çağrıları Frappe içi YZ servisinde",
+   "requirement": "Sağlayıcı anahtarı, sistem promptu, yetki yapısı ve onay imza sırrı yalnızca sunucudadır. Tarayıcı LLM sağlayıcısını doğrudan çağırmaz; her model çağrısı Frappe içi YZ servisinden geçer ve kota, zaman aşımı, redaction ve correlation kimliği uygulanır. Model göreve göre yönlendirilir (karar kitabı Y01): hassas veri sınıfı (kişisel, finansal, kimlik belgesi, İK) kendi sunucumuzdaki açık ağırlıklı modelde işlenir; diğer görevler yönetilen model API'sine gider. Yönlendirme bağlam manifestindeki veri sınıfından (M23) sunucuda hesaplanır; model veya istemci seçemez.",
+   "note": "İki kalite düzeyi olduğu için iki ayrı değerlendirme seti koşar (K2) ve aynı görev iki yolda ayrı eşiğe tabidir. Kendi model sunucusu GPU'lu ayrı bir makinedir (aday: Hetzner'ın GPU'lu adanmış sunucuları, 29 Eylül 2026'da listelenen GEX45 ve GEX131; seçim model boyutu ve ölçümle ADR'de); yerel model kapalıysa hassas görev dış API'ye düşmez, klasik yola düşer (I6). Modele giden bağlam izinli manifest ve permission-aware retrieval ile kurulur: gizli alan, başka tenant içeriği ve permlevel dışı veri prompt, log ve retrieval sonucunda bulunmaz. Yurt dışı aktarım ve rıza G8'dedir.",
+   "tests": [
+    "TP-11",
+    "TP-18"
+   ],
+   "decisions": [
+    "ai-gateway",
+    "context",
+    "model-host",
+    "data-residency"
+   ]
+  },
+  {
+   "id": "G5",
+   "group": "G",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "Frappe",
+   "title": "Denetim zinciri: kullanıcı → ajan → capability → revizyon",
+   "requirement": "Her öneri, onay, uygulama ve geri alma için yapılandırılmış olay: tenant, kullanıcı, gerçek aktör (vekil oturumda ayrı), Run ve ChangeSet kimliği, capability, parametre hash'i, risk sınıfı, karar (proposed, approved, partially_approved, edited, rejected, expired, applied, reverted, failed), kayıt revizyonu, UTC zaman. Correlation kimliği UI → gateway → Frappe → job/YZ boyunca aynıdır.",
+   "note": "Bir toplu işlemden tek kaydın onayına, revizyonuna ve aktörüne geri gidilebilir. Şema hatası, katalog dışı deneme, URL reddi, CSP ihlali ve yetkisiz RPC güvenlik olayıdır; eşik aşımında uyarı üretir.",
+   "tests": [
+    "TP-04",
+    "TP-18"
+   ],
+   "decisions": [
+    "audit",
+    "observability"
+   ]
+  },
+  {
+   "id": "G6",
+   "group": "G",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "BFF",
+   "title": "Kiracı izolasyonu ve vekil oturum",
+   "requirement": "İki tenant ile negatif erişim testi her yayında koşar: resource, RPC, Socket.IO aboneliği, dosya ve YZ bağlamı. Destek vekil oturumu yalnızca ayrı onayla, süreli, dar kapsamlı ve sınırlı yazma ile açılır; YZ yazması vekil oturumda varsayılan kapalıdır; gerçek aktör ve hedef kullanıcı ayrı kaydedilir.",
+   "note": "Vekil oturum vardır (karar kitabı K21): müşteri tarafı (hedef kullanıcı veya şirket yöneticisi) her oturum için ayrıca onay verir; oturum en fazla 60 dakikadır, arayüzde sürekli işaretlidir, YZ yazması kapalıdır ve her eylem gerçek aktörle denetim izine düşer; müşteri oturumu istediği an sonlandırır ve sonunda özet alır. Vekil oturum Keycloak'ın yönetici \"impersonate\" özelliğiyle açılmaz: o özellik kullanıcı adına bütün istemcilerde geçerli bir SSO oturumu açar ve dar kapsam kuralını bozar. Vekil oturum Frappe'de ayrı onaylı, süreli bir oturumdur ve Dilim 3'te gelir; kiracı izolasyonu testi Dilim 1'den itibaren her yayında koşar. Kabul: AT-37.",
+   "tests": [
+    "TP-05",
+    "AT-12",
+    "AT-37"
+   ],
+   "decisions": [
+    "tenant-isolation",
+    "impersonation"
+   ]
+  },
+  {
+   "id": "G7",
+   "group": "G",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "Frontend",
+   "title": "Veri sınıfı politikası ve telemetri gizliliği",
+   "requirement": "Veri sınıflandırması (genel, iç, kişisel, finansal, gizli) log, taslak, model bağlamı, cihaz kuyruğu ve backup için ayrı minimizasyon, maskeleme, saklama ve silme kuralı belirler. Silinen kayıt arama indeksinden, önbellekten ve YZ bağlamından düşer. Sentry, RUM ve session replay prompt, model çıktısı, spec içeriği veya kayıt verisi taşımaz; replay tüm metni maskeler.",
+   "note": "Yalnızca kimlikler, gecikme, token sayısı ve hata kodu gönderilir. Serbest metin geri bildirimi kişisel veri taramasıyla sunucuda saklanır. Saklama süreleri tek tabloda durur (DocType kataloğu, saklama sütunu): YZ konuşma geçmişi, bağlam önbelleği ve türetilmiş özetler 90 gün (karar kitabı Y09); kapanan şirketin verisi 185 gün salt okunur ve dışa aktarılabilir, sonra arşiv veya silme (K16, M26). Kullanıcının \"sohbeti sil\" eylemi yalnızca sohbet metnini hemen siler (karar kitabı V04); bağlam önbelleği, saklı öneriler, vektör indeksi ve düzeltme hafızası kendi saklama süresi dolana kadar kalır ve arayüz bunu silme anında açıkça yazar. KVKK kapsamındaki silme talebi destek süreciyle karşılanır ve türetilmiş kopyaları, yedekleri (en geç 35 gün) ve arama indeksini de kapsar; denetim izinde yalnızca \"kim, ne zaman sildi\" olayı kalır (K14, çelişki notu).",
+   "tests": [
+    "TP-18",
+    "TP-04"
+   ],
+   "decisions": [
+    "data-policy",
+    "observability"
+   ]
+  },
+  {
+   "id": "G8",
+   "group": "G",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "Frappe",
+   "title": "Yurt dışı aktarım, veri yerleşimi ve YZ işleme rızası",
+   "requirement": "Kişisel veri yurt dışındaki model sağlayıcısında işlenebilir (karar kitabı Y02); koşulları: sağlayıcıyla veri işleme sözleşmesi ve KVKK'nın yurt dışı aktarım hükmündeki dayanak (7499 sayılı Kanunla 1 Haziran 2024'te yürürlüğe giren yeni 9. maddeye göre düzenli aktarım için yeterlilik kararı yoksa Kurul'un standart sözleşmesi imzalanır ve imzadan sonra 5 iş günü içinde Kurum'a bildirilir; açık rıza artık yalnızca arızi, yani tekrar etmeyen aktarım için dayanaktır), kullanıcının YZ işleme için ayrıca verdiği açık rıza (Rıza Kaydı'na ayrı satır, M12) ve Y01 yönlendirmesi: hassas veri sınıfı zaten kendi sunucumuzda kalır. Veri akışı envanteri tek tabloda tutulur: her veri türü için bölge, alt işleyen, amaç, saklama ve aktarım dayanağı. Envanterde olmayan bir alt işleyene veri gitmez.",
+   "note": "Barındırma da yurt dışıdır: Hetzner'ın Türkiye lokasyonu yoktur (Almanya ve Finlandiya), bu yüzden aktarım dayanağı yalnız model sağlayıcısı için değil, bütün platform için gerekir. Rızasını geri çeken kullanıcının istekleri dış modele gitmez, klasik yola veya kendi sunucumuzdaki modele düşer. Bu madde hukuki görüş değildir; standart sözleşme ve rıza metinleri canlıya çıkmadan hukukçuya teyit ettirilir (Açık kararlar). Kabul: veri akışı envanteri ile gerçek çağrı günlüğü karşılaştırılır; envanter dışı hedef sıfır.",
+   "tests": [
+    "TP-18"
+   ],
+   "decisions": [
+    "data-residency",
+    "model-host",
+    "data-policy",
+    "kimlik:riza"
+   ]
+  },
+  {
+   "id": "H1",
+   "group": "H",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "Frontend",
+   "title": "Kanonik iç UI Spec ve dört port",
+   "requirement": "İç UI Spec şeması dış protokollerden bağımsızdır: specVersion, catalogId, catalogVersion, schemaFingerprint, surfaceId, düz elements haritası (id → type, props, children), dataBindings (veri bağlama referansları), actions. Render katmanı yalnızca bunu tüketir. Portlar: TransportAdapter, SpecAdapter, RendererAdapter, ToolAdapter; portlar arasında dış kütüphane tipi sızmaz.",
+   "note": "ChangeSet ve ReportDefinition aynı sürümleme ve doğrulama disiplinine tabidir; UI Spec yalnızca sunum tarifidir, iş verisi taşımaz; veri zarfı çalışma anında ayrı gelir (D7).",
+   "tests": [
+    "TP-01",
+    "AT-03"
+   ],
+   "decisions": [
+    "generative",
+    "primitives"
+   ]
+  },
+  {
+   "id": "H2",
+   "group": "H",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "Frontend",
+   "title": "Protokol matrisi",
+   "requirement": "protocol-matrix dosyasında sürümler sabittir: Frappe REST v2 (yalnız v16, A3), Socket.IO 4.x, AG-UI wire \"1.0\" (kullanılırsa), A2UI \"v0.9.x\" (dışa ve içe aktarım), MCP yetkilendirme 2025-06-18 (dış MCP adaptörü için). Farklı sürüm bildiren yük reddedilir ve loglanır.",
+   "note": "A2UI v0.8 üretilmez; v1.0 aday desteği yalnızca adaptörde ve sertifikasyon paketiyle (MAY). Frappe minor yükseltmesi contract fixture'ları geçmeden matrise girmez.",
+   "tests": [
+    "TP-01",
+    "AT-04"
+   ],
+   "decisions": [
+    "version",
+    "ai-protocol"
+   ]
+  },
+  {
+   "id": "H3",
+   "group": "H",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "BFF",
+   "title": "Yetenek pazarlığı ve sürüm kayması",
+   "requirement": "Oturum başında istemci yetenek bildirimi gönderir: specVersions, catalogIds ve catalogVersion, schemaFingerprint, features (actions, forms, charts, runs), maxSurfaceCount. Sunucu kesişimi seçer; kesişim yoksa metin ve statik bileşen moduna düşer. Pazarlık model çağrısından önce yapılır.",
+   "note": "Deploy sırasında istemci ile sunucu arasındaki katalog veya metadata sürüm kayması bu yolla yakalanır; eski SPA en az iki sürüm veya 90 gün boyunca yeni sunucuyla uyumlu kalır ve eski sürüm dosyaları en az iki sürüm veya 30 gün saklanır (karar kitabı X02, X07; K15). Dışa açık API'nin uzun süreli uyumluluğu ayrı kuraldır (B12).",
+   "tests": [
+    "TP-17",
+    "AT-04"
+   ],
+   "decisions": [
+    "schema-evolution",
+    "hosting"
+   ]
+  },
+  {
+   "id": "H4",
+   "group": "H",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "Frontend",
+   "title": "Doğrulama hatası ve yeniden üretim sınırı",
+   "requirement": "Doğrulama hatası modele yapılandırılmış hata olarak döner; en fazla 2 otomatik yeniden üretimden sonra E6 fallback sırası uygulanır. Her kademe metrik olarak sayılır. Vercel AI SDK RSC (streamUI) kullanılmaz; AI SDK tercih edilirse yalnızca sunucu tarafında.",
+   "note": "",
+   "tests": [
+    "TP-11",
+    "TP-01"
+   ],
+   "decisions": [
+    "generative",
+    "ai-eval"
+   ]
+  },
+  {
+   "id": "H5",
+   "group": "H",
+   "level": "MUST",
+   "slice": 4,
+   "actor": "Frappe",
+   "title": "İç tool + dış MCP adaptörü, aynı izin sonucu",
+   "requirement": "Capability registry protokolden bağımsızdır. İç tool çağrısı ve dış MCP sunucusu aynı capability girdisi için aynı izin ve risk sonucunu verir; token passthrough yapılmaz. MCP Apps (sandbox iframe HTML) çekirdek CRUD akışlarında kullanılmaz; yalnızca varsayılan kapalı, allowlist'li \"açık uçlu\" kademe olarak.",
+   "note": "Dış tüketici gereksinimi doğrulanmadan MCP adaptörü açılmaz; açıldığında yetkilendirme MCP 2025-06-18 spesifikasyonuna göre kurulur. İç tool çağrısı Dilim 1'de vardır; dış MCP adaptörü en erken Dilim 4'te ve dışa açık API'nin sürüm kuralıyla (B12) gelir.",
+   "tests": [
+    "TP-05",
+    "TP-01"
+   ],
+   "decisions": [
+    "ai-protocol",
+    "capabilities"
+   ]
+  },
+  {
+   "id": "H6",
+   "group": "H",
+   "level": "SHOULD",
+   "slice": 1,
+   "actor": "Frontend",
+   "title": "Ant ekosistemi ve barındırılan servisler",
+   "requirement": "@ant-design/x 2.9.x (Bubble, Sender, Conversations, ThoughtChain, Attachments, Prompts, Actions, Sources) yalnızca @genui/ui/assistant içinde, kök XProvider ile; x-sdk yalnızca BFF'ye bağlı özel ChatProvider ile. @ant-design/x-card (A2UI v0.8/v0.9) çekirdek renderer değildir, pilotta SpecAdapter arkasında denenebilir.",
+   "note": "Thesys C1 / OpenUI Cloud gibi barındırılan GenUI servisleri ve \"yalnızca dahili kullanım\" lisanslı SDK'lar çekirdek bağımlılık olamaz; kullanılırsa yalnızca değiştirilebilir adaptör olarak.",
+   "tests": [
+    "TP-02"
+   ],
+   "decisions": [
+    "ui-kit",
+    "licensing"
+   ]
+  },
+  {
+   "id": "I1",
+   "group": "I",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "Frontend",
+   "title": "Beş YZ yüzeyi, her birinin manuel eşdeğeri",
+   "requirement": "Komut paleti ve asistan (niyet, çapraz ekran eylem); alan ve form yardımı (doldur, açıkla, öner); satır, hücre ve toplu seçim eylemleri; rapor ve pano üretimi (dil → ReportDefinition, WorkspaceDefinition); workflow, hata ve denetim yardımı (sonraki adım, kurtarma önerisi). Her yüzeyde aynı işi YZ olmadan tamamlayan manuel akış vardır. Beş yüzeyin hepsi sürüm 1.0 kapsamındadır (karar kitabı Y03): komut paleti, alan ve form yardımı ile toplu seçim eylemleri Dilim 1'de; doğal dilden rapor ve workflow yardımı Dilim 2'de gelir. Her yüzeyin kendi başarı ölçütü ve değerlendirme seti vardır (AT-38); ek yüzeyler I13'tedir.",
+   "note": "Bağlam kapsamı görünürdür: seçili kayıt sayısı, filtre, tenant ve hangi alanların modele gittiği. Komut paleti keşfedilebilirdir; yönlendiren boş durum ilk kullanımda örnek istemler sunar.",
+   "tests": [
+    "TP-08",
+    "AT-38"
+   ],
+   "decisions": [
+    "ai-surfaces",
+    "control-patterns"
+   ]
+  },
+  {
+   "id": "I2",
+   "group": "I",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "Frontend",
+   "title": "YZ etiketi ve dayanak paneli",
+   "requirement": "Model tarafından yerleştirilen her bileşen ve YZ ile doldurulan veya değiştirilen her alan tek standart etiketle işaretlenir (eyleme özgü metin: \"YZ ile dolduruldu\"). Etiket açıklama panelini açar: Dayanak (sayısal sonuçta sorgu, filtre ve tarih kapsamı; metinsel yanıtta kaynak belge ve sürümü), Artefaktlar (model, prompt, katalog, şema fingerprint, Run kimliği), Ek eylemler (geri al, geri bildirim, klasik görünüm). Doğal dilden raporda sonuçtan önce \"şöyle anladım\" filtre çipleri gösterilir ve kullanıcı onaylar (karar kitabı Y04; D1).",
+   "note": "Modelin uydurduğu toplam veri sonucu sayılmaz; sayısal değer deterministik sorgudan gelir. Adım adım muhakeme zinciri varsayılan gösterilmez. İlk temasta YZ ile etkileşim açıkça bildirilir (EU AI Act Md. 50; hukuk ekibiyle doğrulanır).",
+   "tests": [
+    "TP-06",
+    "TP-08"
+   ],
+   "decisions": [
+    "knowledge-policy",
+    "context"
+   ]
+  },
+  {
+   "id": "I3",
+   "group": "I",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "Kullanıcı",
+   "title": "Düzenle, geri al, yeniden dene; orijinal ezilmez",
+   "requirement": "Kullanıcı YZ değerini elle değiştirince etiket kalkar ve \"YZ sürümüne dön\" gelir. Her YZ değişikliğinin yanında Düzenle, Geri Al, Yeniden Dene bulunur. Veri yazan tüm öneriler önce DiffReview'da gösterilir; toplu işlemde örnek satır önizlemesi varsayılandır; kaydedilmiş değer ile öneri görsel olarak ayrılır. Ayrım yalnızca görsel değildir (karar kitabı Y14): YZ etiketi erişilebilir adda yer alır ve ekran okuyucu alanı \"YZ önerisi\" diye duyurur; üretilen ekranın başlık seviyelerini model değil çizici atar; değerlendirme setindeki her örneğin çizilmiş hâli otomatik erişilebilirlik taramasından geçer (K2, K4).",
+   "note": "",
+   "tests": [
+    "TP-06",
+    "TP-07"
+   ],
+   "decisions": [
+    "ai-surfaces",
+    "diff-review"
+   ]
+  },
+  {
+   "id": "I4",
+   "group": "I",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "Model",
+   "title": "Güven, dil ve belirsizlik",
+   "requirement": "Ham güven yüzdesi varsayılan gösterilmez; karar etkisi varsa kategorik (Yüksek, Orta, Düşük). Kategori yalnızca ölçülmüş sinyalden hesaplanır (karar kitabı Y05): kaynakta birebir eşleşme, çapraz doğrulama ve değerlendirme setinde o görev türünün başarısı; modelin kendi \"eminim\" beyanı sinyal sayılmaz. Kalibrasyon (K2) bitene kadar etiket gösterilmez, yalnızca dayanak gösterilir. Düşük ve Orta güvenli çıktı grant ile otomatik uygulanmaz (F3). Belirsizlikte model eylem yerine düğme biçiminde en fazla iki netleştirme sorusu sorar; sonra da belirsiz kalan kayıtlar \"belirsiz\" işaretlenip ayrılır, dokunulmaz ve manuel kuyruğa gider, kalanlarla devam edilir (karar kitabı Y06). Açıklamalar olgusal atıf dilindedir; insanlaştırıcı duygu dili ve suçlayıcı ton yasaktır; model bilmediğini söyler.",
+   "note": "Belirsiz kayıtlar için geri bildirim güçlüdür (Y06 notu): toplu sonuç ekranında belirsiz sayısı ve her kaydın nedeni ayrı sütunda görünür, manuel kuyruğa tek tıkla gidilir, canlı bölge sonucu bir kez duyurur, Run bittiğinde bildirim merkezine kalıcı kayıt düşer; belirsiz kayıt hiçbir zaman \"başarısız\" veya \"tamamlandı\" sayılmaz.",
+   "tests": [
+    "TP-11"
+   ],
+   "decisions": [
+    "knowledge-policy"
+   ]
+  },
+  {
+   "id": "I5",
+   "group": "I",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "Frontend",
+   "title": "Gecikme bütçesi ve ilerleme",
+   "requirement": "1 s altı gösterge yok; 1 ile 10 s arası iskelet ve ne yapıldığını söyleyen özgül mesaj (\"Ürün özniteliklerini eşleştiriyor\"); 10 s üstü RunPanel'de ilerleme, süre tahmini ve iptal. Uzun işler arka planda sürer ve bildirim merkezine düşer. Durdur düğmesi 1 s'den uzun her üretimde aynı konumdadır.",
+   "note": "Yeniden üret önceki sürümü silmez, saklar (en fazla 5 sürüm). Durdurulan kısmi çıktı \"kısmi\" etiketiyle korunur.",
+   "tests": [
+    "TP-08",
+    "TP-10"
+   ],
+   "decisions": [
+    "ai-stream",
+    "runs"
+   ]
+  },
+  {
+   "id": "I6",
+   "group": "I",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "Kullanıcı",
+   "title": "Kullanıcı kontrolü ve bozulmuş mod",
+   "requirement": "\"Bu görünümü sabitle\" sabitlenen düzeni modelden korur. Her ekranın deterministik, YZ'siz \"Klasik görünüm\"ü vardır ve varsayılan yapılabilir. \"Otomatik değiştirme\" ve \"YZ'yi kapat\" global tercihlerdir. Model erişilemez, zaman aşımı veya kota aşımında ekran klasik görünüme düşer, tüm iş yetenekleri çalışır, form girdileri korunur; hata mesajı ne olduğunu ve sonraki adımı düz dille söyler.",
+   "note": "",
+   "tests": [
+    "TP-08",
+    "AT-05"
+   ],
+   "decisions": [
+    "handoff",
+    "mobile"
+   ]
+  },
+  {
+   "id": "I7",
+   "group": "I",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "Frontend",
+   "title": "Geri bildirim, yetenek beyanı ve ürün içi yardım",
+   "requirement": "Her YZ çıktısında beğen, beğenme ve \"uygunsuz bildir\"; geri bildirim sonrası somut etki bildirilir: düzeltme şirketin düzeltme hafızasına girer ve bir sonraki öneride kullanılır (karar kitabı Y08; I12), kullanıcı bunu \"bu düzeltme hatırlandı\" bildirimiyle görür. Her YZ giriş noktasında yetenek ve sınır beyanı ile örnek istemler. Kısa bağlamsal yardım zorunlu uzun turun yerine geçer; kullanıcı \"kaybettiğini düşündüğü işi\" tek adımda bildirebilir ve destek talebi görev başarısıyla birlikte izlenir.",
+   "note": "Model veya katalog major sürümü değişince kullanıcı oturum başına bir kez bilgilendirilir.",
+   "tests": [
+    "TP-08"
+   ],
+   "decisions": [
+    "adoption",
+    "model-lifecycle"
+   ]
+  },
+  {
+   "id": "I8",
+   "group": "I",
+   "level": "SHOULD",
+   "slice": 1,
+   "actor": "Frontend",
+   "title": "Bilgi mimarisi",
+   "requirement": "Asistan yan panel olarak açılır, dar alanda sheet olur; ürettiği surface'ler kayıt bağlamının içine satır içi yerleşir veya tam sayfa çalışma alanı olur. Paylaşılabilir URL spec değil surface veya Run kimliği taşır. Sohbet geçmişi aranabilir, 90 gün saklanır ve sonra otomatik silinir (karar kitabı Y09). Kullanıcının \"sohbeti sil\" eylemi sohbet metnini hemen siler; türetilmiş kopyalar kendi saklama süresine kadar kalır ve eylemin metni bunu açıkça söyler (karar kitabı V04; G7).",
+   "note": "",
+   "tests": [
+    "TP-08"
+   ],
+   "decisions": [
+    "adaptive-shell",
+    "data-policy"
+   ]
+  },
+  {
+   "id": "I9",
+   "group": "I",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "Frontend",
+   "title": "Bağlam sözleşmesi: modele ne gider, kullanıcı ne görür",
+   "requirement": "Her YZ isteği bir bağlam manifesti taşır: seçili kayıtlar (kimlik ve izinli alanlar), aktif filtre AST'si, zaman aralığı, açık belge ve sürümü, önceki tur özeti, kullanıcının tercihleri. Manifest kullanıcıya çip olarak gösterilir; kullanıcı gönderimden önce öğe çıkarabilir, çıkarılan öğe modele gitmez. Sunucu manifesti izin projeksiyonundan geçirir; permlevel dışı alan, başka tenant verisi ve gizli sınıf veri hiçbir zaman eklenmez.",
+   "note": "Manifest parmak izi (F9) Run kaydına yazılır; aynı parmak iziyle tekrar istek önbellekten dönebilir. Kullanıcı bir konuşmayı bağlamdan çıkarabilir: o konuşmanın önceki tur özeti sonraki isteklere eklenmez. Bu eylem \"sohbeti sil\" ile aynı şey değildir ve türetilmiş kopyaları silmez; tam silme KVKK talebiyle yapılır (G7). Arayüz bu eylemi \"unut\" diye adlandırmaz, çünkü türetilmiş kopyalar saklama süresince kalır.",
+   "tests": [
+    "TP-05",
+    "TP-11"
+   ],
+   "decisions": [
+    "context",
+    "knowledge-policy",
+    "data-policy"
+   ]
+  },
+  {
+   "id": "I10",
+   "group": "I",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "Frontend",
+   "title": "Varsayılan başlangıç: niyet girişi",
+   "requirement": "Panelin açılış yüzeyi modül listesi değil görev başlangıcıdır: niyet girişi (komut paleti ile aynı), kullanıcıya atanmış işler, durdurulmuş veya uzlaştırma bekleyen Run'lar ve bağlamlı öneriler. Her liste ve kayıt yüzeyi aynı niyet girişini bağlamı önceden doldurulmuş olarak sunar. Klasik gezinti her yüzeyde bir tık uzaklıktadır.",
+   "note": "Kabul: oturum açan kullanıcı varsayılan yolculuğu tek eylemle başlatır; yarım kalmış Run'a açılış yüzeyinden tek eylemle döner; YZ kapalıyken açılış yüzeyi klasik başlangıca düşer ve iş kaybolmaz. Bu madde \"AI-first\"i bir ilke olmaktan çıkarıp sınanabilir kılar (AT-13, AT-14). Başlangıç ekranı dışındaki proaktif öneriler I11'dedir.",
+   "tests": [
+    "TP-08",
+    "AT-13",
+    "AT-14"
+   ],
+   "decisions": [
+    "ai-surfaces",
+    "patterns",
+    "adoption"
+   ]
+  },
+  {
+   "id": "I11",
+   "group": "I",
+   "level": "MUST",
+   "slice": 2,
+   "actor": "Frontend",
+   "title": "Proaktif öneri: her ekranda, ama yazma başlatmadan",
+   "requirement": "YZ kullanıcı istemeden de her ekranda öneri gösterebilir (karar kitabı Y07). Sınırlar serbestliği değil güvenliği korur: öneri hiçbir zaman kendiliğinden değişiklik yapmaz veya Run başlatmaz; modal açmaz, odağı çalmaz, kullanıcı yazarken belirmez; sayfanın kenarındaki öneri alanında durur; her öneri kaynağını ve neden gösterildiğini söyler; kapatılan öneri o kayıt ve ekran için hatırlanır. Kullanıcı ekran başına veya tümden kapatabilir; şirket yöneticisi şirket için kapatabilir.",
+   "note": "Maliyet ve rahatsızlık riski yüksektir (çelişki notu): proaktif çağrılar şirketin aylık YZ bütçesinden düşer (E7) ve bütçenin %20'sini aşamaz; aynı ekranda en fazla 3 görünür öneri; kapatma oranı ve kabul oranı canlı metriktir (K13) ve kapatma oranı eşiği aşan öneri türü kendiliğinden kısılır. Kill switch proaktif önerileri de kapatır. Dilim 2'de gelir; Dilim 1'de öneri yalnızca başlangıç ekranındadır (I10).",
+   "tests": [
+    "TP-08",
+    "TP-18"
+   ],
+   "decisions": [
+    "ai-surfaces",
+    "ai-budget",
+    "adoption"
+   ]
+  },
+  {
+   "id": "I12",
+   "group": "I",
+   "level": "MUST",
+   "slice": 2,
+   "actor": "Frappe",
+   "title": "Şirket düzeltme hafızası",
+   "requirement": "Kullanıcı düzeltmeleri şirket bazlı bir hafızaya yazılır ve aynı şirketteki bir sonraki öneride bağlam olarak kullanılır (karar kitabı Y08). Hafıza kaydı: şirket, görev türü, alan, önceki öneri, düzeltilmiş değer, düzelten kullanıcı, zaman ve kaynak Run. Hafıza yalnızca kendi şirketinde okunur; başka şirkete, başka tenant'a ve model eğitimine gitmez. Şirket yöneticisi hafızayı listeler, tek kaydı veya tamamını siler; silinen kayıt bir sonraki istekte bağlama girmez.",
+   "note": "Riskler ve önlemleri: yanlış veya kötü niyetli düzeltme sonraki önerileri bozabilir, bu yüzden hafızadan gelen bilgi öneride dayanak olarak gösterilir (\"şirket düzeltmesi, 12 Eylül\") ve yeni öneri yine onaydan geçer; hafıza kaydı veri sınıfını taşır ve kişisel veri içeren düzeltme yalnızca kendi sunucumuzdaki modele gider (G4); hafıza 90 gün kullanılmazsa silinir. Değerlendirme seti hafızalı ve hafızasız ayrı koşar (K2). Dilim 2'de gelir; kabul: AT-39.",
+   "tests": [
+    "TP-11",
+    "TP-05",
+    "AT-39"
+   ],
+   "decisions": [
+    "ai-eval",
+    "context",
+    "data-policy"
+   ]
+  },
+  {
+   "id": "I13",
+   "group": "I",
+   "level": "MUST",
+   "slice": 3,
+   "actor": "Frontend",
+   "title": "Ek YZ yüzeyleri kataloğu",
+   "requirement": "Beş temel yüzeyin (I1) dışında şu yüzeyler kataloğa eklenmiştir (karar kitabı Y03 notu: \"daha fazlasını bul ve ekle\"): (1) belgeden kayıt oluşturma: fatura, irsaliye veya tedarikçi belgesinden alan önerisi; (2) veri kalitesi: yinelenen kayıt ve tutarsız değer tespiti; (3) anlamsal arama: doğal dille kayıt ve belge arama (L1); (4) kayıt özeti: bir müşteri, ürün veya talebin geçmişinin kısa özeti; (5) yanıt ve e-posta taslağı: CRM ve destek için; (6) çeviri ve yerelleştirme: ürün içeriğinin dillere çevrilmesi; (7) içe aktarma eşlemesi: CSV kolonlarını alanlara eşleme önerisi (D9); (8) anomali açıklaması: bir göstergenin neden değiştiğini dayanakla açıklama; (9) bağlamsal yardım: \"bu ekran ne yapar\" sorusuna ürün belgesinden cevap; (10) talep sınıflandırma ve yönlendirme: destek taleplerini konu ve önceliğe göre ayırma. Her ek yüzey açılmadan önce I1'deki kuralları taşır: manuel eşdeğer, capability manifestinde risk sınıfı, kendi değerlendirme seti ve başarı ölçütü (AT-38), kill switch.",
+   "note": "Ek yüzeylerin dilimi uygulamasıyla gelir: (1), (3), (7) ve (9) Dilim 2'de; (2), (4), (5), (6) ve (10) Dilim 3'te CRM ve destekle; (8) Dilim 2'de raporlarla. Hiçbiri veri yazmayı onaysız başlatmaz; (5) taslak üretir, gönderim kullanıcının eylemidir.",
+   "tests": [
+    "TP-11",
+    "AT-38"
+   ],
+   "decisions": [
+    "ai-surfaces",
+    "knowledge-policy"
+   ]
+  },
+  {
+   "id": "J1",
+   "group": "J",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "Frontend",
+   "title": "WCAG 2.2 AA; 44 px dokunma hedefi ayrı ürün standardı",
+   "requirement": "Uyumluluk hedefi WCAG 2.2 AA'dır (seçim korunur, karar kitabı R06; EN 301 549 v4.1.1, beyan v3.2.1'e de eşlenir). AAA hedefleri varsayılan kapsamda değildir; seçili AAA maddeleri erişilebilirlik modunda açılır (J10). Dokunma hedefi en az 44×44 CSS px ayrı bir karardır (targets) ve ürün standardı olarak uygulanır. Uygulama kabuğu iki kalıcı canlı bölge (role=status polite, role=alert) oluşturur; tüm durum bildirimleri tek announce() servisiyle yazılır.",
+   "note": "antd message ve notification varsayılan role=\"alert\" taşır (kesintili duyuru); Run ilerlemesi gibi sık bildirimler toast ile değil polite bölgeyle verilir. Uygunluk kapsamı, kriterler, istisnalar ve manuel kanıt kaydedilir.",
+   "tests": [
+    "TP-07"
+   ],
+   "decisions": [
+    "a11y-target",
+    "targets"
+   ]
+  },
+  {
+   "id": "J2",
+   "group": "J",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "Frontend",
+   "title": "Odak, overlay ve alternatif akışlar",
+   "requirement": "Render veya yeniden üretim odağı çalmaz; odak asla body'ye düşmez; üretilen surface kabuğun etiketli landmark'ı içinde çizilir (model landmark üretemez). Sürükleme için taşı düğmeleri, grafik için veri tablosu, sanal grid için sayfalı görünüm: aynı iş işaretçi, klavye ve ekran okuyucuyla tamamlanır.",
+   "note": "Tek semantik odak token'ı vardır: çift halka (yüzey rengi boşluk + vurgu), her zeminde en az 3:1 kontrast; bileşenler kendi odak stilini tanımlamaz, çift çerçeve görülürse hata sayılır. Route değişiminde başlık, breadcrumb ve odak/duyuru güncellenir (route metadata). Kontroller tutarlı custom kontrollerdir (seçim): tarih, saat, seçim, dosya ve sayı girişleri platformun yerli panelleri yerine antd ve domain bileşenleriyle; platformun yerli açılır panelleri kullanılmaz. Bedeli üstlenilir: klavye, IME composition, locale ayrıştırma, VoiceOver ve TalkBack duyuruları, autofill ve parola yöneticisi (doğru name, autocomplete, inputmode), sanal klavye tipi; Safari/iOS ve Android gerçek cihazda kanıtlanır.",
+   "tests": [
+    "TP-07",
+    "TP-15"
+   ],
+   "decisions": [
+    "focus",
+    "alternatives",
+    "native",
+    "route-metadata"
+   ]
+  },
+  {
+   "id": "J3",
+   "group": "J",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "CI",
+   "title": "Tarayıcı ve yardımcı teknoloji matrisi",
+   "requirement": "Safari + VoiceOver (macOS, iOS), Chrome/Firefox + NVDA, Edge/Chrome + JAWS, Android + TalkBack, %200–400 yakınlaştırma, forced colors, reduced motion. Ana görevler yalnız klavye ve en az bir ekran okuyucuyla tamamlanabilir; her major sürümde manuel görev testi koşar.",
+   "note": "Otomatik axe taraması (wcag2a, wcag2aa, wcag21a, wcag21aa, wcag22aa) ihlal sıfır olmalıdır ama AA kanıtı değildir.",
+   "tests": [
+    "TP-07"
+   ],
+   "decisions": [
+    "test-matrix"
+   ]
+  },
+  {
+   "id": "J4",
+   "group": "J",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "Model",
+   "title": "Diller, çeviri köprüsü ve modelin metin sözleşmesi",
+   "requirement": "Türkçe ve İngilizce zorunlu (Dilim 1); Arapça ve İbranice (RTL) kapsamda ve Dilim 4'te açılır, ama logical CSS ve bidi kuralları Dilim 1'den itibaren uygulanır ki sonradan yeniden yazım gerekmesin; diğer locale'ler anahtar yedeğiyle. Çeviri mimarisi iki kataloglu: Frappe katalog köprüsü (mevcut terimler; get_all_translations çekirdekte whitelisted olmadığı için BFF'de yetkili sarmalayıcı) ve UI kataloğu (ICU MessageFormat, çoğul ve select). Model kontrol metinlerini yalnızca anahtar olarak üretir; serbest açıklama literal olabilir, lang etiketi taşır, kontrol konumunda kullanılmaz.",
+   "note": "RTL: logical CSS, bidi izolasyonu (bdi, dir=auto), ikon ve ok aynalama kuralı; karma metin (belge kimliği, e-posta, URL) okuma sırasını korur. Eksik anahtar, placeholder ve sabit metin taraması CI'da.",
+   "tests": [
+    "TP-19"
+   ],
+   "decisions": [
+    "locales",
+    "messages",
+    "bidi"
+   ]
+  },
+  {
+   "id": "J5",
+   "group": "J",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "Frontend",
+   "title": "LocaleContext ve zaman politikası",
+   "requirement": "Dil, bölge, saat dilimi, para birimi, takvim, sayı sistemi, birim ve yazı yönü ayrı boyutlardır. Tarih-yalnız değerler UTC ana dönüştürülmez; işlem anı saat dilimli sunulur; rapor ve filtre iş günü dilimini sonuçla birlikte gösterir. Para Decimal hassasiyetiyle taşınır; biçimlendirme istemcide Intl ile, ayrıştırma sunucu sözleşmesiyle.",
+   "note": "Türkçe harf dönüşümü toLocaleUpperCase(\"tr-TR\"), sıralama Intl.Collator(\"tr\"); antd locale trTR ile dayjs/locale/tr birlikte yüklenir. CSV, PDF, arama ve tarih filtresi ekrandaki locale anlamını korur.",
+   "tests": [
+    "TP-19"
+   ],
+   "decisions": [
+    "locale-model",
+    "regional",
+    "time-policy"
+   ]
+  },
+  {
+   "id": "J6",
+   "group": "J",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "Frontend",
+   "title": "Uyarlanan düzen ve mobil korumalar",
+   "requirement": "Göreve göre ayrı yüzeyler (seçim korunur, karar kitabı R08): aynı görev telefonda, tablette, masaüstünde ve büyük ekranda kendi yerleşim ve gezinti koduyla sunulur; arka uç, sözleşme, iş durumu ve domain bileşenleri aynıdır (\"backend aynı, frontend ayrı\"). Cihaz sınıfları, yön ve uyarlamalı teslim J9'dadır. Görünümler arasında seçim, taslak ve kaydırma konumu korunur; her yüzeyin içinde parçalar container query ve intrinsic layout ile esner. Dinamik viewport ve safe area (sanal klavye açılınca eylemler görünür kalır), işaretçi/hover/dokunma ayrımı (hover-only eylem yok), yavaş ağ ve data saver ipucu, kullanıcı görünüm tercihi. Kiosk için oturum temizliği ve zaman aşımı.",
+   "note": "Bedeli üstlenilir: iki (ve daha çok) görünüm arasında durum korunumu ve her yüzey için ayrı test. Gerçek iOS ve Android cihazda form + overlay + klavye + geri navigasyon senaryosu her PR'da koşar (karar kitabı T05; K4).",
+   "tests": [
+    "TP-09",
+    "TP-15"
+   ],
+   "decisions": [
+    "layout",
+    "mobile",
+    "devices"
+   ]
+  },
+  {
+   "id": "J7",
+   "group": "J",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "Frontend",
+   "title": "Merkezi motion tokenları",
+   "requirement": "Süre, easing, mesafe ve enter/exit davranışı token'dır; popover, drawer, sheet, toast ve shimmer reduced-motion tercihinde hareketi kaldırır; antd motion aynı tercihle kapanır. Skeleton geometrisi gerçek içerikle eşleşir.",
+   "note": "",
+   "tests": [
+    "TP-07",
+    "TP-09"
+   ],
+   "decisions": [
+    "motion",
+    "async"
+   ]
+  },
+  {
+   "id": "J8",
+   "group": "J",
+   "level": "MUST",
+   "slice": 2,
+   "actor": "CI",
+   "title": "Yerelleştirme kalite kapıları",
+   "requirement": "Sözde yerelleştirme (%300 genişleme), IME composition testi (Enter seçimi tamamlamadan form göndermez), bidi ve karma metin fixture'ları, RTL/CJK/print görsel matrisi, locale duyarlı sıralama ve arama testleri.",
+   "note": "",
+   "tests": [
+    "TP-19"
+   ],
+   "decisions": [
+    "locale-testing"
+   ]
+  },
+  {
+   "id": "J9",
+   "group": "J",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "Frontend",
+   "title": "Cihaz sınıfı ve yön matrisi, uyarlamalı teslim",
+   "requirement": "Tasarım telefondan başlar: taban 320 CSS px genişliktir (karar kitabı U12 notu: \"320 px önce\"). Cihaz sınıfları: telefon, tablet, dizüstü, masaüstü, 4K ve 5K ekran, 8K televizyon, akıllı tahta ve kiosk. Yön ayrı bir çarpandır: her sınıf dikey ve yatay tutuşta ayrı kabul edilir. Uyarlamalı teslim (adaptive delivery): uygulama açılışında cihaz sınıfı ekran boyutu, giriş biçimi (dokunma, işaretçi, uzaktan kumanda) ve yön sorgularıyla belirlenir; yalnızca o sınıfın yüzey paketi (packages/surfaces/*) yüklenir; yön değişince aynı sınıfın diğer yön düzenine geçilir, iş durumu korunur. Kullanıcı sınıfı elle değiştirebilir (ör. tablette masaüstü düzeni). Sınıf tespiti yalnızca sunum içindir; yetki, veri ve iş kuralı cihaza göre değişmez.",
+   "note": "Her sınıfın kendine özgü kuralı vardır: televizyonda uzaktan kumanda ile odak gezintisi (yön tuşları) ve 3 metreden okunur yazı ölçeği; akıllı tahtada çoklu dokunma, ayakta kullanım ve eylemlerin ekranın alt yarısında olması; 4K–8K'da yoğun bilgi yerine ölçekli düzen ve görsel keskinlik; kioskta M27'deki oturum kuralları. \"iPhone 4 önce\" notu 320 CSS px genişlik tabanı olarak uygulanır; iPhone 4'ün tarayıcısı bu yığını çalıştıramaz ve desteklenmez (A2). Dilimler: telefon, dizüstü ve masaüstü Dilim 1; tablet Dilim 2; kiosk Dilim 3; 4K, 5K, 8K televizyon ve akıllı tahta Dilim 4. Matris ve kabul Ürün ailesi ve cihaz matrisi bölümünde; kabul: AT-35.",
+   "tests": [
+    "TP-09",
+    "TP-15",
+    "AT-35"
+   ],
+   "decisions": [
+    "devices",
+    "layout",
+    "mobile",
+    "targets"
+   ]
+  },
+  {
+   "id": "J10",
+   "group": "J",
+   "level": "MUST",
+   "slice": 2,
+   "actor": "Frontend",
+   "title": "Erişilebilirlik modu",
+   "requirement": "Kullanıcı tercihlerde bir \"erişilebilirlik modu\" açabilir (karar kitabı R06 notu). Mod, AA tabanının üstünde seçili AAA maddelerini ve ek kolaylıkları birlikte açar: gelişmiş metin kontrastı (7:1, WCAG 1.4.6), belirgin odak görünümü (WCAG 2.4.13), en az 44×44 CSS px hedef (WCAG 2.5.5), hareketin kapanması, daha büyük yazı ve satır aralığı, sadeleştirilmiş düzen (ikincil paneller katlanır, tek sütun), YZ proaktif önerilerinin kapanması ve oturum sonu uyarısının daha erken gelmesi. Mod tema ve yoğunluktan bağımsız bir eksendir (C3); tercih sunucuda saklanır ve cihazlar arası taşınır.",
+   "note": "Mod bir \"ayrı site\" değildir: aynı ekran, aynı iş ve aynı veri; yalnızca sunum kuralları değişir. Görsel regresyon ve axe taraması bu modda ayrıca koşar (K4). Dilim 2'de gelir.",
+   "tests": [
+    "TP-07",
+    "TP-09"
+   ],
+   "decisions": [
+    "a11y-target",
+    "themes",
+    "targets"
+   ]
+  },
+  {
+   "id": "K1",
+   "group": "K",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "CI",
+   "title": "Sözleşme, izin ve iki yazma yolu testleri",
+   "requirement": "Katalog ve Entity/Field şemalarının z.toJSONSchema snapshot'ı repo'da; uyuşmazlık derlemeyi kırar. Gateway için Frappe v16'da contract fixture'ları (liste, form, submit, workflow, meta). İzin negatif testleri: rol kaldırıldığında UI, API, export, dosya ve YZ bağlamı aynı anda kısıtlanır. Lifecycle işlemleri klasik kaydet yolundan ve yürütücü yolundan yapılıp durum, yan etki, denetim olayı ve hata biçimi karşılaştırılır (B1, AT-10).",
+   "note": "Snapshot güncellemesi yalnızca katalog veya şema sürümünün değiştiği PR'da ve CODEOWNERS onayıyla. \"Eski tanımı yeni sürümde aç\" testi her major için en az 20 saklı tanımla %100 geçer.",
+   "tests": [
+    "TP-01",
+    "TP-05"
+   ],
+   "decisions": [
+    "quality-gates",
+    "contract-codegen",
+    "permissions"
+   ]
+  },
+  {
+   "id": "K2",
+   "group": "K",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "CI",
+   "title": "Altın görev seti ve adversarial değerlendirme",
+   "requirement": "Kritik capability başına en az 50 örnek (girdi, bağlam, beklenen ve yasaklı capability, beklenen renderer), en az %20'si çok turlu, sentetik tenant verisi; her örnek en az 3 kez çalıştırılır ve bir örnek ancak her çalıştırmada geçerse \"geçti\" sayılır (karar kitabı Y12). Her setin bir sahibi vardır. Ölçütler: görev başarısı, yanlış tool, onaysız yazma, izin sızıntısı, gecikme, işlem başına maliyet; doğal dilden raporda filtre doğruluğu (Y04); güven etiketinin kalibrasyonu (Y05: \"Yüksek\" etiketli önerilerin gerçek doğruluk oranı ölçülür, kalibrasyon eşiği tutmadan etiket açılmaz); üretilen her örnek ekranın erişilebilirlik taraması (Y14). Model yönlendirmesi iki kalite düzeyi ürettiği için kendi sunucumuzdaki model ve yönetilen API için ayrı set ve ayrı eşik vardır (Y01); düzeltme hafızası hafızalı ve hafızasız ayrı koşar (I12). Prompt, model, katalog, şema veya renderer değiştiren her PR'da koşar; eşik altı (başlangıç %95) PR'ı bloklar.",
+   "note": "Deterministik kontroller (şema, allowlist, URL, düğüm sayısı, izin alanı) tek başına bloklayıcıdır; LLM-yargıç yalnızca kalite boyutları için ve en az 50 insan etiketli örnekle kalibre edilir. Araç: Promptfoo (MIT); OpenAI Evals platformu 30 Kasım 2026'da kapandığı için kullanılmaz.",
+   "tests": [
+    "TP-11",
+    "AT-01"
+   ],
+   "decisions": [
+    "ai-eval",
+    "quality-gates",
+    "success"
+   ]
+  },
+  {
+   "id": "K3",
+   "group": "K",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "Frontend",
+   "title": "Performans bütçeleri ve saha ölçümü",
+   "requirement": "Core Web Vitals p75: LCP 2,5 s, INP 200 ms, CLS 0,1. Başlangıç JS en fazla 250 KB gzip; route ve feature bütçeleri CI'da error seviyesinde; ağır grid, editör ve grafik chunk'ları yalnızca kullanıldığında ve niyet sinyaliyle yüklenir; mobil görevde kullanılmayan chunk ağdan inmez. GenUI ölçütleri günlük: şema uyumu ilk geçiş en az %95, onarım sonrası %99; render başarısı %99,5; ilk geri bildirim p95 1 s, tamamlanmış sonuç p95 10 s. Ölçek hedefi büyüktür (karar kitabı U11): 500'den fazla eşzamanlı kullanıcı ve milyonlarca kayıt; yük testi en az 750 eşzamanlı oturumla (500 × 1,5 pay) koşar ve liste, form, rapor ve giriş için p95 hedefleri bu yükte ölçülür. Yoğun anda giriş, yüzde 95'inde en fazla 5 saniyedir (karar kitabı K09; M7).",
+   "note": "Performans çok önemlidir (karar kitabı T04 notu); ölçüm koşulu (cihaz, ağ, önbellek durumu, görev sınıfı) T04 ertelendiği için henüz sabit değildir ve Açık kararlar'dadır. Karar verilene kadar laboratuvar ölçümü orta segment Android + 4G profili ve masaüstü kablolu profil ile, önbellek boş ve dolu ayrı yapılır; bu varsayım bir üst sınır değil, ölçüm tekrarlanabilirliği içindir. Bütçelerin sıkılaşma yönü sabittir: başarı oranları yalnızca yükseltilebilir, gecikme ve boyut üst sınırları yalnızca düşürülebilir; her değişiklik ölçüm ve ADR ister. Ağ kanıtı: bir mobil görevde ilgisiz özelliğin (grid, editör, grafik) hiçbir kaynağının istenmediği HAR kaydıyla gösterilir. Gerçek cihazda giriş gecikmesi ve RUM p75 dağılımı izlenir; eşik altı alarm ve on-call runbook'u (model geri alma, kill switch, restore provası).",
+   "tests": [
+    "TP-10"
+   ],
+   "decisions": [
+    "performance",
+    "loading-code",
+    "recovery",
+    "success",
+    "user-scale"
+   ]
+  },
+  {
+   "id": "K4",
+   "group": "K",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "CI",
+   "title": "Bileşen kataloğu, görsel matris ve erişilebilirlik kapısı",
+   "requirement": "Storybook 10: her domain bileşeninin ve alan tipinin her durumu (C7 matrisi) için story zorunlu; katalog kimliği ile story eşleşme testi eksik story'de derlemeyi kırar. Görsel regresyon tema × yoğunluk × erişilebilirlik modu × locale (TR, EN, RTL, sözde locale) matrisinde, o dilimde açık her cihaz sınıfı ve iki yön için (J9); onaylanmamış fark PR'ı bloklar. Otomatik axe ihlali sıfır; manuel AT testi her major sürümde (J3). Gerçek cihaz testi her PR'da koşar (karar kitabı T05): PR cihaz seti bir iPhone (Safari), bir Android telefon (Chrome) ve bir tablettir, bulut cihaz çiftliğinde veya yerel cihaz laboratuvarında; televizyon, akıllı tahta ve 5K–8K ekranlar çiftlikte bulunmadığı için sürümde elle ve kanıt kaydıyla (K9) sınanır.",
+   "note": "Her PR'da gerçek cihaz pahalı ve yavaştır (çelişki notu): süre ve maliyet ilk ay ölçülür; PR başına 15 dakikayı aşarsa gerçek cihaz testi yalnızca ekran ve etkileşim kodunu değiştiren PR'larda koşar, bu daraltma ADR ile yapılır. Vitest 4.1.x'e sabitlenir; Storybook Vitest eklentisi Vitest 5 desteği yayımlayınca yükseltilir.",
+   "tests": [
+    "TP-06",
+    "TP-09",
+    "TP-15"
+   ],
+   "decisions": [
+    "component-docs",
+    "quality-gates"
+   ]
+  },
+  {
+   "id": "K5",
+   "group": "K",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "CI",
+   "title": "Güvenlik kapıları ve tehdit modeli",
+   "requirement": "Tehdit modeli yayın kanıtıdır. Uçtan uca senaryolar: tedarikçi belgesinde gizli talimat (eylem yok, görsel veya link yok), yetkisiz RPC (403), kötü amaçlı rich text (temizlenir), özel dosya URL'si (izin kontrolü), katalog dışı renderer (red), javascript: ve data: URL (düz metin), iki tenant çapraz erişim (resource, RPC, Socket.IO, dosya, YZ). CSP başlığı snapshot testi; Trusted Types Report-Only ihlali sıfır.",
+   "note": "Hata enjeksiyonu: kesik yanıt, zaman aşımı, 429 fırtınası, worker yeniden başlatma, sessiz bozuk çıktı → yakalanmamış istisna sıfır, klasik görünüm veya son geçerli spec, çift işlem yok.",
+   "tests": [
+    "TP-13",
+    "AT-09"
+   ],
+   "decisions": [
+    "app-security",
+    "tenant-isolation",
+    "csp"
+   ]
+  },
+  {
+   "id": "K6",
+   "group": "K",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "Frappe",
+   "title": "Model ve prompt yaşam döngüsü",
+   "requirement": "Alias değil tarihli model kimlikleri. Yayın manifesti model, prompt, politika, tool şeması, katalog ve şema fingerprint sürümlerini birlikte taşır ve her Run kaydına yazılır. Yeni model yayın öncesi altın set + \"önceden geçen görev onaysız başarısız olamaz\" kuralı + %5 ile %10 kanarya (tenant veya kullanıcı bazlı) + tek adımda geri alma. Sağlayıcı emeklilik tarihinden en az 30 gün önce yedek model test edilir.",
+   "note": "Görev başına maliyet model × prompt × katalog kırılımında ve şirket başına günlük raporlanır; şirketin aylık bütçesi (E7, karar kitabı Y10) bu rapordan izlenir; circuit breaker bütçe aşımında yeni yan etki başlatmaz. Kendi sunucumuzdaki model için de aynı sürüm kaydı, kanarya ve geri alma kuralı geçerlidir (G4).",
+   "tests": [
+    "TP-11",
+    "AT-01"
+   ],
+   "decisions": [
+    "model-lifecycle",
+    "ai-budget"
+   ]
+  },
+  {
+   "id": "K7",
+   "group": "K",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "CI",
+   "title": "Dikey dilim kapısı ve canlıya çıkış",
+   "requirement": "Faz yoktur; iş uçtan uca dikey dilimlerle ilerler (karar kitabı C05) ve her dilim kendi içinde her katmanı bitirir. Dilimler sırayla (şelale düzeninde) ilerler ve her dilimin içi aynı sırayı izler: test planı → veri modeli (DocType kataloğu) → sözleşme ve örnekler → geliştirme → kabul ve dış inceleme (karar kitabı V09 notu, T02). Bir dilimin kapısı, o dilime atanmış bütün MUST satırları en az \"kanıtlı\" (O2) olmadan, o dilimin yayın kapısı deneyleri \"geçti\" olmadan ve açık kararlarından o dilime bağlı olanlar kapanmadan açılmaz. Kapısı açılan dilim canlıya (ilk dilim pilot müşterilere) çıkar; sonraki dilim ancak ondan sonra başlar.",
+   "note": "Ürün sıfırdan kurulduğu için Desk'ten geçiş, parity matrisi, geçiş provası ve Desk'e dönüş provası yoktur (karar kitabı U01; C10 uygulanmaz). Feature flag ve kanarya, canlıdaki bir dilimin içinde yeni yeteneklerin açılışı içindir; hatalı renderer veya capability tek başına kapatılabilir; veri migration'ı için bayrak kapatmak tek başına rollback değildir. Tarih ile kapı çatışırsa tarih kayar, kapı kısaltılmaz: güvenlik ve kimlik kapıları hiçbir takvim için atlanmaz (çelişki notu).",
+   "tests": [
+    "TP-17"
+   ],
+   "decisions": [
+    "migration",
+    "rollout",
+    "discovery-work",
+    "timeline",
+    "unknown-method"
+   ]
+  },
+  {
+   "id": "K8",
+   "group": "K",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "CI",
+   "title": "CI/CD duruşu ve geliştirici YZ kuralları",
+   "requirement": "main ve release dalları korunur: PR zorunlu, en az 1 insan onayı (bot veya YZ onayı sayılmaz), yeni push'ta bayat onay düşer, CODEOWNERS, zorunlu kontroller, force push yasak, imzalı commit. YZ ajanları (Claude Code, Codex, Copilot) yalnızca PR açar; korumalı dala push edemez, onaylayamaz, birleştiremez; YZ PR'ları etiketlenir. Ekip proje sahibi ve YZ kodlama ajanlarından oluştuğu için (karar kitabı E01) insan onayını proje sahibi verir; kodu yazmayan ikinci bir YZ ajanının incelemesi her PR'da zorunludur ama insan onayının yerine geçmez.",
+   "note": "Geliştirici YZ ile kod üretirken arketip, kullanım örneği ve zorunlu kontroller verilir; üretilen ekran aynı import sınırı, typecheck, izin ve bileşen test kapılarından geçer. Frontend build tek adımda geri alınabilir; eski istemci yeni gateway ile en az iki sürüm veya 90 gün uyumludur (H3, K15).",
+   "tests": [
+    "TP-17"
+   ],
+   "decisions": [
+    "ai-codegen",
+    "governance",
+    "hosting"
+   ]
+  },
+  {
+   "id": "K9",
+   "group": "K",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "CI",
+   "title": "QA kanıt kaydı",
+   "requirement": "Her yayın kapısı için kanıt kaydı tutulur: tarayıcı, işletim sistemi, cihaz sınıfı ve yön, giriş biçimi (fare, dokunma, klavye, ekran okuyucu, uzaktan kumanda) profili; sonuç; kanıt bağlantısı (ekran görüntüsü, HAR, video, log). Dört sonuç vardır ve yalnızca \"geçti\" kapıyı açar (karar kitabı C06): \"geçti\" kapıyı açar; \"kaldı\" kapıyı kapalı tutar; \"çalıştırılmadı\" (not_run) da kapıyı kapalı tutar; \"uygulanmaz\" yalnızca ürüne uymayan kontrol için, yazılı gerekçeyle ve proje sahibinin onayıyla verilir ve sürüm notunda görünür.",
+   "note": "Örnek: Apple girişi o dilimde açılmıyorsa AT-19'un Apple satırı \"uygulanmaz\" olur; açılıyor ama test ortamı kurulamadıysa \"çalıştırılmadı\" olur ve dilim kapısı açılmaz. Bağımsız QA ile geliştirici doğrulaması ayrıdır: kabul deneyleri (AT-xx) geliştirici ve YZ ajanları tarafından koşulur, yayın kapısı olanlar dilim kapısında bağımsız kişi (pilot müşteri kullanıcısı veya dış uzman) tarafından gerçek cihazda tekrarlanır. Deney sonuçları K1–K16 kapılarına bağlanır.",
+   "tests": [
+    "TP-17"
+   ],
+   "decisions": [
+    "quality-gates",
+    "test-matrix"
+   ]
+  },
+  {
+   "id": "K10",
+   "group": "K",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "Frappe",
+   "title": "Kurtarma: SLO, RPO/RTO ve restore provası",
+   "requirement": "SLO, RPO ve RTO değerlerini iş sahibi belirler ve belgeye yazılır; belirlenmeden üretim taahhüdü verilmez. Restore provası ayrı ortamda yapılır ve belgeler, dosyalar, rapor/workspace tanımları, Run ve ChangeSet kayıtları ile aralarındaki ilişkiler birlikte geri gelir; kaybolan veya kopan ilişki provayı başarısız sayar.",
+   "note": "Prova her major sürümden önce ve her dilim kapısında en az bir kez koşar; süre ve sonuç K9 kanıt kaydına yazılır. Frontend, restore sonrası eski önbelleği ve açık Run aboneliklerini geçersiz kılar (şema fingerprint ve izin sürümü değişir).",
+   "tests": [
+    "TP-14"
+   ],
+   "decisions": [
+    "recovery",
+    "hosting"
+   ]
+  },
+  {
+   "id": "K11",
+   "group": "K",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "CI",
+   "title": "Branding ve lisans kapısı: kimlik yüzeyleri",
+   "requirement": "Marka taraması iki açık listeyle çalışır. Kaldırılacaklar: altyapı markaları (Keycloak, Keycloakify, Frappe, ERPNext) ve \"Powered by\" ibareleri; giriş, kayıt, parola sıfırlama, hesap ekranlarında ve e-posta şablonlarında bulunursa PR bloklanır. Korunacaklar: giriş sağlayıcısı düğmeleri (Google, Apple) yalnızca izinli düğme bileşeninde ve sağlayıcının kuralına uygun; lisans ve telif bildirimleri. Korunan liste taramanın açık istisnasıdır. Her PR'da SBOM üretilir; lisans kapısı A5 listesini kimlik deposuna (tema, eklentiler, OTP gateway) da uygular.",
+   "note": "Kapı otomatik kontrol sağlar, otomatik garanti sağlamaz. İnsan kısmı: Google ve Apple düğme kurallarına uygunluk, SMS başlığı ve WhatsApp işletme adı onayı, belirsiz lisans ve yeni kimlik bileşeni incelemesi; sonuç kanıt kaydına (K9) yazılır.",
+   "tests": [
+    "TP-03"
+   ],
+   "decisions": [
+    "kimlik:kapilar",
+    "themes",
+    "licensing"
+   ]
+  },
+  {
+   "id": "K12",
+   "group": "K",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "CI",
+   "title": "Kimlik çekirdeği incelemesi ve eklenti kabulü",
+   "requirement": "Kimlik çekirdeği: Keycloak eklentileri, realm akışları ve istemci ayarları, Frappe kimlik köprüsü, OTP gateway'in gönderim sınırları. Bu alana dokunan PR ilgili kabul testi senaryosu olmadan açılmaz. İnceleme iki katmandır (karar kitabı K10, E01): günlük değişikliği kodu yazmayan bir YZ ajanı ve proje sahibi inceler, PR korumalı kimlik entegrasyon dalına birleşir; bu daldaki değişiklik canlıya ancak dilim kapısında dış güvenlik danışmanı inceleyip onayladıktan sonra çıkar. Proje sahibi kimlik çekirdeği değişikliğini tek başına canlıya çıkaramaz. Aynı kural Frappe custom app'in güvenlik açısından kritik kısımlarına (kimlik köprüsü, capability yürütücüsü, risk ve grant politikası, Run kurtarma) uygulanır; custom app'in geri kalanı dış incelemesiz ilerler (karar kitabı E02; çelişki notu). Kapanan kimlik bulgularının geri gelmemesi için belge ve kod QA'sında regresyon listesi tutulur (karar kitabı K20; K16). Eklenti ancak altı koşulu sağlarsa seçilir: lisans kapısı; sabit Keycloak sürümüyle birlikte derleme ve test; kendi testlerinin CI'da koşması; yakın tarihli sürüm ve güvenlik bildirim yolu; bağımsız kod incelemesi (güvenli rastgele kod, sabit zamanlı karşılaştırma, deneme sınırı, tek kullanım, süre, başlatılan girişe bağlılık); bu belgenin kabul testleri.",
+   "note": "Başarısızlık kuralı: testleri geçemeyen eklenti için otomatik olarak özel kod yazdırılmaz; önce neden bulunur, sonra başka bileşen, kullanımı daraltmak veya ayrı güvenlik incelemeli özgün geliştirme değerlendirilir. Özgün kod, başarısız bileşenden daha güvenli olduğunu testle kanıtlar; daha az satır kanıt değildir. YZ ajanı main'e push etmez (K8). Keycloak'a alternatif kimlik sunucuları yılda bir yeniden değerlendirilir (karar kitabı K11; M1).",
+   "tests": [
+    "TP-12",
+    "TP-16"
+   ],
+   "decisions": [
+    "kimlik:inceleme",
+    "kimlik:kapilar",
+    "governance",
+    "ai-codegen"
+   ]
+  },
+  {
+   "id": "K13",
+   "group": "K",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "Frappe",
+   "title": "Canlı YZ ürün metrikleri ve eşik alarmları",
+   "requirement": "Teknik ölçütlere (K3) ek olarak kullanıcı davranışı ölçülür (karar kitabı Y13): öneri kabul oranı, kabulden önce düzenleme oranı, geri alma oranı, klasik yola dönüş oranı, bırakma oranı (Run yarıda bırakıldı), proaktif öneri kapatma oranı (I11) ve belirsiz kayıt oranı (I4). Oranlar denetim olaylarından (G5) sunucuda, yüzey, capability, model ve şirket kırılımında günlük hesaplanır; her oranın eşiği ve alarmı vardır.",
+   "note": "Başlangıç eşikleri klasik yolun ölçümünden türetilir (karar kitabı Y11; AT-13) ve yalnızca sıkılaşır. Eşik aşılınca önce ilgili yüzey kanarya grubuna daraltılır, sonra gerekirse kill switch kullanılır (E7). Metrikler kişi bazında performans değerlendirmesi için kullanılmaz; yalnızca yüzey ve model kalitesini ölçer.",
+   "tests": [
+    "TP-18"
+   ],
+   "decisions": [
+    "success",
+    "observability",
+    "ai-eval"
+   ]
+  },
+  {
+   "id": "K14",
+   "group": "K",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "CI",
+   "title": "Önce test: test stratejisi ve gereksinim-test bağı",
+   "requirement": "Geliştirmeden önce test yazılır (karar kitabı T02, \"TDD first\"): her dilimde önce o dilimin kabul deneyleri ve otomatik test paketleri yazılır ve kırmızı koşar, sonra kod yazılır. Test stratejisi ayrı bölümdedir: katmanlar (birim, sözleşme, bileşen, uçtan uca), ortamlar (yerel Colima, CI, staging), örnek veri, sabit cevap veren model taklidi ve deney şablonu. Her MUST satırı en az bir otomatik test paketine (TP-xx) veya kabul deneyine (AT-xx) bağlıdır (karar kitabı T01); bağlantısız MUST belgenin derlemesini kırar ve gereksinim × test tablosu her derlemede üretilir.",
+   "note": "Bağ bir tamlık kanıtı değildir: bir satırın bir teste bağlanması, testin o gereksinimi yeterince ölçtüğünü kanıtlamaz; bunu dilim kapısındaki inceleme kanıtlar. Deney ancak şablondaki ön koşul, adımlar, otomatik veya elle oluşu ve sahibi yazılıysa \"hazır\" sayılır.",
+   "tests": [
+    "TP-16"
+   ],
+   "decisions": [
+    "quality-gates",
+    "test-matrix"
+   ]
+  },
+  {
+   "id": "K15",
+   "group": "K",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "CI",
+   "title": "Ortamlar, dağıtım hattı ve önbellek politikası",
+   "requirement": "Dört ortam vardır (karar kitabı X06): yerel (macOS, Colima), CI (GitHub Actions), staging ve canlı (Hetzner, Debian, Docker Engine). Her PR CI'da test edilir; ana dala birleşen değişiklik otomatik olarak staging'e gider; canlıya çıkış insan onaylıdır ve tek adımda geri alınabilir. Ters vekil nginx'tir (X04). Önbellek politikası (X07): HTML hiçbir katmanda önbelleğe alınmaz (nonce, G3); içerik parmak izli JS, CSS ve font dosyaları uzun süre önbellekte kalır; eski sürüm dosyaları en az iki sürüm veya 30 gün sunucuda tutulur ki açık sekmeler güncelleme sırasında bozulmasın. İki dağıtım biçimi vardır (U10): SaaS ve müşteri sunucusuna kurulum; kurulum paketi aynı imajlardan ve aynı yapılandırma dosyalarından üretilir.",
+   "note": "DevOps dostu olmak (X06 notu) şu anlama gelir: bütün altyapı ve yapılandırma koddadır (compose ve dağıtım dosyaları, nginx yapılandırması, realm dosyaları M14); yerel ortam tek komutla ayağa kalkar; her servisin sağlık uç noktası ve yapılandırılmış logu vardır; sırlar yalnızca ortam değişkeninden gelir; veritabanı göçleri geri alınabilir ve staging'de önce koşar; dağıtım tek komutla ve kayıtlıdır. Yerelde Docker Desktop kullanılmaz, Colima kullanılır; sunucularda Docker Engine kullanılır. Sürüm ve güvenlik duyuruları A7'deki gibi izlenir (E06).",
+   "tests": [
+    "TP-17"
+   ],
+   "decisions": [
+    "hosting",
+    "rollout",
+    "recovery"
+   ]
+  },
+  {
+   "id": "K16",
+   "group": "K",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "CI",
+   "title": "Belge ve karar yönetimi",
+   "requirement": "Bu belge tek belge olarak kalır (karar kitabı E04) ve üç gezinme yardımı taşır: başta sözlük ve okuma yolu, sonda değişiklik günlüğü. Her terim sözlükte ve ilk geçtiği yerde kısa açıklamayla bulunur; çok anlamlı kelimeler (ör. \"yüzey\", \"sid\") sözlükte ayrılır (E08). Her açık kararın sahibi ve son dilimi yazılıdır (E03): ürün kararları proje sahibindedir; teknik kararlar önerilen varsayılanla ilerler ve teknik inceleyici onayıyla kapanır; son dilimine kadar kapanmayan karar o dilimin kapısını kapalı tutar. Belgenin kendi kontrol betikleri (T08, K20): her gereksinim geçerli bir dilim taşır; her MUST bir teste bağlıdır; sözlükte olmayan kısaltma derlemeyi kırar; kapanan bulguların yasak ifadeleri ve zorunlu ifadeleri regresyon listesinde denetlenir; \"kabul deneyi\" diye anılan her kimlik bir AT'ye, her gönderme hedefine gider.",
+   "note": "İş takibi aracı kararı ertelendi (karar kitabı E05; aday: Plane). Araç seçilene kadar derleme gereksinimleri araçtan bağımsız bir JSON dosyası olarak üretir (docs/gereksinimler.json); seçilen araca aktarım bu dosyadan yapılır.",
+   "tests": [
+    "TP-16"
+   ],
+   "decisions": [
+    "governance",
+    "quality-gates"
+   ]
+  },
+  {
+   "id": "L1",
+   "group": "L",
+   "level": "MUST",
+   "slice": 2,
+   "actor": "Frappe",
+   "title": "Arama: anahtar kelime + vektör",
+   "requirement": "Hibrit arama iki indeksle çalışır: anahtar kelime (kayıt alanları) ve vektör (belge ve açıklama içeriği). Sıralama iki skoru birleştirir; her sonuç ve öneri sorgu anında izin kontrolünden geçer. Kayıt silinince veya izin kaldırılınca iki indeks de güncellenir; gecikme süresi boyunca sonuç yine sorgu anındaki izinle süzülür.",
+   "note": "Kabul: temsilî relevance veri seti ve eşik; yetkisiz kaydın başlığı, sayısı veya önerisi hiçbir yolda görünmez (AT-11); silinen kayıt belirlenen süre içinde iki indeksten de düşer.",
+   "tests": [
+    "TP-05",
+    "TP-08",
+    "AT-11"
+   ],
+   "decisions": [
+    "search-engine",
+    "knowledge-policy"
+   ]
+  },
+  {
+   "id": "L2",
+   "group": "L",
+   "level": "MUST",
+   "slice": 4,
+   "actor": "Frontend",
+   "title": "Harita: yönetilen servis",
+   "requirement": "Geolocation alanı ve harita görünümü yönetilen bir harita ve geocoding servisinden beslenir; servis adaptör arkasındadır, anahtarı BFF'de kısıtlıdır, maliyet ve veri gönderim politikası yazılıdır. Konum izni olmadan manuel adres ve koordinat girişi çalışır; her harita içeriğinin metin ve klavye alternatifi vardır; tile hatasında içerik kaybolmaz.",
+   "note": "",
+   "tests": [
+    "TP-08",
+    "TP-07"
+   ],
+   "decisions": [
+    "map-scope",
+    "fields"
+   ]
+  },
+  {
+   "id": "L3",
+   "group": "L",
+   "level": "MUST",
+   "slice": 2,
+   "actor": "Frontend",
+   "title": "Hiyerarşi: ağaç ve yetkili taşıma",
+   "requirement": "Derin ağaçlar tembel yüklenir ve breadcrumb ile gezilir. Düğüm taşıma ayrı bir MoveNode capability'sidir: sunucuda döngü kontrolü, hedef ebeveynde yazma izni, düğüm revizyonu kontrolü ve atomik taşıma. Sürükle-bırakın klavye alternatifi (taşı düğmeleri) vardır.",
+   "note": "Kabul: derin ağaç, yetkisiz ebeveyn, eski revizyonlu düğüm ve klavye ile gezinti senaryoları.",
+   "tests": [
+    "TP-04",
+    "TP-08"
+   ],
+   "decisions": [
+    "hierarchy",
+    "specialized"
+   ]
+  },
+  {
+   "id": "L4",
+   "group": "L",
+   "level": "MUST",
+   "slice": 2,
+   "actor": "Frontend",
+   "title": "Takvim görünümü",
+   "requirement": "Zaman içindeki kayıtlar takvimde görünür; tekrar eden olay semantiği, saat dilimi ve DST sınırları J5 kurallarıyla; sürükleyerek taşımanın klavye alternatifi vardır; çakışan kayıtlar görünür işaretlenir.",
+   "note": "Gantt ve kaynak planlayıcı da sürüm 1.0'dadır (karar kitabı C11) ve L10'da ayrı gereksinimdir; takvim ile aynı zaman politikasını ve aynı kayıtları kullanır.",
+   "tests": [
+    "TP-08",
+    "TP-19"
+   ],
+   "decisions": [
+    "schedule-scope",
+    "specialized",
+    "time-policy"
+   ]
+  },
+  {
+   "id": "L5",
+   "group": "L",
+   "level": "MUST",
+   "slice": 2,
+   "actor": "Frontend",
+   "title": "Aranabilir varlık kütüphanesi",
+   "requirement": "Dosyalar kayıtlara eklenmenin ötesinde ortak bir kütüphanede yaşar: arama, metadata, sürüm, yeniden kullanım (bir dosyayı birden çok kayda bağlama), kota ve yaşam döngüsü (arşiv, silme). Yükleme, önizleme, indirme ve silme yollarında aynı izin, içerik türü ve boyut kuralı geçerlidir (G2).",
+   "note": "",
+   "tests": [
+    "TP-05",
+    "TP-08"
+   ],
+   "decisions": [
+    "file-management",
+    "specialized"
+   ]
+  },
+  {
+   "id": "L6",
+   "group": "L",
+   "level": "MUST",
+   "slice": 4,
+   "actor": "Frontend",
+   "title": "Görsel workflow tasarımcısı",
+   "requirement": "Yöneticiler durum ve geçişleri görsel olarak tasarlar. Yayınlamadan önce graf doğrulanır (ulaşılamaz durum, çıkışsız durum, rol eksikliği); yayın sürümlüdür; yeni sürüm açık belgeleri nasıl etkilediğini gösteren migration önizlemesi üretir; önceki sürüme geri alınabilir.",
+   "note": "Kabul: açık belgesi olan bir workflow'u değiştir, migration senaryosunu çalıştır, geri al. Klavye ile düğüm ve kenar düzenleme.",
+   "tests": [
+    "TP-08",
+    "TP-04"
+   ],
+   "decisions": [
+    "workflow-builder"
+   ]
+  },
+  {
+   "id": "L7",
+   "group": "L",
+   "level": "MUST",
+   "slice": 2,
+   "actor": "Frontend",
+   "title": "İleri grid",
+   "requirement": "TanStack tabanlı ayrı yüzey: sunucu tarafı gruplama ve aggregate; pivot; toplu düzenleme ve batch commit (kısmi hatada kayıt başına sonuç, F6); range seçimi, clipboard, fill ve undo. Yapıştırılan veri satır ve alan bazında doğrulanır; commit öncesi diff gösterilir.",
+   "note": "Büyük ölçek kararıyla (karar kitabı U11) Dilim 2'de gelir. Kabul: milyonlarca satırlı sunucu veri kümesinde sunucu tarafı gruplama ve pivot, 100 bin+ satırlık görünümde kaydırma, yapıştırma doğrulaması, undo, ekran okuyucu için sayfalı alternatif; bundle ölçüsü ayrı (K3).",
+   "tests": [
+    "TP-10",
+    "TP-08"
+   ],
+   "decisions": [
+    "grid-needs",
+    "advanced-grid",
+    "collections",
+    "scale"
+   ]
+  },
+  {
+   "id": "L8",
+   "group": "L",
+   "level": "MUST",
+   "slice": 3,
+   "actor": "Frontend",
+   "title": "Yetkili dış kullanıcı portalı",
+   "requirement": "Müşteri ve tedarikçi self-servisi ayrı bilgi mimarisi ve ayrı veri projeksiyonuyla çalışır: portal rolü yalnızca kendi kayıtlarını ve izinli alanları görür; panel bileşenleri portal projeksiyonuyla yeniden kullanılır. Oturum açma, parola sıfırlama, davet ve oturum sonu akışları ayrı kabul edilir.",
+   "note": "İlk sürümde önce panel gelir, portal ve herkese açık site sonraki dilimlerdedir (karar kitabı R11): portal Dilim 3'te. Müşteri ve iş ortağı ikincil kullanıcı olarak seçildiği için (U06) portal sürüm 1.0'ın içindedir ama 3 aylık ilk teslimin (Dilim 1) içinde değildir (çelişki notu).",
+   "tests": [
+    "TP-05",
+    "TP-08"
+   ],
+   "decisions": [
+    "surface",
+    "audience",
+    "permissions"
+   ]
+  },
+  {
+   "id": "L9",
+   "group": "L",
+   "level": "MUST",
+   "slice": 3,
+   "actor": "Frontend",
+   "title": "Herkese açık içerik ve keşfedilebilirlik",
+   "requirement": "Public içerik Astro SSG ile üretilir: anonim HTML'de başlık, içerik, canonical, locale metadata ve doğru HTTP durum kodu; sitemap, hreflang ve yalnızca görünür içerikle eşleşen structured data. İndekslenebilir içerikte gizli kayıt bulunmaz; içerik güncellemesi build veya revalidation akışıyla yayına girer.",
+   "note": "Dilim 3'te, e-ticaret ile birlikte gelir (R11, M21). Kabul: anonim ve yetkili kullanıcıyla aynı sayfayı aç; structured data doğrulayıcıdan geçer; yayından kaldırılan içerik doğru durum koduyla döner.",
+   "tests": [
+    "TP-08",
+    "TP-10"
+   ],
+   "decisions": [
+    "seo",
+    "discovery",
+    "surface"
+   ]
+  },
+  {
+   "id": "L10",
+   "group": "L",
+   "level": "MUST",
+   "slice": 2,
+   "actor": "Frontend",
+   "title": "Gantt ve kaynak planlayıcı",
+   "requirement": "Görevler ve iş kalemleri Gantt görünümünde planlanır (karar kitabı C11): görev bağımlılıkları (bitiş-başlangıç ve diğer türler), kritik yol vurgusu, kilometre taşları, kaynak (kişi, ekip, ekipman) atama ve kaynak yükü görünümü, aşırı yük uyarısı. Sürükleyerek taşıma ve süre değiştirme sunucuda revizyon kontrollü capability'dir (E3); bağımlılık döngüsü ve kaynak takvimi sunucuda doğrulanır. Her Gantt işleminin klavye alternatifi ve tablo görünümü vardır; ekran okuyucu görevleri ve bağımlılıkları liste olarak okur.",
+   "note": "Seçim yeni bir gereksinim ve deneme ister: Dilim 2'nin başında zaman kutulu bir deneme (PoC) büyük veri (10 bin görev), klavye erişimi ve lisans (A5; ticari Gantt bileşenleri yasak) üzerinden yapılır; PoC'nin sonucu bileşen seçimini belirler, kapsamı değil. Takvim ile aynı zaman politikası (J5) ve aynı kayıtlar kullanılır. Dilim 2'de gelir.",
+   "tests": [
+    "TP-08",
+    "TP-07"
+   ],
+   "decisions": [
+    "specialized",
+    "schedule-scope",
+    "time-policy"
+   ]
+  },
+  {
+   "id": "M1",
+   "group": "M",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "Kimlik",
+   "title": "Merkezi kimlik sunucusu: Keycloak, sabit sürüm, tek realm",
+   "requirement": "Ürün ailesinin kimlik sunucusu Keycloak'tır (Apache-2.0). 26.7 serisinin güncel yamasına sabitlenmiş resmi imajdan çalışır (28 Eylül 2026'da doğrulanan 26.7.4); çekirdek fork edilmez. Ürün ailesi tek realm'dir (Keycloak'ta kullanıcı havuzu, istemciler ve akışlardan oluşan alan); her uygulama ve her Frappe sitesi ayrı istemcidir. master realm yalnızca yöneticiler içindir; yönetim konsolu ayrı adreste ve IP izin listesi arkasındadır.",
+   "note": "Keycloak eklentileri Keycloak ile aynı Java sürecinde, sandbox olmadan çalışır; bu yüzden dışa çıkış izin listesi (PostgreSQL, OTP gateway, e-posta, Google ve Apple uç noktaları) ve eklenti kabul listesi (K12) zorunludur. Keycloak Organizations MVP'de kullanılmaz; kurumsal müşteri kendi kimlik sağlayıcısını bağlamak isterse değerlendirilir. Keycloak düşerse yeni giriş yapılamaz, açık oturumlar sürer: iki düğüm, yedek ve geri dönüş provası (K10). Alternatif kimlik sunucuları (ör. Casdoor) yılda bir, güvenlik kayıtları ve bu belgenin kabul testleri üzerinden yeniden değerlendirilir (karar kitabı K11).",
+   "tests": [
+    "TP-12",
+    "TP-03"
+   ],
+   "decisions": [
+    "kimlik:idp",
+    "kimlik:organizations",
+    "auth"
+   ]
+  },
+  {
+   "id": "M2",
+   "group": "M",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "Kimlik",
+   "title": "İstemci güvenliği: yalnızca kod akışı + PKCE",
+   "requirement": "Her istemcide yalnızca yetkilendirme kodu akışı açıktır, PKCE S256 zorunludur. Parolayla token alma (Direct Access Grants), implicit akış ve token exchange kapalıdır; kodu veya parolayı uygulamadan token uç noktasına gönderen özel grant türleri kullanılmaz. Yönlendirme ve çıkış dönüş adresleri tam eşleşmedir, joker karakter yoktur. Her istemcide back-channel logout adresi tanımlıdır. Kaba kuvvet koruması açık; aynı e-postayla ikinci hesap kapalı; e-posta doğrulaması zorunlu.",
+   "note": "Dayanak: RFC 9700 §2.4 parolayla token almayı yasaklar (\"MUST NOT\"); RFC 10017 (BCP 212, Ağustos 2026) tarayıcı tabanlı uygulamalarda oturumu sunucuda tutan deseni ilk sıraya koyar. Kanıt: realm dışa aktarımındaki bu bayraklar CI'da snapshot testiyle korunur; token uç noktasına parolayla gelen istek reddedilir (AT-22).",
+   "tests": [
+    "TP-12",
+    "AT-22"
+   ],
+   "decisions": [
+    "kimlik:ropc",
+    "kimlik:realm",
+    "auth"
+   ]
+  },
+  {
+   "id": "M3",
+   "group": "M",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "BFF",
+   "title": "Aynı origin oturum: token tarayıcıya inmez",
+   "requirement": "SPA sunan her hostta SPA'lar, Frappe API'si, dosyalar, Socket.IO ve kimlik köprüsü ters vekil arkasında aynı origin'de sunulur; app ve www ayrı origin'lerdir, çerez paylaşmaz (M20). Oturum Frappe'nin Secure, HttpOnly, SameSite=Lax çerezindedir. Tarayıcı erişim, yenileme veya ID token'ı, API anahtarı ya da JavaScript'in okuyabildiği oturum bilgisi taşımaz; localStorage, sessionStorage ve IndexedDB'de kimlik verisi yoktur. Ters vekil yalnızca izin listesindeki yolları Frappe'ye geçirir.",
+   "note": "Bu madde karar kaydının \"ayrı origin + BFF session\" seçiminin yerini alır (Açık kararlar). Ayrı bir BFF servisi yalnızca birden fazla backend aynı oturumla çağrılırsa ADR ile eklenir. Mobil uygulamalar için token tabanlı desen ayrı tasarımdır, bu belgenin kapsamı dışındadır. Desk yalnızca sistem yönetimi için ayrı yönetim adresinde ve aynı köprüyle girişle sunulur; son kullanıcı işi Desk'te yapılmaz (karar kitabı U01; B8).",
+   "tests": [
+    "TP-12",
+    "TP-13",
+    "AT-15"
+   ],
+   "decisions": [
+    "kimlik:frontend",
+    "auth",
+    "hosting",
+    "gateway"
+   ]
+  },
+  {
+   "id": "M4",
+   "group": "M",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "BFF",
+   "title": "Frappe kimlik köprüsü",
+   "requirement": "Frappe'ye giriş, Frappe'nin genel Social Login akışıyla veya hazır köprülerle değil, platformun kendi Frappe uygulamasıyla yapılır. Köprü: state, nonce ve PKCE doğrulayıcısını üretir ve kısa ömürlü HttpOnly çerezle girişi başlatan tarayıcıya bağlar; dönüşte state'in aynı tarayıcıya ait olduğunu doğrular ve tek kullanımlık siler; kodu arka kanalda PKCE ile değiştirir; ID token imzasını JWKS ile (anahtar kimliğine göre yenileyerek) ve algoritma izin listesiyle, issuer, audience, süre, nonce ve acr değerlerini doğrular; yalnızca izin listesindeki aynı-origin yollara döner. Back-channel logout ayrı sözleşmedir (M18).",
+   "note": "İncelenen sürüm: Frappe v16.35.0, frappe/utils/oauth.py. Rehberin bu koda dair dört iddiası tek tek karşılaştırıldı ve hepsi aynı ölçüde doğrulanmış sayılmadı: state için \"yalnızca varlık kontrolü\" ifadesi eksiktir; state sunucu önbelleğinde süreli ve tek kullanımlıktır. Kalan farkların ayrıntısı bildirim kanalına iletilene kadar bu herkese açık belgede yazılmaz; bildirim taslağı proje sahibine ayrıca verildi ve gönderimi proje sahibindedir (karar kitabı K19; Yapılacaklar). Özel köprü, bu maddedeki gereksinimlerin hepsini tek yerde ve test edilebilir biçimde karşılamak için seçildi; seçim tek bir bulguya dayanmaz. Müşteriler için Frappe'nin parola formu, e-posta bağlantısıyla giriş ve Social Login Key kayıtları kapalıdır; acil durum yönetici girişi IP izin listesiyle kalır. İmza doğrulaması yerleşik kütüphaneyle (PyJWT) yapılır; elle kriptografi yazılmaz. Köprü için yazılı tehdit modeli ve canlı öncesi bağımsız güvenlik testi zorunludur (K12, AT-18).",
+   "tests": [
+    "TP-12",
+    "AT-18"
+   ],
+   "decisions": [
+    "kimlik:kopru",
+    "auth",
+    "app-security"
+   ]
+  },
+  {
+   "id": "M5",
+   "group": "M",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "Frappe",
+   "title": "Kimlik eşlemesi ve canlı yetki",
+   "requirement": "Frappe kullanıcısı Keycloak kimliğine issuer + sub ile bağlanır (Kimlik Bağı; ikisi birlikte benzersiz); e-posta yalnızca özniteliktir ve kalıcı eşleme için kullanılmaz. Bağın ilk kez nasıl kurulacağı M16 ve M17'dedir. Keycloak'ta e-posta değişince bağlı Frappe kullanıcısı güncellenir; yeni e-posta başka kullanıcıyla çakışırsa giriş durur. Yetki token'dan değil Frappe kayıtlarından (Organizasyon Üyeliği, Uygulama Yetkisi, KYC/KYB durumu) her istekte okunur; token'daki bilgi yalnızca ipucudur.",
+   "note": "Frappe'de User kaydının adı e-posta adresidir; e-posta değişikliği bu yüzden köprüde ayrıca ele alınır. Kimlik alanları (e-posta, ad, soyad, telefon) Frappe arayüzünde salt okunur yansımadır; değişiklik Keycloak'ta yapılır (M6). Kullanıcı istekleri tek bir yönetici API anahtarıyla yürütülmez. KYB reddedilince kritik işlemler token süresini beklemeden kapanır (AT-21).",
+   "tests": [
+    "TP-12",
+    "AT-21"
+   ],
+   "decisions": [
+    "kimlik:eslesme",
+    "kimlik:is-kurallari",
+    "permissions"
+   ]
+  },
+  {
+   "id": "M6",
+   "group": "M",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "Frontend",
+   "title": "SPA oturum davranışı: CSRF, oturum sonu, çok sekme",
+   "requirement": "SPA CSRF belirtecini köprünün oturum uç noktasından alır ve her yazma isteğinde X-Frappe-CSRF-Token başlığıyla gönderir. 401'de taslağı kaydeder ve dönüş yoluyla köprünün giriş adresine tam sayfa yönlenir; Keycloak oturumu sürüyorsa kullanıcı soru görmeden döner. 403 her zaman oturum sonu değildir: SPA oturum uç noktasına sorar; kullanıcı misafirse girişe yönlenir, değilse izin hatası gösterir; yönlendirme döngüsü oluşmaz. Çıkış ve kullanıcı değişimi aynı origin'deki bütün sekmelere yayılır (BroadcastChannel): önbellek temizlenir, soket kapanır. Oturum bilgisi M22'deki oturum uç noktasından gelir. Bu temizlik kullanıcı deneyimidir; yetkinin kesilmesi sunucudadır (M19).",
+   "note": "Sessiz giriş iframe ile değil tam sayfa yönlendirmeyle yapılır; üçüncü taraf çerez kısıtları iframe'i güvenilmez kılar. Boşta kalma süresi dolmadan kullanıcı uyarılır ve süreyi uzatabilir (WCAG 2.2.1); mutlak bitiş yaklaşınca uzatma yolu Keycloak ile yeniden doğrulamadır ve taslak korunur (M25). Kimlik ve güvenlik ayarları (parola, passkey ekleme, e-posta değişikliği) SPA'da form olarak değil, Keycloak'ın uygulama başlatmalı eylemleriyle (kc_action) Keycloak sayfasında yapılır, kullanıcı sonra SPA'ya döner. Kullanıcı hesabını kendisi kalıcı olarak silemez; hesabını kapatır (devre dışı bırakma) ve kalıcı silmeyi destek talebiyle ister (karar kitabı K14; M26). Başka kullanıcıyla giriş önceki önbelleği ve taslağı temizler (B5).",
+   "tests": [
+    "TP-12",
+    "TP-08"
+   ],
+   "decisions": [
+    "kimlik:frontend",
+    "auth",
+    "cache-isolation"
+   ]
+  },
+  {
+   "id": "M7",
+   "group": "M",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "Kimlik",
+   "title": "Giriş ve kayıt ekranları: Keycloakify, erişilebilir kimlik doğrulama",
+   "requirement": "Giriş, kayıt, parola sıfırlama ve kod ekranları Keycloakify (MIT; doğrulanan 11.16.0) ile ürünün token'larından (C2) üretilen Keycloak temasıdır; hesap ekranı (Account v3) ve e-posta şablonları aynı token kaynağından gelir. Parola ve kod formu yalnızca bu sayfalardadır. WCAG 2.2 3.3.8 (AA): yapıştırma ve parola yöneticisi hiçbir alanda engellenmez; autocomplete değerleri doğrudur (username, current-password, new-password, one-time-code; passkey için \"username webauthn\"); kod alanı tek input'tur, altı ayrı kutu değildir; hata metni alana aria-describedby ile bağlıdır; yeniden gönderme geri sayımı her saniye duyurulmaz.",
+   "note": "Yoğun anda giriş, yüzde 95'inde en fazla 5 saniyede tamamlanır (karar kitabı K09); ölçüm Keycloak sayfasının açılışından SPA'ya dönüşe kadardır ve yük testinde (K3) koşar. Giriş sayfası panelden sıkı bir bütçeyle ölçülür (başlangıç 100 KB gzip JS, yalnızca düşer); tam antd yerine token'lar ve hafif bileşenler kullanılır, seçim ölçümle ADR'de. Metinler TR ve EN; hata ve bilgi metinleri hesabın var olup olmadığını sızdırmaz. Türkçe büyük/küçük harf dönüşümü (İ, ı) e-posta eşleşmesinde test edilir (AT-19). Tema değişikliği görsel regresyon ve axe kapısından geçer (K4).",
+   "tests": [
+    "TP-12",
+    "TP-07",
+    "AT-19"
+   ],
+   "decisions": [
+    "kimlik:tema",
+    "a11y-target",
+    "locales"
+   ]
+  },
+  {
+   "id": "M8",
+   "group": "M",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "Kimlik",
+   "title": "Giriş yöntemleri yöntem bazında kabul edilir",
+   "requirement": "Sürüm 1.0'da yedi yöntem vardır (karar kitabı K05) ve her biri kendi kabul testi (AT-19) yeşil olmadan arayüzde görünmez. Dilim 1: parola + e-posta doğrulaması, Google, passkey (Keycloak'ın kendi özellikleri). Dilim 2: Apple (Keycloak'ta yerleşik değildir; aday eklenti Apache-2.0 lisanslı ve 26.x destekli) ve e-posta ile gelen kod (eklenti). Dilim 3: SMS kodu, WhatsApp ve Telegram kodu (OTP gateway, M15). Passkey yöneticiler ve KYC inceleyicileri için zorunludur; SMS, WhatsApp ve Telegram kodu yalnızca müşteri girişinde kullanılır. E-posta birincil kimliktir; telefon ikinci kanaldır (karar kitabı K07). Kullanıcı adı telefon numarası olamaz; kayıt ve profil doğrulaması bunu reddeder. Doğrulama kanalı tenant yöneticisinin seçimidir: yalnız e-posta, yalnız telefon ya da iki aşamalı (hem e-posta hem telefon); seçim şirket ayarında durur ve o şirketin kullanıcılarına uygulanır.",
+   "note": "Magic link ertelendi (karar kitabı K06) ve açık gereksinim olarak görünür kalır: gelecekse Keycloak üzerinden gelir, ayrı bir servisle gelmez. Keycloak'ın kendisinde magic link yoktur; bilinen olgun eklenti Elastic License 2.0'dır ve yasaktır (A5); Apache-2.0 lisanslı tek aday Eylül 2026'da yayımlanmış ve olgunlaşmamıştır, K12'deki altı koşulu geçmeden seçilmez. Arayüz kimliği önce soran akışı kullanır: önce e-posta, sonra o hesap için etkin yöntemler; passkey tarayıcının otomatik önerisiyle (conditional mediation) gelir. Yalnızca ikinci faktör olarak tasarlanmış eklentilerde tek faktör kullanımı ayrıca test edilir. Numara devri ve SIM değiştirme riski nedeniyle yönetici erişimi ve KYC belgeleri SMS ile açılmaz; iki aşamalı doğrulamada bile ayrıcalıklı rol için passkey şarttır.",
+   "tests": [
+    "TP-12",
+    "AT-19"
+   ],
+   "decisions": [
+    "kimlik:yontemler",
+    "kimlik:passkey",
+    "kimlik:magic-link",
+    "kimlik:telefon"
+   ]
+  },
+  {
+   "id": "M9",
+   "group": "M",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "Frappe",
+   "title": "Adım yükseltme capability sözleşmesinde",
+   "requirement": "Capability manifesti her eylem için gereken doğrulama seviyesini (acr) ve azami kimlik doğrulama yaşını taşır. Köprü ID token'daki acr ve kimlik doğrulama zamanını Frappe oturumuna yazar; Frappe capability yürütücüsü seviyeyi yürütme anında kontrol eder ve yetersizse ayrı bir hata türü döner. Frontend taslağı, seçimi ve Run'ı kaydedip istenen seviyeyle Keycloak'a tam sayfa yönlenir. Dönüşte yürütücü aynı kullanıcı, aynı şirket ve aynı işlem bağlamını (Run, ChangeSet), güncel izni, onaylanan revizyonu (F8) ve doğrulama yaşını yeniden kontrol eder; biri tutmazsa uygulamaz ve yeniden inceleme ister. Kullanıcı adım yükseltmeyi iptal ederse Run onay bekler durumda kalır; iptal hiçbir zaman otomatik yazmaya dönmez. KYC belgesi görüntüleme ve yönetim işlemleri passkey seviyesini ister.",
+   "note": "Model seviye isteyemez, düşüremez veya atlayamaz; seviye kontrolü yalnızca Frappe'dedir. Adım yükseltme bekleyen Run worker tutmaz (E10). Önceden verilmiş sınırlı yetki (grant) adım yükseltme gerektiren eylemi kapsamaz. KYC belge erişimi ayrıca erişim kaydına yazılır (G5).",
+   "tests": [
+    "TP-12",
+    "AT-22"
+   ],
+   "decisions": [
+    "kimlik:step-up",
+    "risk-policy",
+    "approval"
+   ]
+  },
+  {
+   "id": "M10",
+   "group": "M",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "Frontend",
+   "title": "Uygulama kabuğu ve aktif şirket bağlamı",
+   "requirement": "Ortak kabuk (@genui/ui) kullanıcının yetkili olduğu uygulamaları Frappe'deki Uygulama Yetkisi kayıtlarından ve ürün ailesi kataloğundan (A8) listeler ve aktif şirket seçicisini barındırır. Seçilen şirket her istekte Frappe'de üyelikle yeniden doğrulanır. Oturumda tek aktif şirket vardır (karar kitabı V02): şirket değişince aynı origin'deki bütün sekmeler uyarılır ve yeniden yüklenir; uçuştaki istekler iptal edilir; sorgu önbelleği, açık Run'lar, grant'ler ve YZ bağlam manifesti şirket anahtarıyla ayrılır; başka şirketin verisi bağlama girmez. Aynı origin'deki uygulamalar arası geçiş yeniden giriş istemez.",
+   "note": "A şirketinde yönetici, B şirketinde danışman olan kullanıcının yetkileri karışmaz; URL veya parametre değiştirerek başka şirketin kaydına erişim reddedilir (AT-21). Düğme gizlemek güvenlik değildir; asıl kontrol Frappe API izinlerindedir. Üyelik iptalinin sunucudaki yürürlüğü M19'dadır. Tenant modeli hibrittir (karar kitabı K01; B9): paylaşımlı sitede şirket bir Organizasyon kaydıdır, ayrı sitedeki büyük veya regüle müşteride bir sitedir; sözleşme iki modelde aynıdır.",
+   "tests": [
+    "TP-05",
+    "AT-21"
+   ],
+   "decisions": [
+    "tenancy",
+    "tenant-isolation",
+    "context",
+    "kimlik:is-kurallari",
+    "kimlik:tenant"
+   ]
+  },
+  {
+   "id": "M11",
+   "group": "M",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "Frontend",
+   "title": "Onboarding ve üyelik yaşam döngüsü",
+   "requirement": "Keycloak kayıt formu minimum alan taşır (e-posta, ad, soyad; telefon, şirketin doğrulama kanalı ayarı telefonu istiyorsa zorunlu, değilse isteğe bağlı); e-postası olmayan kullanıcı hesap açamaz (karar kitabı K08); KYC/KYB alanları Keycloak'ta değil Frappe'dedir. Girişten sonra çok adımlı onboarding (rıza → organizasyon oluştur veya davet kabul → KYB/KYC → uygulama yetkisi → ilk görev) SchemaForm ile çizilir ve Onboarding İlerlemesi kaydıyla kaldığı yerden sürer. Davet tek kullanımlık, süreli ve davet edilen e-postaya bağlıdır. KYB/KYC kararı insan inceleyicidedir; ret, arayüzde nedeni ve sonraki adımıyla gösterilir.",
+   "note": "KYC belgesinden alan çıkarımı iki yoldan biriyle yapılır ve ikisi de şirket için panelden ayarlanır (karar kitabı K12 ve notu): alanları kullanıcı elle girer, ya da kendi sunucumuzdaki modelle yalnız alan çıkarımı yapılır (veri dışarı çıkmaz, M23). Öneri taslakta durur ve kullanıcı kabul eder; hiçbir onboarding adımı YZ kapalıyken tamamlanamaz hâle gelmez. KYC akışı Dilim 4'te gelir; Dilim 1'de onboarding organizasyon oluşturma ve davetle sınırlıdır. Şirketin son yöneticisi sahipliği devretmeden ayrılamaz (M26). Misafir sepetinin girişten sonra kullanıcıya bağlanması M21'dedir. Barındırma yurt dışında olduğu için KYC belgeleri dahil kişisel verinin aktarım dayanağı G8'dedir.",
+   "tests": [
+    "TP-08",
+    "TP-12"
+   ],
+   "decisions": [
+    "kimlik:is-kurallari",
+    "audience",
+    "surface"
+   ]
+  },
+  {
+   "id": "M12",
+   "group": "M",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "Frappe",
+   "title": "Rıza ve iletişim izni",
+   "requirement": "KVKK aydınlatma metni giriş ve kayıt sayfasından erişilebilir. Açık rıza ve pazarlama izni ayrı onay kutularıdır, önceden işaretli gelmez ve hizmetin koşulu yapılmaz. Her onay metin sürümü, zaman ve kanalla Rıza Kaydı'na yazılır; geri çekme verme kadar kolaydır ve aynı kayda düşer.",
+   "note": "YZ ile yurt dışında işleme için ayrı bir açık rıza satırı vardır (karar kitabı Y02; G8); bu rıza hizmetin koşulu yapılmaz, rıza vermeyen kullanıcının istekleri dış modele gitmez. Doğrulama kodu bilgilendirme mesajıdır; pazarlama izni Rıza Kaydı'nda ve İYS'de (İleti Yönetim Sistemi) tutulur ve İYS'de kayıtlı onay olmadan ticari ileti gönderilmez. Bu madde hukuki görüş değildir; ticari dağıtım modeli ve lisanslarla birlikte hukukçuya teyit ettirilir.",
+   "tests": [
+    "TP-08",
+    "TP-04"
+   ],
+   "decisions": [
+    "kimlik:riza",
+    "data-policy"
+   ]
+  },
+  {
+   "id": "M13",
+   "group": "M",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "Frontend",
+   "title": "White-label marka katmanı",
+   "requirement": "Tek token kaynağı (C2) dört çıktı üretir: antd ConfigProvider (panel ve uygulama SPA'ları), Keycloakify teması (giriş ve hesap), e-posta şablonları (Keycloak ve Frappe), Astro (herkese açık içerik). Tenant marka paketi sınırlıdır: ad, logo, birincil renk, e-posta gönderici adı, yasal metin bağlantıları. Birincil renkten türetilen tonlar kontrast kontrolünden geçer; AA'yı karşılamayan paket yayınlanmaz. Marka her yüzey için ayrı çözülür: giriş sayfası sunucunun bildiği anahtardan (istemci kimliği), Keycloak hesap ve e-postaları realm düzeyindeki özel tema mantığıyla, Frappe e-postaları organizasyon kaydından; çözülemeyen marka ürün markasına düşer, hiçbir zaman başka bir tenant'ın markasına. Marka URL parametresinden okunmaz. İlk teslimde seviye 2 vardır (karar kitabı U09): müşterinin logosu, adı ve rengi platformun alan adında görünür. Mekanizma: her müşteri şirketine platform alan adı altında bir host (ör. musteri.app.alanadi) ve Keycloak'ta o hosta ait ayrı bir istemci açılır; tek Keycloakify teması markayı bu istemcinin özniteliğinden, yalnızca izinli marka paketleri listesinden seçer; panel markayı oturum uç noktasındaki marka anahtarından (M22) alır.",
+   "note": "URL'den marka okumak, gerçek giriş sayfasını başka markayla gösteren oltalama sayfasını kolaylaştırır. Asistan adı markalanabilir; YZ olduğu, lisans ve telif bildirimleri gizlenmez. Kaldırılan altyapı markaları (Keycloak, Keycloakify, Frappe, ERPNext ve \"Powered by\" ibareleri) ile korunan giriş sağlayıcısı markaları (Google, Apple düğmeleri; sağlayıcı kurallarına göre) ayrı listelerdir (K11). Keycloak'ta hesap, yönetim ve e-posta teması realm düzeyindedir; istemci başına yalnızca giriş teması değişir. Bu yüzden Keycloak'ın gönderdiği e-postalarda (doğrulama, parola sıfırlama) müşteri markası tek realm e-posta temasının içinde, kullanıcının marka özniteliğine bakan şablon koşullarıyla verilir; bu yol yetmezse e-postayı Frappe'den göndermek ya da özel tema seçici eklentisi yazmak seçenektir. Seçim Dilim 1'deki bir denemeyle (PoC) yapılır; deneme bitene kadar Keycloak e-postaları ürün markasıyla gider ve bu durum Açık kararlar'dadır. Seviye 3 (müşterinin kendi alan adı) sürüm 1.0 kapsamında değildir.",
+   "tests": [
+    "TP-09",
+    "TP-12",
+    "AT-23"
+   ],
+   "decisions": [
+    "themes",
+    "token-pipeline",
+    "kimlik:tema"
+   ]
+  },
+  {
+   "id": "M14",
+   "group": "M",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "CI",
+   "title": "Realm yapılandırması kod olarak",
+   "requirement": "Realm, istemci, rol ve akış tanımları git'teki dosyalardan keycloak-config-cli (Apache-2.0) ile idempotent uygulanır; araç Keycloak'a yönetici parolasıyla değil, yalnızca bu iş için açılmış servis hesabıyla (client credentials) bağlanır. Yönetim panelinden elle değişiklik yapılmaz; her gece salt okunur bir iş canlı yapılandırmayı git ile karşılaştırır ve farkı raporlar. Boş ortamda dosyalardan kurulum testi CI'dadır.",
+   "note": "Uyum açığı: keycloak-config-cli'nin yayımlanmış son sürümü (6.5.1) Keycloak 26.5.5'e kadar test edilmiştir; karar gereği Keycloak 26.7'de kalınır ve 26.7 ile uyum CI'da kanıtlanmadan üretime alınmaz; uyum gelmezse takvim kayar (karar kitabı K18). Keycloak'ın başlangıçtaki realm içe aktarması yalnızca ilk kurulum içindir, eşitleme aracı değildir. İstemci sırları, SMTP ve gateway anahtarları ortam değişkenlerinden gelir; git'e girmez.",
+   "tests": [
+    "TP-12",
+    "AT-23"
+   ],
+   "decisions": [
+    "kimlik:config",
+    "governance"
+   ]
+  },
+  {
+   "id": "M15",
+   "group": "M",
+   "level": "MUST",
+   "slice": 3,
+   "actor": "Kimlik",
+   "title": "OTP gateway sınırları",
+   "requirement": "Kod teslimi ayrı bir FastAPI servisindedir (SQLAlchemy 2.0, Alembic, PostgreSQL). Kod hiçbir yerde saklanmaz ve hiçbir log'a düşmez; telefon numarası hash olarak tutulur; her istek tekrar koruma anahtarı (idempotency key) taşır. Numara, IP ve ülke başına gönderim sınırı, başlangıçta yalnızca +90, maliyet alarmı ve yedek kanal (SMS) vardır. \"Kodu kaydet, gönderme\" modu yalnızca test ortamında açılır.",
+   "note": "Arayüze etkisi: kanal değiştirme, yedek kanala düşme bildirimi ve bekleme süresi M7 kurallarıyla gösterilir. SMS pumping (botların sahte numaralara toplu kod istetmesi) risk bazlı doğrulamayla sınırlanır; doğrulama bulmacası kullanılırsa WCAG 3.3.8'e uygun alternatifi olur. Kanal kuralları: WhatsApp'ta tek kullanımlık kod yalnızca Meta'nın onaylı \"authentication\" şablonuyla gönderilir; Telegram'da kod Telegram Gateway API ile gönderilir; iki kanalın da şablon onayı veya hesabı yoksa yedek kanal SMS'tir. Gateway Dilim 3'te gelir (M8).",
+   "tests": [
+    "TP-12",
+    "AT-22"
+   ],
+   "decisions": [
+    "kimlik:otp"
+   ]
+  },
+  {
+   "id": "M16",
+   "group": "M",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "Kimlik",
+   "title": "Hesap oluşturma ve sosyal hesap bağlama",
+   "requirement": "Üç durum ayrı tanımlanır ve ayrı test edilir: yeni hesap, sosyal hesabı mevcut Keycloak hesabına bağlama, mevcut Frappe kullanıcısını ilk kez bağlama (M17). Sosyal girişte e-postası mevcut bir hesapla eşleşen kullanıcı, Keycloak'ın ilk sosyal giriş akışında mevcut hesabın kontrolünü kanıtlamadan bağlanmaz: o hesapla yeniden kimlik doğrulama veya o hesabın e-postasına giden doğrulama bağlantısı gerekir. Otomatik bağlama (\"Automatically set existing user\") kapalıdır. Oturumu açık kullanıcı bir sağlayıcıyı hesap ayarlarından bağlayabilir; bu yol da yeniden doğrulama ister.",
+   "note": "E-posta eşitliği kalıcı eşleme için kullanılmaz, yalnızca \"bu hesabı bağlamak ister misin\" önerisini tetikler; Keycloak kendi belgelerinde otomatik bağlamanın riskini ayrıca uyarır. Sağlayıcının \"e-posta doğrulandı\" beyanına güven (Trust Email) yalnızca yazılı güven politikasındaki sağlayıcılar için açılır ve tek başına bağlama izni vermez. Apple'ın gizli e-postası mevcut hesapla eşleşmez: yeni hesap açılmadan önce kullanıcıya \"zaten hesabın var mı\" yolu sunulur, bağlama giriş yaptıktan sonra hesap ayarlarından yapılır. Kabul: AT-18.",
+   "tests": [
+    "TP-12",
+    "AT-18"
+   ],
+   "decisions": [
+    "kimlik:eslesme",
+    "kimlik:yontemler",
+    "auth"
+   ]
+  },
+  {
+   "id": "M17",
+   "group": "M",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "BFF",
+   "title": "Mevcut Frappe kullanıcısını ilk kez bağlama",
+   "requirement": "Frappe'de önceden var olan kullanıcı için varsayılan yol kontrollü göçtür: yönetici başlatır, göç listesi ve denetim kaydıyla Kimlik Bağı önceden kurulur, kullanıcıya bildirim gider. Göç dışında ilk bağ ancak bağlama anında alınan taze bir kanıtla kurulur: köprü, Frappe hesabının kayıtlı e-postasına tek kullanımlık, kısa süreli bir bağlama kanıtı gönderir; kanıt bu bağlama işlemine, hedef Frappe kullanıcısına ve issuer + sub çiftine bağlıdır, başka bir işlemde, kullanıcıda veya kimlikte geçersizdir. Keycloak'taki geçmiş e-posta doğrulaması (email_verified) tek başına kanıt sayılmaz. Ek koşullar: Frappe kullanıcısının bu issuer için başka bağı yok; kullanıcının ayrıcalıklı rolü (sistem yöneticisi, yönetici rolleri, KYC inceleyicisi) yok; hesapta e-postadan güçlü bir ikinci faktör (ör. Frappe iki adımlı doğrulaması) tanımlı değil, çünkü e-posta kanıtı o politikayı aşamaz. Koşullardan biri tutmazsa bağ kurulmaz ve kontrollü göç yolu kullanılır.",
+   "note": "Kanıtın geçerlilik süresi başlangıçta 15 dakikadır ve yalnızca kısalır; sunucuda yalnızca kanıtın özeti tutulur, kullanıldığında veya süresi dolduğunda geçersizleşir. (issuer, sub) ve (kullanıcı, issuer) çiftleri veritabanında benzersizdir; aynı kimlikle eşzamanlı iki ilk giriş tek bağ ve tek kullanıcı üretir, ikincisi çakışma alır. E-posta başka bir Frappe kullanıcısıyla çakışırsa giriş durur ve destek kodu gösterilir (M24). Bağ kurulunca kullanıcıya ve güvenlik kaydına bildirim düşer; bağ kaldırma ve yeniden bağlama da denetim kaydına düşer. Kabul: AT-18, eski doğrulama bilgisiyle kanıtsız bağlamanın reddini ölçer.",
+   "tests": [
+    "TP-12",
+    "AT-18"
+   ],
+   "decisions": [
+    "kimlik:eslesme",
+    "kimlik:kopru",
+    "permissions"
+   ]
+  },
+  {
+   "id": "M18",
+   "group": "M",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "BFF",
+   "title": "Tek çıkış: logout token doğrulama sözleşmesi",
+   "requirement": "Köprü back-channel logout bildirimini ID token'dan ayrı kurallarla doğrular (OpenID Connect Back-Channel Logout 1.0 §2.4–2.8): imza realm anahtarlarıyla ve algoritma izin listesiyle (ör. RS256, ES256; none ve simetrik algoritmalar reddedilir); issuer, audience (bu istemci), iat ve exp; events alanında back-channel logout üyesi zorunlu; sid veya sub bulunmalı; nonce bulunmamalı; typ başlığı varsa logout+jwt olmalı. Geçersiz bildirim 400 ile reddedilir ve hiçbir oturumu kapatmaz. jti kısa süreli önbellekte tutulur; yinelenen bildirim yan etkisiz 200 döner.",
+   "note": "Oturum eşlemesi: Keycloak sid → bu sitedeki bütün hostların Frappe oturumları; Frappe önbelleğinde, TTL Keycloak SSO oturumunun azami ömrü kadar. Eşleme kaybolmuşsa (önbellek boşaldıysa) sub ile o kullanıcının bu issuer'dan açılmış bütün oturumları kapatılır. Bildirim kaybolursa oturum en geç mutlak bitiş zamanında kapanır (M25); Frappe'nin boşta kalma süresi etkinlikle uzadığı için üst sınır sayılmaz. Aynı doğrulama kütüphanesi ve algoritma izin listesi ID token için de kullanılır (M4). Kabul: AT-20.",
+   "tests": [
+    "TP-12",
+    "AT-20"
+   ],
+   "decisions": [
+    "kimlik:realm",
+    "kimlik:kopru",
+    "auth"
+   ]
+  },
+  {
+   "id": "M19",
+   "group": "M",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "Frappe",
+   "title": "Sunucu tarafı iptal: çıkış, devre dışı bırakma, üyelik iptali",
+   "requirement": "İptalin yürürlüğe girdiği yer sunucudur; SPA temizliği yalnızca kullanıcı deneyimidir. Çıkış ve back-channel logout Frappe oturumunu siler; sonraki HTTP isteği anında reddedilir. Hesabı devre dışı bırakmak dağıtık atomik bir işlem değil, izlenen bir orkestrasyondur: önce erişimi kesen adım (Frappe'de kullanıcıyı devre dışı bırak, bütün hostlardaki oturumlarını sil, grant'lerini iptal et), sonra Keycloak'ta kullanıcıyı devre dışı bırak ve oturumlarını sonlandır (back-channel logout tetiklenir). Adımlar idempotenttir ve bir devre dışı bırakma kaydında izlenir (istendi → Frappe tamam → Keycloak tamam, ya da uzlaştırma gerekli). Keycloak adımı başarısız olursa yeniden denenir ve uyarı üretilir; bu sürede erişim kapalı kalır, çünkü köprü devre dışı bir Frappe kullanıcısına oturum açmaz. Kısmi başarı hiçbir durumda erişimi yeniden açmaz; yeniden etkinleştirme ayrı ve açık bir yönetici işlemidir. Üyelik iptali veya KYB reddi o şirketteki yetkiyi bir sonraki istekte keser; kullanıcının o şirketteki grant'leri anında iptal edilir; Run her adım başında sahibinin güncel yetkisini yeniden doğrular, yetki yoksa yeni yan etki başlatmadan durur ve kısmi sonucu korur. Açık Socket.IO bağlantıları için azami yürürlük gecikmesi 60 saniyedir (karar kitabı K04); bu süreden sonra iptal edilen kullanıcıya yeni olay ulaşmaz.",
+   "note": "Yerel Frappe yolu bunu tek başına sağlamaz: Socket.IO aboneliği yalnızca katılım anında yetkilendirilir; HTTP oturumunu silmek açık soketi kapatmaz. Mekanizma kararlaştırıldı (karar kitabı K03): Frappe soket servisine eklenen küçük bir handler, her bağlantının oturumunu, kullanıcının etkinliğini ve aktif şirket üyeliğini periyodik olarak (en fazla 30 saniyede bir) yeniden doğrular; geçersizse bağlantıyı sunucu tarafında keser. 30 saniyelik aralık ile doğrulama süresi toplamı 60 saniye sınırının içinde kalır. Olaylar yalnızca kayıt referansı ve değişiklik sayacı taşır (B6); Run durumu ve ilerleme dahil her içerik REST ile çekilir ve orada anında kesilir. Kabul: AT-15, AT-20, AT-21 ve devre dışı bırakma için AT-26, istemci kapatma mesajını yok saysa bile.",
+   "tests": [
+    "TP-12",
+    "TP-05",
+    "AT-26"
+   ],
+   "decisions": [
+    "kimlik:is-kurallari",
+    "realtime",
+    "runs",
+    "permissions"
+   ]
+  },
+  {
+   "id": "M20",
+   "group": "M",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "BFF",
+   "title": "Host, çerez ve dönüş adresi kapsamı",
+   "requirement": "Her host kendi origin'idir ve Kimlik bölümündeki host tablosuna uyar. Frappe oturum çerezi host-only yazılır (Domain özniteliği yok, Path=/); hiçbir çerez üst alan adına yazılmaz. SPA sunan her host kendi /api, /private/files, /socket.io ve köprü yollarını kendi origin'inde sunar; her hostun dönüş ve çıkış dönüş adresi istemcide tam eşleşmeyle kayıtlıdır. Hostlar arası geçiş, Keycloak oturumuyla tam sayfa sessiz yönlendirme yapar ve o host için ayrı Frappe oturumu açar; bütün hostların oturumları aynı Keycloak sid eşlemesine yazılır.",
+   "note": "Üst alan adına yazılan bir Frappe çerezi Keycloak ve ileride Drupal hostlarına da giderdi. BroadcastChannel yalnızca aynı origin'deki sekmelere ulaşır; başka hosttaki sekmeler back-channel logout sonrasında bir sonraki istekte 401 alır, açık soketleri M19'daki yürürlük süresinde kapanır. Desk yalnızca sistem yönetimi için ayrı yönetim hostunda, IP izin listesiyle sunulur (U01). White-label seviye 2 için her müşteri şirketinin platform alan adı altında kendi hostu vardır (M13); bu hostlar da aynı kurallara uyar, TLS için joker sertifika kullanılır. Birden çok şirkete üye kullanıcı şirket değiştirdiğinde o şirketin hostuna tam sayfa, sessiz girişle geçer. Kabul: AT-20, AT-24.",
+   "tests": [
+    "TP-12",
+    "AT-24"
+   ],
+   "decisions": [
+    "hosting",
+    "auth",
+    "kimlik:frontend",
+    "kimlik:realm"
+   ]
+  },
+  {
+   "id": "M21",
+   "group": "M",
+   "level": "MUST",
+   "slice": 3,
+   "actor": "Frappe",
+   "title": "www hesap ve misafir sepeti sözleşmesi",
+   "requirement": "www'deki hesap, sepet ve ödeme sayfaları app ile aynı köprü ve oturum desenini kendi hostunda kullanır. Misafir sepeti host-only, HttpOnly bir sepet kimliğiyle tutulur. Girişten sonra misafir sepeti o kullanıcıya bir kez bağlanır: birleştirme sepet kimliğine göre idempotenttir, bağlanan misafir sepeti tüketilmiş işaretlenir ve ikinci bir kullanıcıya bağlanamaz. Kullanıcının zaten sepeti varsa iki sepet birleşir ve aynı ürünün miktarları toplanır (karar kitabı K13); fiyat ve stok yeniden doğrulanır; stok toplam miktarı karşılamıyorsa miktar stokla sınırlanır ve bu gösterilir. Birleştirmeden sonra kullanıcı \"sepetiniz birleştirildi\" bildirimini ve eklenen satırların listesini görür; tek eylemle birleştirmeyi geri alabilir (misafir sepetinden gelen satırlar çıkar). Çıkışta sepet kimliği tarayıcıdan silinir.",
+   "note": "Toplama kuralının riski (kullanıcı istemediği ürünü sepette bulabilir) bildirim ve geri alma ile hafifletilir; ödeme adımında sepet satırları yeniden gösterilir. Aynı cihazda kullanıcı değişimi (A çıkar, B girer) A'nın sepetini B'ye taşımaz. Dilim 3'te gelir (R11). Ödeme işlemini uygulamak bu belgenin kapsamı dışındadır; ödeme sağlayıcısı entegrasyonu ayrı sözleşmedir. Kabul: AT-24.",
+   "tests": [
+    "TP-08",
+    "AT-24"
+   ],
+   "decisions": [
+    "surface",
+    "audience",
+    "kimlik:frontend"
+   ]
+  },
+  {
+   "id": "M22",
+   "group": "M",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "BFF",
+   "title": "Oturum uç noktası sözleşmesi",
+   "requirement": "Köprünün oturum uç noktası SPA'ya yalnızca özet döner: durum (anonim, etkin, onboarding eksik, askıda), kullanıcı kimliği, görünen ad ve e-posta, aktif şirket ve üyelik rolü, izin sürümü, doğrulama seviyesi (acr) ve kimlik doğrulama zamanı, boşta kalma bitişi ve mutlak bitiş zamanı (M25), CSRF belirteci, realtime site ad alanı, marka anahtarı. Dönmeyenler: oturum anahtarı (sid), erişim, yenileme ve ID token'ları, telefon, KYC/KYB ayrıntısı ve izinlerin tam listesi; kayıt bazındaki izinler B3 ile gelir. Yanıt önbelleğe alınmaz (Cache-Control: no-store).",
+   "note": "CSRF belirteci oturum anahtarı değildir: tek başına oturum açmaz, yalnızca istek sahteciliğini önler. Durum \"askıda\" iken SPA yalnızca nedeni ve sonraki adımı gösterir. Adım yükseltme ihtiyacı bu uç noktadan değil, eylem başına hata türüyle gelir (M9).",
+   "tests": [
+    "TP-12",
+    "TP-01"
+   ],
+   "decisions": [
+    "kimlik:frontend",
+    "auth",
+    "cache-isolation"
+   ]
+  },
+  {
+   "id": "M23",
+   "group": "M",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "Frappe",
+   "title": "Kimlik verisi sınıfları ve YZ işleme sınırı",
+   "requirement": "Kimlik bölümündeki veri sınıfı tablosu bağlayıcıdır. Kimlik doğrulama sırları hiçbir modele ve log'a gitmez. Gerçek kişi KYC belgesi dış model sağlayıcısına hiçbir zaman gitmez. Kendi sunucumuzdaki modelle yalnızca alan çıkarımı yapılabilir (karar kitabı K12): bu yol şirket için panelden açılır veya kapatılır, varsayılanı kapalıdır ve kapalıyken alanlar elle girilir; yolun açılabilmesi için ADR, veri akışı envanterinde kaydı (G8) ve kendi değerlendirme seti gerekir. Çıkarım sonucu taslaktır; belge görüntüsü model sunucusunda saklanmaz. Şirket KYB belgesindeki gerçek kişi verisi maskelenmeden modele gitmez. Çıkarılmış ve onaylanmış alanlar olağan iş verisi politikasıyla işlenir. İnceleyici iç notu model bağlamına girmez. Bağlam manifesti (I9) her öğenin veri sınıfını taşır; sınıfı izin vermeyen öğe bağlama eklenemez.",
+   "note": "YZ önerisi her zaman taslaktır; kullanıcı kabul eder, karar inceleyicidedir. Onaylı yol kapalıyken aynı adım manuel tamamlanır ve bu yol ayrıca test edilir. Hassas veri sınıfı kendi sunucumuzdaki modelde işlenir (G4, karar kitabı Y01); hassas olmayan kişisel verinin yurt dışındaki modelde işlenmesi G8'deki rıza ve aktarım dayanağına bağlıdır (Y02).",
+   "tests": [
+    "TP-11",
+    "TP-05"
+   ],
+   "decisions": [
+    "data-policy",
+    "context",
+    "kimlik:is-kurallari"
+   ]
+  },
+  {
+   "id": "M24",
+   "group": "M",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "Frontend",
+   "title": "Kimlik hata ve kurtarma yolları",
+   "requirement": "Kimlik bölümündeki hata ve kurtarma matrisi bağlayıcıdır: her tetikleyici için ekran ve mesaj, güvenli ana eylem, korunan taslak ve sunucu sonucu tanımlıdır. Hiçbir hata yolu hesabın var olup olmadığını sızdırmaz, taslağı sessizce silmez, iptal edilen bir adımı otomatik yazmaya çevirmez. Keycloak erişilemezken açık Frappe oturumları sürer; yeni giriş için durum ve tekrar deneme yolu gösterilir.",
+   "note": "Metinler TR ve EN; her hata mesajı alana veya sayfa başlığına bağlıdır ve ekran okuyucuya bir kez duyurulur. Kabul: AT-25 matristeki her satırı adıyla koşar.",
+   "tests": [
+    "TP-12",
+    "AT-25"
+   ],
+   "decisions": [
+    "kimlik:yontemler",
+    "kimlik:frontend"
+   ]
+  },
+  {
+   "id": "M25",
+   "group": "M",
+   "level": "MUST",
+   "slice": 1,
+   "actor": "BFF",
+   "title": "Oturum süreleri: boşta kalma ve mutlak bitiş",
+   "requirement": "Frappe oturumunun iki ayrı sınırı vardır. Boşta kalma süresi etkinlikle uzar. Mutlak bitiş zamanı oturum açılırken köprü tarafından bir kez yazılır: Keycloak kimlik doğrulama zamanı + SSO oturumunun azami ömrü ile ürünün mutlak sınırından küçük olanı. Etkin istekler, \"süreyi uzat\" düğmesi, sekme geçişi, realtime trafiği ve Keycloak kesintisi mutlak bitişi ileri taşımaz; yeni mutlak bitiş yalnızca Keycloak'ta başarılı yeniden doğrulamadan (sessiz tam sayfa giriş dahil) sonra verilir. Mutlak bitiş geçince oturum sunucuda silinir ve istek 401 alır.",
+   "note": "Frappe v16.35.0'da oturum ömrü son güncellemeden hesaplanır ve etkinlikle yenilenir; isteğe bağlı session_end alanı yalnızca önbellekten okunan oturumda kontrol edilir, veritabanından geri yüklenen oturumda edilmez (frappe/sessions.py). Bu yüzden köprü mutlak bitişi oturum verisine (session_end) yazar ve her istekte çalışan kendi kancasıyla (before_request veya auth_hooks) hem önbellekten hem veritabanından gelen oturumda uygular; Frappe'nin yerleşik kontrolüne tek başına güvenilmez. Süreler rol bazlıdır (karar kitabı K02), boşta kalma / mutlak sınır olarak: sistem yöneticisi, şirket yöneticisi ve KYC inceleyicisi 30 dakika / 8 saat; operasyon kullanıcısı 2 saat / 12 saat; portal kullanıcısı 1 saat / 24 saat; kiosk oturumu 2 dakika boşta (M27). Birden çok rolü olan kullanıcıya en kısa süre uygulanır. Keycloak'ın SSO azami ömrü en uzun mutlak sınırdan (24 saat) kısa olamaz. Kaçan çıkış bildiriminin azami etkisi mutlak sınırdır (M18). Kabul: AT-20.",
+   "tests": [
+    "TP-12",
+    "AT-20"
+   ],
+   "decisions": [
+    "kimlik:oturum-sure",
+    "kimlik:kopru",
+    "auth"
+   ]
+  },
+  {
+   "id": "M26",
+   "group": "M",
+   "level": "MUST",
+   "slice": 2,
+   "actor": "Frappe",
+   "title": "Hesap kapatma, son yönetici ve şirket kapanışı",
+   "requirement": "Üç yaşam sonu durumu ayrı tanımlanır. (1) Hesap kapatma (karar kitabı K14): kullanıcı hesabını kendisi kapatabilir; bu, M19'daki devre dışı bırakma orkestrasyonudur. Kalıcı silme destek talebiyle yapılır; talep KVKK süresi içinde karşılanır, Keycloak kimliği silinir, Frappe kullanıcısı anonimleştirilir, yasal saklama gerektiren kayıtlar (ör. fatura) anonim kalır ve kullanıcıya sonuç özeti gönderilir. (2) Son yönetici (K15): şirketin son yöneticisi sahipliği başka bir üyeye devretmeden ayrılamaz, hesabını kapatamaz veya rolünü bırakamaz; sistem onu devir ekranına yönlendirir. (3) Şirket aboneliğinin kapanması (K16 ve notu): şirket 185 gün salt okunur olur ve bu sürede verisini dışa aktarabilir; süre sonunda veri arşive alınır veya silinir; kapanış, 30, 7 ve 1 gün kala ve bitişte yöneticilere e-posta ile bildirilir.",
+   "note": "Karar kitabında K16'nın seçilen seçeneği \"30 gün\" idi, notta \"185 gün\" yazıldı; notu kullanıcının son niyeti sayarak 185 gün uygulandı (not). Salt okunur dönemde YZ yüzeyleri kapalıdır, grant'ler ve çalışan Run'lar iptal edilir, dışa aktarım işi (D9) yetkili ve sürelidir. Arşiv veya silme seçimi şirketin kapanıştaki tercihidir; tercih yoksa silme uygulanır, yasal saklama gerektiren kayıtlar hariç. Dilim 2'de gelir; kabul: AT-31.",
+   "tests": [
+    "TP-04",
+    "AT-31"
+   ],
+   "decisions": [
+    "kimlik:is-kurallari",
+    "data-policy"
+   ]
+  },
+  {
+   "id": "M27",
+   "group": "M",
+   "level": "MUST",
+   "slice": 3,
+   "actor": "Frontend",
+   "title": "Ortak cihaz (kiosk) oturumu",
+   "requirement": "Birden fazla kişinin kullandığı ortak cihazda (karar kitabı K17): 2 dakika boşta kalınca oturum sunucuda kapanır; her kullanıcı değişiminde önbellek, taslak, çevrimdışı kuyruk ve tarayıcı veritabanı tamamen temizlenir; giriş cihazdaki passkey veya kayıtlı parola ile değil, kullanıcının kendi telefonuyla yapılır (telefondan onaylanan cihazlar arası passkey veya kod). Kiosk modu cihaz kaydıyla açılır; kiosk cihazında \"beni hatırla\", parola yöneticisi kaydı ve hassas taslağın cihazda tutulması kapalıdır.",
+   "note": "Kiosk kullanıcısı yalnızca kiosk için izinli capability'leri görür; destructive ve sensitive işlemler kioskta açılmaz. Cihaz sınıfı kurallarının geri kalanı J9'dadır. Dilim 3'te gelir; kabul: AT-32.",
+   "tests": [
+    "TP-12",
+    "AT-32"
+   ],
+   "decisions": [
+    "devices",
+    "kimlik:oturum-sure",
+    "kimlik:frontend"
+   ]
+  }
+ ],
+ "experiments": [
+  {
+   "id": "AT-01",
+   "dilim": 1,
+   "tur": "otomatik",
+   "sahip": "CI",
+   "onkosul": "Altın set, katalog ve prompt sürümü sabit; iki model kimliği tanımlı",
+   "gate": true,
+   "proves": [
+    "K2",
+    "K6"
+   ]
+  },
+  {
+   "id": "AT-02",
+   "dilim": 1,
+   "tur": "otomatik",
+   "sahip": "CI",
+   "onkosul": "EntityPicker'ın iki uygulaması ve katalog şema snapshot'ı",
+   "gate": false,
+   "proves": [
+    "C1"
+   ]
+  },
+  {
+   "id": "AT-03",
+   "dilim": 2,
+   "tur": "otomatik",
+   "sahip": "CI",
+   "onkosul": "Altın spec seti; ikinci render motoru adaptörü",
+   "gate": false,
+   "proves": [
+    "D1",
+    "H1"
+   ]
+  },
+  {
+   "id": "AT-04",
+   "dilim": 2,
+   "tur": "otomatik",
+   "sahip": "CI",
+   "onkosul": "Test taşıma adaptörü; A2UI dışa aktarım fikstürü",
+   "gate": false,
+   "proves": [
+    "H2",
+    "H3"
+   ]
+  },
+  {
+   "id": "AT-05",
+   "dilim": 1,
+   "tur": "otomatik",
+   "sahip": "CI",
+   "onkosul": "Hata enjeksiyonu açık; sahte model; yarım form ve Run",
+   "gate": true,
+   "proves": [
+    "E6",
+    "I6"
+   ]
+  },
+  {
+   "id": "AT-06",
+   "dilim": 1,
+   "tur": "otomatik",
+   "sahip": "CI",
+   "onkosul": "Yarı dolu form, üç child satır, üç seçili kayıt",
+   "gate": false,
+   "proves": [
+    "E1",
+    "E8",
+    "E9"
+   ]
+  },
+  {
+   "id": "AT-07",
+   "dilim": 1,
+   "tur": "otomatik",
+   "sahip": "CI",
+   "onkosul": "N-1 ve N-2 katalog tanımları; Custom Field değişikliği betiği",
+   "gate": false,
+   "proves": [
+    "B2",
+    "D8"
+   ]
+  },
+  {
+   "id": "AT-08",
+   "dilim": 1,
+   "tur": "otomatik",
+   "sahip": "CI",
+   "onkosul": "Üç tema, üç yoğunluk, iki marka paketi",
+   "gate": false,
+   "proves": [
+    "C3"
+   ]
+  },
+  {
+   "id": "AT-09",
+   "dilim": 1,
+   "tur": "yarı otomatik",
+   "sahip": "CI + dış güvenlik danışmanı",
+   "onkosul": "Zararlı belge, rich text, URL ve RPC fikstürleri",
+   "gate": true,
+   "proves": [
+    "G1",
+    "G2",
+    "G3",
+    "K5"
+   ]
+  },
+  {
+   "id": "AT-10",
+   "dilim": 1,
+   "tur": "otomatik",
+   "sahip": "CI",
+   "onkosul": "Aynı belge iki yazma yolunda; aynı idempotency anahtarı",
+   "gate": true,
+   "proves": [
+    "B1",
+    "B4",
+    "D4"
+   ]
+  },
+  {
+   "id": "AT-11",
+   "dilim": 1,
+   "tur": "otomatik",
+   "sahip": "CI",
+   "onkosul": "Açık oturumda rol ve User Permission değişikliği",
+   "gate": true,
+   "proves": [
+    "B3",
+    "L1"
+   ]
+  },
+  {
+   "id": "AT-12",
+   "dilim": 1,
+   "tur": "otomatik",
+   "sahip": "CI",
+   "onkosul": "İki tenant; yavaş istek; onay sonrası değişiklik",
+   "gate": false,
+   "proves": [
+    "B9",
+    "G6"
+   ]
+  },
+  {
+   "id": "AT-13",
+   "dilim": 1,
+   "tur": "elle",
+   "sahip": "Proje sahibi + 5–8 pilot kullanıcı",
+   "onkosul": "Klasik yolun ölçümü tamam; gerçek cihazlar; sentetik veya maskeli PIM verisi",
+   "gate": true,
+   "proves": [
+    "I10"
+   ]
+  },
+  {
+   "id": "AT-14",
+   "dilim": 1,
+   "tur": "yarı otomatik",
+   "sahip": "CI + pilot kullanıcı",
+   "onkosul": "Eksik alanlı 12 kayıt; sınırlı grant; sahte model ve gerçek model",
+   "gate": true,
+   "proves": [
+    "E5",
+    "F1",
+    "F2",
+    "F3",
+    "I10"
+   ]
+  },
+  {
+   "id": "AT-15",
+   "dilim": 1,
+   "tur": "otomatik",
+   "sahip": "CI",
+   "onkosul": "Aynı origin ters vekil; işbirliği etmeyen test istemcisi",
+   "gate": true,
+   "proves": [
+    "B5",
+    "B6",
+    "B10",
+    "M3"
+   ]
+  },
+  {
+   "id": "AT-16",
+   "dilim": 1,
+   "tur": "otomatik",
+   "sahip": "CI",
+   "onkosul": "Onaylı ChangeSet; eşzamanlı ikinci kullanıcı",
+   "gate": true,
+   "proves": [
+    "D4",
+    "E3",
+    "F8"
+   ]
+  },
+  {
+   "id": "AT-17",
+   "dilim": 1,
+   "tur": "otomatik",
+   "sahip": "CI",
+   "onkosul": "Kaos betikleri; tekrar korumalı ve korumasız sahte sağlayıcı",
+   "gate": false,
+   "proves": [
+    "E10"
+   ]
+  },
+  {
+   "id": "AT-18",
+   "dilim": 1,
+   "tur": "yarı otomatik",
+   "sahip": "CI + dış güvenlik danışmanı",
+   "onkosul": "Keycloak test realm'i; kurcalanmış token fikstürleri",
+   "gate": true,
+   "proves": [
+    "M4",
+    "M16",
+    "M17"
+   ]
+  },
+  {
+   "id": "AT-19",
+   "dilim": 1,
+   "tur": "yarı otomatik",
+   "sahip": "CI + proje sahibi (ekran okuyucu)",
+   "onkosul": "Yöntemin dilimi açık; Mailpit ve OTP taklidi",
+   "gate": false,
+   "proves": [
+    "M7",
+    "M8"
+   ]
+  },
+  {
+   "id": "AT-20",
+   "dilim": 1,
+   "tur": "otomatik",
+   "sahip": "CI",
+   "onkosul": "İki host; rol bazlı süreler; düşürülmüş logout bildirimi",
+   "gate": true,
+   "proves": [
+    "M18",
+    "M25"
+   ]
+  },
+  {
+   "id": "AT-21",
+   "dilim": 1,
+   "tur": "otomatik",
+   "sahip": "CI",
+   "onkosul": "İki şirket, çok şirketli kullanıcı, davetler",
+   "gate": true,
+   "proves": [
+    "B9",
+    "M5",
+    "M10"
+   ]
+  },
+  {
+   "id": "AT-22",
+   "dilim": 1,
+   "tur": "otomatik",
+   "sahip": "CI",
+   "onkosul": "Adım yükseltme gerektiren capability; kod deneme fırtınası betiği",
+   "gate": true,
+   "proves": [
+    "M2",
+    "M9",
+    "M15"
+   ]
+  },
+  {
+   "id": "AT-23",
+   "dilim": 1,
+   "tur": "otomatik",
+   "sahip": "CI",
+   "onkosul": "Boş ortam; marka paketleri; realm dosyaları",
+   "gate": false,
+   "proves": [
+    "M13",
+    "M14"
+   ]
+  },
+  {
+   "id": "AT-24",
+   "dilim": 3,
+   "tur": "otomatik",
+   "sahip": "CI",
+   "onkosul": "app ve www hostları; misafir ve kullanıcı sepetleri",
+   "gate": false,
+   "proves": [
+    "M20",
+    "M21"
+   ]
+  },
+  {
+   "id": "AT-25",
+   "dilim": 1,
+   "tur": "yarı otomatik",
+   "sahip": "CI + proje sahibi",
+   "onkosul": "Hata ve kurtarma matrisinin her satırı için fikstür",
+   "gate": false,
+   "proves": [
+    "M24"
+   ]
+  },
+  {
+   "id": "AT-26",
+   "dilim": 1,
+   "tur": "otomatik",
+   "sahip": "CI",
+   "onkosul": "Açık oturumlar, soket, grant ve Run; Keycloak adımı hata benzetimi",
+   "gate": true,
+   "proves": [
+    "M19"
+   ]
+  },
+  {
+   "id": "AT-27",
+   "dilim": 1,
+   "tur": "otomatik",
+   "sahip": "CI",
+   "onkosul": "Üç eşzamanlı kullanıcı; tenant ve global bayrak",
+   "gate": true,
+   "proves": [
+    "E7"
+   ]
+  },
+  {
+   "id": "AT-28",
+   "dilim": 1,
+   "tur": "otomatik",
+   "sahip": "CI",
+   "onkosul": "Kalan bütçesi 30 kayıt olan grant; iki eşzamanlı Run",
+   "gate": true,
+   "proves": [
+    "F3"
+   ]
+  },
+  {
+   "id": "AT-29",
+   "dilim": 4,
+   "tur": "otomatik",
+   "sahip": "CI",
+   "onkosul": "Çevrimdışı benzetim; dört oturum senaryosu",
+   "gate": true,
+   "proves": [
+    "E11"
+   ]
+  },
+  {
+   "id": "AT-30",
+   "dilim": 1,
+   "tur": "otomatik",
+   "sahip": "CI",
+   "onkosul": "Uzun form; tarayıcı sürecini öldüren betik; hassas alan",
+   "gate": true,
+   "proves": [
+    "E2"
+   ]
+  },
+  {
+   "id": "AT-31",
+   "dilim": 2,
+   "tur": "otomatik",
+   "sahip": "CI",
+   "onkosul": "Hesap, son yönetici ve kapanan şirket fikstürleri; zaman benzetimi",
+   "gate": true,
+   "proves": [
+    "M26"
+   ]
+  },
+  {
+   "id": "AT-32",
+   "dilim": 3,
+   "tur": "yarı otomatik",
+   "sahip": "CI + gerçek kiosk cihazı",
+   "onkosul": "Kayıtlı kiosk cihazı; iki kullanıcı telefonu",
+   "gate": true,
+   "proves": [
+    "M27"
+   ]
+  },
+  {
+   "id": "AT-33",
+   "dilim": 2,
+   "tur": "otomatik",
+   "sahip": "CI",
+   "onkosul": "50 örnek soru; filtre doğruluğu seti",
+   "gate": true,
+   "proves": [
+    "D1"
+   ]
+  },
+  {
+   "id": "AT-34",
+   "dilim": 4,
+   "tur": "yarı otomatik",
+   "sahip": "CI + muhasebe kullanıcısı",
+   "onkosul": "e-Fatura sağlayıcı test ortamı; muhasebe rolü; adım yükseltme",
+   "gate": true,
+   "proves": [
+    "F10"
+   ]
+  },
+  {
+   "id": "AT-35",
+   "dilim": 1,
+   "tur": "yarı otomatik",
+   "sahip": "CI + cihaz çiftliği",
+   "onkosul": "Dilimde açık cihaz sınıfları; iki yön",
+   "gate": true,
+   "proves": [
+    "D10",
+    "J9"
+   ]
+  },
+  {
+   "id": "AT-36",
+   "dilim": 1,
+   "tur": "otomatik",
+   "sahip": "CI",
+   "onkosul": "İki API sürümü; bir önceki SPA sürümü",
+   "gate": true,
+   "proves": [
+    "B11",
+    "B12"
+   ]
+  },
+  {
+   "id": "AT-37",
+   "dilim": 3,
+   "tur": "otomatik",
+   "sahip": "CI",
+   "onkosul": "Destek ve müşteri kullanıcıları; onay akışı",
+   "gate": true,
+   "proves": [
+    "G6"
+   ]
+  },
+  {
+   "id": "AT-38",
+   "dilim": 1,
+   "tur": "yarı otomatik",
+   "sahip": "CI + proje sahibi",
+   "onkosul": "Her yüzeyin görev seti ve klasik yol ölçümü",
+   "gate": true,
+   "proves": [
+    "I1",
+    "I13"
+   ]
+  },
+  {
+   "id": "AT-39",
+   "dilim": 2,
+   "tur": "otomatik",
+   "sahip": "CI",
+   "onkosul": "İki şirket; hafıza kayıtları; kötü niyetli düzeltme fikstürü",
+   "gate": true,
+   "proves": [
+    "I12"
+   ]
+  }
+ ]
+}

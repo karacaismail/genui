@@ -1,0 +1,869 @@
+{
+ "about": "Karar kitabı cevaplarının belgeye nasıl işlendiği. Anahtar soru kimliğidir; hedefler belgede var olan kimliklerdir (gereksinim satırı, AT, bölüm). durum: uygulandı | çelişki notuyla | ertelendi | uygulanmaz. build.py her cevabın burada bir kaydı olduğunu ve her hedefin belgede bulunduğunu denetler.",
+ "kaynak": "genui-karar-kitabi-20260929-1100.json",
+ "uygulama": {
+  "U01": {
+   "durum": "uygulandı",
+   "hedef": [
+    "B4",
+    "B8",
+    "K7",
+    "AT-10"
+   ],
+   "ozet": "Desk geçişi, parity ve Desk'e dönüş kaldırıldı; Desk yalnız sistem yönetimi için."
+  },
+  "U02": {
+   "durum": "çelişki notuyla",
+   "hedef": [
+    "A6",
+    "C1",
+    "ck-adi"
+   ],
+   "ozet": "AEP kaldırıldı; kod adı genui (@genui/*); marka paketten gelir."
+  },
+  "U03": {
+   "durum": "uygulandı",
+   "hedef": [
+    "A8",
+    "F2",
+    "urun-ailesi"
+   ],
+   "ozet": "Yedi uygulama sürüm 1.0'da; TeamsLike, eğitim, sağlık ve pazarlama sonraki ürün dilimlerinde."
+  },
+  "U04": {
+   "durum": "uygulandı",
+   "hedef": [
+    "yolculuk",
+    "AT-13",
+    "AT-14"
+   ],
+   "ozet": "İlk dilim ürün bilgisi: eksik alanları belgelerden tamamlama."
+  },
+  "U05": {
+   "durum": "uygulandı",
+   "hedef": [
+    "AT-13",
+    "J6",
+    "urun-ailesi"
+   ],
+   "ozet": "Birincil kullanıcı operasyon ekibi; Dilim 1 bu kullanıcıya göre."
+  },
+  "U06": {
+   "durum": "çelişki notuyla",
+   "hedef": [
+    "L8",
+    "ck-kapsam"
+   ],
+   "ozet": "Dört kullanıcı kitlesi sürüm 1.0'da; müşteri portalı Dilim 3'te (R11 önce panel)."
+  },
+  "U07": {
+   "durum": "çelişki notuyla",
+   "hedef": [
+    "F10",
+    "onay-matrisi",
+    "AT-34",
+    "ck-yasal"
+   ],
+   "ozet": "YZ onaylı yasal belge gönderebilir; belge başına onay, adım yükseltme, grant yok."
+  },
+  "U08": {
+   "durum": "uygulandı",
+   "hedef": [
+    "A3",
+    "H2"
+   ],
+   "ozet": "Yalnız Frappe v16; tek fixture seti."
+  },
+  "U09": {
+   "durum": "uygulandı",
+   "hedef": [
+    "M13",
+    "M20",
+    "ak-eposta-marka"
+   ],
+   "ozet": "Seviye 2 marka ilk teslimde: müşteri başına host ve Keycloak istemcisi."
+  },
+  "U10": {
+   "durum": "uygulandı",
+   "hedef": [
+    "A5",
+    "K15",
+    "ak-kurulum"
+   ],
+   "ozet": "SaaS ve müşteriye kurulum; kurulum paketinin lisans yükümlülükleri yazıldı."
+  },
+  "U11": {
+   "durum": "uygulandı",
+   "hedef": [
+    "K3",
+    "L7",
+    "D5"
+   ],
+   "ozet": "Büyük ölçek: ileri grid Dilim 2'de, yük testi 750 eşzamanlı oturum."
+  },
+  "U12": {
+   "durum": "çelişki notuyla",
+   "hedef": [
+    "J9",
+    "D10",
+    "cihaz-matrisi",
+    "AT-35",
+    "ck-iphone"
+   ],
+   "ozet": "Dokuz cihaz sınıfı, yön çarpanı, uyarlamalı teslim; 320 px taban."
+  },
+  "C01": {
+   "durum": "uygulandı",
+   "hedef": [
+    "F2",
+    "onay-matrisi",
+    "AT-14"
+   ],
+   "ozet": "Risk kayıt başına; 50 kayıt eşiği ve içerik sınıfı yükseltir."
+  },
+  "C02": {
+   "durum": "uygulandı",
+   "hedef": [
+    "F3",
+    "F1",
+    "onay-matrisi",
+    "AT-14"
+   ],
+   "ozet": "Canlıda sınırlı grant: safe write ve reversible, 50 kayıt, 4 saat."
+  },
+  "C03": {
+   "durum": "uygulandı",
+   "hedef": [
+    "E4",
+    "B6",
+    "mekanizma"
+   ],
+   "ozet": "Olay yalnız sinyal; ilerleme REST ile. E4 ve çizim düzeltildi."
+  },
+  "C04": {
+   "durum": "uygulandı",
+   "hedef": [
+    "C1",
+    "karar",
+    "yigin"
+   ],
+   "ozet": "Her şey @genui/ui ile sarmalanır; uygulamada antd importu lint hatası."
+  },
+  "C05": {
+   "durum": "çelişki notuyla",
+   "hedef": [
+    "K7",
+    "plan",
+    "ck-dilim"
+   ],
+   "ozet": "Fazlar kaldırıldı; Dilim 1–4 dikey dilimler ve olgunluk seviyeleri."
+  },
+  "C06": {
+   "durum": "uygulandı",
+   "hedef": [
+    "K9"
+   ],
+   "ozet": "Yalnız 'geçti' kapıyı açar; 'uygulanmaz' gerekçeli ve onaylı."
+  },
+  "C07": {
+   "durum": "uygulandı",
+   "hedef": [
+    "E11",
+    "AT-29"
+   ],
+   "ozet": "Tam çevrimdışı yazma kuyruğu Dilim 4'te."
+  },
+  "C08": {
+   "durum": "uygulandı",
+   "hedef": [
+    "E2",
+    "E11"
+   ],
+   "ozet": "Hassas taslak cihazda şifreli, 72 saat; anahtar sunucuda."
+  },
+  "C09": {
+   "durum": "uygulandı",
+   "hedef": [
+    "E11",
+    "AT-29"
+   ],
+   "ozet": "Kuyruk kullanıcıya ve oturuma bağlı; oynatmadan önce yeniden yetki."
+  },
+  "C10": {
+   "durum": "uygulanmaz",
+   "hedef": [
+    "K7"
+   ],
+   "ozet": "Ürün sıfırdan olduğu için canlıya geçiş sorusu uygulanmaz."
+  },
+  "C11": {
+   "durum": "uygulandı",
+   "hedef": [
+    "L10",
+    "L4",
+    "ak-gantt"
+   ],
+   "ozet": "Gantt ve kaynak planlayıcı sürüm 1.0'da; Dilim 2 başında deneme."
+  },
+  "C12": {
+   "durum": "uygulandı",
+   "hedef": [
+    "B8"
+   ],
+   "ozet": "Yorum, atama ve bildirim baştan yeni arayüzde."
+  },
+  "C13": {
+   "durum": "uygulandı",
+   "hedef": [
+    "E9",
+    "yolculuk"
+   ],
+   "ozet": "Öneri ayrı katmanda; kabul edilince taslağa geçer."
+  },
+  "Y01": {
+   "durum": "uygulandı",
+   "hedef": [
+    "G4",
+    "M23",
+    "ak-model"
+   ],
+   "ozet": "Hassas veri kendi sunucumuzdaki modelde, diğerleri API'de; iki değerlendirme seti."
+  },
+  "Y02": {
+   "durum": "uygulandı",
+   "hedef": [
+    "G8",
+    "M12",
+    "ak-hukuk"
+   ],
+   "ozet": "Rıza ve standart sözleşmeyle yurt dışı işleme; KVKK 9. madde notu."
+  },
+  "Y03": {
+   "durum": "uygulandı",
+   "hedef": [
+    "I1",
+    "I13",
+    "AT-38"
+   ],
+   "ozet": "Beş yüzey sürüm 1.0'da; on ek yüzey kataloğa eklendi."
+  },
+  "Y04": {
+   "durum": "uygulandı",
+   "hedef": [
+    "D1",
+    "I2",
+    "K2",
+    "AT-33"
+   ],
+   "ozet": "Doğal dilden raporda 'şöyle anladım' filtre çipleri ve onay."
+  },
+  "Y05": {
+   "durum": "uygulandı",
+   "hedef": [
+    "I4",
+    "K2",
+    "F3"
+   ],
+   "ozet": "Güven etiketi yalnız ölçülmüş sinyalden; kalibrasyona kadar etiket yok."
+  },
+  "Y06": {
+   "durum": "uygulandı",
+   "hedef": [
+    "I4",
+    "yolculuk"
+   ],
+   "ozet": "Belirsiz kayıtlar ayrılır; güçlü geri bildirimle manuel kuyruğa."
+  },
+  "Y07": {
+   "durum": "çelişki notuyla",
+   "hedef": [
+    "I11",
+    "ck-proaktif"
+   ],
+   "ozet": "Her ekranda proaktif öneri; yazma yok, bütçe tavanı, kapatılabilir."
+  },
+  "Y08": {
+   "durum": "uygulandı",
+   "hedef": [
+    "I12",
+    "I7",
+    "AT-39"
+   ],
+   "ozet": "Şirket bazlı düzeltme hafızası; izolasyon, silme ve dayanak gösterimi."
+  },
+  "Y09": {
+   "durum": "uygulandı",
+   "hedef": [
+    "I8",
+    "G7"
+   ],
+   "ozet": "YZ konuşma geçmişi 90 gün."
+  },
+  "Y10": {
+   "durum": "uygulandı",
+   "hedef": [
+    "E7",
+    "K6",
+    "ak-kota"
+   ],
+   "ozet": "Şirket başı aylık YZ bütçesi; aşım varsayılanı klasik görünüm."
+  },
+  "Y11": {
+   "durum": "uygulandı",
+   "hedef": [
+    "AT-13",
+    "K13"
+   ],
+   "ozet": "Önce klasik yolun ölçümü; eşikler oradan türetilir."
+  },
+  "Y12": {
+   "durum": "uygulandı",
+   "hedef": [
+    "K2"
+   ],
+   "ozet": "En az 50 örnek, her biri 3 kez; her çalıştırmada geçmeli."
+  },
+  "Y13": {
+   "durum": "uygulandı",
+   "hedef": [
+    "K13"
+   ],
+   "ozet": "Kabul, düzenleme, geri alma, klasiğe dönüş ve bırakma oranları eşik alarmlı."
+  },
+  "Y14": {
+   "durum": "uygulandı",
+   "hedef": [
+    "I3",
+    "K2",
+    "K4"
+   ],
+   "ozet": "YZ etiketi erişilebilir adda; üretilen ekranlar taranır; başlıkları çizici atar."
+  },
+  "K01": {
+   "durum": "uygulandı",
+   "hedef": [
+    "B9",
+    "M10",
+    "ak-tenant"
+   ],
+   "ozet": "Hibrit tenant: paylaşımlı site varsayılan, büyük/regüle müşteri ayrı site."
+  },
+  "K02": {
+   "durum": "uygulandı",
+   "hedef": [
+    "M25",
+    "AT-20"
+   ],
+   "ozet": "Rol bazlı boşta kalma ve mutlak süreler yazıldı."
+  },
+  "K03": {
+   "durum": "uygulandı",
+   "hedef": [
+    "M19",
+    "B10",
+    "ak-realtime"
+   ],
+   "ozet": "Soket servisi oturumu periyodik yeniden doğrular."
+  },
+  "K04": {
+   "durum": "uygulandı",
+   "hedef": [
+    "M19",
+    "AT-15",
+    "AT-21",
+    "AT-26"
+   ],
+   "ozet": "Azami yürürlük gecikmesi 60 saniye."
+  },
+  "K05": {
+   "durum": "uygulandı",
+   "hedef": [
+    "M8",
+    "AT-19"
+   ],
+   "ozet": "Yedi giriş yöntemi Dilim 1–3'e dağıtıldı; her biri ayrı kabul."
+  },
+  "K06": {
+   "durum": "ertelendi",
+   "hedef": [
+    "M8",
+    "ak-magic"
+   ],
+   "ozet": "Magic link açık gereksinim; gelirse Keycloak üzerinden."
+  },
+  "K07": {
+   "durum": "uygulandı",
+   "hedef": [
+    "M8",
+    "M11"
+   ],
+   "ozet": "E-posta birincil; kullanıcı adı telefon olamaz; kanal tenant yöneticisinin seçimi."
+  },
+  "K08": {
+   "durum": "uygulandı",
+   "hedef": [
+    "M11"
+   ],
+   "ozet": "E-posta zorunlu."
+  },
+  "K09": {
+   "durum": "uygulandı",
+   "hedef": [
+    "M7",
+    "K3"
+   ],
+   "ozet": "Yoğun anda giriş p95 5 saniye."
+  },
+  "K10": {
+   "durum": "çelişki notuyla",
+   "hedef": [
+    "K12",
+    "ck-inceleme"
+   ],
+   "ozet": "Günlük inceleme içeride, dilim kapısında dış güvenlik danışmanı."
+  },
+  "K11": {
+   "durum": "uygulandı",
+   "hedef": [
+    "M1",
+    "K12"
+   ],
+   "ozet": "Alternatif kimlik sunucuları yılda bir değerlendirilir."
+  },
+  "K12": {
+   "durum": "uygulandı",
+   "hedef": [
+    "M23",
+    "M11"
+   ],
+   "ozet": "KYC: elle giriş veya yerel modelle alan çıkarımı; panelden ayarlanır."
+  },
+  "K13": {
+   "durum": "uygulandı",
+   "hedef": [
+    "M21",
+    "AT-24"
+   ],
+   "ozet": "Sepet miktarları toplanır; bildirim ve geri alma."
+  },
+  "K14": {
+   "durum": "uygulandı",
+   "hedef": [
+    "M26",
+    "M6",
+    "G7"
+   ],
+   "ozet": "Kullanıcı hesabını kapatır; kalıcı silme destek talebiyle."
+  },
+  "K15": {
+   "durum": "uygulandı",
+   "hedef": [
+    "M26",
+    "AT-31"
+   ],
+   "ozet": "Son yönetici devretmeden ayrılamaz."
+  },
+  "K16": {
+   "durum": "çelişki notuyla",
+   "hedef": [
+    "M26",
+    "G7",
+    "AT-31",
+    "ck-185"
+   ],
+   "ozet": "185 gün salt okunur ve dışa aktarım, sonra arşiv veya silme."
+  },
+  "K17": {
+   "durum": "uygulandı",
+   "hedef": [
+    "M27",
+    "AT-32"
+   ],
+   "ozet": "Kiosk: 2 dk boşta, tam temizlik, kişisel telefonla giriş."
+  },
+  "K18": {
+   "durum": "uygulandı",
+   "hedef": [
+    "M14"
+   ],
+   "ozet": "Keycloak 26.7'de kalınır; config-cli uyumu CI'da kanıtlanmadan canlı yok."
+  },
+  "K19": {
+   "durum": "uygulandı",
+   "hedef": [
+    "M4",
+    "yapma"
+   ],
+   "ozet": "Bildirim taslağı proje sahibine verildi; gönderim proje sahibinde."
+  },
+  "K20": {
+   "durum": "uygulandı",
+   "hedef": [
+    "K12",
+    "K16"
+   ],
+   "ozet": "Kapanan bulgular için yasak ve zorunlu ifade listesi derlemede."
+  },
+  "K21": {
+   "durum": "uygulandı",
+   "hedef": [
+    "G6",
+    "AT-37"
+   ],
+   "ozet": "Onaylı, 60 dk, işaretli vekil oturum; YZ yazması kapalı."
+  },
+  "V01": {
+   "durum": "uygulandı",
+   "hedef": [
+    "B1",
+    "D4",
+    "F1",
+    "AT-10"
+   ],
+   "ozet": "Klasik kaydet doğrudan Frappe'ye; YZ ve onaylı değişiklik yürütücüden."
+  },
+  "V02": {
+   "durum": "uygulandı",
+   "hedef": [
+    "B9",
+    "M10",
+    "M22"
+   ],
+   "ozet": "Oturumda tek aktif şirket; değişince sekmeler uyarılır."
+  },
+  "V03": {
+   "durum": "uygulandı",
+   "hedef": [
+    "D6",
+    "D7"
+   ],
+   "ozet": "Paylaşımda filtre değerleri maskelenir."
+  },
+  "V04": {
+   "durum": "çelişki notuyla",
+   "hedef": [
+    "G7",
+    "I8",
+    "I9",
+    "ck-unut"
+   ],
+   "ozet": "Yalnız sohbet metni silinir; eylem bunu açıkça söyler; tam silme KVKK talebiyle."
+  },
+  "V05": {
+   "durum": "uygulandı",
+   "hedef": [
+    "F3",
+    "AT-28"
+   ],
+   "ozet": "Grant bütçesi her adımdan önce atomik rezerve edilir."
+  },
+  "V06": {
+   "durum": "çelişki notuyla",
+   "hedef": [
+    "E10",
+    "AT-17",
+    "ck-tekrar"
+   ],
+   "ozet": "Son tamamlanan adımdan otomatik tekrar; bilinmeyen dış işlem hariç."
+  },
+  "V07": {
+   "durum": "uygulandı",
+   "hedef": [
+    "B2",
+    "sozlesme-eki"
+   ],
+   "ozet": "zod asıl kaynak; JSON Schema paketi; Python tüketir."
+  },
+  "V08": {
+   "durum": "uygulandı",
+   "hedef": [
+    "sozlesme-eki"
+   ],
+   "ozet": "İlk akışın örnekli sözleşme paketi ve Run durum tablosu yazıldı."
+  },
+  "V09": {
+   "durum": "uygulandı",
+   "hedef": [
+    "doctype-katalogu",
+    "ck-dilim"
+   ],
+   "ozet": "Platform DocType kataloğu yazıldı; not dilim planına işlendi."
+  },
+  "T01": {
+   "durum": "uygulandı",
+   "hedef": [
+    "K14",
+    "test-stratejisi"
+   ],
+   "ozet": "Her MUST bir teste bağlı; bağsız MUST derlemeyi kırar."
+  },
+  "T02": {
+   "durum": "uygulandı",
+   "hedef": [
+    "K14",
+    "test-stratejisi"
+   ],
+   "ozet": "Test stratejisi bölümü; önce test (TDD)."
+  },
+  "T03": {
+   "durum": "uygulandı",
+   "hedef": [
+    "gereksinimler",
+    "plan"
+   ],
+   "ozet": "MUST kalıcı kural; dilim etiketi 'ne zaman' sorusunu cevaplar."
+  },
+  "T04": {
+   "durum": "ertelendi",
+   "hedef": [
+    "K3",
+    "ak-performans"
+   ],
+   "ozet": "Ölçüm koşulu açık; varsayılan ölçüm profili yazıldı."
+  },
+  "T05": {
+   "durum": "çelişki notuyla",
+   "hedef": [
+    "K4",
+    "J6",
+    "ck-kapsam"
+   ],
+   "ozet": "Her PR'da gerçek cihaz; maliyet ilk ay ölçülür."
+  },
+  "T06": {
+   "durum": "uygulandı",
+   "hedef": [
+    "E7",
+    "AT-27"
+   ],
+   "ozet": "Kill switch 30 saniye kabul deneyi yayın kapısı."
+  },
+  "T07": {
+   "durum": "uygulandı",
+   "hedef": [
+    "AT-13"
+   ],
+   "ozet": "Pilot müşterilerden 5–8 gerçek kullanıcı."
+  },
+  "T08": {
+   "durum": "uygulandı",
+   "hedef": [
+    "K16"
+   ],
+   "ozet": "Belge QA: dilim, test bağı, sözlük, regresyon ve gönderme denetimleri."
+  },
+  "E01": {
+   "durum": "uygulandı",
+   "hedef": [
+    "K8",
+    "K12",
+    "gereksinimler"
+   ],
+   "ozet": "Proje sahibi ve YZ kodlama ajanları; kapılarda dış uzman."
+  },
+  "E02": {
+   "durum": "çelişki notuyla",
+   "hedef": [
+    "K12",
+    "ck-inceleme"
+   ],
+   "ozet": "Custom app dış incelemesiz; güvenlik-kritik dört parça hariç."
+  },
+  "E03": {
+   "durum": "uygulandı",
+   "hedef": [
+    "acik",
+    "K16"
+   ],
+   "ozet": "Her açık kararın sahibi ve son dilimi var."
+  },
+  "E04": {
+   "durum": "uygulandı",
+   "hedef": [
+    "okuma",
+    "gunluk",
+    "K16"
+   ],
+   "ozet": "Tek belge; sözlük, okuma yolu ve değişiklik günlüğü."
+  },
+  "E05": {
+   "durum": "ertelendi",
+   "hedef": [
+    "K16",
+    "ak-takip"
+   ],
+   "ozet": "Araç açık (aday Plane); gereksinimler.json üretilir."
+  },
+  "E06": {
+   "durum": "uygulandı",
+   "hedef": [
+    "A7",
+    "K15"
+   ],
+   "ozet": "Dependabot ve haftalık n8n + OpenClaw raporu; yalnız rapor ve PR."
+  },
+  "E07": {
+   "durum": "çelişki notuyla",
+   "hedef": [
+    "plan",
+    "K7",
+    "ck-kapsam"
+   ],
+   "ozet": "İlk teslim 3 ay = Dilim 1; tarih kayar, kapı kısalmaz."
+  },
+  "E08": {
+   "durum": "uygulandı",
+   "hedef": [
+    "sozluk",
+    "K16"
+   ],
+   "ozet": "Başta sözlük; ilk kullanımda tanım bağlantısı; tanımsız kısaltma derlemeyi kırar."
+  },
+  "R01": {
+   "durum": "uygulandı",
+   "hedef": [
+    "D6"
+   ],
+   "ozet": "Her ikisi: şablondan başla veya sıfırdan kur."
+  },
+  "R02": {
+   "durum": "uygulandı",
+   "hedef": [
+    "J2",
+    "C5"
+   ],
+   "ozet": "Tutarlı custom kontroller korunur."
+  },
+  "R03": {
+   "durum": "uygulanmaz",
+   "hedef": [
+    "B4"
+   ],
+   "ozet": "Taşınacak Client Script yok (U01)."
+  },
+  "R04": {
+   "durum": "uygulandı",
+   "hedef": [
+    "C4",
+    "A2"
+   ],
+   "ozet": "SCSS Modules ve cascade katmanları."
+  },
+  "R05": {
+   "durum": "uygulandı",
+   "hedef": [
+    "C8"
+   ],
+   "ozet": "Çok kütüphaneli TypeScript ikon kayıt mekanizması; Phosphor öncelikli."
+  },
+  "R06": {
+   "durum": "uygulandı",
+   "hedef": [
+    "J1",
+    "J10"
+   ],
+   "ozet": "WCAG 2.2 AA + erişilebilirlik modu."
+  },
+  "R07": {
+   "durum": "uygulandı",
+   "hedef": [
+    "B6"
+   ],
+   "ozet": "Socket.IO + 15 saniyelik yoklama yedeği."
+  },
+  "R08": {
+   "durum": "uygulandı",
+   "hedef": [
+    "J6",
+    "J9"
+   ],
+   "ozet": "Göreve göre ayrı yüzeyler; arka uç aynı, ön yüz ayrı."
+  },
+  "R09": {
+   "durum": "uygulandı",
+   "hedef": [
+    "B2"
+   ],
+   "ozet": "Frappe tiplerine yakın sözleşme korunur."
+  },
+  "R10": {
+   "durum": "uygulandı",
+   "hedef": [
+    "E2",
+    "AT-30"
+   ],
+   "ozet": "Taslak otomatik, belge Kaydet ile; kesintide taslak geri gelir."
+  },
+  "R11": {
+   "durum": "uygulandı",
+   "hedef": [
+    "L8",
+    "L9",
+    "M21"
+   ],
+   "ozet": "Önce panel; portal ve site Dilim 3."
+  },
+  "R12": {
+   "durum": "uygulanmaz",
+   "hedef": [
+    "B8"
+   ],
+   "ozet": "Desk eşitliği hedeflenmez (U01)."
+  },
+  "X01": {
+   "durum": "uygulandı",
+   "hedef": [
+    "B11",
+    "api-hata"
+   ],
+   "ozet": "Tek JSON hata biçimi ve hata kataloğu."
+  },
+  "X02": {
+   "durum": "çelişki notuyla",
+   "hedef": [
+    "B12",
+    "api-hata",
+    "ck-kapsam"
+   ],
+   "ozet": "Sürümlü API tablosu; dış API 20 yıl uyumluluk hedefi."
+  },
+  "X03": {
+   "durum": "uygulandı",
+   "hedef": [
+    "F9"
+   ],
+   "ozet": "RFC 8785 kanonik JSON + SHA-256."
+  },
+  "X04": {
+   "durum": "uygulandı",
+   "hedef": [
+    "G3",
+    "K15"
+   ],
+   "ozet": "Ters vekil nginx."
+  },
+  "X05": {
+   "durum": "uygulandı",
+   "hedef": [
+    "G3"
+   ],
+   "ozet": "nginx her HTML yanıtında nonce üretir."
+  },
+  "X06": {
+   "durum": "uygulandı",
+   "hedef": [
+    "K15",
+    "api-hata"
+   ],
+   "ozet": "Yerel Colima, CI, staging, canlı; DevOps dostu kurallar."
+  },
+  "X07": {
+   "durum": "uygulandı",
+   "hedef": [
+    "K15",
+    "H3"
+   ],
+   "ozet": "Eski sürüm dosyaları iki sürüm veya 30 gün; HTML önbelleğe alınmaz."
+  }
+ }
+}

@@ -3,13 +3,17 @@
 
 Usage: python3 docs/src/qa/validate.py docs/genui-frontend-gereksinimleri.html
 
-Checks: balanced tags, duplicate ids, local #fragment links that point nowhere,
-requirement rows with a phase, and the inline script's syntax (needs `node`).
-Exits 1 on any failure. These checks cover the document only; they do not run
-the identity integration tests AT-18–AT-25.
+Checks: balanced tags, duplicate ids, local #fragment links that point nowhere, requirement rows
+with a valid slice (dilim 1-4), every MUST row linked to a test, every AT-xx and TP-xx mention
+resolving to an experiment or test suite, every acronym defined in the glossary, the closed-findings
+regression list (docs/src/qa/kapanan-bulgular.json), and the inline script's syntax (needs `node`).
+Exits 1 on any failure. These checks cover the document only; they do not run the product's tests
+or the identity integration tests.
 """
 import collections
+import html
 import html.parser
+import json
 import pathlib
 import re
 import subprocess
@@ -18,6 +22,7 @@ import tempfile
 
 VOID = {"area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "source", "track", "wbr",
         "path", "line", "rect", "circle", "polyline", "polygon", "ellipse", "stop", "use"}
+HERE = pathlib.Path(__file__).resolve().parent
 
 
 class Parser(html.parser.HTMLParser):
@@ -52,7 +57,12 @@ class Parser(html.parser.HTMLParser):
             self.errors.append(f"<{top}> opened at {pos} closed by </{tag}> at {self.getpos()}")
 
 
-def main(path):
+def plain_text(fragment):
+    fragment = re.sub(r"<(script|style|svg|code|pre)\b[^>]*>.*?</\1>", " ", fragment, flags=re.S)
+    return re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", " ", fragment)))
+
+
+def main(path, findings_path=HERE / "kapanan-bulgular.json"):
     src = pathlib.Path(path).read_text(encoding="utf-8")
     p = Parser()
     p.feed(src)
@@ -62,11 +72,62 @@ def main(path):
     results.append(("no duplicate ids", not dups, " ".join(dups)))
     missing = sorted({h for h in p.hrefs if h not in p.ids})
     results.append(("local links resolve", not missing, " ".join(missing)))
-    # every requirement row is found independently of its phase attribute, then each must carry a valid phase
-    req_rows = re.findall(r'<tr id="([A-M]\d{1,2})"([^>]*)>', src)
-    bad = [rid for rid, attrs in req_rows if not re.search(r'\bdata-phase="0[1-4]"', attrs)]
-    results.append(("every requirement row carries a valid phase", len(req_rows) > 0 and not bad,
+
+    # every requirement row is found independently of its slice attribute, then each must carry a valid slice
+    req_rows = re.findall(r'<tr id="([A-M]\d{1,2})"([^>]*)>(.*?)</tr>', src, re.S)
+    bad = [rid for rid, attrs, _ in req_rows if not re.search(r'\bdata-dilim="[1-4]"', attrs)]
+    results.append(("every requirement row carries a valid slice", len(req_rows) > 0 and not bad,
                     f"{len(req_rows)} rows; missing or invalid: {' '.join(bad)}" if bad else f"{len(req_rows)} rows"))
+    untested = [rid for rid, _, inner in req_rows
+                if 'class="chip must"' in inner and not re.search(r'<span class="tst">Test: <a href="#', inner)]
+    results.append(("every MUST row links to a test", len(req_rows) > 0 and not untested, " ".join(untested)))
+
+    main_html = src.split("<main", 1)[-1].split("</main>", 1)[0]
+    text = plain_text(main_html)
+    # every experiment and suite mentioned resolves
+    at_refs = set(re.findall(r"\bAT-\d\d\b", text))
+    tp_refs = set(re.findall(r"\bTP-\d\d\b", text))
+    bad_refs = sorted(r for r in at_refs if r not in p.ids) + sorted(r for r in tp_refs if r.lower() not in p.ids)
+    results.append(("every AT-xx and TP-xx mention resolves", bool(at_refs) and not bad_refs, " ".join(bad_refs)))
+
+    # glossary: every acronym in the body is defined; sources are citations and are exempt
+    gloss = re.findall(r'<dt id="t-[^"]+" data-esanlam="([^"]*)">', src)
+    defined = set()
+    for variants in gloss:
+        for v in html.unescape(variants).split("|"):
+            defined.add(v)
+            defined.update(re.findall(r"[A-ZÇĞİÖŞÜ][A-ZÇĞİÖŞÜ0-9]+", v))
+    try:
+        common = set(json.loads((HERE.parent / "data" / "sozluk.json").read_text(encoding="utf-8")).get("yaygin", []))
+    except FileNotFoundError:
+        common = set()
+    body_wo_sources = re.sub(r'<section id="kaynaklar".*?</section>', " ", main_html, flags=re.S)
+    body_wo_sources = re.sub(r'<span class="dec">.*?</span>', " ", body_wo_sources, flags=re.S)
+    tokens = re.findall(r"(?<![\w-])([A-ZÇĞİÖŞÜ][A-ZÇĞİÖŞÜ]+[0-9]*[a-z]?[A-ZÇĞİÖŞÜ0-9]*)(?![\w])(?!-\d)",
+                        plain_text(body_wo_sources))
+    undefined = sorted({t for t in tokens if t not in defined and t not in common
+                        and re.sub(r"\d+$", "", t) not in defined})
+    results.append(("every acronym is in the glossary", bool(gloss) and not undefined,
+                    f"{len(gloss)} terms" if not undefined else "undefined: " + " ".join(undefined)))
+
+    # closed findings must not come back; required statements must stay. Sections that quote sources
+    # verbatim (decision book answers, traceability, changelog, sources) are history, not statements.
+    current = main_html
+    for sec in ("kitap-sonuc", "izlenebilirlik", "gunluk", "kaynaklar"):
+        current = re.sub(rf'<section id="{sec}".*?</section>', " ", current, flags=re.S)
+    current_text = plain_text(current)
+    findings = json.loads(pathlib.Path(findings_path).read_text(encoding="utf-8"))["bulgular"]
+    regress = []
+    for f in findings:
+        for rx in f.get("yasak", []):
+            m = re.search(rx, current_text)
+            if m:
+                regress.append(f'{f["id"]} yasak "{m.group(0)[:60]}"')
+        for rx in f.get("zorunlu", []):
+            if not re.search(rx, current_text):
+                regress.append(f'{f["id"]} eksik /{rx[:50]}/')
+    results.append(("closed findings stay closed", not regress, f"{len(findings)} findings" if not regress else "; ".join(regress)))
+
     scripts = re.findall(r"<script>(.*?)</script>", src, re.S)
     with tempfile.NamedTemporaryFile("w", suffix=".js", delete=False, encoding="utf-8") as f:
         f.write(scripts[-1] if scripts else "")

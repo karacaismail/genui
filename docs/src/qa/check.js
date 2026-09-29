@@ -1,4 +1,4 @@
-// Behavior checks for the requirements page (document UI only; not the identity integration tests AT-18–AT-25).
+// Behavior checks for the requirements page (document UI only; not the product's tests or the identity integration tests).
 // Usage: node check.js <file-or-url>
 // Browser: CHROME_PATH=/path/to/chromium, otherwise the locally installed Chrome channel is used.
 // Prints one JSON line per check: {check, status: pass|fail|not_run, detail}; exits 1 if any check fails.
@@ -136,42 +136,42 @@ const rec = (check, ok, detail) => results.push({ check, status: ok === null ? '
     await page.close();
   }
 
-  // 8. phase filter: one button per phase that rows carry; each phase shows exactly its rows; "Tümü" restores all
+  // 8. slice (dilim) filter: one button per slice that rows carry; each slice shows exactly its rows; "Tümü" restores all
   {
     const page = await browser.newPage({ viewport: { width: 1280, height: 900 } });
     await page.goto(url);
     const info = await page.evaluate(() => {
-      // the universe is every requirement row, not only rows that already carry a phase attribute
+      // the universe is every requirement row, not only rows that already carry a slice attribute
       const rows = [].slice.call(document.querySelectorAll('.req-table tbody tr'));
-      const missing = rows.filter(r => !/^0[1-4]$/.test(r.getAttribute('data-phase') || '')).map(r => r.id);
-      if (missing.length) return { total: rows.length, phases: ['missing:' + missing.join(',')], btns: [] };
-      const phases = Array.from(new Set(rows.map(r => r.getAttribute('data-phase')))).sort();
-      const btns = [].slice.call(document.querySelectorAll('#flt-phase button')).map(b => b.getAttribute('data-phase')).filter(p => p !== 'ALL').sort();
-      return { total: rows.length, phases, btns };
+      const missing = rows.filter(r => !/^[1-4]$/.test(r.getAttribute('data-dilim') || '')).map(r => r.id);
+      if (missing.length) return { total: rows.length, slices: ['missing:' + missing.join(',')], btns: [] };
+      const slices = Array.from(new Set(rows.map(r => r.getAttribute('data-dilim')))).sort();
+      const btns = [].slice.call(document.querySelectorAll('#flt-phase button')).map(b => b.getAttribute('data-dilim')).filter(p => p !== 'ALL').sort();
+      return { total: rows.length, slices, btns };
     });
-    rec('phase filter: a button for every phase present', JSON.stringify(info.phases) === JSON.stringify(info.btns), 'rows=' + info.phases.join(',') + ' buttons=' + info.btns.join(','));
-    if (info.phases.some(p => p.startsWith('missing:'))) {
-      rec('phase filter: each phase shows exactly its rows, "Tümü" restores all', false, 'requirement rows without a valid phase: ' + info.phases.join(','));
+    rec('slice filter: a button for every slice present', JSON.stringify(info.slices) === JSON.stringify(info.btns), 'rows=' + info.slices.join(',') + ' buttons=' + info.btns.join(','));
+    if (info.slices.some(p => p.startsWith('missing:'))) {
+      rec('slice filter: each slice shows exactly its rows, "Tümü" restores all', false, 'requirement rows without a valid slice: ' + info.slices.join(','));
       await page.close();
     } else {
-    const visible = () => page.evaluate(() => [].slice.call(document.querySelectorAll('.req-table tbody tr')).filter(r => !r.hidden && r.getBoundingClientRect().height > 0).map(r => r.id));
-    let ok = true; const detail = [];
-    for (const ph of info.phases) {
-      await page.locator('#flt-phase button[data-phase="' + ph + '"]').click();
-      const ids = await visible();
-      const expected = await page.evaluate(p => [].slice.call(document.querySelectorAll('tr[data-phase="' + p + '"]')).map(r => r.id), ph);
-      const same = JSON.stringify(ids) === JSON.stringify(expected);
-      ok = ok && same; detail.push(ph + ':' + ids.length + (same ? '' : '!=' + expected.length));
-    }
-    await page.locator('#flt-phase button[data-phase="ALL"]').click();
-    const all = (await visible()).length;
-    ok = ok && all === info.total;
-    rec('phase filter: each phase shows exactly its rows, "Tümü" restores all', ok, detail.join(' ') + ' all=' + all + '/' + info.total);
-    await page.close();
+      const visible = () => page.evaluate(() => [].slice.call(document.querySelectorAll('.req-table tbody tr')).filter(r => !r.hidden && r.getBoundingClientRect().height > 0).map(r => r.id));
+      let ok = true; const detail = [];
+      for (const sl of info.slices) {
+        await page.locator('#flt-phase button[data-dilim="' + sl + '"]').click();
+        const ids = await visible();
+        const expected = await page.evaluate(p => [].slice.call(document.querySelectorAll('tr[data-dilim="' + p + '"]')).map(r => r.id), sl);
+        const same = JSON.stringify(ids) === JSON.stringify(expected);
+        ok = ok && same; detail.push(sl + ':' + ids.length + (same ? '' : '!=' + expected.length));
+      }
+      await page.locator('#flt-phase button[data-dilim="ALL"]').click();
+      const all = (await visible()).length;
+      ok = ok && all === info.total;
+      rec('slice filter: each slice shows exactly its rows, "Tümü" restores all', ok, detail.join(' ') + ' all=' + all + '/' + info.total);
+      await page.close();
     }
   }
 
-  // 9. traceability: superseded and reopened record decisions are visible on their own row
+  // 9. traceability: decisions changed by a later source show their effective state on their own row
   {
     const page = await browser.newPage();
     await page.goto(url);
@@ -180,10 +180,52 @@ const rec = (check, ok, detail) => results.push({ check, status: ok === null ? '
       [].slice.call(document.querySelectorAll('#izlenebilirlik table.trace tr')).forEach(tr => {
         const c = tr.querySelectorAll('td'); if (c.length > 8) out[c[0].textContent] = c[8].textContent;
       });
-      return { auth: out['auth'], gateway: out['gateway'], tenancy: out['tenancy'], 'tenant-isolation': out['tenant-isolation'] };
+      return { auth: out['auth'], gateway: out['gateway'], tenancy: out['tenancy'], migration: out['migration'], css: out['css'], devices: out['devices'] };
     });
-    rec('trace: effective state shown for superseded and reopened decisions',
-      st.auth === 'yerine geçti' && st.gateway === 'koşullu' && st.tenancy === 'yeniden açıldı' && st['tenant-isolation'] === 'yeniden açıldı', JSON.stringify(st));
+    rec('trace: effective state shown for superseded, closed and extended decisions',
+      st.auth === 'yerine geçti' && st.gateway === 'koşullu' && st.tenancy === 'kapandı' && st.migration === 'yerine geçti' && st.css === 'yerine geçti' && st.devices === 'genişletildi', JSON.stringify(st));
+    await page.close();
+  }
+
+  // 10. decision book: one row per answer; a link to a row inside a closed appendix opens it
+  {
+    const page = await browser.newPage({ viewport: { width: 1280, height: 900 } });
+    await page.goto(url);
+    const n = await page.locator('#kitap-sonuc tr[id^="kk-"]').count();
+    await page.evaluate(() => { location.hash = '#kk-U07'; });
+    await page.waitForTimeout(300);
+    const vis = await page.evaluate(() => { const r = document.getElementById('kk-U07'); const d = r && r.closest('details'); return { open: !!(d && d.open), h: r ? Math.round(r.getBoundingClientRect().height) : 0 }; });
+    rec('decision book: every answer has a row and deep links open its appendix', n === 104 && vis.open && vis.h > 0, 'rows=' + n + ' ' + JSON.stringify(vis));
+    await page.close();
+  }
+
+  // 11. glossary: first use of a term links to its entry, which opens and is visible
+  {
+    const page = await browser.newPage({ viewport: { width: 1280, height: 900 } });
+    await page.goto(url);
+    const href = await page.evaluate(() => { const a = document.querySelector('#karar ~ section a.terim, #karar a.terim'); return a ? a.getAttribute('href') : null; });
+    let ok = false, detail = 'no term link';
+    if (href) {
+      await page.evaluate(h => { location.hash = h; }, href);
+      await page.waitForTimeout(300);
+      const r = await page.evaluate(h => { const dt = document.querySelector(h); const d = dt && dt.closest('details'); return { open: !!(d && d.open), h: dt ? Math.round(dt.getBoundingClientRect().height) : 0, title: document.querySelector('a.terim').getAttribute('title') || '' }; }, href);
+      ok = r.open && r.h > 0 && r.title.length > 10; detail = href + ' ' + JSON.stringify(r).slice(0, 120);
+    }
+    rec('glossary: term link opens the glossary entry and carries a short definition', ok, detail);
+    await page.close();
+  }
+
+  // 12. every MUST row shows its test link; summary reading mode hides it
+  {
+    const page = await browser.newPage({ viewport: { width: 1280, height: 900 } });
+    await page.goto(url);
+    const r = await page.evaluate(() => {
+      const rows = [].slice.call(document.querySelectorAll('.req-table tbody tr')).filter(tr => tr.querySelector('.chip.must'));
+      return { must: rows.length, missing: rows.filter(tr => !tr.querySelector('.tst a')).map(tr => tr.id) };
+    });
+    await page.locator('#flt-mode button[data-mode="ozet"]').click();
+    const hidden = await page.evaluate(() => { const t = document.querySelector('.req-table .tst'); return t ? getComputedStyle(t).display : 'none'; });
+    rec('tests: every MUST row links to a test; summary mode hides test lines', r.missing.length === 0 && r.must > 0 && hidden === 'none', 'must=' + r.must + ' missing=' + r.missing.join(',') + ' ozet display=' + hidden);
     await page.close();
   }
 

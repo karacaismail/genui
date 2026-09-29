@@ -1,0 +1,982 @@
+{
+ "about": "Sözlük (karar kitabı E08). Her terim sözlükte ve ilk kullanımında bağlantıyla tanımlıdır. esanlam: metinde aynı terimi karşılayan yazımlar. cok_anlamli: birden fazla anlamı olan kelime. yaygin: tanım gerektirmeyen büyük harfli işlem adları; validate.py bunları kısaltma denetiminden muaf tutar.",
+ "terimler": [
+  {
+   "terim": "A2UI",
+   "tanim": "Google'ın ajan ile arayüz arasında bileşen tarifi taşıyan açık protokolü; bu belgede yalnız dışa ve içe aktarım adaptöründe."
+  },
+  {
+   "terim": "a11y",
+   "tanim": "İngilizce accessibility (erişilebilirlik) kelimesinin kısaltması.",
+   "esanlam": [
+    "A11y"
+   ]
+  },
+  {
+   "terim": "AA, AAA",
+   "tanim": "WCAG uyum düzeyleri: AA yasal ve sektörel standart düzey, AAA daha sıkı ek düzey.",
+   "esanlam": [
+    "AA",
+    "AAA"
+   ]
+  },
+  {
+   "terim": "ADR",
+   "tanim": "Mimari karar kaydı: bir kararın bağlamını, seçeneklerini ve gerekçesini yazan kısa belge."
+  },
+  {
+   "terim": "AEP",
+   "tanim": "Önceki sürümlerde başka bir projenin tasarım sisteminden yanlışlıkla taşınan kod adı; v2.6'da kaldırıldı, yerine genui kullanılır."
+  },
+  {
+   "terim": "AES-GCM",
+   "tanim": "Taslakları cihazda şifrelemek için kullanılan standart şifreleme yöntemi."
+  },
+  {
+   "terim": "AG-UI",
+   "tanim": "Ajan ile arayüz arasında olay akışı taşıyan açık protokol; bu belgede isteğe bağlı taşıma adaptörü."
+  },
+  {
+   "terim": "AI, YZ",
+   "tanim": "Yapay zekâ (İngilizce Artificial Intelligence). Belgede YZ kısaltması kullanılır.",
+   "esanlam": [
+    "AI",
+    "YZ"
+   ]
+  },
+  {
+   "terim": "AI-first",
+   "tanim": "YZ öncelikli: kullanıcının işe niyetini yazarak başladığı, klasik ekranın her an bir tık uzakta durduğu tasarım yaklaşımı."
+  },
+  {
+   "terim": "API",
+   "tanim": "Uygulama programlama arayüzü: programların birbirine istek gönderdiği tanımlı uç noktalar.",
+   "esanlam": [
+    "APIs"
+   ]
+  },
+  {
+   "terim": "AST",
+   "tanim": "Soyut sözdizimi ağacı: filtre gibi bir ifadenin metin değil, yapılandırılmış veri olarak tutulması."
+  },
+  {
+   "terim": "BCP",
+   "tanim": "Best Current Practice: IETF'in güncel en iyi uygulama belgesi (ör. BCP 212)."
+  },
+  {
+   "terim": "BFF",
+   "tanim": "Backend for Frontend: frontend'e özel kenar katmanı. Bu belgede aynı origin ters vekil, sürümlü API sözleşmesi ve kimlik köprüsü; ayrı bir servis değildir."
+  },
+  {
+   "terim": "BOM",
+   "tanim": "Byte Order Mark: CSV dosyasının başındaki, Excel'in Türkçe karakterleri doğru okumasını sağlayan işaret."
+  },
+  {
+   "terim": "CC BY 4.0",
+   "tanim": "Atıf şartıyla serbest kullanım izni veren içerik lisansı (Font Awesome Free ikonları)."
+  },
+  {
+   "terim": "CDN",
+   "tanim": "İçerik dağıtım ağı: dosyaları kullanıcıya yakın sunuculardan veren hizmet."
+  },
+  {
+   "terim": "CI, CD",
+   "tanim": "Sürekli entegrasyon ve sürekli dağıtım: kod gönderildiğinde testleri ve dağıtımı otomatik çalıştıran süreç.",
+   "esanlam": [
+    "CI",
+    "CD",
+    "CI/CD"
+   ]
+  },
+  {
+   "terim": "CJK",
+   "tanim": "Çince, Japonca ve Korece yazı sistemleri."
+  },
+  {
+   "terim": "CODEOWNERS",
+   "tanim": "GitHub'da bir klasörün değişikliğini kimin onaylaması gerektiğini söyleyen dosya."
+  },
+  {
+   "terim": "COOP",
+   "tanim": "Cross-Origin-Opener-Policy: sayfayı başka origin'deki pencerelerden yalıtan güvenlik başlığı."
+  },
+  {
+   "terim": "Core Web Vitals",
+   "tanim": "Google'ın kullanıcı deneyimi ölçütleri: LCP (ana içeriğin yüklenmesi), INP (etkileşime yanıt), CLS (düzen kayması).",
+   "esanlam": [
+    "CWV",
+    "LCP",
+    "INP",
+    "CLS"
+   ]
+  },
+  {
+   "terim": "CRM",
+   "tanim": "Müşteri ilişkileri yönetimi uygulaması."
+  },
+  {
+   "terim": "CRUD",
+   "tanim": "Oluşturma, okuma, güncelleme ve silme işlemlerinin topluca adı."
+  },
+  {
+   "terim": "CSP",
+   "tanim": "Content Security Policy: tarayıcının hangi betik ve kaynakları çalıştırabileceğini sınırlayan güvenlik başlığı."
+  },
+  {
+   "terim": "CSRF",
+   "tanim": "Siteler arası istek sahteciliği: kullanıcının tarayıcısına habersiz istek yaptırma saldırısı; CSRF belirteci bunu önler."
+  },
+  {
+   "terim": "CSS, SCSS",
+   "tanim": "CSS sayfa stil dili; SCSS (Sass) CSS'e değişken ve iç içe yazım ekleyen, derlemede CSS'e dönüşen dil.",
+   "esanlam": [
+    "CSS",
+    "SCSS"
+   ]
+  },
+  {
+   "terim": "CSV",
+   "tanim": "Virgülle ayrılmış değerler: tablo verisinin düz metin dosyası."
+  },
+  {
+   "terim": "DKIM, DMARC, SPF",
+   "tanim": "E-postanın gerçekten o alan adından gönderildiğini kanıtlayan DNS kayıtları.",
+   "esanlam": [
+    "DKIM",
+    "DMARC",
+    "SPF"
+   ]
+  },
+  {
+   "terim": "DSL",
+   "tanim": "Alana özgü küçük dil: burada form koşullarını güvenle ifade eden kısıtlı kural dili."
+  },
+  {
+   "terim": "DST",
+   "tanim": "Yaz saati uygulaması: saat dilimlerinde yılda iki kez olan saat kayması."
+  },
+  {
+   "terim": "E2E",
+   "tanim": "Uçtan uca test: kullanıcının yaptığı işi tarayıcıda baştan sona sınayan test."
+  },
+  {
+   "terim": "ERP",
+   "tanim": "Kurumsal kaynak planlama: muhasebe, stok, satış gibi işleri birleştiren iş yazılımı."
+  },
+  {
+   "terim": "EU AI Act",
+   "tanim": "Avrupa Birliği'nin yapay zekâ yönetmeliği; kullanıcıya YZ ile etkileşimde olduğunu bildirme yükümlülüğü içerir."
+  },
+  {
+   "terim": "GET, POST",
+   "tanim": "HTTP istek yöntemleri: GET veri okur, POST veri gönderir veya işlem başlatır.",
+   "esanlam": [
+    "GET",
+    "POST"
+   ]
+  },
+  {
+   "terim": "GILT",
+   "tanim": "Globalleştirme, uluslararasılaştırma, yerelleştirme ve çeviri işlerinin topluca adı."
+  },
+  {
+   "terim": "GPU",
+   "tanim": "Grafik işlemci; YZ modellerini hızlı çalıştırmak için kullanılır."
+  },
+  {
+   "terim": "GUI",
+   "tanim": "Grafik kullanıcı arayüzü: düğme ve formlarla çalışılan ekran."
+  },
+  {
+   "terim": "HAR",
+   "tanim": "Tarayıcının ağ isteklerini kaydettiği dosya; performans ve güvenlik kanıtı olarak saklanır."
+  },
+  {
+   "terim": "HRMS",
+   "tanim": "İnsan kaynakları yönetim sistemi; Frappe HRMS bu işi yapan GPL-3.0 uygulamadır."
+  },
+  {
+   "terim": "HSTS",
+   "tanim": "Tarayıcıya siteye yalnızca HTTPS ile bağlanmasını söyleyen güvenlik başlığı."
+  },
+  {
+   "terim": "HTML",
+   "tanim": "Web sayfalarının işaretleme dili."
+  },
+  {
+   "terim": "HTTP, HTTPS",
+   "tanim": "Web'in istek-yanıt protokolü; HTTPS şifreli sürümüdür.",
+   "esanlam": [
+    "HTTP",
+    "HTTPS"
+   ]
+  },
+  {
+   "terim": "ICU MessageFormat",
+   "tanim": "Çoğul ve cinsiyet gibi dil kurallarını çeviri metninde ifade eden standart biçim."
+  },
+  {
+   "terim": "ID",
+   "tanim": "Kimlik; bir kaydı veya kişiyi tek başına tanımlayan değer."
+  },
+  {
+   "terim": "IME",
+   "tanim": "Giriş yöntemi düzenleyicisi: Çince, Japonca gibi dillerde klavyeden karakter oluşturan sistem."
+  },
+  {
+   "terim": "IP",
+   "tanim": "İnternet protokol adresi; bir cihazın ağdaki adresi."
+  },
+  {
+   "terim": "ISO 8601",
+   "tanim": "Tarih ve saatin uluslararası standart yazımı (ör. 2026-09-29T10:14:02)."
+  },
+  {
+   "terim": "İK",
+   "tanim": "İnsan kaynakları."
+  },
+  {
+   "terim": "İYS",
+   "tanim": "İleti Yönetim Sistemi: Türkiye'de ticari elektronik ileti onaylarının kayıtlı olması gereken ulusal sistem."
+  },
+  {
+   "terim": "JAWS, NVDA",
+   "tanim": "Windows için ekran okuyucu yazılımları.",
+   "esanlam": [
+    "JAWS",
+    "NVDA"
+   ]
+  },
+  {
+   "terim": "JCS",
+   "tanim": "JSON Canonicalization Scheme (RFC 8785): JSON verisini her yerde aynı bayt dizisine çeviren kural; parmak izi bunun üstünde hesaplanır."
+  },
+  {
+   "terim": "JS, TS, JSX",
+   "tanim": "JavaScript, TypeScript (tip denetimli JavaScript) ve React'in HTML benzeri yazımı.",
+   "esanlam": [
+    "JS",
+    "TS",
+    "JSX"
+   ]
+  },
+  {
+   "terim": "JSON",
+   "tanim": "Veri taşımak için kullanılan metin biçimi."
+  },
+  {
+   "terim": "JSON Schema",
+   "tanim": "JSON verisinin yapısını tanımlayan ve doğrulayan standart şema dili."
+  },
+  {
+   "terim": "JWKS",
+   "tanim": "Keycloak'ın imza doğrulama anahtarlarını yayımladığı JSON anahtar listesi."
+  },
+  {
+   "terim": "KB",
+   "tanim": "Kilobayt; dosya ve paket boyutu birimi."
+  },
+  {
+   "terim": "KVKK",
+   "tanim": "6698 sayılı Kişisel Verilerin Korunması Kanunu."
+  },
+  {
+   "terim": "KYC, KYB",
+   "tanim": "Müşteriyi tanı (kişi) ve işletmeyi tanı (şirket) doğrulama süreçleri.",
+   "esanlam": [
+    "KYC",
+    "KYB"
+   ]
+  },
+  {
+   "terim": "LLM",
+   "tanim": "Büyük dil modeli: Claude veya ChatGPT gibi metin üreten YZ modeli."
+  },
+  {
+   "terim": "LMS",
+   "tanim": "Öğrenme yönetim sistemi; çevrim içi eğitim platformu."
+  },
+  {
+   "terim": "MCP",
+   "tanim": "Model Context Protocol: YZ ajanlarının dış araçları çağırması için açık protokol."
+  },
+  {
+   "terim": "MSW",
+   "tanim": "Mock Service Worker: testlerde ağ isteklerini taklit eden araç."
+  },
+  {
+   "terim": "MUST, SHOULD, MAY",
+   "tanim": "RFC 2119 düzeyleri: MUST zorunlu, SHOULD güçlü öneri, MAY isteğe bağlı.",
+   "esanlam": [
+    "MUST",
+    "SHOULD",
+    "MAY"
+   ]
+  },
+  {
+   "terim": "MVP",
+   "tanim": "En küçük kullanılabilir ürün; ilk yayımlanan asgari kapsam."
+  },
+  {
+   "terim": "NOTICE",
+   "tanim": "Dağıtımda bileşenlerin lisans ve telif bildirimlerini toplayan dosya."
+  },
+  {
+   "terim": "OIDC",
+   "tanim": "OpenID Connect: OAuth 2.0 üstünde kimlik doğrulama standardı; Keycloak ile kimlik köprüsü bunu konuşur.",
+   "esanlam": [
+    "OpenID Connect"
+   ]
+  },
+  {
+   "terim": "OTP",
+   "tanim": "Tek kullanımlık kod (6 haneli doğrulama kodu)."
+  },
+  {
+   "terim": "OWASP",
+   "tanim": "Açık web uygulama güvenliği topluluğu; güvenlik risk listeleri ve rehberleri yayımlar."
+  },
+  {
+   "terim": "PDF",
+   "tanim": "Taşınabilir belge biçimi."
+  },
+  {
+   "terim": "PIM",
+   "tanim": "Ürün bilgisi yönetimi: ürün özellikleri, varyantlar ve katalog verisi."
+  },
+  {
+   "terim": "PKCE",
+   "tanim": "Proof Key for Code Exchange: yetkilendirme kodunun çalınıp kullanılmasını önleyen OAuth ek adımı."
+  },
+  {
+   "terim": "PR",
+   "tanim": "Pull request: ana koda girmeden önce incelenen değişiklik isteği."
+  },
+  {
+   "terim": "QA",
+   "tanim": "Kalite güvencesi: yayından önce bağımsız test ve doğrulama."
+  },
+  {
+   "terim": "REST, RPC",
+   "tanim": "REST kaynak odaklı HTTP API biçimi; RPC bir sunucu fonksiyonunu uzaktan çağırma biçimi.",
+   "esanlam": [
+    "REST",
+    "RPC"
+   ]
+  },
+  {
+   "terim": "RFC",
+   "tanim": "İnternet standartlarını yayımlayan belge serisi (ör. RFC 9700)."
+  },
+  {
+   "terim": "ROPC",
+   "tanim": "Parolayla token alma (Resource Owner Password Credentials); güvenlik BCP'si yasaklar."
+  },
+  {
+   "terim": "RQ",
+   "tanim": "Frappe'nin arka plan işleri için kullandığı Python iş kuyruğu kütüphanesi."
+  },
+  {
+   "terim": "RS256, ES256, S256",
+   "tanim": "İmza ve özetleme algoritmalarının adları (RSA ve eliptik eğri imzası, SHA-256).",
+   "esanlam": [
+    "RS256",
+    "ES256",
+    "S256"
+   ]
+  },
+  {
+   "terim": "RSC",
+   "tanim": "React Server Components: sunucuda çalışan React bileşenleri; bu projede kullanılmaz."
+  },
+  {
+   "terim": "RTL",
+   "tanim": "Sağdan sola yazılan diller (Arapça, İbranice)."
+  },
+  {
+   "terim": "RUM",
+   "tanim": "Gerçek kullanıcı izleme: sahadaki gerçek kullanıcıların performans ölçümü."
+  },
+  {
+   "terim": "SBOM",
+   "tanim": "Yazılım malzeme listesi: üründeki bütün bileşenlerin ve sürümlerinin listesi."
+  },
+  {
+   "terim": "SCA",
+   "tanim": "Bağımlılık zafiyet taraması: kullanılan paketlerdeki bilinen açıkları arar."
+  },
+  {
+   "terim": "SDK",
+   "tanim": "Yazılım geliştirme kiti: bir hizmeti kullanmak için hazır kütüphane."
+  },
+  {
+   "terim": "SEO",
+   "tanim": "Arama motoru optimizasyonu."
+  },
+  {
+   "terim": "SIL OFL 1.1",
+   "tanim": "Fontlar için açık lisans."
+  },
+  {
+   "terim": "SIM",
+   "tanim": "Telefon hattını taşıyan kart; SIM değiştirme saldırısı SMS kodlarını ele geçirmek için kullanılır."
+  },
+  {
+   "terim": "SLO, RPO, RTO",
+   "tanim": "Hizmet hedefi (ör. %99,9 erişilebilirlik), kabul edilebilir veri kaybı süresi ve kabul edilebilir kesinti süresi.",
+   "esanlam": [
+    "SLO",
+    "RPO",
+    "RTO"
+   ]
+  },
+  {
+   "terim": "SMS",
+   "tanim": "Kısa mesaj."
+  },
+  {
+   "terim": "SMTP",
+   "tanim": "E-posta gönderme protokolü."
+  },
+  {
+   "terim": "SPA",
+   "tanim": "Tek sayfa uygulama: tarayıcıda çalışan, sayfayı yeniden yüklemeden ekran değiştiren uygulama."
+  },
+  {
+   "terim": "SQL",
+   "tanim": "Veritabanı sorgu dili; modele hiçbir zaman ürettirilmez."
+  },
+  {
+   "terim": "SSG",
+   "tanim": "Statik site üretimi: sayfaların önceden HTML olarak üretilmesi (Astro)."
+  },
+  {
+   "terim": "SSO",
+   "tanim": "Tek oturum açma: bir kez girip birden çok uygulamayı kullanma."
+  },
+  {
+   "terim": "SVG",
+   "tanim": "Vektör çizim biçimi; ikonlar ve diyagramlar için."
+  },
+  {
+   "terim": "TCO",
+   "tanim": "Toplam sahip olma maliyeti."
+  },
+  {
+   "terim": "TDD",
+   "tanim": "Test güdümlü geliştirme: önce test yazılır ve kırmızı koşar, sonra kod yazılır."
+  },
+  {
+   "terim": "TLS",
+   "tanim": "Aktarım katmanı güvenliği: HTTPS'in şifreleme protokolü."
+  },
+  {
+   "terim": "TR, EN",
+   "tanim": "Türkçe ve İngilizce dil kodları.",
+   "esanlam": [
+    "TR",
+    "EN"
+   ]
+  },
+  {
+   "terim": "TTL",
+   "tanim": "Yaşam süresi: bir kaydın veya önbellek girdisinin geçerli kaldığı süre."
+  },
+  {
+   "terim": "UI, UX",
+   "tanim": "Kullanıcı arayüzü ve kullanıcı deneyimi.",
+   "esanlam": [
+    "UI",
+    "UX"
+   ]
+  },
+  {
+   "terim": "URL",
+   "tanim": "Web adresi."
+  },
+  {
+   "terim": "UTC",
+   "tanim": "Eşgüdümlü evrensel zaman; saat dilimlerinin başlangıç noktası."
+  },
+  {
+   "terim": "VKN",
+   "tanim": "Vergi kimlik numarası."
+  },
+  {
+   "terim": "WCAG",
+   "tanim": "Web içeriği erişilebilirlik yönergeleri (W3C)."
+  },
+  {
+   "terim": "XML",
+   "tanim": "Yapılandırılmış veri biçimi; e-Fatura belgeleri XML'dir."
+  },
+  {
+   "terim": "ZAP",
+   "tanim": "OWASP'ın web güvenliği tarama aracı."
+  },
+  {
+   "terim": "GPL, AGPL, SSPL, BUSL",
+   "tanim": "Kaynak kodu paylaşma veya kullanım kısıtı getiren lisanslar; A5'e göre ürün bağımlılığı olamaz.",
+   "esanlam": [
+    "GPL",
+    "AGPL",
+    "SSPL",
+    "BUSL",
+    "GPL-3.0",
+    "AGPL-3.0"
+   ]
+  },
+  {
+   "terim": "MIT, BSD, ISC, Apache-2.0",
+   "tanim": "İzin verici açık kaynak lisansları; ürün bağımlılığında serbesttir.",
+   "esanlam": [
+    "MIT",
+    "BSD",
+    "ISC",
+    "Apache-2.0"
+   ]
+  },
+  {
+   "terim": "acr",
+   "tanim": "Keycloak'ın bildirdiği kimlik doğrulama seviyesi (ör. parola mı, passkey mi); adım yükseltmede kontrol edilir."
+  },
+  {
+   "terim": "adım yükseltme",
+   "tanim": "Kritik işlemden önce kullanıcıdan daha güçlü doğrulama (ör. passkey) istenmesi.",
+   "esanlam": [
+    "step-up"
+   ]
+  },
+  {
+   "terim": "antd",
+   "tanim": "Ant Design bileşen kütüphanesinin paket adı; bu projede yalnızca @genui/ui içinde kullanılır.",
+   "esanlam": [
+    "Ant Design"
+   ]
+  },
+  {
+   "terim": "assisted, direct, delegated",
+   "tanim": "Etkileşim modları: direct kullanıcının kendi eylemi, assisted modelin önerip kullanıcının onayladığı, delegated ajanın grant kapsamında onaysız çalıştığı mod.",
+   "esanlam": [
+    "assisted",
+    "direct",
+    "delegated"
+   ]
+  },
+  {
+   "terim": "Astro",
+   "tanim": "Herkese açık sayfaları statik HTML olarak üreten web çatısı."
+  },
+  {
+   "terim": "autosave",
+   "tanim": "Otomatik kaydetme; bu projede yalnızca taslak otomatik kaydedilir, gerçek belge Kaydet ile yazılır."
+  },
+  {
+   "terim": "back-channel logout",
+   "tanim": "Keycloak'ın çıkışı tarayıcı üzerinden değil, sunucudan sunucuya bildirmesi."
+  },
+  {
+   "terim": "bağlam manifesti",
+   "tanim": "Bir YZ isteğinde modele giden her şeyin (kayıt, filtre, belge) listesi; kullanıcıya çip olarak gösterilir."
+  },
+  {
+   "terim": "capability",
+   "tanim": "Sunucunun izin verdiği, adı ve parametreleri tanımlı bir iş eylemi (ör. eksik ürün alanlarını tamamla)."
+  },
+  {
+   "terim": "capability manifesti",
+   "tanim": "Kullanıcının o an kullanabileceği capability'lerin sunucudan gelen listesi; model yalnızca buradan seçer."
+  },
+  {
+   "terim": "capability yürütücüsü",
+   "tanim": "Frappe custom app'te onaylı YZ değişikliklerini kilitli okuma ve revizyon kontrolüyle uygulayan sunucu parçası.",
+   "esanlam": [
+    "yürütücü"
+   ]
+  },
+  {
+   "terim": "ChangeSet",
+   "tanim": "YZ'nin önerdiği değişikliklerin kayıt kayıt listesi; kullanıcı bunu görür ve onaylar."
+  },
+  {
+   "terim": "Client Script",
+   "tanim": "Frappe Desk formunda tarayıcıda çalışan betik; bu projede yazılmaz."
+  },
+  {
+   "terim": "codegen",
+   "tanim": "Kod üretimi: DocType metadata'sından tipli şemaların otomatik üretilmesi."
+  },
+  {
+   "terim": "Colima",
+   "tanim": "macOS'ta Docker Desktop yerine kullanılan hafif container çalışma ortamı."
+  },
+  {
+   "terim": "container query",
+   "tanim": "Bir parçanın ekran genişliğine değil, içinde durduğu kutunun genişliğine göre düzenlenmesi."
+  },
+  {
+   "terim": "custom app",
+   "tanim": "Frappe'ye eklenen özel uygulama; platformun sunucu kodu burada yaşar."
+  },
+  {
+   "terim": "dikey dilim",
+   "tanim": "Uçtan uca, her katmanı (kimlik, veri, arayüz, test) bitiren ve canlıya çıkan iş parçası; bu belgede Dilim 1–4.",
+   "esanlam": [
+    "dilim"
+   ],
+   "cok_anlamli": true
+  },
+  {
+   "terim": "Desk",
+   "tanim": "Frappe'nin hazır yönetim arayüzü; bu projede yalnızca sistem yönetimi için kalır.",
+   "esanlam": [
+    "Frappe Desk"
+   ]
+  },
+  {
+   "terim": "DocType",
+   "tanim": "Frappe'de bir veri tablosunun ve formunun tanımı (ör. Item, Run)."
+  },
+  {
+   "terim": "docstatus",
+   "tanim": "Frappe belge durumu: 0 taslak, 1 gönderilmiş (submit), 2 iptal."
+  },
+  {
+   "terim": "Docker Engine",
+   "tanim": "Sunucularda container çalıştıran motor; canlıda ve staging'de kullanılır."
+  },
+  {
+   "terim": "e-Fatura",
+   "tanim": "Türkiye'de elektronik fatura; gönderildikten sonra geri alınamaz yasal belge.",
+   "esanlam": [
+    "e-Arşiv",
+    "e-Defter"
+   ]
+  },
+  {
+   "terim": "feature flag",
+   "tanim": "Bir özelliği kod değiştirmeden açıp kapatan sunucu ayarı."
+  },
+  {
+   "terim": "fixture",
+   "tanim": "Testte kullanılan sabit örnek veri."
+  },
+  {
+   "terim": "Frappe",
+   "tanim": "Bu projenin arka uç çatısı: iş kuralları, yetki, veri ve belge yaşam döngüsünün otoritesi.",
+   "esanlam": [
+    "Frappe Framework"
+   ]
+  },
+  {
+   "terim": "GenUI",
+   "tanim": "Üretken arayüz: modelin onaylı katalogdan seçerek göreve uygun ekran veya değişiklik önerisi kurması."
+  },
+  {
+   "terim": "@genui/ui",
+   "tanim": "Projenin bileşen paketi; antd yalnızca bunun içinde kullanılır."
+  },
+  {
+   "terim": "grant",
+   "tanim": "Kullanıcının önceden verdiği, küçük ve kısa süreli sınırlı yetki; kapsamındaki YZ değişikliği onaysız uygulanır."
+  },
+  {
+   "terim": "headless",
+   "tanim": "Arayüzü olmayan, yalnızca API sunan arka uç kullanımı."
+  },
+  {
+   "terim": "Hetzner",
+   "tanim": "Sunucuların barındırıldığı hizmet sağlayıcı (Almanya ve Finlandiya).",
+   "esanlam": [
+    "GEX45",
+    "GEX131"
+   ]
+  },
+  {
+   "terim": "hook",
+   "tanim": "Frappe'de bir olay anında (ör. kayıttan önce) çalışan sunucu kodu."
+  },
+  {
+   "terim": "idempotency",
+   "tanim": "Tekrar koruması: aynı isteğin iki kez gönderilmesinin tek sonuç üretmesi.",
+   "esanlam": [
+    "idempotency anahtarı"
+   ]
+  },
+  {
+   "terim": "IndexedDB",
+   "tanim": "Tarayıcının içindeki yerel veritabanı; taslak kesintiye karşı burada tutulur."
+  },
+  {
+   "terim": "ilk teslim",
+   "tanim": "3 ayda pilot müşterilere çıkan Dilim 1."
+  },
+  {
+   "terim": "kabul deneyi",
+   "tanim": "Bir gereksinimin gerçekten sağlandığını gösteren tanımlı deney (AT-xx)."
+  },
+  {
+   "terim": "kanarya",
+   "tanim": "Yeni sürümü önce küçük bir kullanıcı grubuna açma yöntemi."
+  },
+  {
+   "terim": "Keycloak",
+   "tanim": "Açık kaynak kimlik sunucusu; giriş, kayıt ve oturum burada."
+  },
+  {
+   "terim": "Keycloakify",
+   "tanim": "Keycloak giriş ekranlarını React ve ürün token'larıyla üreten araç."
+  },
+  {
+   "terim": "kill switch",
+   "tanim": "YZ özelliklerini sunucudan 30 saniyede kapatan acil durum anahtarı."
+  },
+  {
+   "terim": "kimlik köprüsü",
+   "tanim": "Keycloak girişini Frappe oturumuna çeviren, platformun kendi Frappe uygulaması."
+  },
+  {
+   "terim": "kiosk",
+   "tanim": "Birden fazla kişinin kullandığı ortak cihaz."
+  },
+  {
+   "terim": "lease",
+   "tanim": "Bir işi yalnızca bir worker'ın belirli süre sahiplenmesi; süre dolunca başka worker devralır."
+  },
+  {
+   "terim": "lint",
+   "tanim": "Kodu yazım ve kural hatalarına karşı otomatik tarayan kontrol."
+  },
+  {
+   "terim": "magic link",
+   "tanim": "E-postaya gelen tek tıkla giriş bağlantısı; ertelendi."
+  },
+  {
+   "terim": "maker-checker",
+   "tanim": "Bir işlemin bir kişi tarafından hazırlanıp başka bir kişi tarafından onaylanması."
+  },
+  {
+   "terim": "n8n",
+   "tanim": "İş akışı otomasyon aracı; burada yalnızca haftalık rapor ve PR üretmek için."
+  },
+  {
+   "terim": "nginx",
+   "tanim": "Ters vekil olarak kullanılan web sunucusu."
+  },
+  {
+   "terim": "nonce",
+   "tanim": "Her yanıtta yeni üretilen tek kullanımlık değer; CSP'de izinli betiği işaretler."
+  },
+  {
+   "terim": "olgunluk seviyesi",
+   "tanim": "Bir hedefin ne kadar hazır olduğu: O1 tanımlı, O2 kanıtlı, O3 işletilen, O4 kurumsal."
+  },
+  {
+   "terim": "OpenClaw",
+   "tanim": "YZ ajan aracı; burada n8n ile birlikte haftalık duyuru özeti yazar."
+  },
+  {
+   "terim": "origin",
+   "tanim": "Protokol, alan adı ve portun üçü birden; tarayıcı güvenliği origin başına çalışır.",
+   "esanlam": [
+    "aynı origin"
+   ]
+  },
+  {
+   "terim": "outcome_unknown",
+   "tanim": "Dış işlemin sonucunun bilinmediği Run durumu; uzlaştırmaya gider."
+  },
+  {
+   "terim": "parmak izi",
+   "tanim": "Verinin kısa özet değeri (SHA-256); verinin değişip değişmediğini kanıtlar.",
+   "esanlam": [
+    "fingerprint"
+   ]
+  },
+  {
+   "terim": "passkey",
+   "tanim": "Parolasız giriş: telefon veya bilgisayarın kilidiyle (parmak izi, yüz) yapılan doğrulama."
+  },
+  {
+   "terim": "persona",
+   "tanim": "Bir kullanıcı tipinin tarifi (ör. operasyon uzmanı)."
+  },
+  {
+   "terim": "pilot",
+   "tanim": "Ürünün ilk gerçek müşterilerle sınırlı kullanımı."
+  },
+  {
+   "terim": "Playwright",
+   "tanim": "Tarayıcıda uçtan uca test çalıştıran araç."
+  },
+  {
+   "terim": "PoC",
+   "tanim": "Kavram kanıtı: bir yaklaşımın işe yaradığını gösteren küçük, zaman kutulu deneme."
+  },
+  {
+   "terim": "Promptfoo",
+   "tanim": "YZ çıktılarını değerlendirme setiyle ölçen araç."
+  },
+  {
+   "terim": "realm",
+   "tanim": "Keycloak'ta kullanıcıları, istemcileri ve giriş akışlarını barındıran alan."
+  },
+  {
+   "terim": "renderer",
+   "tanim": "UI Spec'i ekrana çizen bileşen; yalnızca onaylı katalogdakiler kullanılır."
+  },
+  {
+   "terim": "risk sınıfı",
+   "tanim": "Bir yazma işleminin sınıfı: read, safe write, reversible, destructive, sensitive; onay kuralını belirler.",
+   "esanlam": [
+    "safe write",
+    "reversible",
+    "destructive",
+    "sensitive"
+   ]
+  },
+  {
+   "terim": "Run",
+   "tanim": "Uzun YZ işinin sunucudaki kaydı; tarayıcı kapansa da sürer."
+  },
+  {
+   "terim": "sid",
+   "tanim": "Oturum kimliği; Keycloak sid'i ve Frappe sid'i ayrı şeylerdir.",
+   "cok_anlamli": true
+  },
+  {
+   "terim": "Socket.IO",
+   "tanim": "Tarayıcıya canlı olay gönderen bağlantı; bu projede yalnızca 'değişti' sinyali taşır."
+  },
+  {
+   "terim": "staging",
+   "tanim": "Canlıdan önceki, canlıyla aynı kurulmuş test ortamı."
+  },
+  {
+   "terim": "Storybook",
+   "tanim": "Bileşenlerin her durumunu örnekleyen ve test eden araç."
+  },
+  {
+   "terim": "tenant",
+   "tanim": "Kiracı: ürünü kullanan müşteri şirket; verisi diğerlerinden ayrılır.",
+   "esanlam": [
+    "kiracı"
+   ]
+  },
+  {
+   "terim": "token",
+   "tanim": "Çok anlamlı: kimlikte erişim veya kimlik bilgisi taşıyan imzalı değer; tasarımda renk, aralık gibi adlandırılmış değer.",
+   "cok_anlamli": true
+  },
+  {
+   "terim": "ters vekil",
+   "tanim": "İstekleri karşılayıp doğru servise yönlendiren sunucu (reverse proxy); bu projede nginx.",
+   "esanlam": [
+    "reverse proxy"
+   ]
+  },
+  {
+   "terim": "UI Spec",
+   "tanim": "Ekranın JSON tarifi: hangi bileşen, hangi veri bağlantısı; veri taşımaz."
+  },
+  {
+   "terim": "uzlaştırma",
+   "tanim": "Sonucu bilinmeyen bir işlemin gerçekte olup olmadığını tespit edip kaydı düzeltme."
+  },
+  {
+   "terim": "vekil oturum",
+   "tanim": "Destek çalışanının müşteri onayıyla, süreli ve işaretli olarak müşteri adına oturum açması."
+  },
+  {
+   "terim": "white-label",
+   "tanim": "Ürünün müşterinin markasıyla sunulması."
+  },
+  {
+   "terim": "worker",
+   "tanim": "Arka plan işlerini çalıştıran sunucu süreci."
+  },
+  {
+   "terim": "yayın kapısı",
+   "tanim": "Geçmeden yayına çıkılamayan kontrol veya deney."
+  },
+  {
+   "terim": "yoklama",
+   "tanim": "Canlı bağlantı yokken sunucuya belirli aralıkla 'değişen var mı' diye sormak (polling).",
+   "esanlam": [
+    "polling"
+   ]
+  },
+  {
+   "terim": "yüzey",
+   "tanim": "Çok anlamlı: YZ yüzeyi (YZ'nin göründüğü etkileşim yeri), cihaz yüzey paketi (cihaz sınıfının arayüz kodu) veya üretilen ekran bölgesi (surface).",
+   "esanlam": [
+    "surface"
+   ],
+   "cok_anlamli": true
+  },
+  {
+   "terim": "zod",
+   "tanim": "TypeScript'te veri şeması tanımlayan ve çalışma anında doğrulayan kütüphane; sözleşmelerin asıl kaynağı."
+  },
+  {
+   "terim": "ekran okuyucu",
+   "tanim": "Görme engelli kullanıcı için ekrandaki metni sesli okuyan yazılım (VoiceOver, TalkBack, NVDA, JAWS).",
+   "esanlam": [
+    "VoiceOver",
+    "TalkBack"
+   ]
+  },
+  {
+   "terim": "erişilebilirlik modu",
+   "tanim": "Kullanıcının açtığı, seçili AAA maddelerini ve sadeleştirilmiş düzeni açan tercih."
+  },
+  {
+   "terim": "öneri katmanı",
+   "tanim": "YZ önerilerinin kullanıcının kendi yazdığından ayrı durduğu katman; kabul edilince taslağa geçer."
+  },
+  {
+   "terim": "taslak",
+   "tanim": "Kaydedilmemiş form verisi; cihazda ve sunucudaki çalışma kopyasında tutulur.",
+   "esanlam": [
+    "çalışma kopyası"
+   ]
+  },
+  {
+   "terim": "uyarlamalı teslim",
+   "tanim": "Cihaz sınıfına göre yalnızca o sınıfın arayüz paketinin yüklenmesi (adaptive delivery).",
+   "esanlam": [
+    "adaptive delivery"
+   ]
+  },
+  {
+   "terim": "AT-xx",
+   "tanim": "Kabul deneyi kimliği (ör. AT-14); gereksinim kimliğiyle karışmaz."
+  },
+  {
+   "terim": "TP-xx",
+   "tanim": "Otomatik test paketi kimliği (ör. TP-01); Test stratejisi bölümünde listelenir."
+  },
+  {
+   "terim": "DNS",
+   "tanim": "Alan adlarını sunucu adreslerine çeviren internet dizin sistemi."
+  },
+  {
+   "terim": "IETF",
+   "tanim": "İnternet standartlarını (RFC) yayımlayan kuruluş."
+  },
+  {
+   "terim": "RSA",
+   "tanim": "Yaygın açık anahtarlı şifreleme ve imza algoritması."
+  },
+  {
+   "terim": "EN 301 549",
+   "tanim": "Avrupa'nın bilişim ürünleri için erişilebilirlik standardı; WCAG'e eşlenir."
+  }
+ ],
+ "yaygin": [
+  "AND",
+  "OR",
+  "NOT",
+  "LICENSE"
+ ]
+}

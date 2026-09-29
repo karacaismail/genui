@@ -1,9 +1,166 @@
 {
- "about": "Karar kaydındaki seçimi sonraki bir kaynakla değişen veya yeniden açılan kararlar. Kaynak seçim tarihçe olarak korunur; izlenebilirlik tablosu etkin durumu bu dosyadan gösterir.",
+ "about": "Karar kaydındaki seçimi sonraki bir kaynakla (kimlik rehberi veya karar kitabı) değişen, kapanan veya genişleyen kararlar. Kaynak seçim tarihçe olarak korunur; izlenebilirlik tablosu etkin durumu bu dosyadan gösterir. link: belgedeki bağlantı hedefi.",
  "overrides": {
-  "auth": {"state": "yerine geçti", "effective": "Aynı origin, Frappe HttpOnly oturumu; BFF görevi kimlik köprüsünde", "source": "Kimlik rehberi", "adr": "ak-oturum"},
-  "gateway": {"state": "koşullu", "effective": "Aynı origin kenar katmanı; ayrı BFF servisi yalnızca birden fazla backend aynı oturumla çağrılınca", "source": "Kimlik rehberi", "adr": "ak-oturum"},
-  "tenancy": {"state": "yeniden açıldı", "effective": "Tek site + organizasyon izolasyonu ya da müşteri başına site; sözleşme iki modele dayanıklı", "source": "Kimlik rehberi", "adr": "ak-tenant"},
-  "tenant-isolation": {"state": "yeniden açıldı", "effective": "Tenant modeli kararına bağlı; iki modelde de negatif izolasyon testi", "source": "Kimlik rehberi", "adr": "ak-tenant"}
+  "auth": {
+   "state": "yerine geçti",
+   "effective": "Aynı origin, Frappe HttpOnly oturumu; BFF görevi kimlik köprüsünde",
+   "source": "Kimlik rehberi",
+   "link": "ak-oturum",
+   "link_text": "ADR yazılacak"
+  },
+  "gateway": {
+   "state": "koşullu",
+   "effective": "Aynı origin kenar katmanı; ayrı BFF servisi yalnızca birden fazla backend aynı oturumla çağrılınca",
+   "source": "Kimlik rehberi",
+   "link": "ak-oturum",
+   "link_text": "ADR yazılacak"
+  },
+  "tenancy": {
+   "state": "kapandı",
+   "effective": "Hibrit: varsayılan paylaşımlı site, büyük veya regüle müşteri ayrı site; oturumda tek aktif şirket",
+   "source": "Karar kitabı K01, V02",
+   "link": "kk-K01",
+   "link_text": "K01"
+  },
+  "tenant-isolation": {
+   "state": "kapandı",
+   "effective": "İki modelde de her yayında negatif izolasyon testi",
+   "source": "Karar kitabı K01",
+   "link": "kk-K01",
+   "link_text": "K01"
+  },
+  "migration": {
+   "state": "yerine geçti",
+   "effective": "Geçiş yok; ürün sıfırdan, dört dikey dilim",
+   "source": "Karar kitabı U01, C05",
+   "link": "kk-U01",
+   "link_text": "U01"
+  },
+  "parity": {
+   "state": "yerine geçti",
+   "effective": "Desk eşitliği hedeflenmez; Desk yalnızca sistem yönetimi için",
+   "source": "Karar kitabı U01, R12",
+   "link": "kk-U01",
+   "link_text": "U01"
+  },
+  "scripts": {
+   "state": "yerine geçti",
+   "effective": "Client Script yazılmaz; iş kuralı baştan sunucuda",
+   "source": "Karar kitabı U01, R03",
+   "link": "kk-R03",
+   "link_text": "R03"
+  },
+  "inventory": {
+   "state": "yerine geçti",
+   "effective": "Taşınacak özelleştirme yok",
+   "source": "Karar kitabı U01",
+   "link": "kk-U01",
+   "link_text": "U01"
+  },
+  "css": {
+   "state": "yerine geçti",
+   "effective": "SCSS Modules ve cascade katmanları (kaydın önerisi)",
+   "source": "Karar kitabı R04",
+   "link": "kk-R04",
+   "link_text": "R04"
+  },
+  "realtime": {
+   "state": "yerine geçti",
+   "effective": "Socket.IO + 15 saniyelik yoklama yedeği (kaydın önerisi)",
+   "source": "Karar kitabı R07",
+   "link": "kk-R07",
+   "link_text": "R07"
+  },
+  "drafts": {
+   "state": "yerine geçti",
+   "effective": "Taslak otomatik, gerçek belge Kaydet ile; kesintide taslak korunur",
+   "source": "Karar kitabı R10",
+   "link": "kk-R10",
+   "link_text": "R10"
+  },
+  "team": {
+   "state": "yerine geçti",
+   "effective": "Proje sahibi ve YZ kodlama ajanları; dilim kapılarında dış uzman",
+   "source": "Karar kitabı E01, E02, K10",
+   "link": "kk-E01",
+   "link_text": "E01"
+  },
+  "timeline": {
+   "state": "yerine geçti",
+   "effective": "İlk teslim 3 ay (Dilim 1); tarih kayar, kapı kısalmaz",
+   "source": "Karar kitabı E07",
+   "link": "kk-E07",
+   "link_text": "E07"
+  },
+  "version": {
+   "state": "yerine geçti",
+   "effective": "Yalnız Frappe v16",
+   "source": "Karar kitabı U08",
+   "link": "kk-U08",
+   "link_text": "U08"
+  },
+  "data-residency": {
+   "state": "kapandı",
+   "effective": "Rıza ve standart sözleşmeyle yurt dışı işleme; hassas veri kendi sunucumuzda",
+   "source": "Karar kitabı Y02, Y01",
+   "link": "kk-Y02",
+   "link_text": "Y02"
+  },
+  "schedule-scope": {
+   "state": "genişletildi",
+   "effective": "Takvim + Gantt ve kaynak planlayıcı sürüm 1.0'da",
+   "source": "Karar kitabı C11",
+   "link": "kk-C11",
+   "link_text": "C11"
+  },
+  "collaboration-flows": {
+   "state": "yerine geçti",
+   "effective": "Yorum, atama ve bildirim baştan yeni arayüzde; Desk'te devam yok",
+   "source": "Karar kitabı C12",
+   "link": "kk-C12",
+   "link_text": "C12"
+  },
+  "workspace": {
+   "state": "genişletildi",
+   "effective": "Tam kişisel ve şablondan başlatma birlikte",
+   "source": "Karar kitabı R01",
+   "link": "kk-R01",
+   "link_text": "R01"
+  },
+  "icons": {
+   "state": "genişletildi",
+   "effective": "Özel ikonlar + çok kütüphaneli ikon kayıt mekanizması (Phosphor öncelikli)",
+   "source": "Karar kitabı R05",
+   "link": "kk-R05",
+   "link_text": "R05"
+  },
+  "a11y-target": {
+   "state": "genişletildi",
+   "effective": "WCAG 2.2 AA + erişilebilirlik modu",
+   "source": "Karar kitabı R06",
+   "link": "kk-R06",
+   "link_text": "R06"
+  },
+  "ui-kit": {
+   "state": "yerine geçti",
+   "effective": "antd yalnızca @genui/ui içinde; uygulama antd görmez",
+   "source": "Karar kitabı C04",
+   "link": "kk-C04",
+   "link_text": "C04"
+  },
+  "devices": {
+   "state": "genişletildi",
+   "effective": "Dört sınıf + 4K, 5K, 8K televizyon ve akıllı tahta; yön çarpanı; 320 px önce",
+   "source": "Karar kitabı U12",
+   "link": "kk-U12",
+   "link_text": "U12"
+  },
+  "scale": {
+   "state": "genişletildi",
+   "effective": "500'den fazla eşzamanlı kullanıcı, milyonlarca kayıt; 750 oturum yük testi",
+   "source": "Karar kitabı U11",
+   "link": "kk-U11",
+   "link_text": "U11"
+  }
  }
 }

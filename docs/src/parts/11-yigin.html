@@ -1,41 +1,48 @@
 <section id="yigin">
   <div class="sec-head">
     <div class="title"><h2>Teknoloji seçimi</h2></div>
-    <p>Sürümler 28 Eylül 2026'da npm registry, GitHub ve resmi belgelerden okunmuştur. "Konum" sütunu paketin uygulamada nereye girebileceğini söyler; bu sınır sürümden daha önemlidir. Seçimler karar kaydındaki tercihlerle uyumludur.</p>
+    <p>Sürümler 28–29 Eylül 2026'da npm registry, GitHub ve resmi belgelerden okunmuştur. "Konum" sütunu paketin uygulamada nereye girebileceğini söyler; bu sınır sürümden daha önemlidir. Seçimler karar kaydındaki tercihlerle ve karar kitabı cevaplarıyla uyumludur.</p>
   </div>
   <div class="tbl-wrap"><table class="stack-table">
     <thead><tr><th scope="col">Alan</th><th scope="col">Seçim</th><th scope="col">Sürüm</th><th scope="col">Lisans</th><th scope="col">Konum ve değiştirilebilirlik</th></tr></thead>
     <tbody>
-      <tr><td>Backend platform</td><td>Frappe Framework</td><td>v16.35.0 (v15 paralel bakımda)</td><td>MIT</td><td>Otorite; aynı origin ters vekil arkasında, sürüm matrisiyle</td></tr>
-      <tr><td>Headless API</td><td>Frappe REST v2 + whitelisted RPC</td><td>/api/v2 (v15+)</td><td>MIT</td><td>Sürümlü sözleşme; ters vekil yalnızca izinli yolları geçirir (B1)</td></tr>
+      <tr><td>Backend platform</td><td>Frappe Framework</td><td>v16.35.0 (yalnız v16)</td><td>MIT</td><td>Otorite; aynı origin ters vekil arkasında (A3)</td></tr>
+      <tr><td>Headless API</td><td>Frappe REST v2 + whitelisted RPC</td><td>/api/v2</td><td>MIT</td><td>Sürümlü sözleşme; ters vekil yalnızca izinli yolları geçirir; platform metotları <code>genui.api.v1</code> ad alanında (B1, B12)</td></tr>
       <tr><td>Canlı olaylar</td><td>Frappe Socket.IO + socket.io-client</td><td>server ^4.7 · client 4.8.4</td><td>MIT</td><td>TransportAdapter; aynı origin, HttpOnly çerez (B10)</td></tr>
       <tr><td>Uzun işler</td><td>Frappe jobs (RQ) + Run DocType</td><td>RQ Job DocType, publish_progress</td><td>MIT</td><td>Frappe custom app (E10); RunPanel istemcide</td></tr>
       <tr><td>Kimlik sunucusu</td><td>Keycloak</td><td>26.7.4 (26.7 serisine sabit)</td><td>Apache-2.0</td><td>Merkezi IdP; çekirdek fork edilmez; eklenti yalnızca kabul listesiyle (M1, K12)</td></tr>
       <tr><td>Kimlik köprüsü</td><td>Frappe custom app + PyJWT</td><td>Frappe v16 ile</td><td>MIT</td><td>BFF görevi, aynı origin; Frappe Social Login yerine (M3, M4)</td></tr>
-      <tr><td>Giriş teması</td><td>Keycloakify</td><td>11.16.0</td><td>MIT</td><td>identity-infra; AEP token'larından giriş, hesap ve e-posta temaları (M7, M13)</td></tr>
+      <tr><td>Giriş teması</td><td>Keycloakify</td><td>11.16.0</td><td>MIT</td><td>identity-infra; ürün token'larından giriş, hesap ve e-posta temaları; müşteri markası istemci özniteliğinden (M7, M13)</td></tr>
       <tr><td>Realm yapılandırması</td><td>keycloak-config-cli</td><td>6.5.1 (26.5.5'e kadar test edilmiş)</td><td>Apache-2.0</td><td>CI; 26.7 uyumu kanıtlanmadan üretime alınmaz (M14)</td></tr>
       <tr><td>Kod teslimi</td><td>OTP gateway: FastAPI + SQLAlchemy 2.0 + Alembic + PostgreSQL</td><td>kendi servisi</td><td>MIT, PostgreSQL License</td><td>Ayrı servis; kod saklamaz, gönderim sınırı (M15)</td></tr>
       <tr><td>Kimlik testleri</td><td>Playwright, Mailpit, k6</td><td>1.63 / sabitlenir / sabitlenir</td><td>Apache-2.0, MIT, AGPL-3.0 (k6)</td><td>Yalnızca CI ve yerel Colima ortamı; k6 ürüne girmez (A5)</td></tr>
       <tr><td>UI çerçevesi</td><td>React</td><td>19.3.0</td><td>MIT</td><td>Çekirdek; değişmez</td></tr>
       <tr><td>Derleme</td><td>Vite (Rolldown, Oxc)</td><td>8.3.1</td><td>MIT</td><td>Çekirdek</td></tr>
       <tr><td>Dil</td><td>TypeScript (tsgo)</td><td>7.0.2</td><td>Apache-2.0</td><td>Çekirdek; lint kararı ADR'de</td></tr>
-      <tr><td>Bileşen kütüphanesi</td><td>antd</td><td>6.6.5</td><td>MIT</td><td>Yalnızca @aep/ui; katalog sözleşmesi sabit kalarak değiştirilebilir</td></tr>
+      <tr><td>Bileşen kütüphanesi</td><td>antd</td><td>6.6.5</td><td>MIT</td><td>Yalnızca <code>@genui/ui</code> içinde; uygulama kodunda import lint hatası (C1); katalog sözleşmesi sabit kalarak değiştirilebilir</td></tr>
       <tr><td>Eksik davranışlar</td><td>Radix Primitives</td><td>radix-ui 1.6.7</td><td>MIT</td><td>Yalnızca antd'de olmayan kontrol için, tek davranış sahibi</td></tr>
       <tr><td>Renk ölçekleri</td><td>@radix-ui/colors</td><td>3.0.0</td><td>MIT</td><td>packages/tokens; semantik rollere eşlenir</td></tr>
-      <tr><td>Sohbet primitifleri</td><td>@ant-design/x + x-sdk</td><td>2.9.0 (peer antd ^6.1.1)</td><td>MIT</td><td>Yalnızca @aep/ui/assistant; isteğe bağlı</td></tr>
+      <tr><td>Sohbet primitifleri</td><td>@ant-design/x + x-sdk</td><td>2.9.0 (peer antd ^6.1.1)</td><td>MIT</td><td>Yalnızca <code>@genui/ui/assistant</code>; isteğe bağlı</td></tr>
       <tr><td>Yönlendirme ve sunucu durumu</td><td>TanStack Router / Query</td><td>1.170.40 / 5.104.0</td><td>MIT</td><td>Çekirdek</td></tr>
       <tr><td>Form motoru</td><td>TanStack Form + zod</td><td>1.33.5 / 4.6.5</td><td>MIT</td><td>SchemaFormEngine; tek state sahibi</td></tr>
-      <tr><td>Liste motoru</td><td>TanStack Table + Virtual</td><td>9.2.4 / 3.14.13</td><td>MIT</td><td>EntityTable; ileri grid ayrı yüzey (faz 04)</td></tr>
+      <tr><td>Liste motoru</td><td>TanStack Table + Virtual</td><td>9.2.4 / 3.14.13</td><td>MIT</td><td>EntityTable; ileri grid ayrı yüzey (Dilim 2, L7)</td></tr>
       <tr><td>Grafik</td><td>ECharts (+ echarts-for-react)</td><td>6.1.0 / 3.0.6</td><td>Apache-2.0 / MIT</td><td>ChartView adaptörü; veri tablosu alternatifi</td></tr>
       <tr><td>Herkese açık içerik</td><td>Astro SSG</td><td>7.3.5</td><td>MIT</td><td>Ayrı yüzey; ortak token ve auth sözleşmesi</td></tr>
       <tr><td>UI tanım protokolü</td><td>A2UI spec; @a2ui/react</td><td>v0.9.1 (v1.0 aday); 0.12.0 (peer zod ^3)</td><td>Apache-2.0</td><td>SpecAdapter; zod 3 adaptörde izole</td></tr>
       <tr><td>Taşıma protokolü</td><td>AG-UI (@ag-ui/core)</td><td>1.0.0</td><td>MIT</td><td>TransportAdapter; isteğe bağlı</td></tr>
-      <tr><td>Referans render motoru</td><td>@json-render/react</td><td>0.21.0 (peer react ^19.2.3)</td><td>Apache-2.0</td><td>RendererAdapter; kabul deneyi E3</td></tr>
+      <tr><td>Referans render motoru</td><td>@json-render/react</td><td>0.21.0 (peer react ^19.2.3)</td><td>Apache-2.0</td><td>RendererAdapter; kabul deneyi AT-03</td></tr>
       <tr><td>Dış araç protokolü</td><td>MCP (yetkilendirme 2025-06-18)</td><td>spec</td><td>MIT</td><td>ToolAdapter; dış tüketici doğrulanınca</td></tr>
       <tr><td>Test</td><td>Vitest / Playwright / Storybook / axe-core / MSW</td><td>4.1.x / 1.63 / 10.6 / 4.13 / 2.x</td><td>MIT, Apache-2.0, MPL-2.0 (axe)</td><td>CI</td></tr>
       <tr><td>LLM değerlendirme</td><td>Promptfoo</td><td>0.123</td><td>MIT</td><td>CI</td></tr>
       <tr><td>Gözlemlenebilirlik</td><td>@sentry/react, web-vitals, OTel GenAI semconv</td><td>11.1 / 6.2 / Development</td><td>MIT, Apache-2.0</td><td>İçerik yakalama istemcide kapalı (G7)</td></tr>
-      <tr><td>Kullanılmaz</td><td>Next.js, Supabase, Tailwind/Flowbite (panel), AG Grid Enterprise, @thesysai/genui-sdk, Desk iç endpoint'leri; müşteri girişi için Frappe Social Login ve hazır OIDC köprüleri; Phase Two magic link (Elastic License)</td><td></td><td>Çeşitli</td><td>Yasak; gerekçe A2, A5, C4, M4, Karar</td></tr>
+      <tr><td>Stil</td><td>Sass (SCSS Modules) + cascade katmanları</td><td>1.x (sabitlenir)</td><td>MIT</td><td>Derleme zamanı; uygulama ve <code>@genui/ui</code> stilleri (C4)</td></tr>
+      <tr><td>İkonlar</td><td>Kendi ikon kayıt mekanizması; Phosphor, Font Awesome Free, özel SVG</td><td>sağlayıcı başına sabitlenir</td><td>MIT; CC BY 4.0 + MIT (Font Awesome Free)</td><td><code>packages/icons</code>; anlamsal ad → sağlayıcı (C8)</td></tr>
+      <tr><td>YZ modeli: yönetilen</td><td>Yönetilen model API'si (sağlayıcı açık karar)</td><td>tarihli model kimliği</td><td>Ticari hizmet</td><td>Hassas olmayan görevler; rıza ve standart sözleşmeyle (G4, G8)</td></tr>
+      <tr><td>YZ modeli: kendi sunucumuz</td><td>Açık ağırlıklı model, GPU'lu adanmış sunucu (aday Hetzner GEX45, GEX131)</td><td>açık karar</td><td>Modelin lisansı ADR'de</td><td>Hassas veri sınıfı ve KYC alan çıkarımı (G4, M23)</td></tr>
+      <tr><td>Ters vekil</td><td>nginx (sub_filter ile CSP nonce)</td><td>kararlı sürüm, sabitlenir</td><td>BSD-2-Clause</td><td>Hostlar, TLS, güvenlik başlıkları, nonce; HTML önbelleğe alınmaz (G3, K15)</td></tr>
+      <tr><td>Ortamlar</td><td>Yerel Colima; CI GitHub Actions; staging ve canlı Hetzner + Debian + Docker Engine</td><td>—</td><td>Apache-2.0 (Docker Engine, Colima: MIT)</td><td>Yerelde Docker Desktop kullanılmaz (K15)</td></tr>
+      <tr><td>İzleme otomasyonu</td><td>Dependabot; n8n + OpenClaw haftalık duyuru özeti</td><td>—</td><td>n8n Sustainable Use License (yalnızca iç araç)</td><td>Yalnızca rapor ve PR üretir; ürüne girmez (A7)</td></tr>
+      <tr><td>Kullanılmaz</td><td>Next.js, Supabase, Tailwind/Flowbite (panel), AG Grid Enterprise, @thesysai/genui-sdk, Desk iç endpoint'leri; müşteri girişi için Frappe Social Login ve hazır OIDC köprüleri; Phase Two magic link (Elastic License); ticari Gantt ve scheduler bileşenleri; Docker Desktop (yerel)</td><td></td><td>Çeşitli</td><td>Yasak; gerekçe A2, A5, C4, M4, Karar</td></tr>
     </tbody>
   </table></div>
 </section>

@@ -20,7 +20,7 @@ sys.path.insert(0, str(HERE))
 from ortak import BOLUMLER  # noqa: E402
 import sorular_1, sorular_2, sorular_3  # noqa: E402
 
-KITAP_SURUM = "1.0"
+KITAP_SURUM = "1.1"
 TARIH = "29 Eylül 2026"
 BELGE_SURUM = "v2.5"
 KAYNAK_COMMIT = "c19bfca"

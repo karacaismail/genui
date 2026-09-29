@@ -1,0 +1,45 @@
+<section id="test-stratejisi">
+  <div class="sec-head">
+    <div class="title"><h2>Test stratejisi</h2></div>
+    <p>Bu bölüm geliştirmeden önce yazılır ve her dilimin ilk adımıdır (karar kitabı T02, "TDD first"; K14). Ne yapar: hangi testin hangi katmanda, hangi araçla, hangi ortamda ve ne sıklıkta koştuğunu; örnek verinin ve sahte modelin nasıl kurulduğunu; kabul deneylerinin hangi şablonla yazıldığını tek yerde tanımlar. Ne yapmaz: testlerin kendisi değildir ve bir gereksinimin bir teste bağlanması o testin yeterli olduğunu kanıtlamaz; yeterliliği dilim kapısındaki inceleme kanıtlar. Bu repodaki belge kontrolleri (TP-16) yalnızca belgenin doğru üretildiğini gösterir; ürün testleri ana projenin reposunda koşar.</p>
+  </div>
+
+  <h3 style="font-size:var(--fs-l)">Katmanlar ve ortamlar</h3>
+  <div class="tbl-wrap" style="margin-top:.6rem"><table class="matrix prose">
+    <thead><tr><th scope="col">Katman</th><th scope="col">Ne sınar</th><th scope="col">Araç</th><th scope="col">Ortam</th></tr></thead>
+    <tbody>
+      <tr><td>Birim</td><td>Saf fonksiyonlar, sözleşme dönüşümleri, form motoru, risk politikası, yürütücü kuralları</td><td>Vitest (frontend); Frappe test çalıştırıcısı ve pytest (custom app); pytest (OTP gateway)</td><td>Yerel, CI</td></tr>
+      <tr><td>Sözleşme</td><td>zod şemaları ve üretilen JSON Schema; geçerli ve geçersiz örnekler; Python'un aynı örnekleri aynı sonuçla doğrulaması; parmak izi eşitliği</td><td>Vitest + pytest, ortak örnek klasörü</td><td>Yerel, CI</td></tr>
+      <tr><td>Bileşen</td><td><code>@genui/ui</code> bileşenlerinin durum matrisi, etkileşimi ve erişilebilirliği</td><td>Storybook 10 + etkileşim testleri + axe-core</td><td>Yerel, CI</td></tr>
+      <tr><td>Uçtan uca</td><td>Kritik kullanıcı işleri, YZ yolculuğu, kimlik akışları, izin ve izolasyon</td><td>Playwright; Keycloak, Frappe, Mailpit ve OTP taklidi compose ile</td><td>Yerel (Colima), CI, staging</td></tr>
+      <tr><td>YZ değerlendirme</td><td>Görev başarısı, yanlış tool, onaysız yazma, izin sızıntısı, filtre doğruluğu, kalibrasyon</td><td>Promptfoo; gerçek model</td><td>CI (ilgili PR), gece</td></tr>
+      <tr><td>Performans ve yük</td><td>Paket bütçesi, laboratuvar Web Vitals, 750 eşzamanlı oturum, giriş p95</td><td>Vite bütçe kontrolü, Lighthouse CI, k6 (yalnız CI aracı)</td><td>CI, staging</td></tr>
+      <tr><td>Gerçek cihaz</td><td>PR cihaz seti ve sürüm cihaz seti (J9, K4)</td><td>Bulut cihaz çiftliği veya yerel cihaz laboratuvarı</td><td>CI, sürüm</td></tr>
+      <tr><td>Kaos ve kurtarma</td><td>Worker öldürme, sonucu bilinmeyen dış işlem, restore provası</td><td>Hata enjeksiyonu betikleri</td><td>Staging, dilim kapısı</td></tr>
+    </tbody>
+  </table></div>
+  <p style="margin-top:.8rem">Ortamlar K15'tedir: yerel ortam macOS'ta Colima ile tek komutla kalkar; CI GitHub Actions'tır; staging ve canlı Hetzner'da Debian ve Docker Engine üzerindedir. <b>Örnek veri:</b> iki sentetik şirket (paylaşımlı sitede) ve bir ayrı site; her şirkette 10 bin ürün, sentetik tedarikçi belgeleri (PDF), dört personaya karşılık gelen kullanıcılar; gerçek kişisel veri test ortamına girmez (G8). <b>Sahte model:</b> birim ve uçtan uca testlerde model, istem örneğine göre sabit cevap veren bir taklittir; böylece testler her koşuda aynı sonucu verir. Gerçek model yalnızca YZ değerlendirme katmanında çağrılır.</p>
+
+  <h3 style="margin-top:1.75rem;font-size:var(--fs-l)">Kabul deneyi şablonu</h3>
+  <p style="margin-top:.4rem;color:var(--ink-2)">Her AT bu alanlarla yazılır; biri eksikse deney "hazır" sayılmaz (K14). Belgedeki her AT'nin altındaki satır dilim, tür, sahip ve ön koşulu verir; adımlar ve beklenen sonuç "Değişen" ve "Geçer" satırlarıdır.</p>
+  <div class="tbl-wrap" style="margin-top:.6rem"><table class="matrix prose">
+    <thead><tr><th scope="col">Alan</th><th scope="col">Anlamı</th></tr></thead>
+    <tbody>
+      <tr><td>Kimlik ve ad</td><td>AT-xx ve kısa ad</td></tr>
+      <tr><td>Gereksinimler</td><td>Deneyin kanıtladığı gereksinim satırları</td></tr>
+      <tr><td>Dilim</td><td>Deneyin ilk kez "geçti" olması gereken dilim</td></tr>
+      <tr><td>Ön koşul</td><td>Ortam, örnek veri, kullanıcı ve bayrak durumu</td></tr>
+      <tr><td>Adımlar ("Değişen")</td><td>Deneyde değiştirilen ve yapılan her şey</td></tr>
+      <tr><td>Beklenen sonuç ("Geçer")</td><td>Ölçülebilir geçme koşulları</td></tr>
+      <tr><td>Tür</td><td>Otomatik, yarı otomatik (otomatik koşar, insan doğrular) veya elle</td></tr>
+      <tr><td>Sahip</td><td>Deneyi koşan ve sonucu kaydeden kişi veya sistem</td></tr>
+      <tr><td>Kanıt</td><td>K9 kaydına giden ekran görüntüsü, HAR, video veya log</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3 style="margin-top:1.75rem;font-size:var(--fs-l)">Otomatik test paketleri</h3>
+  {{TEST_PAKETLERI}}
+
+  <h3 style="margin-top:1.75rem;font-size:var(--fs-l)">Gereksinim × test bağı</h3>
+  {{TEST_MATRIS}}
+</section>
