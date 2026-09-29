@@ -1073,7 +1073,7 @@
   "AT-09": {
    "dilim": 1,
    "tur": "yarı otomatik",
-   "sahip": "CI + dış güvenlik danışmanı",
+   "sahip": "CI + proje sahibi (güvenlik incelemesi)",
    "onkosul": "Zararlı belge, rich text, URL ve RPC fikstürleri"
   },
   "AT-10": {
@@ -1135,7 +1135,7 @@
   "AT-18": {
    "dilim": 1,
    "tur": "yarı otomatik",
-   "sahip": "CI + dış güvenlik danışmanı",
+   "sahip": "CI + proje sahibi (güvenlik incelemesi)",
    "onkosul": "Keycloak test realm'i; kurcalanmış token fikstürleri",
    "parcalar": [
     {

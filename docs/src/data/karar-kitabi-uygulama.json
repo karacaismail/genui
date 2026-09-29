@@ -19,7 +19,7 @@
     "C1",
     "ck-adi"
    ],
-   "ozet": "AEP kaldırıldı; kod adı genui (@genui/*); marka paketten gelir."
+   "ozet": "AEP kaldırıldı; kod adı genui (onaylandı)."
   },
   "U03": {
    "durum": "uygulandı",
@@ -56,7 +56,7 @@
     "ck-analist",
     "ck-musteri"
    ],
-   "ozet": "Dört kullanıcı kitlesi sürüm 1.0'da; analist Dilim 2, müşteri Dilim 3 önerisi onay bekliyor."
+   "ozet": "Dört kullanıcı kitlesi de ilk teslimde; analist, portal ve e-ticaret dahil (proje sahibi kararı)."
   },
   "U07": {
    "durum": "çelişki notuyla",
@@ -85,7 +85,7 @@
     "ck-eposta-marka",
     "ck-aktif-sirket"
    ],
-   "ozet": "Seviye 2 ilk teslimde: müşteri başına host ve istemci; Keycloak e-postası PoC'ye bağlı (onay bekliyor)."
+   "ozet": "Seviye 2 ilk teslimde; Keycloak e-postaları dahil, eklenti gecikirse teslim bekler (proje sahibi kararı)."
   },
   "U10": {
    "durum": "uygulandı",
@@ -160,7 +160,7 @@
     "plan",
     "ck-dilim"
    ],
-   "ozet": "Fazlar kaldırıldı; Dilim 1–4 dikey dilimler ve olgunluk seviyeleri."
+   "ozet": "Fazlar kaldırıldı; dört dilim paralel ilerler; olgunluk seviyeleri planda (proje sahibi kararı)."
   },
   "C06": {
    "durum": "uygulandı",
@@ -208,7 +208,7 @@
     "ak-gantt",
     "ck-ilk-teslim"
    ],
-   "ozet": "Gantt ve kaynak planlayıcı sürüm 1.0'da, Dilim 2 (ilk teslim yorumu onay bekliyor)."
+   "ozet": "Gantt ve kaynak planlayıcı ilk teslimde (Dilim 2 paketi)."
   },
   "C12": {
    "durum": "çelişki notuyla",
@@ -216,7 +216,7 @@
     "B8",
     "ck-ilk-teslim"
    ],
-   "ozet": "İşbirliği yeni arayüzde, Dilim 2 (ilk teslim yorumu onay bekliyor)."
+   "ozet": "İşbirliği yeni arayüzde, ilk teslimde (Dilim 2 paketi)."
   },
   "C13": {
    "durum": "uygulandı",
@@ -252,7 +252,7 @@
     "AT-38",
     "ck-ilk-teslim"
    ],
-   "ozet": "Beş yüzey sürüm 1.0'da: üçü Dilim 1, ikisi Dilim 2; ek yüzeyler Dilim 2–3 (ilk teslim yorumu onay bekliyor)."
+   "ozet": "Beş yüzey ve ek yüzeyler ilk teslimde (Dilim 1–3 paketleri)."
   },
   "Y04": {
    "durum": "uygulandı",
@@ -287,7 +287,7 @@
     "I11",
     "ck-proaktif"
    ],
-   "ozet": "Her ekranda proaktif öneri; yazma yok, bütçe tavanı, kapatılabilir."
+   "ozet": "Her ekranda öneri; yazma başlatmaz; bütçenin en fazla %30'u, ekranda 3 öneri (proje sahibi kararı)."
   },
   "Y08": {
    "durum": "uygulandı",
@@ -390,7 +390,7 @@
     "AT-19",
     "ck-ilk-teslim"
    ],
-   "ozet": "Yedi yöntem sürüm 1.0'da; Dilim 1–3'e dağıtım (ilk teslim yorumu onay bekliyor); her biri ayrı kabul."
+   "ozet": "Yedi yöntem ilk teslimde; Dilim 1–3 paketlerinde paralel, her biri ayrı kabul."
   },
   "K06": {
    "durum": "ertelendi",
@@ -408,7 +408,7 @@
     "M11",
     "ck-iki-asamali"
    ],
-   "ozet": "E-posta birincil; kullanıcı adı telefon olamaz; şirket politikası kanal ve giriş ikinci adımı ayrı (\"2 aşamalı\" yorumu onay bekliyor)."
+   "ozet": "E-posta birincil; kullanıcı adı telefon olamaz; \"2 aşamalı\" şirket yöneticisinin seçimi, sunulup sunulmaması platform ayarı."
   },
   "K08": {
    "durum": "uygulandı",
@@ -431,7 +431,7 @@
     "K12",
     "ck-inceleme"
    ],
-   "ozet": "Günlük inceleme içeride, dilim kapısında dış güvenlik danışmanı."
+   "ozet": "Dış güvenlik danışmanı yok (proje sahibi kararı); iç inceleme, tehdit modeli, güvenlik deneyleri."
   },
   "K11": {
    "durum": "uygulandı",
@@ -482,7 +482,7 @@
     "AT-31",
     "ck-185"
    ],
-   "ozet": "185 gün salt okunur ve dışa aktarım, sonra arşiv veya silme."
+   "ozet": "185 gün salt okunur ve dışa aktarım, sonra arşiv veya silme (onaylandı)."
   },
   "K17": {
    "durum": "uygulandı",
@@ -542,7 +542,7 @@
     "M22",
     "ck-aktif-sirket"
    ],
-   "ozet": "Tek aktif şirket; kapsamı tarayıcıdaki SSO oturumu ve sunucu bağlam sürümü (onay bekliyor)."
+   "ozet": "Tek aktif şirket tarayıcı başına (SSO oturumu); sunucu bağlam sürümü (onaylandı)."
   },
   "V03": {
    "durum": "uygulandı",
@@ -577,7 +577,7 @@
     "AT-17",
     "ck-tekrar"
    ],
-   "ozet": "Son tamamlanan adımdan otomatik tekrar; bilinmeyen dış işlem hariç."
+   "ozet": "Son tamamlanan adımdan otomatik tekrar; sonucu bilinmeyen dış işlem hariç (onaylandı)."
   },
   "V07": {
    "durum": "uygulandı",
@@ -600,7 +600,7 @@
     "doctype-katalogu",
     "ck-dilim"
    ],
-   "ozet": "Platform DocType kataloğu yazıldı; not dilim planına işlendi."
+   "ozet": "Platform DocType kataloğu yazıldı; olgunluk planı dilim planında."
   },
   "T01": {
    "durum": "uygulandı",
@@ -641,7 +641,7 @@
     "J6",
     "ck-cihaz-testi"
    ],
-   "ozet": "Her PR'da gerçek cihaz; 15 dakikayı aşarsa daraltma önerisi onay bekliyor."
+   "ozet": "Her PR'da gerçek cihaz; süre uzasa da daraltılmaz (proje sahibi kararı)."
   },
   "T06": {
    "durum": "uygulandı",
@@ -673,7 +673,7 @@
     "gereksinimler",
     "ck-inceleme"
    ],
-   "ozet": "Proje sahibi ve YZ kodlama ajanları; kapılarda dış uzman."
+   "ozet": "Proje sahibi ve YZ kodlama ajanları; dış uzman yok (ck-inceleme)."
   },
   "E02": {
    "durum": "çelişki notuyla",
@@ -681,7 +681,7 @@
     "K12",
     "ck-inceleme"
    ],
-   "ozet": "Custom app dış incelemesiz; güvenlik-kritik dört parça hariç."
+   "ozet": "Custom app ve kimlik kodu dış incelemesiz (proje sahibi kararı)."
   },
   "E03": {
    "durum": "uygulandı",
@@ -724,7 +724,7 @@
     "ck-ilk-teslim",
     "ck-analist"
    ],
-   "ozet": "İlk teslim 3 ay = Dilim 1 önerisi onay bekliyor; tarih kayar, kapı kısalmaz."
+   "ozet": "İlk teslim sürüm 1.0'ın tamamı; 3 ay hedefi kalktı; tarih kayar, kapı kısalmaz (proje sahibi kararı)."
   },
   "E08": {
    "durum": "uygulandı",
@@ -817,7 +817,7 @@
     "M21",
     "ck-musteri"
    ],
-   "ozet": "Önce panel; portal ve site Dilim 3."
+   "ozet": "Panel, portal ve site sürüm 1.0'da ve ilk teslimde; \"önce panel\" sırası uygulanmaz (ck-musteri)."
   },
   "R12": {
    "durum": "uygulanmaz",
@@ -841,7 +841,7 @@
     "api-hata",
     "ck-api-surum"
    ],
-   "ozet": "Tarihli sürüm ve dönüşüm zinciri; 20 yıl dış API'ye, SPA iki sürüm veya 90 gün (onay bekliyor)."
+   "ozet": "Tarihli sürüm ve dönüşüm zinciri; 20 yıl dış API'ye, SPA iki sürüm veya 90 gün (onaylandı)."
   },
   "X03": {
    "durum": "uygulandı",

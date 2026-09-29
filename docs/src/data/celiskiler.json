@@ -4,206 +4,389 @@
   {
    "id": "ck-ilk-teslim",
    "baslik": "İlk teslim ile ilk sürüm",
-   "cevaplar": ["E07", "K05", "C11", "C12", "Y03"],
+   "cevaplar": [
+    "E07",
+    "K05",
+    "C11",
+    "C12",
+    "Y03"
+   ],
    "ham_cevap": "E07: ilk teslim 3 ay. K05, C11, C12 ve Y03'te birçok özellik için \"ilk sürümde\" seçildi (yedi giriş yöntemi, Gantt, işbirliği, beş YZ yüzeyi).",
    "sorun": "3 ay seçeneğinin kendi sonucu \"kapsam en küçük dilime iner\" idi; \"ilk sürümde\" denen işlerin hepsi 3 aya sığmaz.",
-   "oneri": "\"İlk teslim\" = Dilim 1 (3 ay, pilot müşteriler). \"İlk sürüm\" = sürüm 1.0 = Dilim 1–4'ün sonu. Tarih ile kapı çatışırsa tarih kayar, güvenlik ve kimlik kapıları kısaltılmaz (K7).",
-   "yururluk": "Cevaplar yürürlükte. Öneri çalışma varsayımıdır: Dilim 1 planı bu varsayımla yazılır ama Dilim 1'in test planı onaysız kesinleşmez.",
-   "kapsam_farki": "3 aylık teslimin dışında kalanlar: Apple ve e-posta kodu (Dilim 2), SMS, WhatsApp ve Telegram (Dilim 3), Gantt ve işbirliği (Dilim 2), doğal dilden rapor ve workflow yardımı (Dilim 2), ek YZ yüzeyleri (Dilim 2–3).",
-   "onay": {"durum": "onay bekliyor", "sahip": "Proje sahibi", "son": "Dilim 1 test planından önce", "onaylayan": null, "tarih": null},
-   "etkiledigi": ["plan", "K7", "M8", "B8", "L10", "I1", "I13"]
+   "oneri": "İlk teslim sürüm 1.0'dır: \"ilk sürümde\" denen her şey ilk teslimdedir (yedi giriş yöntemi, Gantt, işbirliği, beş YZ yüzeyi ve dört dilimin tamamı). Dilimler paralel geliştirilen iş paketleridir; canlıya ilk çıkış dört dilimin kabul kapısı birlikte geçince olur.",
+   "yururluk": "Proje sahibinin kararı yürürlükte. E07'deki 3 ay hedefi kalktı; tarih, dilim çalışmalarının ölçülen hızından tahmin edilir. Güvenlik ve kimlik kapıları tarih için kısaltılmaz (K7).",
+   "kapsam_farki": "Önerilen küçük ilk teslim yerine bütün sürüm 1.0 ilk teslimde; süre 3 aydan uzun.",
+   "onay": {
+    "durum": "değiştirildi",
+    "onaylayan": "Proje sahibi (karacaismail)",
+    "tarih": "29 Eylül 2026",
+    "not": "\"Hepsi ilk teslimde\" seçildi."
+   },
+   "etkiledigi": [
+    "plan",
+    "K7",
+    "M8",
+    "B8",
+    "L10",
+    "I1",
+    "I13"
+   ]
   },
   {
    "id": "ck-analist",
    "baslik": "Analist ve yönetici ilk teslimde",
-   "cevaplar": ["U06", "E07"],
+   "cevaplar": [
+    "U06",
+    "E07"
+   ],
    "ham_cevap": "U06: ilk teslimde operasyon ekibi, analist ve yönetici, müşteri veya iş ortağı ve sistem yöneticisi.",
    "sorun": "Analistin işleri (doğal dilden rapor, pano, ileri grid) panelin içindedir; R11'in \"önce panel\" seçimi onları dışarıda bırakmaz. Onları ilk teslimden çıkaran tek gerekçe E07'nin 3 ay sınırıdır; bu, cevabın kendisinden değil belge yazarının kapasite yorumundan gelir.",
-   "oneri": "Analist ve yönetici görevleri Dilim 2'de (rapor, pano, ileri grid). Alternatifler: (b) doğal dilden rapor Dilim 1'e alınır ve Dilim 1'in süresi uzar; (c) Dilim 1'e yalnız analistin hazır listeyi filtreleyip görmesi (D5) girer, rapor ve pano yine Dilim 2'dedir.",
-   "yururluk": "U06 yürürlükte. Öneri (Dilim 2) çalışma varsayımıdır; onay gelmeden Dilim 1'in test planı kesinleşmez.",
-   "kapsam_farki": "İlk teslimde analist ve yönetici personası yok; D6, D9, L7 ve I1'in rapor kapsamı Dilim 2'de.",
-   "onay": {"durum": "onay bekliyor", "sahip": "Proje sahibi", "son": "Dilim 1 test planından önce", "onaylayan": null, "tarih": null},
-   "etkiledigi": ["urun-ailesi", "D6", "D9", "L7", "I1"]
+   "oneri": "Analist ve yönetici işleri (doğal dilden rapor, pano, ileri grid) ilk teslimdedir.",
+   "yururluk": "Proje sahibinin kararı yürürlükte (U06).",
+   "kapsam_farki": "Yok; U06 olduğu gibi uygulanır.",
+   "onay": {
+    "durum": "değiştirildi",
+    "onaylayan": "Proje sahibi (karacaismail)",
+    "tarih": "29 Eylül 2026",
+    "not": "ck-ilk-teslim kararıyla çözüldü: her şey ilk teslimde."
+   },
+   "etkiledigi": [
+    "urun-ailesi",
+    "D6",
+    "D9",
+    "L7",
+    "I1"
+   ]
   },
   {
    "id": "ck-musteri",
    "baslik": "Müşteri ve iş ortağı ilk teslimde",
-   "cevaplar": ["U06", "R11"],
+   "cevaplar": [
+    "U06",
+    "R11"
+   ],
    "ham_cevap": "U06: müşteri veya iş ortağı ilk teslimde. R11: önce panel; portal ve site sonraki fazlarda.",
    "sorun": "İki cevap birbirini dışlıyor: müşteri yalnız portal ve www üzerinden gelir, R11 onları sonraya bırakıyor.",
-   "oneri": "R11 seçildi: müşteri ve iş ortağı portalı, www ve e-ticaret Dilim 3'te.",
-   "yururluk": "İki cevap da yürürlükte ve çelişkili. Öneri çalışma varsayımıdır; onay gelmeden Dilim 1'in test planı kesinleşmez.",
-   "kapsam_farki": "İlk teslimde dış kullanıcı yok; L8, L9, M21 ve AT-24 Dilim 3'te.",
-   "onay": {"durum": "onay bekliyor", "sahip": "Proje sahibi", "son": "Dilim 1 test planından önce", "onaylayan": null, "tarih": null},
-   "etkiledigi": ["urun-ailesi", "L8", "L9", "M21"]
+   "oneri": "Müşteri ve iş ortağı portalı, herkese açık site ve e-ticaret ilk teslimdedir (U06). R11'deki \"önce panel\" sırası kalktı; panel, portal ve www paralel geliştirilir.",
+   "yururluk": "Proje sahibinin kararı yürürlükte.",
+   "kapsam_farki": "Yok; U06 olduğu gibi uygulanır, R11'in sırası uygulanmaz.",
+   "onay": {
+    "durum": "değiştirildi",
+    "onaylayan": "Proje sahibi (karacaismail)",
+    "tarih": "29 Eylül 2026",
+    "not": "Panel ile portalın farkı açıklandıktan sonra \"ilk teslimde\" seçildi."
+   },
+   "etkiledigi": [
+    "urun-ailesi",
+    "L8",
+    "L9",
+    "M21"
+   ]
   },
   {
    "id": "ck-inceleme",
    "baslik": "Güvenlik incelemesi",
-   "cevaplar": ["E02", "K10", "E01"],
+   "cevaplar": [
+    "E02",
+    "K10",
+    "E01"
+   ],
    "ham_cevap": "E02: Frappe tarafında dış inceleme yok. K10: kimlik kodunda günlük inceleme içeride, faz kapılarında dış güvenlik danışmanı. E01: faz kapılarında dış uzman.",
    "sorun": "Kimlik köprüsü Frappe custom app'in içindedir; E02 onu incelemesiz bırakır, K10 dış danışman ister.",
-   "oneri": "Dar kapsamlı kural: kimlik köprüsü, capability yürütücüsü, risk ve grant politikası ve Run kurtarma canlıya ancak dilim kapısında dış güvenlik danışmanı onayıyla çıkar; custom app'in geri kalanı dış incelemesiz ilerler (K12).",
-   "yururluk": "Öneri çalışma varsayımıdır. Onaya kadar daha sıkı olan (K10) uygulanır: dört parça dış incelemesiz canlıya çıkmaz.",
-   "kapsam_farki": "E02'ye göre dört parça daha incelemeye girer.",
-   "onay": {"durum": "onay bekliyor", "sahip": "Proje sahibi", "son": "Dilim 1 kapısı", "onaylayan": null, "tarih": null},
-   "etkiledigi": ["K12", "E10", "F8", "M4"]
+   "oneri": "Dış güvenlik incelemesi yoktur (E02). Güvenlik açısından kritik kod (kimlik köprüsü, capability yürütücüsü, risk ve grant politikası, Run kurtarma, Keycloak eklentileri ve realm akışları) kodu yazmayan bir YZ ajanı ve proje sahibi tarafından incelenir; yazılı tehdit modeli ve güvenlik kabul deneyleri (AT-09, AT-18) yayın kapısıdır.",
+   "yururluk": "Proje sahibinin kararı yürürlükte. K10 ve E01'deki \"kapılarda dış danışman\" kısmı uygulanmaz.",
+   "kapsam_farki": "Dış danışman incelemesi kalktı; güvenlik kanıtı iç inceleme, tehdit modeli ve otomatik güvenlik testlerine dayanır.",
+   "onay": {
+    "durum": "değiştirildi",
+    "onaylayan": "Proje sahibi (karacaismail)",
+    "tarih": "29 Eylül 2026",
+    "not": "\"Hiç dış inceleme yok\" seçildi."
+   },
+   "etkiledigi": [
+    "K12",
+    "E10",
+    "F8",
+    "M4"
+   ]
   },
   {
    "id": "ck-yasal",
    "baslik": "YZ ile yasal belge",
-   "cevaplar": ["U07"],
+   "cevaplar": [
+    "U07"
+   ],
    "ham_cevap": "U07: onaylı kayıt ve yasal belge gönderimi dahil.",
    "sorun": "Seçeneğin kendi notu \"önerilmez\" idi: e-Fatura geri alınamaz, yasal ve mali sorumluluk doğar.",
    "oneri": "Seçim en sıkı sınıfla uygulandı: belge başına insan onayı, muhasebe rolü, adım yükseltme, belge ve sağlayıcı doğrulaması önizlemesi, grant yok, çevrimdışı kuyruk yok, otomatik tekrar yok (F10). Dilim 4'te gelir.",
    "yururluk": "Seçim olduğu gibi yürürlükte.",
    "kapsam_farki": "Yok; eklenen kontroller belgenin değişmeyen güvenlik kuralıdır (YZ insan onayı olmadan geri alınamaz iş yapmaz).",
-   "onay": {"durum": "onay gerekmez", "gerekce": "Seçim daraltılmadı; eklenen onay ve adım yükseltme proje sahibinin genel kuralının (YZ onaysız geri alınamaz iş yapmaz) uygulamasıdır. Sorumluluk onayı veren kullanıcıda ve şirkettedir."},
-   "etkiledigi": ["F10"]
+   "onay": {
+    "durum": "onay gerekmez",
+    "gerekce": "Seçim daraltılmadı; eklenen onay ve adım yükseltme proje sahibinin genel kuralının (YZ onaysız geri alınamaz iş yapmaz) uygulamasıdır. Sorumluluk onayı veren kullanıcıda ve şirkettedir."
+   },
+   "etkiledigi": [
+    "F10"
+   ]
   },
   {
    "id": "ck-tekrar",
    "baslik": "Çöküşten sonra tekrar",
-   "cevaplar": ["V06"],
+   "cevaplar": [
+    "V06"
+   ],
    "ham_cevap": "V06: son tamamlanan adımdan otomatik tekrar.",
    "sorun": "Düz tekrar, sonucu bilinmeyen dış işlemi ikinci kez yapabilir: çift ödeme, çift e-Fatura, çift e-posta.",
    "oneri": "Otomatik tekrar varsayılandır. Tek istisna: sonucu bilinmeyen dış yan etki, sağlayıcı aynı tekrar koruma anahtarıyla güvenli tekrarı desteklemiyorsa tekrarlanmaz, uzlaştırmaya gider; eski worker sahiplik numarasıyla reddedilir (E10).",
    "yururluk": "Seçim yürürlükte; istisna seçimi daraltır ve onay bekler. Onaya kadar istisna uygulanır, çünkü onun kaldırılması çift ödeme riskini açar.",
    "kapsam_farki": "Tekrar korumasız dış adımlar otomatik tekrar edilmez.",
-   "onay": {"durum": "onay bekliyor", "sahip": "Proje sahibi", "son": "Dilim 1 kapısı", "onaylayan": null, "tarih": null},
-   "etkiledigi": ["E10"]
+   "onay": {
+    "durum": "onaylandı",
+    "onaylayan": "Proje sahibi (karacaismail)",
+    "tarih": "29 Eylül 2026",
+    "not": "\"İstisna olsun\" seçildi."
+   },
+   "etkiledigi": [
+    "E10"
+   ]
   },
   {
    "id": "ck-unut",
    "baslik": "\"Sil\" deyince ne silinir",
-   "cevaplar": ["V04"],
+   "cevaplar": [
+    "V04"
+   ],
    "ham_cevap": "V04: yalnız sohbet metni silinir.",
    "sorun": "Türetilmiş kopyalar kalırsa \"unut\" demek yanıltıcı olur; KVKK silme hakkı yalnız sohbet metniyle karşılanmaz.",
    "oneri": "Seçim uygulandı: \"sohbeti sil\" yalnızca sohbet metnini siler ve eylemin metni türetilmiş kopyaların kaldığını söyler; arayüz \"unut\" kelimesini kullanmaz. Tam silme KVKK talebiyle destek sürecinden yapılır (G7, I8, I9).",
    "yururluk": "Seçim olduğu gibi yürürlükte.",
    "kapsam_farki": "Yok.",
-   "onay": {"durum": "onay gerekmez", "gerekce": "Seçim daraltılmadı; eklenen yalnızca eylem metni ve KVKK talebinin ayrı yoldan yürümesidir."},
-   "etkiledigi": ["G7", "I8"]
+   "onay": {
+    "durum": "onay gerekmez",
+    "gerekce": "Seçim daraltılmadı; eklenen yalnızca eylem metni ve KVKK talebinin ayrı yoldan yürümesidir."
+   },
+   "etkiledigi": [
+    "G7",
+    "I8"
+   ]
   },
   {
    "id": "ck-proaktif",
    "baslik": "Her ekranda öneri",
-   "cevaplar": ["Y07"],
+   "cevaplar": [
+    "Y07"
+   ],
    "ham_cevap": "Y07: serbest, her ekranda öneri.",
    "sorun": "Seçeneğin notu \"rahatsızlık ve maliyet riski yüksek\" idi.",
-   "oneri": "Seçim sınırlarla uygulandı: öneri yazma başlatmaz, modal açmaz, yazarken belirmez; bütçenin en fazla %20'si; ekranda en fazla 3 öneri; kapatılan hatırlanır; kullanıcı ve şirket kapatabilir (I11).",
-   "yururluk": "Seçim yürürlükte. Güvenlik sınırları (yazma başlatmaz, modal açmaz) değişmez; sayısal sınırlar (%20, 3 öneri) seçimi daraltır ve onay bekler.",
-   "kapsam_farki": "Proaktif çağrılar bütçenin %20'siyle ve ekran başına 3 öneriyle sınırlı.",
-   "onay": {"durum": "onay bekliyor", "sahip": "Proje sahibi", "son": "Dilim 2 kapısı", "onaylayan": null, "tarih": null},
-   "etkiledigi": ["I11"]
+   "oneri": "Seçim sınırlarla uygulanır: öneri yazma başlatmaz, modal açmaz, yazarken belirmez; proaktif öneriler şirketin aylık YZ bütçesinin en fazla %30'unu kullanır; ekranda en fazla 3 öneri; kapatılan hatırlanır; kullanıcı ve şirket kapatabilir (I11).",
+   "yururluk": "Proje sahibinin kararı yürürlükte.",
+   "kapsam_farki": "Bütçe sınırı %20 yerine %30.",
+   "onay": {
+    "durum": "değiştirildi",
+    "onaylayan": "Proje sahibi (karacaismail)",
+    "tarih": "29 Eylül 2026",
+    "not": "\"%30, 3 öneri\" seçildi."
+   },
+   "etkiledigi": [
+    "I11"
+   ]
   },
   {
    "id": "ck-dilim",
    "baslik": "Faz yok, ama şelale ve olgunluk",
-   "cevaplar": ["C05", "V09"],
+   "cevaplar": [
+    "C05",
+    "V09"
+   ],
    "ham_cevap": "C05: fazları kaldır, yalnız uçtan uca dikey dilimler. V09 notu: \"her şey waterfall plan, her hedef maturity level plan\".",
    "sorun": "Dikey dilim ile şelale ilk bakışta zıt görünüyor.",
-   "oneri": "İkisi birleştirildi: dilimler sırayla ilerler (şelale), her dilimin içi aynı sırayı izler (test → veri modeli → sözleşme → geliştirme → kabul) ve her hedefin dilim sonundaki olgunluk seviyesi (O1–O4) planda yazılıdır.",
-   "yururluk": "Öneri çalışma varsayımıdır; planın yapısı bu yorumla yazıldı.",
-   "kapsam_farki": "Yok; plan biçimidir.",
-   "onay": {"durum": "onay bekliyor", "sahip": "Proje sahibi", "son": "Dilim 1 test planından önce", "onaylayan": null, "tarih": null},
-   "etkiledigi": ["plan", "K7"]
+   "oneri": "Dilimler paralel ilerleyebilir: bir dilim bitmeden diğerine başlanabilir. Her dilimin içi aynı sırayı izler (test → veri modeli → sözleşme → geliştirme → kabul) ve her hedefin dilim sonundaki olgunluk seviyesi (O1–O4) planda yazılıdır.",
+   "yururluk": "Proje sahibinin kararı yürürlükte.",
+   "kapsam_farki": "Dilimler arasındaki sıra şartı kalktı; her dilimin kendi kabul kapısı kalır.",
+   "onay": {
+    "durum": "değiştirildi",
+    "onaylayan": "Proje sahibi (karacaismail)",
+    "tarih": "29 Eylül 2026",
+    "not": "\"Parçalar paralel gitsin\" seçildi."
+   },
+   "etkiledigi": [
+    "plan",
+    "K7"
+   ]
   },
   {
    "id": "ck-185",
    "baslik": "Kapanan şirketin verisi",
-   "cevaplar": ["K16"],
+   "cevaplar": [
+    "K16"
+   ],
    "ham_cevap": "K16: seçilen seçenek 30 gün; notta 185 gün.",
    "sorun": "Seçenek ile not farklı.",
    "oneri": "Not son niyet sayıldı: 185 gün salt okunur ve dışa aktarım, sonra arşiv veya silme (M26).",
    "yururluk": "Öneri çalışma varsayımıdır; M26 Dilim 2'de geldiği için Dilim 1'i etkilemez.",
    "kapsam_farki": "Saklama 30 gün yerine 185 gün.",
-   "onay": {"durum": "onay bekliyor", "sahip": "Proje sahibi", "son": "Dilim 2 kapısı", "onaylayan": null, "tarih": null},
-   "etkiledigi": ["M26"]
+   "onay": {
+    "durum": "onaylandı",
+    "onaylayan": "Proje sahibi (karacaismail)",
+    "tarih": "29 Eylül 2026",
+    "not": "\"185 gün\" seçildi."
+   },
+   "etkiledigi": [
+    "M26"
+   ]
   },
   {
    "id": "ck-adi",
    "baslik": "\"AEP\" adı",
-   "cevaplar": ["U02"],
+   "cevaplar": [
+    "U02"
+   ],
    "ham_cevap": "U02: başka bir ad kullan; not: başka projenin tasarım sistemi.",
    "sorun": "Yeni ad verilmedi.",
    "oneri": "\"AEP\" belgeden kaldırıldı; kod adı \"genui\" (A6). Açık karar ak-kodadi ile aynı konudur.",
-   "yururluk": "\"AEP\" kaldırıldı (cevap). \"genui\" çalışma varsayımıdır.",
+   "yururluk": "Kod adı \"genui\" (paket kapsamı @genui/*, CSS öneki genui).",
    "kapsam_farki": "Yok.",
-   "onay": {"durum": "onay bekliyor", "sahip": "Proje sahibi", "son": "Dilim 1 kapısı", "onaylayan": null, "tarih": null},
-   "etkiledigi": ["A6"]
+   "onay": {
+    "durum": "onaylandı",
+    "onaylayan": "Proje sahibi (karacaismail)",
+    "tarih": "29 Eylül 2026",
+    "not": "\"genui kalsın\" seçildi."
+   },
+   "etkiledigi": [
+    "A6"
+   ]
   },
   {
    "id": "ck-iphone",
    "baslik": "\"iPhone 4 önce\"",
-   "cevaplar": ["U12"],
+   "cevaplar": [
+    "U12"
+   ],
    "ham_cevap": "U12 notu: \"mobile 320 px iphone 4 first\".",
    "sorun": "iPhone 4'ün tarayıcısı (iOS 7 Safari) bu yığını çalıştıramaz.",
    "oneri": "Not, 320 CSS px genişlik tabanı olarak uygulandı; iPhone 4 cihazı desteklenmez (J9, A2).",
    "yururluk": "320 CSS px tabanı yürürlükte.",
    "kapsam_farki": "Yok.",
-   "onay": {"durum": "onay gerekmez", "gerekce": "Teknik olarak uygulanabilir tek yorum; notun kendisi \"320 px\" diyor."},
-   "etkiledigi": ["J9"]
+   "onay": {
+    "durum": "onay gerekmez",
+    "gerekce": "Teknik olarak uygulanabilir tek yorum; notun kendisi \"320 px\" diyor."
+   },
+   "etkiledigi": [
+    "J9"
+   ]
   },
   {
    "id": "ck-cihaz-testi",
    "baslik": "Her PR'da gerçek cihaz",
-   "cevaplar": ["T05"],
+   "cevaplar": [
+    "T05"
+   ],
    "ham_cevap": "T05: her PR'da gerçek cihaz.",
    "sorun": "Her PR'da gerçek cihaz pahalı ve yavaştır; tek geliştirici ve YZ ajanlarının PR hızını düşürebilir.",
-   "oneri": "Seçim uygulanır; süre ve maliyet ilk ay ölçülür. PR başına 15 dakikayı aşarsa gerçek cihaz testi yalnız ekran ve etkileşim kodunu değiştiren PR'larda koşar; bu daraltma ADR ile yapılır (K4).",
-   "yururluk": "Seçim yürürlükte; daraltma kuralı onay bekler ve onaysız uygulanmaz.",
-   "kapsam_farki": "Koşullu daraltma: yalnız ekran kodu PR'larında gerçek cihaz.",
-   "onay": {"durum": "onay bekliyor", "sahip": "Proje sahibi", "son": "Dilim 1 kapısı", "onaylayan": null, "tarih": null},
-   "etkiledigi": ["K4"]
+   "oneri": "Gerçek cihaz testi her PR'da koşar; süresi uzasa da daraltılmaz (K4).",
+   "yururluk": "Proje sahibinin kararı yürürlükte (T05).",
+   "kapsam_farki": "Yok; T05 olduğu gibi uygulanır.",
+   "onay": {
+    "durum": "değiştirildi",
+    "onaylayan": "Proje sahibi (karacaismail)",
+    "tarih": "29 Eylül 2026",
+    "not": "\"Her değişiklikte\" seçildi."
+   },
+   "etkiledigi": [
+    "K4"
+   ]
   },
   {
    "id": "ck-api-surum",
    "baslik": "20 yıl geriye uyumluluk",
-   "cevaplar": ["X02"],
+   "cevaplar": [
+    "X02"
+   ],
    "ham_cevap": "X02: önerilen varsayılan (sürümlü ad alanı, API tablosu, iki sürümlük geçiş penceresi); not: \"stripe api'leri gibi, 20 yıl geriye dönük uyumlu olmalı\".",
    "sorun": "Seçilen seçenek iki sürümlük pencere diyor, not 20 yıl diyor.",
    "oneri": "20 yıl dışa açık API'ye (entegrasyonlar, API anahtarları) uygulanır: yayımlanmış tarihli sürüm kaldırılmaz. Ürünün kendi SPA'ları dış istemci değildir; iki sürüm veya 90 gün uyumlu kalır (B12, H3).",
    "yururluk": "Öneri çalışma varsayımıdır; onaya kadar dışa açık API yayımlanmaz (dış API zaten Dilim 3–4'te).",
    "kapsam_farki": "SPA için 20 yıl değil, iki sürüm veya 90 gün.",
-   "onay": {"durum": "onay bekliyor", "sahip": "Proje sahibi", "son": "Dilim 3 kapısı", "onaylayan": null, "tarih": null},
-   "etkiledigi": ["B12", "H3", "api-hata"]
+   "onay": {
+    "durum": "onaylandı",
+    "onaylayan": "Proje sahibi (karacaismail)",
+    "tarih": "29 Eylül 2026",
+    "not": "\"Yalnız dış entegrasyonlar\" seçildi."
+   },
+   "etkiledigi": [
+    "B12",
+    "H3",
+    "api-hata"
+   ]
   },
   {
    "id": "ck-eposta-marka",
    "baslik": "E-postada müşteri markası",
-   "cevaplar": ["U09"],
+   "cevaplar": [
+    "U09"
+   ],
    "ham_cevap": "U09: ilk teslimde seviye 2 (müşteri markası, platform alan adında).",
    "sorun": "Keycloak'ta e-posta teması realm düzeyindedir; Keycloak'ın gönderdiği doğrulama ve parola sıfırlama e-postalarında istemci başına marka hazır gelmez.",
-   "oneri": "Dilim 1'de giriş ekranı, panel ve Frappe'nin gönderdiği e-postalar müşteri markasıyla gelir. Keycloak e-postaları için marka işlemi başlatan istemciden (sunucunun doğruladığı bağlam) bir tema seçici eklentisiyle çözülür; Dilim 1'de deneme (PoC) yapılır. Deneme kapıya kadar başarısızsa Keycloak e-postaları ürün markasıyla çıkar ve müşteri markası Dilim 2'ye kalır.",
-   "yururluk": "U09 yürürlükte. Başarısız PoC durumundaki geri düşüş (ürün markası) onay bekler.",
-   "kapsam_farki": "PoC başarısızsa Keycloak e-postalarında seviye 2 Dilim 2'ye kayar.",
-   "onay": {"durum": "onay bekliyor", "sahip": "Proje sahibi", "son": "Dilim 1 kapısı", "onaylayan": null, "tarih": null},
-   "etkiledigi": ["M13", "ak-eposta-marka"]
+   "oneri": "Keycloak'ın gönderdiği e-postalar (doğrulama, parola sıfırlama) dahil bütün yüzeylerde müşteri markası ilk teslimdedir. Tema seçici eklentisi kapıya kadar çalışmazsa ilk teslim bekler; geçici ürün markası kullanılmaz.",
+   "yururluk": "Proje sahibinin kararı yürürlükte (U09).",
+   "kapsam_farki": "Yok; U09 olduğu gibi uygulanır. Risk: eklenti gecikirse ilk teslim de gecikir.",
+   "onay": {
+    "durum": "değiştirildi",
+    "onaylayan": "Proje sahibi (karacaismail)",
+    "tarih": "29 Eylül 2026",
+    "not": "\"Teslim beklesin\" seçildi."
+   },
+   "etkiledigi": [
+    "M13",
+    "ak-eposta-marka"
+   ]
   },
   {
    "id": "ck-aktif-sirket",
    "baslik": "\"Oturumda\" tek aktif şirket",
-   "cevaplar": ["V02", "K01", "U09"],
+   "cevaplar": [
+    "V02",
+    "K01",
+    "U09"
+   ],
    "ham_cevap": "V02: oturumda tek aktif şirket; değişince tüm sekmeler uyarılır.",
    "sorun": "Seviye 2 marka her şirkete ayrı host verir (U09) ve her hostun ayrı Frappe oturumu vardır; \"oturum\" kelimesi Frappe oturumu, Keycloak SSO oturumu veya kullanıcının bütün oturumları olabilir.",
    "oneri": "Kapsam, bir tarayıcıdaki Keycloak SSO oturumudur: aynı tarayıcıdaki bütün hostlarda tek aktif şirket vardır ve sunucu bunu bağlam sürümüyle her istekte denetler (M10). Aynı kullanıcının başka cihazdaki SSO oturumu kendi aktif şirketini taşır. Ayrı sitedeki büyük müşteri (Dilim 3) kendi sitesinde ayrı bağlamdır; iki site arasında bağlam paylaşılmaz (B9).",
    "yururluk": "Öneri çalışma varsayımıdır; Dilim 1'in veri modeli (GenUI Session Context) bu yorumla yazılır.",
    "kapsam_farki": "Başka cihazda başka şirket açık olabilir; ayrı site kendi bağlamını taşır.",
-   "onay": {"durum": "onay bekliyor", "sahip": "Proje sahibi", "son": "Dilim 1 test planından önce", "onaylayan": null, "tarih": null},
-   "etkiledigi": ["B9", "M10", "M20"]
+   "onay": {
+    "durum": "onaylandı",
+    "onaylayan": "Proje sahibi (karacaismail)",
+    "tarih": "29 Eylül 2026",
+    "not": "\"Tarayıcı başına\" seçildi."
+   },
+   "etkiledigi": [
+    "B9",
+    "M10",
+    "M20"
+   ]
   },
   {
    "id": "ck-iki-asamali",
    "baslik": "\"2 aşamalı\" doğrulama",
-   "cevaplar": ["K07"],
+   "cevaplar": [
+    "K07"
+   ],
    "ham_cevap": "K07 notu: e-posta ya da telefon tenant yöneticisinin opsiyonu; \"2 aşamalı (hem telefon hem eposta) bu da yine tenant yöneticisi için opsiyonel seçenek\".",
    "sorun": "\"2 aşamalı\" iki şey olabilir: hesapta iki kanalın da doğrulanmış olması (bir kez) ya da her girişte ikinci adım.",
-   "oneri": "Şirket politikası iki ayrı alan taşır (M8, M10): doğrulanmış kanal şartı (e-posta, telefon veya ikisi; kayıtta ve kanal değişiminde bir kez doğrulanır) ve giriş ikinci adımı (yok, telefona kod, passkey; her girişte). \"2 aşamalı\" seçeneği ikisinin birleşimidir: iki kanal doğrulanmış ve her girişte telefona kod. Telefon kodu OTP gateway'le Dilim 3'te gelir; Dilim 1'de yalnız e-posta kanalı ve passkey ikinci adımı vardır.",
-   "yururluk": "K07 yürürlükte. \"2 aşamalı\" yorumu ve telefon seçeneklerinin Dilim 3'e kalması onay bekler.",
-   "kapsam_farki": "Dilim 1–2'de telefon kanalı ve \"2 aşamalı\" seçilemez.",
-   "onay": {"durum": "onay bekliyor", "sahip": "Proje sahibi", "son": "Dilim 1 test planından önce", "onaylayan": null, "tarih": null},
-   "etkiledigi": ["M8", "M10", "M11"]
+   "oneri": "\"2 aşamalı\" doğrulama, her girişte ikinci bir adım istenmesidir (parola veya sosyal girişten sonra telefona kod). Şirket yöneticisi bunu şirketi için açar veya kapatır; bu seçeneğin şirket yöneticilerine sunulup sunulmayacağını platform sahibi platform ayarından belirler. Telefon kodu OTP gateway ile Dilim 3'te gelir.",
+   "yururluk": "Proje sahibinin kararı yürürlükte. \"2 aşamalı\" kelimesi yaygın anlamıyla (her girişte ikinci adım) okundu.",
+   "kapsam_farki": "Platform ayarı eklenir: şirket yöneticisinin \"2 aşamalı\" seçeneğini görüp görmediğini platform sahibi belirler.",
+   "onay": {
+    "durum": "değiştirildi",
+    "onaylayan": "Proje sahibi (karacaismail)",
+    "tarih": "29 Eylül 2026",
+    "not": "Şirket yöneticisi için isteğe bağlı; isteğe bağlı olup olmaması platform sahibince ayarlanır."
+   },
+   "etkiledigi": [
+    "M8",
+    "M10",
+    "M11"
+   ]
   }
  ]
 }

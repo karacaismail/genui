@@ -351,6 +351,65 @@
    "yasak": [
     "kullanıcının marka özniteliğine bakan"
    ]
+  },
+  {
+   "id": "PS-ilk-teslim",
+   "kaynak": "Proje sahibi kararları, 29 Eylül 2026, v2.8",
+   "konu": "İlk teslim sürüm 1.0'ın tamamıdır; dilimler paralel",
+   "zorunlu": [
+    "İlk teslim sürüm 1.0'dır",
+    "Dilimler paralel ilerleyebilir"
+   ],
+   "yasak": [
+    "ilk dilim 3 ayda pilota çıkar",
+    "Hedef süre: 3 ay",
+    "sonraki dilim ancak ondan sonra başlar"
+   ]
+  },
+  {
+   "id": "PS-inceleme",
+   "kaynak": "Proje sahibi kararları, 29 Eylül 2026, v2.8",
+   "konu": "Dış güvenlik incelemesi yoktur; iç inceleme ve güvenlik deneyleri kapıdır",
+   "zorunlu": [
+    "Dış güvenlik incelemesi yoktur"
+   ],
+   "yasak": [
+    "canlıya dış güvenlik danışmanının onayıyla çıkar",
+    "dış güvenlik danışmanı inceleyip onayladıktan sonra"
+   ]
+  },
+  {
+   "id": "PS-proaktif",
+   "kaynak": "Proje sahibi kararları, 29 Eylül 2026, v2.8",
+   "konu": "Proaktif öneri bütçenin en fazla %30'u",
+   "zorunlu": [
+    "bütçenin %30'unu aşamaz"
+   ],
+   "yasak": [
+    "bütçenin %20'sini aşamaz"
+   ]
+  },
+  {
+   "id": "PS-cihaz",
+   "kaynak": "Proje sahibi kararları, 29 Eylül 2026, v2.8",
+   "konu": "Gerçek cihaz testi her PR'da, daraltılmaz",
+   "zorunlu": [
+    "her PR'da koşar ve daraltılmaz"
+   ],
+   "yasak": [
+    "15 dakikayı aşarsa"
+   ]
+  },
+  {
+   "id": "PS-eposta",
+   "kaynak": "Proje sahibi kararları, 29 Eylül 2026, v2.8",
+   "konu": "Keycloak e-postalarında müşteri markası olmadan ilk teslim yapılmaz",
+   "zorunlu": [
+    "çalışmazsa ilk teslim bekler"
+   ],
+   "yasak": [
+    "Keycloak e-postaları ürün markasıyla çıkar"
+   ]
   }
  ]
 }
